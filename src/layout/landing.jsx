@@ -16,6 +16,11 @@ function Landing() {
             <LandingPageSection2 />
           </div>
         </div>
+        <div className="main-panel">
+          <div className="section2">
+            <LandingPageSection2 />
+          </div>
+        </div>
       </div>
     </div>
   );
