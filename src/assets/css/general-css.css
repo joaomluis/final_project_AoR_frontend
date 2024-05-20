@@ -1,7 +1,18 @@
+:root {
+  --primary-color: #112D4E;
+  --secondary-color: #3F72AF;
+  --greyish: #DBE2EF;
+  --whitey: #F9F7F7;
+}
+
 .section1{
-    background-color: #DBE2EF; 
+    background-color: var(--greyish); 
   }
   
   .section2 {
-    background-color: #F9F7F7; 
+    background-color: var(--whitey); 
+  }
+
+  .section3 {
+    background-color: var(--greyish); 
   }

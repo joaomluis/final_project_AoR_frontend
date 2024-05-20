@@ -1,6 +1,7 @@
 import MainNavBar from "../components/navbar/navbar.jsx";
 import LandingPageSection1 from "../views/landing-page/landing-page-section1.jsx";
 import LandingPageSection2 from "../views/landing-page/landing-page-section2.jsx";
+import LandingPageSection3 from "../views/landing-page/landing-page-section3.jsx";
 
 function Landing() {
   return (
@@ -17,8 +18,8 @@ function Landing() {
           </div>
         </div>
         <div className="main-panel">
-          <div className="section2">
-            <LandingPageSection2 />
+          <div className="section3">
+            <LandingPageSection3 />
           </div>
         </div>
       </div>

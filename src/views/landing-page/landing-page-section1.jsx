@@ -45,7 +45,7 @@ function LandingPageContent() {
           <Col md="6">
             <Card
               style={{
-                backgroundColor: "#112D4E",
+                backgroundColor: "var(--primary-color)",
                 borderRadius: "20px",
                 marginTop: "60px",
                 marginBottom: "50px",
@@ -53,7 +53,7 @@ function LandingPageContent() {
               }}
               body
             >
-              <CardHeader className="text-center" style={{ color: "#F9F7F7" }}>
+              <CardHeader className="text-center" style={{ color: "var(--whitey)" }}>
                 <h4>Sign Up</h4>
 
                 <CardText className="text-center" style={{ marginTop: "20px" }}>
@@ -97,8 +97,8 @@ function LandingPageContent() {
                   </FormGroup>
                   <Button
                     style={{
-                      backgroundColor: "#3E92CC",
-                      color: "#F9F7F7",
+                      backgroundColor: "var(--secondary-color)",
+                      color: "var(--whitey)",
                       marginTop: "20px",
                       width: "100%",
                       border: "none",
@@ -109,7 +109,7 @@ function LandingPageContent() {
                 </Form>
               </CardBody>
               <CardFooter className="text-center">
-                <p style={{ color: "#F9F7F7", marginTop: "10px" }}>
+                <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                   Already have an account? <a href="/sign-in">Sign in</a>
                 </p>
               </CardFooter>
