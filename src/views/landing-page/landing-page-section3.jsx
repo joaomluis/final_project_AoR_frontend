@@ -70,7 +70,6 @@ function LandingPageContent() {
                 style={{
                   marginTop: "80px",
                   fontWeight: "bold",
-                  
                 }}
               >
                 Interested in make your idea come to life? Show us what you got!
@@ -107,20 +106,29 @@ function LandingPageContent() {
                   />
                   <CardBody>
                     <CardTitle tag="h5">{item.caption}</CardTitle>
-                    
                   </CardBody>
-                  <CardFooter  style={{ backgroundColor: 'inherit' }}>
-                  <Button style={{ backgroundColor: 'var(--secondary-color)' }}>Open Project</Button>
+                  <CardFooter style={{ backgroundColor: "inherit" }}>
+                    <Button
+                      style={{
+                        backgroundColor: "var(--secondary-color)",
+                        border: "none",
+                      }}
+                    >
+                      Open Project
+                    </Button>
                   </CardFooter>
                 </Card>
               </div>
             ))}
           </Carousel>
         </Row>
-        <Row> 
+        <Row>
           <Col md="12" className="align-right mb-5 mt-3">
             <Button
-              style={{backgroundColor: "var(--secondary-color)" }}
+              style={{
+                backgroundColor: "var(--secondary-color)",
+                border: "none",
+              }}
             >
               See More Projects
             </Button>
