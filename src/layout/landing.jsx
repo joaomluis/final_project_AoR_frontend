@@ -13,15 +13,13 @@ function Landing() {
         <div className="section1">
           <LandingPageSection1 />
         </div>
-        <div className="main-panel">
-          <div className="section2">
-            <LandingPageSection2 />
-          </div>
+
+        <div className="section2">
+          <LandingPageSection2 />
         </div>
-        <div className="main-panel">
-          <div className="section3">
-            <LandingPageSection3 />
-          </div>
+
+        <div className="section3">
+          <LandingPageSection3 />
         </div>
       </div>
       <Footer />
