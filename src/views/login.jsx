@@ -14,7 +14,6 @@ import {
   CardText,
 } from "reactstrap";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 import PasswordStrengthBar from "react-password-strength-bar";
 
@@ -111,7 +110,7 @@ function LandingPageContent() {
               </CardBody>
               <CardFooter className="text-center">
                 <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
-                  Already have an account? <Link to="/sign-in"> <a>Sign in</a></Link>
+                  Already have an account? <a href="/sign-in">Sign in</a>
                 </p>
               </CardFooter>
             </Card>

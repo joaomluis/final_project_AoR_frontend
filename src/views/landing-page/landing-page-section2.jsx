@@ -14,7 +14,7 @@ function LandingPageContent() {
           <Col md="8">
             <Row>
               <h1 style={{ marginTop: "60px", fontWeight: "bold" }}>
-                Besides helping you make your projects a reality, FicaLab also
+                Besides helping you with your projects, FicaLab also
                 gives you the best tools to keep track of your progress.
               </h1>
             </Row>
