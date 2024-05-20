@@ -2,6 +2,7 @@ import MainNavBar from "../components/navbar/navbar.jsx";
 import LandingPageSection1 from "../views/landing-page/landing-page-section1.jsx";
 import LandingPageSection2 from "../views/landing-page/landing-page-section2.jsx";
 import LandingPageSection3 from "../views/landing-page/landing-page-section3.jsx";
+import Footer from "../components/footer/footer.jsx";
 
 function Landing() {
   return (
@@ -23,6 +24,7 @@ function Landing() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

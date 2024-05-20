@@ -1,5 +1,6 @@
 :root {
   --primary-color: #112D4E;
+  --primary-color-darker: #020e1bcb;
   --secondary-color: #3F72AF;
   --greyish: #DBE2EF;
   --whitey: #F9F7F7;
@@ -15,4 +16,14 @@
 
   .section3 {
     background-color: var(--greyish); 
+  }
+
+  .align-right {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .align-left {
+    display: flex;
+    justify-content: flex-start;
   }

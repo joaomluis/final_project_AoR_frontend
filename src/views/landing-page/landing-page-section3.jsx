@@ -64,13 +64,13 @@ function LandingPageContent() {
     <Container>
       <div className="section3">
         <Row>
-          <Col md="12">
+          <Col md="12" className="text-center">
             <Row>
               <h2
                 style={{
                   marginTop: "80px",
                   fontWeight: "bold",
-                  textAlign: "center",
+                  
                 }}
               >
                 Interested in make your idea come to life? Show us what you got!
@@ -116,6 +116,15 @@ function LandingPageContent() {
               </div>
             ))}
           </Carousel>
+        </Row>
+        <Row> 
+          <Col md="12" className="align-right mb-5 mt-3">
+            <Button
+              style={{backgroundColor: "var(--secondary-color)" }}
+            >
+              See More Projects
+            </Button>
+          </Col>
         </Row>
       </div>
     </Container>
