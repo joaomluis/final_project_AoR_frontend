@@ -8,7 +8,6 @@ import {
   CardImg,
   CardBody,
   CardTitle,
-  CardText,
 } from "reactstrap";
 
 import Carousel from "react-multi-carousel";
