@@ -18,23 +18,21 @@ import { useState } from "react";
 
 import "../../assets/css/general-css.css";
 
-function SignIn() {
-  const [email, setEmail] = useState("");
+function ConfirmAccount() {
   const [password, setPassword] = useState("");
 
   return (
     <div className="section1" style={{ minHeight: "845px" }}>
       <Container>
         <Row>
-          <Col md="3">
-            </Col>
+          <Col md="3"></Col>
 
           <Col md="6">
             <Card
               style={{
                 backgroundColor: "var(--primary-color)",
                 borderRadius: "20px",
-                marginTop: "110px",
+                marginTop: "60px",
                 marginBottom: "50px",
                 boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.6)",
               }}
@@ -44,38 +42,48 @@ function SignIn() {
                 className="text-center"
                 style={{ color: "var(--whitey)" }}
               >
-                <h4>Sign In</h4>
+                <h4>Confirm your account</h4>
 
                 <CardText className="text-center" style={{ marginTop: "20px" }}>
-                  Time to get back to work!
+                  Just a few more steps to go!
                 </CardText>
               </CardHeader>
               <CardBody>
                 <Form>
                   <FormGroup floating>
                     <Input
-                      name="email"
-                      placeholder="Email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      name="text"
+                      placeholder="First Name"
+                      type="text"
                       required
                     />
-                    <Label for="exampleEmail">Email</Label>
+                    <Label>First Name*</Label>
                   </FormGroup>
-                  
                   <FormGroup floating>
                     <Input
-                      name="password"
-                      placeholder="Password"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      name="text"
+                      placeholder="Last Name"
+                      type="text"
                       required
                     />
-
-                    <Label for="examplePassword">Password</Label>
+                    <Label>Last Name*</Label>
                   </FormGroup>
+                  <FormGroup floating>
+                    <Input name="text" placeholder="Username" type="text" />
+                    <Label>Username</Label>
+                  </FormGroup>
+
+                  <FormGroup floating>
+                    <Input bsSize="lg" type="select">
+                      <option>Lab location*</option>
+                    </Input>
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label style={{ color: "var(--whitey)" }}>About you:</Label>
+                    <Input name="text" type="textarea" style={{ resize: 'none', height: '150px' }} />
+                  </FormGroup>
+
                   <Button
                     style={{
                       backgroundColor: "var(--secondary-color)",
@@ -85,18 +93,12 @@ function SignIn() {
                       border: "none",
                     }}
                   >
-                    Sign In 
+                    Confirm Account
                   </Button>
                 </Form>
               </CardBody>
               <CardFooter className="text-center">
-                <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
-                  Dont have an account yet?{" "}
-                  <Link to="/">
-                    {" "}
-                    <a>Sign up</a>
-                  </Link>
-                </p>
+                
               </CardFooter>
             </Card>
           </Col>
@@ -106,4 +108,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default ConfirmAccount;
