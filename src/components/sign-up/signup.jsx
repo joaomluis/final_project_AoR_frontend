@@ -12,12 +12,14 @@ import {
 } from "reactstrap";
 import { useState, useRef } from "react";
 import PasswordStrengthBar from "react-password-strength-bar";
+import { useTranslation } from 'react-i18next';
 
 import RecoverPassword from "../modals/recover-password.jsx";
 
 import "../../assets/css/general-css.css";
 
 function SignUp() {
+  const { t } = useTranslation();
   const recoverPasswordRef = useRef();
 
   const [isSignUp, setIsSignUp] = useState(true);

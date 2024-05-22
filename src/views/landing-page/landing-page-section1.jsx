@@ -13,7 +13,7 @@ import SignUp from "../../components/sign-up/signup.jsx";
 
 
 function LandingPageContent() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Container>
@@ -28,10 +28,7 @@ function LandingPageContent() {
             </Row>
             <Row className="mt-4">
               <h5>
-                FicaLab is a platform for managing your projects and tasks. It
-                allows you to create projects, add tasks to them, and assign
-                tasks to your team members. You can also track the progress of
-                your projects and tasks.
+              {t("subtitle-section1")}
               </h5>
             </Row>
           </Col>
