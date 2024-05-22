@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import LandingLayout from './layout/landing';
 
+import './i18n';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

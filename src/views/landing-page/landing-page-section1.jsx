@@ -4,6 +4,7 @@ import {
   Row,
 } from "reactstrap";
 
+import { useTranslation } from 'react-i18next';
 
 import "../../assets/css/general-css.css";
 
@@ -12,6 +13,7 @@ import SignUp from "../../components/sign-up/signup.jsx";
 
 
 function LandingPageContent() {
+  const { t, i18n } = useTranslation();
 
   return (
     <Container>
@@ -20,7 +22,8 @@ function LandingPageContent() {
           <Col md="6">
             <Row>
               <h1 style={{ marginTop: "60px", fontWeight: "bold" }}>
-                Webapp for project management and task tracking.
+              {t("title-section1")}
+                
               </h1>
             </Row>
             <Row className="mt-4">

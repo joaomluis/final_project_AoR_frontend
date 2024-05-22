@@ -1,11 +1,21 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
+import { useTranslation } from "react-i18next";
 
 import "../../assets/css/general-css.css";
 
 import logo from "../../assets/img/logo_pl.jpg";
+import ukFlag from "../../assets/img/united-kingdom.png";
+import ptFlag from "../../assets/img/portugal.png";
 
 const Footer = () => {
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    window.scrollTo(0, 0);
+  };
+
   return (
     <Container
       fluid={true}
@@ -25,6 +35,38 @@ const Footer = () => {
         </Col>
 
         <Col md="3" className="text-center mt-3"></Col>
+        <Col
+          md="3"
+          className="text-center mt-3"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-end",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            alt="logo"
+            src={ukFlag}
+            onClick={() => changeLanguage("en")}
+            style={{
+              cursor: "pointer",
+              height: 25,
+              width: 25,
+              marginRight: 10,
+            }}
+          />{" "}
+          <img
+            alt="logo"
+            src={ptFlag}
+            onClick={() => changeLanguage("pt")}
+            style={{
+              cursor: "pointer",
+              height: 25,
+              width: 25,
+            }}
+          />{" "}
+        </Col>
       </Row>
       <hr style={{ borderColor: "white" }} />
       <Row>
