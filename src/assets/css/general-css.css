@@ -30,3 +30,14 @@
     display: flex;
     justify-content: flex-start;
   }
+
+  .modal-style {
+    background-color: var(--primary-color-darker);
+    border: none !important;
+  }
+
+  .button-style1 {
+    background-color: var(--secondary-color);
+    color: var(--whitey);
+    border: none;
+  }
