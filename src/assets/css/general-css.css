@@ -7,15 +7,18 @@
 }
 
 .section1{
-    background-color: var(--greyish); 
+    background-color: var(--greyish);
+    min-height: 630px;
   }
   
   .section2 {
-    background-color: var(--whitey); 
+    background-color: var(--whitey);
+    min-height: 1020px;
   }
 
   .section3 {
-    background-color: var(--greyish); 
+    background-color: var(--greyish);
+    min-height: 700px;
   }
 
   .align-right {

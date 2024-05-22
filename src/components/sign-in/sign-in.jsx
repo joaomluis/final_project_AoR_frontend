@@ -22,6 +22,8 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [resetPassword, setResetPassword] = useState(false);
+
   return (
     <div className="section1" style={{ minHeight: "845px" }}>
       <Container>
@@ -76,6 +78,11 @@ function SignIn() {
 
                     <Label for="examplePassword">Password</Label>
                   </FormGroup>
+                  <Link to="/confirm-account">
+                    <a style={{ color: "var(--whitey)", fontWeight:"bold" }}>
+                      Forgot password?
+                    </a>
+                  </Link> 
                   <Button
                     style={{
                       backgroundColor: "var(--secondary-color)",
