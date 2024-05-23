@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import LandingLayout from './layout/landing';
+import MainLayout from './layout/main';
 
 import './i18n';
 
@@ -13,7 +14,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/*" element={<LandingLayout />} />
-
+      <Route path="/fica-lab/*" element={<MainLayout />} />
     </Routes>
   </BrowserRouter>
 );
