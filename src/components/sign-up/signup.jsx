@@ -1,21 +1,9 @@
-import {
-  Card,
-  Button,
-  CardHeader,
-  CardBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  CardFooter,
-  CardText,
-} from "reactstrap";
+import { Card, Button, CardHeader, CardBody, Form, FormGroup, Label, Input, CardFooter, CardText } from "reactstrap";
 import { useState, useRef } from "react";
 import PasswordStrengthBar from "react-password-strength-bar";
-import { useTranslation } from 'react-i18next';
-
+import { useTranslation } from "react-i18next";
 import RecoverPassword from "../modals/recover-password.jsx";
-
+import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
 
 function SignUp() {
@@ -26,6 +14,15 @@ function SignUp() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  async function handleSingIn() {
+    try {
+      const response = await Api.signin(email, password);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -42,10 +39,7 @@ function SignUp() {
       >
         {isSignUp ? (
           <>
-            <CardHeader
-              className="text-center"
-              style={{ color: "var(--whitey)" }}
-            >
+            <CardHeader className="text-center" style={{ color: "var(--whitey)" }}>
               <h4>Sign Up</h4>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
@@ -55,35 +49,16 @@ function SignUp() {
             <CardBody>
               <Form>
                 <FormGroup floating>
-                  <Input
-                    name="email"
-                    placeholder="Email"
-                    type="email"
-                    required
-                  />
+                  <Input value={email} onChange={(e) => setEmail(e.target.value)} name="email" placeholder="Email" type="email" required />
                   <Label for="exampleEmail">Email</Label>
                 </FormGroup>
                 <FormGroup floating>
-                  <Input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    name="password"
-                    placeholder="Password"
-                    type="password"
-                    required
-                  />
-                  {password && (
-                    <PasswordStrengthBar minLength={1} password={password} />
-                  )}
+                  <Input value={password} onChange={(e) => setPassword(e.target.value)} name="password" placeholder="Password" type="password" required />
+                  {password && <PasswordStrengthBar minLength={1} password={password} />}
                   <Label for="examplePassword">Password</Label>
                 </FormGroup>
                 <FormGroup floating>
-                  <Input
-                    name="password"
-                    placeholder="Password"
-                    type="password"
-                    required
-                  />
+                  <Input name="password" placeholder="Password" type="password" required />
 
                   <Label>Confirm Password</Label>
                 </FormGroup>
@@ -103,10 +78,7 @@ function SignUp() {
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                 Already have an account?{" "}
-                <a
-                  onClick={() => setIsSignUp(false)}
-                  style={{ cursor: "pointer", color: "#FFD700" }}
-                >
+                <a onClick={() => setIsSignUp(false)} style={{ cursor: "pointer", color: "#FFD700" }}>
                   Sign In
                 </a>
               </p>
@@ -114,10 +86,7 @@ function SignUp() {
           </>
         ) : (
           <>
-            <CardHeader
-              className="text-center"
-              style={{ color: "var(--whitey)" }}
-            >
+            <CardHeader className="text-center" style={{ color: "var(--whitey)" }}>
               <h4>Sign In</h4>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
@@ -127,37 +96,20 @@ function SignUp() {
             <CardBody>
               <Form>
                 <FormGroup floating>
-                  <Input
-                    name="email"
-                    placeholder="Email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
+                  <Input name="email" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                   <Label for="exampleEmail">Email</Label>
                 </FormGroup>
 
                 <FormGroup floating>
-                  <Input
-                    name="password"
-                    placeholder="Password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                  <Input name="password" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
                   <Label for="examplePassword">Password</Label>
                 </FormGroup>
-                
-                  <a
-                    style={{ color: "var(--whitey)", fontWeight: "bold" }}
-                    onClick={() => recoverPasswordRef.current.open()}
-                  >
-                    Forgot password?
-                  </a>
-                
+
+                <a style={{ color: "var(--whitey)", fontWeight: "bold" }} onClick={() => recoverPasswordRef.current.open()}>
+                  Forgot password?
+                </a>
+
                 <Button
                   style={{
                     backgroundColor: "var(--secondary-color)",
@@ -166,6 +118,7 @@ function SignUp() {
                     width: "100%",
                     border: "none",
                   }}
+                  onClick={handleSingIn}
                 >
                   Sign In
                 </Button>
@@ -174,10 +127,7 @@ function SignUp() {
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                 Dont have an account yet?{" "}
-                <a
-                  onClick={() => setIsSignUp(true)}
-                  style={{ cursor: "pointer", color: "#FFD700" }}
-                >
+                <a onClick={() => setIsSignUp(true)} style={{ cursor: "pointer", color: "#FFD700" }}>
                   Sign Up
                 </a>
               </p>
