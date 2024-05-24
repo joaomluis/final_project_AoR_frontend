@@ -29,7 +29,11 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError),
   forgotPassword: (email) => apiClient.post(`/users/reset-password/${email}`, {}).then(handleResponse).catch(handleError),
-  confirmAccount: (token, data) => apiClient.post(`/users/confirm-account/${token}`, data).then(handleResponse).catch(handleError),
+  confirmAccount: (token, data) =>
+    apiClient
+      .post("/users/confirm-account", data, { headers: { token: token } })
+      .then(handleResponse)
+      .catch(handleError),
   changePassword: (password, confirmPassword, token) =>
     apiClient
       .post(`/users/change-password`, { password, confirmPassword }, { headers: { token: token } })
