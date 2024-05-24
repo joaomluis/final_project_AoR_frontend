@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useTranslation } from "react-i18next";
 import RecoverPassword from "../modals/recover-password.jsx";
+import { terror, tsuccess } from "../toasts/message-toasts";
 import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
 
@@ -21,18 +22,20 @@ function SignUp() {
   async function handleSignIn() {
     try {
       const response = await Api.signin(email, password);
-      console.log(response);
+      if (response.data) {
+        tsuccess("Login successful!");
+      }
     } catch (error) {
-      console.error(error);
+      terror(error.message);
     }
   }
 
   async function handleSignUp() {
     try {
       const response = await Api.signup(email, password);
-      console.log(response);
+      tsuccess(response.data);
     } catch (error) {
-      console.error(error);
+      terror(error.message);
     }
   }
 
