@@ -1,3 +1,5 @@
+//TODO : Retirar o codigo redundante
+//DONE: Alterei os botões Sign Up / Sign In e o Forgot Password
 import { Card, Button, CardHeader, CardBody, Form, FormGroup, Label, Input, CardFooter, CardText } from "reactstrap";
 import { useState, useRef } from "react";
 import PasswordStrengthBar from "react-password-strength-bar";
@@ -14,10 +16,20 @@ function SignUp() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  async function handleSingIn() {
+  async function handleSignIn() {
     try {
       const response = await Api.signin(email, password);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function handleSignUp() {
+    try {
+      const response = await Api.signup(email, password);
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -58,8 +70,14 @@ function SignUp() {
                   <Label for="examplePassword">Password</Label>
                 </FormGroup>
                 <FormGroup floating>
-                  <Input name="password" placeholder="Password" type="password" required />
-
+                  <Input
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    name="password"
+                    placeholder="Password"
+                    type="password"
+                    required
+                  />
                   <Label>Confirm Password</Label>
                 </FormGroup>
                 <Button
@@ -70,6 +88,7 @@ function SignUp() {
                     width: "100%",
                     border: "none",
                   }}
+                  onClick={handleSignUp}
                 >
                   Create Account
                 </Button>
@@ -78,9 +97,9 @@ function SignUp() {
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                 Already have an account?{" "}
-                <a onClick={() => setIsSignUp(false)} style={{ cursor: "pointer", color: "#FFD700" }}>
+                <button className="button-link" onClick={() => setIsSignUp(false)} style={{ cursor: "pointer", color: "#FFD700" }}>
                   Sign In
-                </a>
+                </button>
               </p>
             </CardFooter>
           </>
@@ -106,9 +125,9 @@ function SignUp() {
                   <Label for="examplePassword">Password</Label>
                 </FormGroup>
 
-                <a style={{ color: "var(--whitey)", fontWeight: "bold" }} onClick={() => recoverPasswordRef.current.open()}>
+                <span className="button-link" style={{ color: "var(--whitey)", fontWeight: "bold" }} onClick={() => recoverPasswordRef.current.open()}>
                   Forgot password?
-                </a>
+                </span>
 
                 <Button
                   style={{
@@ -118,7 +137,7 @@ function SignUp() {
                     width: "100%",
                     border: "none",
                   }}
-                  onClick={handleSingIn}
+                  onClick={handleSignIn}
                 >
                   Sign In
                 </Button>
@@ -127,9 +146,9 @@ function SignUp() {
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                 Dont have an account yet?{" "}
-                <a onClick={() => setIsSignUp(true)} style={{ cursor: "pointer", color: "#FFD700" }}>
+                <button className="button-link" onClick={() => setIsSignUp(true)} style={{ cursor: "pointer", color: "#FFD700" }}>
                   Sign Up
-                </a>
+                </button>
               </p>
             </CardFooter>
           </>

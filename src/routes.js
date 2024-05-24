@@ -1,7 +1,6 @@
 import LandingPage from "./views/landing-page/landing-page.jsx"
 import SignIn from "./components/sign-in/sign-in.jsx"
 import ConfirmAccount from "./components/confirm-account/confirm-account.jsx"
-import MyProfile from "./views/my-profile.jsx"
 
 var routes = [
     {
@@ -17,7 +16,7 @@ var routes = [
         layout: "/landing",
     }, 
     {
-      path: "/confirm-account",
+      path: "/confirm-account/:token",
       name: "confirm-account",
       component: <ConfirmAccount />,
       layout: "/landing",

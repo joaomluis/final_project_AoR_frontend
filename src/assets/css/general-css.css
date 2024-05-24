@@ -1,25 +1,21 @@
 :root {
-  --primary-color: #112D4E;
+  --primary-color: #112d4e;
   --primary-color-darker: #020e1bcb;
-  --secondary-color: #3F72AF;
-  --greyish: #DBE2EF;
-  --whitey: #F9F7F7;
+  --secondary-color: #3f72af;
+  --greyish: #dbe2ef;
+  --whitey: #f9f7f7;
+  --yellowy: #ffd700;
 }
 
-.section1{
-    background-color: var(--greyish);
-    min-height: 630px;
-  }
-  
-  .section2 {
-    background-color: var(--whitey);
-    min-height: 1020px;
-  }
+.section1 {
+  background-color: var(--greyish);
+  min-height: 630px;
+}
 
-  .section3 {
-    background-color: var(--greyish);
-    min-height: 700px;
-  }
+.section2 {
+  background-color: var(--whitey);
+  min-height: 1020px;
+}
 
   .align-right {
     display: flex;
@@ -42,14 +38,43 @@
     display: flex;
     justify-content: flex-start;
   }
+.section3 {
+  background-color: var(--greyish);
+  min-height: 700px;
+}
 
-  .modal-style {
-    background-color: var(--primary-color-darker);
-    border: none !important;
-  }
+.align-right {
+  display: flex;
+  justify-content: flex-end;
+}
 
-  .button-style1 {
-    background-color: var(--secondary-color);
-    color: var(--whitey);
-    border: none;
-  }
+.align-left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.modal-style {
+  background-color: var(--primary-color-darker);
+  border: none !important;
+}
+
+.button-style1 {
+  background-color: var(--secondary-color);
+  color: var(--whitey);
+  border: none;
+}
+
+.button-link {
+  background: none;
+  border: none;
+  color: var(--yellowy);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font: inherit;
+}
+
+.form-floating > .form-select {
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+}
