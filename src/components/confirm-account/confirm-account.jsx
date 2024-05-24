@@ -41,6 +41,7 @@ function ConfirmAccount() {
       const response = await Api.confirmAccount(token, data);
       tsuccess(response.data);
       data = {};
+      //TODO redirect to login page
     } catch (error) {
       terror(error.message);
     }

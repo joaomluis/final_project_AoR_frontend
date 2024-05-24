@@ -19,11 +19,18 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const registerUser = {
+    email,
+    password,
+    confirmPassword,
+  };
+
   async function handleSignIn() {
     try {
       const response = await Api.signin(email, password);
       if (response.data) {
         tsuccess("Login successful!");
+        //TODO redirect to home page
       }
     } catch (error) {
       terror(error.message);
@@ -31,8 +38,13 @@ function SignUp() {
   }
 
   async function handleSignUp() {
+    if (password !== confirmPassword) {
+      terror("Passwords do not match");
+      return;
+    }
     try {
-      const response = await Api.signup(email, password);
+      const response = await Api.signup(registerUser);
+      //TODO redirect to login page
       tsuccess(response.data);
     } catch (error) {
       terror(error.message);
