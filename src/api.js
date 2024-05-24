@@ -9,13 +9,23 @@ const apiClient = axios.create({
   },
 });
 
-const handleResponse = (response) => response.data;
+const handleResponse = (response) => ({ data: response.data, status: response.status });
 
 const handleError = (error) => {
   if (error.response) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    let errorMessage = "Something went wrong";
+    if (typeof error.response.data === "string") {
+      errorMessage = error.response.data;
+    } else if (error.response.data && error.response.data.message) {
+      errorMessage = error.response.data.message;
+    }
+    const err = new Error(errorMessage);
+    err.status = error.response.status;
+    throw err;
   } else {
-    throw new Error("Network Error");
+    const err = new Error("Network Error");
+    err.status = null;
+    throw err;
   }
 };
 

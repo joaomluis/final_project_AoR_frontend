@@ -32,17 +32,16 @@ function ConfirmAccount() {
         setIsLoaded(true);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.messsage);
     }
   }
 
   async function handleConfirmAccount() {
-    tsuccess("Account confirmed successfully");
     try {
       const response = await Api.confirmAccount(token, data);
-      console.log(response);
+      tsuccess(response.data);
     } catch (error) {
-      console.log(error);
+      terror(error.messsage);
     }
   }
 
