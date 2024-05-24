@@ -1,4 +1,4 @@
-import MainNavBar from "../components/navbar/navbar.jsx";
+import MainNavBar from "../components/navbar/main-navbar.jsx";
 import Sidebar from "../components/sidebar/sidebar.jsx";
 import Footer from "../components/footer/footer.jsx";
 
@@ -21,7 +21,6 @@ function Main() {
   return (
     <div className="wrapper">
       <MainNavBar />
-
       <div className="main-panel" style={{ marginTop: "65px" }}>
         <Sidebar />
         <Routes>{getRoutes(routes)}</Routes>
