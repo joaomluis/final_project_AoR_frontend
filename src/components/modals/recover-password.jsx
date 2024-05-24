@@ -1,8 +1,8 @@
-//TODO limpar a caxa quando é enviado o e-mail & verificar os erros de consola com este modal
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from "reactstrap";
 import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
+import { terror, tsuccess } from "../toasts/message-toasts.jsx";
 
 //const RecoverPassword = forwardRef((props, ref, args) => {
 
@@ -16,15 +16,16 @@ const RecoverPassword = forwardRef((props, ref) => {
     setModal(true);
   };
 
-  const handleRedifinePw = () => {
+  async function handleRedifinePw() {
     try {
-      Api.forgotPassword(email);
+      const response = await Api.forgotPassword(email);
       toggle();
       setEmail("");
+      tsuccess(response.data);
     } catch (error) {
-      console.error(error);
+      terror(error.message);
     }
-  };
+  }
 
   // Expose the handleShow function to parent components
   useImperativeHandle(ref, () => ({
