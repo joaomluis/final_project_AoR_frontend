@@ -42,6 +42,7 @@ function ConfirmAccount() {
       tsuccess(response.data);
       data = {};
     } catch (error) {
+      // Handle error
       terror(error.message);
     }
   }
