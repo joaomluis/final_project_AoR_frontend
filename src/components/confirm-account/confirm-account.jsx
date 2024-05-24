@@ -1,16 +1,17 @@
 import { Row, Col, Card, Button, CardHeader, CardBody, Form, FormGroup, Label, Input, CardFooter, CardText, Container } from "reactstrap";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import FormInput from "../input/forminput";
+import { tsuccess, terror, twarn } from "../toasts/message-toasts";
 import { Api } from "../../api";
-function ConfirmAccount() {
-  const token = "781dd116-979f-4f13-a7fb-520d649e1e0d";
-  const [password, setPassword] = useState("");
+import { t } from "i18next";
 
+function ConfirmAccount() {
+  const token = useParams().token;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
-  const [labLocation, setLabLocation] = useState("");
+  const [labId, setSelectedLab] = useState("");
   const [about, setAbout] = useState("");
   const [labs, setLabs] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -19,7 +20,7 @@ function ConfirmAccount() {
     firstName,
     lastName,
     username,
-    labLocation,
+    labId,
     about,
   };
 
@@ -27,11 +28,19 @@ function ConfirmAccount() {
     try {
       if (!isLoaded) {
         const response = await Api.getAllLocations(token);
-        console.log(response);
         setLabs(response);
-        console.log(labs);
         setIsLoaded(true);
       }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleConfirmAccount() {
+    tsuccess("Account confirmed successfully");
+    try {
+      const response = await Api.confirmAccount(token, data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -68,8 +77,16 @@ function ConfirmAccount() {
                   <FormInput label="Username" placeholder="Username" type="text" value={username} setValue={setUsername} />
 
                   <FormGroup floating>
-                    <Input bsSize="md" type="select" className="form-select" onClick={handleLoadLabLocations}>
-                      <option disabled>Lab location*</option>
+                    <Input
+                      bsSize="md"
+                      type="select"
+                      className="form-select"
+                      onClick={handleLoadLabLocations}
+                      onChange={(e) => setSelectedLab(e.target.value)}
+                    >
+                      <option disabled selected>
+                        Lab location*
+                      </option>
                       {labs.map((lab) => (
                         <option key={lab.id} value={lab.id}>
                           {lab.location}
@@ -95,6 +112,7 @@ function ConfirmAccount() {
                       width: "100%",
                       border: "none",
                     }}
+                    onClick={handleConfirmAccount}
                   >
                     Confirm Account
                   </Button>
