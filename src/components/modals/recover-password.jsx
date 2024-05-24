@@ -1,4 +1,3 @@
-//TODO limpar a caxa quando é enviado o e-mail & verificar os erros de consola com este modal
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from "reactstrap";
 import { Api } from "../../api.js";
