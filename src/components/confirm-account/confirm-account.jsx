@@ -16,7 +16,7 @@ function ConfirmAccount() {
   const [labs, setLabs] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const data = {
+  let data = {
     firstName,
     lastName,
     username,
@@ -28,7 +28,7 @@ function ConfirmAccount() {
     try {
       if (!isLoaded) {
         const response = await Api.getAllLocations(token);
-        setLabs(response);
+        setLabs(response.data);
         setIsLoaded(true);
       }
     } catch (error) {
@@ -40,8 +40,9 @@ function ConfirmAccount() {
     try {
       const response = await Api.confirmAccount(token, data);
       tsuccess(response.data);
+      data = {};
     } catch (error) {
-      terror(error.messsage);
+      terror(error.message);
     }
   }
 
