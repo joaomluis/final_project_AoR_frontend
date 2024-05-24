@@ -32,7 +32,7 @@ const handleError = (error) => {
 export const Api = {
   //USER endpoints
   signin: (email, password) => apiClient.post("/users/login", { email, password }).then(handleResponse).catch(handleError),
-  signup: (email, password) => apiClient.post("/users", { email, password }).then(handleResponse).catch(handleError),
+  signup: (registerUser) => apiClient.post("/users", registerUser).then(handleResponse).catch(handleError),
   signout: (token) =>
     apiClient
       .post("/users/logout", {}, { headers: { token: token } })
