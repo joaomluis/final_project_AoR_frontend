@@ -39,6 +39,15 @@ function SignUp() {
     }
   }
 
+  async function handleSignUp() {
+    try {
+      const response = await Api.signup(email, password);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
       <RecoverPassword ref={recoverPasswordRef} />
