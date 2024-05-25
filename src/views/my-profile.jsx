@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import "../assets/css/general-css.css";
 
-import SignUp from "../components/sign-up/signup.jsx";
+
 
 
 
@@ -16,8 +16,9 @@ function LandingPageContent() {
   const { t } = useTranslation();
 
   return (
-    <Container>
-      <div className="section1">
+    
+      <div className="section1" style={{height: "100vh"}}>
+        
         <Row>
           <Col md="6">
             <Row>
@@ -34,11 +35,12 @@ function LandingPageContent() {
           </Col>
 
           <Col md="6">
-            <SignUp />
+            
           </Col>
         </Row>
+        
       </div>
-    </Container>
+    
   );
 }
 

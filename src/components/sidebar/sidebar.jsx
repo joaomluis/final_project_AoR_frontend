@@ -24,7 +24,7 @@ function SideNavbar() {
     <Sidebar
       collapsed={collapsed}
       backgroundColor="#DBE2EF"
-      style={{ marginTop: "65px", height: "calc(100vh - 65px)" }}
+      style={{ height: "100vh"}}
     >
       <Menu>
       <MenuItem icon={<FaHome />}> Home </MenuItem>
