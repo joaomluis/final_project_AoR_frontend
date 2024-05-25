@@ -1,6 +1,17 @@
 //TODO : Retirar o codigo redundante
 //DONE: Alterei os botões Sign Up / Sign In e o Forgot Password
-import { Card, Button, CardHeader, CardBody, Form, FormGroup, Label, Input, CardFooter, CardText } from "reactstrap";
+import {
+  Card,
+  Button,
+  CardHeader,
+  CardBody,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  CardFooter,
+  CardText,
+} from "reactstrap";
 import { useState, useRef } from "react";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useTranslation } from "react-i18next";
@@ -38,6 +49,7 @@ function SignUp() {
   }
 
   async function handleSignUp() {
+    console.log(registerUser);
     if (password !== confirmPassword) {
       terror("Passwords do not match");
       return;
@@ -46,15 +58,6 @@ function SignUp() {
       const response = await Api.signup(registerUser);
       //TODO redirect to login page
       tsuccess(response.data);
-    } catch (error) {
-      terror(error.message);
-    }
-  }
-
-  async function handleSignUp() {
-    try {
-      const response = await Api.signup(email, password);
-      console.log(response);
     } catch (error) {
       terror(error.message);
     }
@@ -75,7 +78,10 @@ function SignUp() {
       >
         {isSignUp ? (
           <>
-            <CardHeader className="text-center" style={{ color: "var(--whitey)" }}>
+            <CardHeader
+              className="text-center"
+              style={{ color: "var(--whitey)" }}
+            >
               <h4>Sign Up</h4>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
@@ -85,12 +91,28 @@ function SignUp() {
             <CardBody>
               <Form>
                 <FormGroup floating>
-                  <Input value={email} onChange={(e) => setEmail(e.target.value)} name="email" placeholder="Email" type="email" required />
+                  <Input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    name="email"
+                    placeholder="Email"
+                    type="email"
+                    required
+                  />
                   <Label for="exampleEmail">Email</Label>
                 </FormGroup>
                 <FormGroup floating>
-                  <Input value={password} onChange={(e) => setPassword(e.target.value)} name="password" placeholder="Password" type="password" required />
-                  {password && <PasswordStrengthBar minLength={1} password={password} />}
+                  <Input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
+                    placeholder="Password"
+                    type="password"
+                    required
+                  />
+                  {password && (
+                    <PasswordStrengthBar minLength={1} password={password} />
+                  )}
                   <Label for="examplePassword">Password</Label>
                 </FormGroup>
                 <FormGroup floating>
@@ -121,7 +143,11 @@ function SignUp() {
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                 Already have an account?{" "}
-                <button className="button-link" onClick={() => setIsSignUp(false)} style={{ cursor: "pointer", color: "#FFD700" }}>
+                <button
+                  className="button-link"
+                  onClick={() => setIsSignUp(false)}
+                  style={{ cursor: "pointer", color: "#FFD700" }}
+                >
                   Sign In
                 </button>
               </p>
@@ -129,7 +155,10 @@ function SignUp() {
           </>
         ) : (
           <>
-            <CardHeader className="text-center" style={{ color: "var(--whitey)" }}>
+            <CardHeader
+              className="text-center"
+              style={{ color: "var(--whitey)" }}
+            >
               <h4>Sign In</h4>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
@@ -139,17 +168,35 @@ function SignUp() {
             <CardBody>
               <Form>
                 <FormGroup floating>
-                  <Input name="email" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                  <Input
+                    name="email"
+                    placeholder="Email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
                   <Label for="exampleEmail">Email</Label>
                 </FormGroup>
 
                 <FormGroup floating>
-                  <Input name="password" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                  <Input
+                    name="password"
+                    placeholder="Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
 
                   <Label for="examplePassword">Password</Label>
                 </FormGroup>
 
-                <span className="button-link" style={{ color: "var(--whitey)", fontWeight: "bold" }} onClick={() => recoverPasswordRef.current.open()}>
+                <span
+                  className="button-link"
+                  style={{ color: "var(--whitey)", fontWeight: "bold" }}
+                  onClick={() => recoverPasswordRef.current.open()}
+                >
                   Forgot password?
                 </span>
 
@@ -170,7 +217,11 @@ function SignUp() {
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                 Dont have an account yet?{" "}
-                <button className="button-link" onClick={() => setIsSignUp(true)} style={{ cursor: "pointer", color: "#FFD700" }}>
+                <button
+                  className="button-link"
+                  onClick={() => setIsSignUp(true)}
+                  style={{ cursor: "pointer", color: "#FFD700" }}
+                >
                   Sign Up
                 </button>
               </p>

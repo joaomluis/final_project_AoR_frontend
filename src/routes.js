@@ -1,7 +1,7 @@
 import LandingPage from "./views/landing-page/landing-page.jsx";
 import SignIn from "./components/sign-in/sign-in.jsx";
 import ConfirmAccount from "./components/confirm-account/confirm-account.jsx";
-import MyProfile from "./views/my-profile/my-profile.jsx";
+import MyProfile from "./views/my-profile.jsx";
 
 var routes = [
   {
