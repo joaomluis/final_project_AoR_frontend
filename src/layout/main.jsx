@@ -26,7 +26,7 @@ function Main() {
       
       <div className="main-panel" style={{ marginTop:"65px", display: 'flex'}}>
         <Sidebar/>
-        <div style={{ flex: 1, overflow: 'auto' }}>
+        <div className="main-container">
           <Routes>
             {getRoutes(routes)}
           </Routes>

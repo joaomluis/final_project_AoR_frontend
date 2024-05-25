@@ -25,6 +25,18 @@
     display: flex;
     justify-content: flex-end;
   }
+
+  .section4 {
+    background-color: var(--whitey);
+    
+  }
+
+  .main-container {
+    background-color: var(--primary-color);
+    min-height: 100vh;
+    width: 100vw;
+    color: var(--whitey);
+  }
   
   .align-left {
     display: flex;
