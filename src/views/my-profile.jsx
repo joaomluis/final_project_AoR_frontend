@@ -2,6 +2,12 @@ import {
   Container,
   Col,
   Row,
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  CardText,
+  Button,
 } from "reactstrap";
 
 import { useTranslation } from 'react-i18next';
@@ -18,27 +24,39 @@ function LandingPageContent() {
   return (
     
       <div className="section1" style={{height: "100vh"}}>
-        
+        <Container>
         <Row>
-          <Col md="6">
-            <Row>
-              <h1 style={{ marginTop: "60px", fontWeight: "bold" }}>
-              {t("title-section1")}
-                
-              </h1>
-            </Row>
-            <Row className="mt-4">
-              <h5>
-              {t("subtitle-section1")}
-              </h5>
-            </Row>
+          <Col md="6" className="text-center">
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h4">Card Title</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <CardText>
+                  Some quick example text to build on the card title and make up the bulk of
+                  the card's content.
+                </CardText>
+                <Button>Go somewhere</Button>
+              </CardBody>
+            </Card>
           </Col>
 
-          <Col md="6">
-            
+          <Col md="6" className="text-center">
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h4">Card Title</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <CardText>
+                  Some quick example text to build on the card title and make up the bulk of
+                  the card's content.
+                </CardText>
+                <Button>Go somewhere</Button>
+              </CardBody>
+            </Card>
           </Col>
         </Row>
-        
+        </Container>
       </div>
     
   );
