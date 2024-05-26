@@ -14,12 +14,22 @@ export const useUserStore = create(
   persist(
     (set) => ({
       // username: "",
-      token: "",
+      token: "f16abf18-f0d6-43f1-9dd8-50d3adcca4e8",
+      email: "admin@admin",
       skills: [],
+      allSkills: [],
+      skillTypes: [],
 
+      updateSkillTypes: (skillTypes) => set({ skillTypes }),
+      updateEmail: (email) => set({ email }), //new action
       updateSkills: (skills) => set({ skills }), //new action
+      updateAllSkills: (allSkills) => set({ allSkills }), //new action
       addSkill: (skill) =>
         set((state) => ({ skills: [...state.skills, skill] })),
+      removeSkill: (skill) =>
+        set((state) => ({
+          skills: state.skills.filter((s) => s.id !== skill.id),
+        })),
       updateToken: (token) => set({ token }), //new action
     }),
     {

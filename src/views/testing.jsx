@@ -11,11 +11,12 @@ import {
   CardImg,
   CardFooter,
 } from "reactstrap";
-
+import { Api } from "../api";
 import { useTranslation } from "react-i18next";
 import "../assets/css/general-css.css";
 import SkillCard from "../components/cards/card-skill";
-
+import { useUserStore } from "../components/stores/useUserStore";
+import { useEffect } from "react";
 function Testing() {
   const { t } = useTranslation();
 
