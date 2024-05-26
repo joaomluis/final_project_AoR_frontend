@@ -9,7 +9,10 @@ const apiClient = axios.create({
   },
 });
 
-const handleResponse = (response) => ({ data: response.data, status: response.status });
+const handleResponse = (response) => ({
+  data: response.data,
+  status: response.status,
+});
 
 const handleError = (error) => {
   if (error.response) {
@@ -31,14 +34,26 @@ const handleError = (error) => {
 
 export const Api = {
   //USER endpoints
-  signin: (email, password) => apiClient.post("/users/login", { email, password }).then(handleResponse).catch(handleError),
-  signup: (registerUser) => apiClient.post("/users", registerUser).then(handleResponse).catch(handleError),
+  signin: (email, password) =>
+    apiClient
+      .post("/users/login", { email, password })
+      .then(handleResponse)
+      .catch(handleError),
+  signup: (registerUser) =>
+    apiClient
+      .post("/users", registerUser)
+      .then(handleResponse)
+      .catch(handleError),
   signout: (token) =>
     apiClient
       .post("/users/logout", {}, { headers: { token: token } })
       .then(handleResponse)
       .catch(handleError),
-  forgotPassword: (email) => apiClient.post(`/users/reset-password/${email}`, {}).then(handleResponse).catch(handleError),
+  forgotPassword: (email) =>
+    apiClient
+      .post(`/users/reset-password/${email}`, {})
+      .then(handleResponse)
+      .catch(handleError),
   confirmAccount: (token, data) =>
     apiClient
       .post("/users/confirm-account", data, { headers: { token: token } })
@@ -46,10 +61,26 @@ export const Api = {
       .catch(handleError),
   changePassword: (password, confirmPassword, token) =>
     apiClient
-      .post(`/users/change-password`, { password, confirmPassword }, { headers: { token: token } })
+      .post(
+        `/users/change-password`,
+        { password, confirmPassword },
+        { headers: { token: token } }
+      )
       .then(handleResponse)
       .catch(handleError),
 
   //LOCATION endpoints
-  getAllLocations: (token) => apiClient.get("/labs", { headers: { token } }).then(handleResponse).catch(handleError),
+  getAllLocations: (token) =>
+    apiClient
+      .get("/labs", { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+
+  //SKILL endpoints
+  addSkill: (token, data) =>
+    apiClient
+      .post("/skills", data, { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+  getSkillType: (token) => apiClient.get("/skills", { headers: { token } }),
 };

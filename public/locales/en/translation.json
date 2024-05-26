@@ -1,4 +1,12 @@
 {
-    "title-section1": "Webapp for project management and task tracking.",
-    "subtitle-section1": "FicaLab is a platform for managing your projects and tasks. It allows you to create projects, add tasks to them, and assign tasks to your team members. You can also track the progress of your projects and tasks."
+  "title-section1": "Webapp for project management and task tracking.",
+  "subtitle-section1": "FicaLab is a platform for managing your projects and tasks. It allows you to create projects, add tasks to them, and assign tasks to your team members. You can also track the progress of your projects and tasks.",
+
+  "create": "Create",
+
+  "my-skills": "My skills",
+  "there-you-can-add-and-remove-your-skills": "There you can add and remove your skills",
+  "new_skill_detected": "New skill detected",
+  "do_you_want_to_create_a_new_skill?": "Do you want to create a new skill?",
+  "choose_skill_type": "Choose skill type"
 }
