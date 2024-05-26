@@ -82,5 +82,14 @@ export const Api = {
       .post("/skills", data, { headers: { token } })
       .then(handleResponse)
       .catch(handleError),
-  getSkillType: (token) => apiClient.get("/skills", { headers: { token } }),
+  removeSkill: (token, data) =>
+    apiClient.put("/skills", data, { headers: { token } }),
+  getSkillType: (token) =>
+    apiClient.get("/skills/types", { headers: { token } }),
+  getAllSkills: (token) => apiClient.get("/skills", { headers: { token } }),
+  getUserSkills: (token, email) =>
+    apiClient.get("/skills", {
+      headers: { token },
+      params: { userEmail: email },
+    }),
 };
