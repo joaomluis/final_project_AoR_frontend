@@ -40,8 +40,8 @@ function Example(args) {
               height: 40,
               width: 40,
             }}
-          />
-          {" "}FicaLab
+          />{" "}
+          FicaLab
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

@@ -1,26 +1,31 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Input,
-  Label,
-  Form,
-  FormGroup,
-} from "reactstrap";
-
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from "reactstrap";
+import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
+import { terror, tsuccess } from "../toasts/message-toasts.jsx";
 
-const RecoverPassword = forwardRef((props, ref, args) => {
+//const RecoverPassword = forwardRef((props, ref, args) => {
+
+const RecoverPassword = forwardRef((props, ref) => {
   const [modal, setModal] = useState(false);
+  const [email, setEmail] = useState("");
 
   const toggle = () => setModal(!modal);
 
   const handleShow = () => {
     setModal(true);
   };
+
+  async function handleRedifinePw() {
+    try {
+      const response = await Api.forgotPassword(email);
+      toggle();
+      setEmail("");
+      tsuccess(response.data);
+    } catch (error) {
+      terror(error.message);
+    }
+  }
 
   // Expose the handleShow function to parent components
   useImperativeHandle(ref, () => ({
@@ -29,27 +34,23 @@ const RecoverPassword = forwardRef((props, ref, args) => {
 
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle} {...args} centered="true">
-        <ModalHeader
-          toggle={toggle}
-          style={{ color: "var(--whitey)", fontWeight: "bold" }}
-          className="modal-style"
-        >
+      <Modal isOpen={modal} toggle={toggle} {...props} centered={true}>
+        <ModalHeader toggle={toggle} style={{ color: "var(--whitey)", fontWeight: "bold" }} className="modal-style">
           Recover Password{" "}
         </ModalHeader>
         <ModalBody className="modal-style">
-          <p style={{ color: "var(--whitey)", textAlign:"center"}}>
-            Enter your email and we will send you a link to reset your password
-          </p>
+          <p style={{ color: "var(--whitey)", textAlign: "center" }}>Enter your email and we will send you a link to reset your password</p>
           <Form>
             <FormGroup floating>
-              <Input name="email" placeholder="Email" type="email" required />
+              <Input onChange={(e) => setEmail(e.target.value)} value={email} name="email" placeholder="Email" type="email" required />
               <Label for="exampleEmail">Email</Label>
             </FormGroup>
           </Form>
         </ModalBody>
         <ModalFooter className="modal-style">
-          <Button className="button-style1">Redifine Password</Button>{" "}
+          <Button className="button-style1" onClick={handleRedifinePw}>
+            Redifine Password
+          </Button>{" "}
         </ModalFooter>
       </Modal>
     </div>

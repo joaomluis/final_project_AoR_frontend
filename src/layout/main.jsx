@@ -6,9 +6,7 @@ import routes from "../routes.js";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 
 function Main() {
-
   const getRoutes = (routes) => {
-    
     return routes.map((prop, key) => {
       if (prop.layout === "/main") {
         return (
@@ -23,13 +21,10 @@ function Main() {
   return (
     <div className="wrapper">
       <MainNavBar />
-      
-      <div className="main-panel" style={{ marginTop:"65px", display: 'flex'}}>
-        <Sidebar/>
+      <div className="main-panel">
+        <Sidebar />
         <div className="main-container">
-          <Routes>
-            {getRoutes(routes)}
-          </Routes>
+          <Routes>{getRoutes(routes)}</Routes>
         </div>
       </div>
       <Footer />

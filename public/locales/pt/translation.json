@@ -1,3 +1,12 @@
 {
-    "title-section1": "Aplicação para gestão de projetos."
+  "title-section1": "Aplicação para gestão de projetos.",
+  "subtitle-section1": "FicaLab é uma plataforma para gerenciar seus projetos e tarefas. Ela permite que crie projetos, adicione tarefas ao projeto e aos membros da sua equipe. Também pode acompanhar o progresso de seus projetos e tarefas.",
+
+  "create": "Criar",
+
+  "my-skills": "Minhas habilidades",
+  "there-you-can-add-and-remove-your-skills": "Aqui você pode adicionar e remover suas habilidades.",
+  "new_skill_detected": "Nova habilidade detectada",
+  "do_you_want_to_create_a_new_skill?": "Quer criar uma nova habilidade?",
+  "choose_skill_type": "Escolha o tipo de habilidade"
 }

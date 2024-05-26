@@ -1,3 +1,5 @@
+//TODO : Retirar o codigo redundante
+//DONE: Alterei os botões Sign Up / Sign In e o Forgot Password
 import {
   Card,
   Button,
@@ -12,10 +14,10 @@ import {
 } from "reactstrap";
 import { useState, useRef } from "react";
 import PasswordStrengthBar from "react-password-strength-bar";
-import { useTranslation } from 'react-i18next';
-
+import { useTranslation } from "react-i18next";
 import RecoverPassword from "../modals/recover-password.jsx";
-
+import { terror, tsuccess } from "../toasts/message-toasts";
+import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
 
 function SignUp() {
@@ -26,6 +28,40 @@ function SignUp() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const registerUser = {
+    email,
+    password,
+    confirmPassword,
+  };
+
+  async function handleSignIn() {
+    try {
+      const response = await Api.signin(email, password);
+      if (response.data) {
+        tsuccess("Login successful!");
+        //TODO redirect to home page
+      }
+    } catch (error) {
+      terror(error.message);
+    }
+  }
+
+  async function handleSignUp() {
+    console.log(registerUser);
+    if (password !== confirmPassword) {
+      terror("Passwords do not match");
+      return;
+    }
+    try {
+      const response = await Api.signup(registerUser);
+      //TODO redirect to login page
+      tsuccess(response.data);
+    } catch (error) {
+      terror(error.message);
+    }
+  }
 
   return (
     <>
@@ -56,6 +92,8 @@ function SignUp() {
               <Form>
                 <FormGroup floating>
                   <Input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     name="email"
                     placeholder="Email"
                     type="email"
@@ -79,12 +117,13 @@ function SignUp() {
                 </FormGroup>
                 <FormGroup floating>
                   <Input
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     name="password"
                     placeholder="Password"
                     type="password"
                     required
                   />
-
                   <Label>Confirm Password</Label>
                 </FormGroup>
                 <Button
@@ -95,6 +134,7 @@ function SignUp() {
                     width: "100%",
                     border: "none",
                   }}
+                  onClick={handleSignUp}
                 >
                   Create Account
                 </Button>
@@ -103,12 +143,13 @@ function SignUp() {
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                 Already have an account?{" "}
-                <a
+                <button
+                  className="button-link"
                   onClick={() => setIsSignUp(false)}
                   style={{ cursor: "pointer", color: "#FFD700" }}
                 >
                   Sign In
-                </a>
+                </button>
               </p>
             </CardFooter>
           </>
@@ -150,14 +191,15 @@ function SignUp() {
 
                   <Label for="examplePassword">Password</Label>
                 </FormGroup>
-                
-                  <a
-                    style={{ color: "var(--whitey)", fontWeight: "bold" }}
-                    onClick={() => recoverPasswordRef.current.open()}
-                  >
-                    Forgot password?
-                  </a>
-                
+
+                <span
+                  className="button-link"
+                  style={{ color: "var(--whitey)", fontWeight: "bold" }}
+                  onClick={() => recoverPasswordRef.current.open()}
+                >
+                  Forgot password?
+                </span>
+
                 <Button
                   style={{
                     backgroundColor: "var(--secondary-color)",
@@ -166,6 +208,7 @@ function SignUp() {
                     width: "100%",
                     border: "none",
                   }}
+                  onClick={handleSignIn}
                 >
                   Sign In
                 </Button>
@@ -174,12 +217,13 @@ function SignUp() {
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                 Dont have an account yet?{" "}
-                <a
+                <button
+                  className="button-link"
                   onClick={() => setIsSignUp(true)}
                   style={{ cursor: "pointer", color: "#FFD700" }}
                 >
                   Sign Up
-                </a>
+                </button>
               </p>
             </CardFooter>
           </>
