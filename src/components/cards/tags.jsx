@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 
 import CreatableSelect from "react-select/creatable";
 const TagCard = (props) => {
@@ -6,17 +6,28 @@ const TagCard = (props) => {
    * Method to handle the change of the selected option mappping the value to the id and the label to the name
    * @param {*} selectedOption
    */
-  const options = props.options.map((option) => ({
-    value: option.id,
-    label: option.name,
-    type: option.type,
-  }));
 
-  const choices = props.choices.map((choice) => ({
-    value: choice.id,
-    label: choice.name,
-    type: choice.type,
-  }));
+  const options = useMemo(
+    () =>
+      props.options.map((option) => ({
+        value: option.id,
+        label: option.name,
+        type: option.type,
+      })),
+    [props.options]
+  );
+
+  const choices = useMemo(
+    () =>
+      props.choices.map((choice) => ({
+        value: choice.id,
+        label: choice.name,
+        type: choice.type,
+      })),
+    [props.choices]
+  );
+
+  console.log("Em tag:" + choices.length + " e " + options.length);
 
   /**
    * Method to handle the change of the selected option
@@ -56,10 +67,10 @@ const TagCard = (props) => {
       ...styles,
       color: "green", // change dropdown indicator color to green
     }),
-    clearIndicator: (styles) => ({
-      ...styles,
-      color: "red", // change clear indicator color to purple
-    }),
+    // clearIndicator: (styles) => ({
+    //   ...styles,
+    //   color: "blue", // change clear indicator color to purple
+    // }),
   };
 
   /**
@@ -80,9 +91,9 @@ const TagCard = (props) => {
    * @param {*} inputValue
    * @param {*} actionMeta
    */
-  const handleInputChange = (inputValue, actionMeta) => {
-    console.log("handleInputChange", inputValue);
-  };
+  // const handleInputChange = (inputValue, actionMeta) => {
+  //   console.log("handleInputChange", inputValue);
+  // };
 
   /**
    * Method to handle the creation of a new option
@@ -96,9 +107,10 @@ const TagCard = (props) => {
   return (
     <CreatableSelect
       options={options}
-      defaultValue={choices}
+      // defaultValue={choices}
+      value={choices}
       onChange={handleChange}
-      onInputChange={handleInputChange}
+      // onInputChange={handleInputChange}
       onCreateOption={handleCreate}
       isMulti
       styles={colorStyles}
