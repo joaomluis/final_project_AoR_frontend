@@ -3,8 +3,9 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { t } from "i18next";
 
 function ModalDD(props) {
-  const [selectedSkillType, setSelectedSkillType] = useState("");
-
+  const [selectedSkillType, setSelectedSkillType] = useState(
+    props.skillTypes && props.skillTypes.length > 0 ? props.skillTypes[0] : ""
+  );
   const handleSkillTypeChange = (event) => {
     setSelectedSkillType(event.target.value);
   };
@@ -15,7 +16,7 @@ function ModalDD(props) {
 
   return (
     <div>
-      <Modal isOpen={props.isOpen} toggle={props.onClose}>
+      <Modal isOpen={props.isOpen} toggle={props.onClosed}>
         <ModalHeader toggle={props.onClose}>
           {t("new_skill_detected")}:{" "}
           <strong>
