@@ -23,7 +23,7 @@ function SkillCard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newInterestName, setNewInterestName] = useState("");
   // const token = useUserStore((state) => state.token);
-  const token = "30e6d24c-ee2d-43a6-987f-78ea6813eeed";
+  const token = "123fd8cf-5faa-410a-8d0b-8f2708c37ba1";
   const interests = useUserStore((state) => state.interests);
   const allInterests = useUserStore((state) => state.allInterests);
   //   const skillTypes = useUserStore((state) => state.skillTypes);
@@ -92,7 +92,7 @@ function SkillCard() {
    */
   async function addInterestToUser(skill) {
     try {
-      const response = await Api.addSkill(token, skill);
+      const response = await Api.addInterest(token, skill);
       addInterest(response.data);
       console.log(response.data);
     } catch (error) {
@@ -120,7 +120,9 @@ function SkillCard() {
    * @param {*} skill
    */
   async function handleAddInterestToUser(skill) {
+    console.log("skill", skill);
     const skillIdName = convertOptionToSkill(skill);
+    console.log("skillIdName", skillIdName);
     addInterestToUser(skillIdName);
   }
 
@@ -187,6 +189,7 @@ function SkillCard() {
         </Card>
       </Col>
       <ModalDD
+        header={t("new_interest_detected")}
         title={t("do_you_want_to_create_a_new_interest?")}
         handleCreateNew={handleCreateNewInterest}
         isOpen={isModalOpen}
