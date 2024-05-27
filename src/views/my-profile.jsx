@@ -23,7 +23,7 @@ import { useTranslation } from "react-i18next";
 import "../assets/css/general-css.css";
 import userImageUrl from "../assets/img/user.jpg";
 
-function LandingPageContent() {
+function MyProfile() {
   const { t } = useTranslation();
 
   return (
@@ -152,9 +152,104 @@ function LandingPageContent() {
           </Col>
           <Col md="6" className="mt-5"></Col>
         </Row>
+        <Row>
+          <Col md="6" className="mt-5">
+            <Card>
+              <CardBody>
+                <Label for="aboutYou" style={{ fontWeight: "bold" }}>
+                  About you:
+                </Label>
+                <Input
+                  type="textarea"
+                  id="aboutYou"
+                  placeholder="Tell us more about you..."
+                  rows="5"
+                  style={{ resize: "none" }}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="6" className="mt-5"></Col>
+        </Row>
+        <Row>
+          <Col md="6" className="mt-5">
+            <Card>
+              <CardBody>
+                <Label for="aboutYou" style={{ fontWeight: "bold" }}>
+                  About you:
+                </Label>
+                <Input
+                  type="textarea"
+                  id="aboutYou"
+                  placeholder="Tell us more about you..."
+                  rows="5"
+                  style={{ resize: "none" }}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="6" className="mt-5"></Col>
+        </Row>
+        <Row>
+          <Col md="6" className="mt-5">
+            <Card>
+              <CardBody>
+                <Label for="aboutYou" style={{ fontWeight: "bold" }}>
+                  About you:
+                </Label>
+                <Input
+                  type="textarea"
+                  id="aboutYou"
+                  placeholder="Tell us more about you..."
+                  rows="5"
+                  style={{ resize: "none" }}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="6" className="mt-5"></Col>
+        </Row>
+        <Row>
+          <Col md="6" className="mt-5">
+            <Card>
+              <CardBody>
+                <Label for="aboutYou" style={{ fontWeight: "bold" }}>
+                  About you:
+                </Label>
+                <Input
+                  type="textarea"
+                  id="aboutYou"
+                  placeholder="Tell us more about you..."
+                  rows="5"
+                  style={{ resize: "none" }}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="6" className="mt-5"></Col>
+        </Row>
+        <Row>
+          <Col md="6" className="mt-5">
+            <Card>
+              <CardBody>
+                <Label for="aboutYou" style={{ fontWeight: "bold" }}>
+                  About you:
+                </Label>
+                <Input
+                  type="textarea"
+                  id="aboutYou"
+                  placeholder="Tell us more about you..."
+                  rows="5"
+                  style={{ resize: "none" }}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="6" className="mt-5"></Col>
+        </Row>
       </Container>
     </div>
   );
 }
 
-export default LandingPageContent;
+export default MyProfile;

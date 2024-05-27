@@ -24,15 +24,21 @@
 
   .section4 {
     background-color: var(--whitey);
-    height: 100vh;
     
   }
 
 .main-container {
   background-color: var(--primary-color);
   min-height: 100vh;
+  max-height: 100vh;
+  overflow: auto;
   width: 100vw;
   color: var(--whitey);
+}
+
+.main-panel {
+  height: calc(100vh - 65px);
+  overflow: hidden;
 }
 
 .main-panel {

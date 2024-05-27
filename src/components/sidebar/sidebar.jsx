@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu} from "react-pro-sidebar";
 import { FaHome, FaUsers, FaTools, FaClipboard } from 'react-icons/fa';
 
-import HomeIcon from "../../assets/icons/home-icon.png";
 
 function SideNavbar() {
   const [collapsed, setCollapsed] = useState(false);
@@ -24,7 +23,7 @@ function SideNavbar() {
     <Sidebar
       collapsed={collapsed}
       backgroundColor="#DBE2EF"
-      style={{ height: "100vh"}}
+      style={{ minHeight: "100vh", maxHeight:"100vh", overflow: 'auto'}}
     >
       <Menu>
       <MenuItem icon={<FaHome />}> Home </MenuItem>

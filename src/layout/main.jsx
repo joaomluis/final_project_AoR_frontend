@@ -25,9 +25,11 @@ function Main() {
         <Sidebar />
         <div className="main-container">
           <Routes>{getRoutes(routes)}</Routes>
+          <Footer />
         </div>
+        
       </div>
-      <Footer />
+      
     </div>
   );
 }
