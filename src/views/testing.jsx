@@ -11,12 +11,10 @@ import {
   CardImg,
   CardFooter,
 } from "reactstrap";
-import { Api } from "../api";
 import { useTranslation } from "react-i18next";
 import "../assets/css/general-css.css";
 import SkillCard from "../components/cards/card-skill";
-import { useUserStore } from "../components/stores/useUserStore";
-import { useEffect } from "react";
+import InterestCard from "../components/cards/card-interest";
 function Testing() {
   const { t } = useTranslation();
 
@@ -24,7 +22,12 @@ function Testing() {
     <div className="testing-section1" style={{ height: "100vh" }}>
       <Container>
         <Row>
-          <SkillCard />
+          <Col md="6">
+            <SkillCard />
+          </Col>
+          <Col>
+            <InterestCard />
+          </Col>
         </Row>
       </Container>
     </div>

@@ -11,7 +11,7 @@ function ModalDD(props) {
   };
 
   const handleClick = () => {
-    props.handleCreateNewSkill(selectedSkillType);
+    props.handleCreateNew(selectedSkillType);
   };
 
   return (
@@ -24,8 +24,9 @@ function ModalDD(props) {
           </strong>
         </ModalHeader>
         <ModalBody>
-          <div>{t("do_you_want_to_create_a_new_skill?")}</div>
-          <div>{t("choose_skill_type")}</div>
+          <span>{props.title}</span>
+          <br />
+          <span>{props.subtitle} </span>
           {props.skillTypes ? (
             <select onChange={handleSkillTypeChange}>
               {props.skillTypes.map((value, index) => (

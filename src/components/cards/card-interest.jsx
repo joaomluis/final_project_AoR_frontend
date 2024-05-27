@@ -21,44 +21,28 @@ import { useUserStore } from "../stores/useUserStore";
  */
 function SkillCard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newSkillName, setNewSkillName] = useState("");
+  const [newInterestName, setNewInterestName] = useState("");
   // const token = useUserStore((state) => state.token);
   const token = "30e6d24c-ee2d-43a6-987f-78ea6813eeed";
-  const skills = useUserStore((state) => state.skills);
-  const allSkills = useUserStore((state) => state.allSkills);
-  const skillTypes = useUserStore((state) => state.skillTypes);
-  const updateAllSkills = useUserStore((state) => state.updateAllSkills);
-  const updateSkills = useUserStore((state) => state.updateSkills);
-  const updateSkillTypes = useUserStore((state) => state.updateSkillTypes);
+  const interests = useUserStore((state) => state.interests);
+  const allInterests = useUserStore((state) => state.allInterests);
+  //   const skillTypes = useUserStore((state) => state.skillTypes);
+  const updateAllInterests = useUserStore((state) => state.updateAllInterests);
+  const updateInterests = useUserStore((state) => state.updateInterests);
+  //   const updateSkillTypes = useUserStore((state) => state.updateSkillTypes);
   const email = useUserStore((state) => state.email);
-  const addSkill = useUserStore((state) => state.addSkill);
-  const addSkillToAll = useUserStore((state) => state.addSkillToAll);
-  const removeSkill = useUserStore((state) => state.removeSkill);
-
-  // const handleModalToggle = () => {
-  //   setIsModalOpen(!isModalOpen);
-  // };
-
-  /**
-   * Method to get all skill types from the API
-   */
-  async function handleGetAllSkillTypes() {
-    try {
-      const response = await Api.getSkillType(token);
-      updateSkillTypes(response.data);
-      // setIsModalOpen(true);
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+  const addInterest = useUserStore((state) => state.addInterest);
+  const addInterestToAll = useUserStore((state) => state.addInterestToAll);
+  const removeInterest = useUserStore((state) => state.removeInterest);
 
   /**
    * Method to get user skills from the API
    */
-  async function handleGetSkills() {
+  async function handleGetInterests() {
     try {
-      const response = await Api.getUserSkills(token, email);
-      updateSkills(response.data);
+      const response = await Api.getUserInterests(token, email);
+      updateInterests(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -67,37 +51,30 @@ function SkillCard() {
   /**
    * Method to get all skills from the API
    */
-  async function handleGetAllSkills() {
+  async function handleGetAllInterests() {
     try {
-      const response = await Api.getAllSkills(token);
-      updateAllSkills(response.data);
+      const response = await Api.getAllInterests(token);
+      updateAllInterests(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error.message);
     }
   }
 
   /**
-   * Const to be called when a new skill is created
-   * @param {*} newSkill
-   */
-  const onCreateNewSkill = (newSkill) => {
-    setNewSkillName(newSkill);
-  };
-
-  /**
    * Method to handle the creation of a new skill, calling the post method from the API
    * @param {*} skillType
    */
-  async function handleCreateNewSkill(skillType) {
+  async function handleCreateNewInterest() {
     let skill = {
-      name: newSkillName,
-      type: skillType,
+      name: newInterestName,
     };
     try {
-      const response = await Api.addSkill(token, skill);
+      const response = await Api.addInterest(token, skill);
       skill = response.data;
-      addSkillToAll(skill);
-      addSkill(skill);
+      console.log("a skill de resposta:" + skill);
+      addInterestToAll(skill);
+      addInterest(skill);
 
       setIsModalOpen(false);
     } catch (error) {
@@ -105,14 +82,19 @@ function SkillCard() {
     }
   }
 
+  const onCreateNewInterest = (newSkill) => {
+    setNewInterestName(newSkill);
+  };
+
   /**
    * Method to add a skill to the user, calling the post method from the API
    * @param {*} skill
    */
-  async function addSkillToUser(skill) {
+  async function addInterestToUser(skill) {
     try {
       const response = await Api.addSkill(token, skill);
-      addSkill(response.data);
+      addInterest(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -122,10 +104,12 @@ function SkillCard() {
    * Method to remove a skill from the user, calling the delete method from the API
    * @param {*} skill
    */
-  async function removeSkillFromUser(skill) {
+  async function removeInterestFromUser(skill) {
+    const { type, ...skillWithoutType } = skill;
     try {
-      const response = await Api.removeSkill(token, skill);
-      removeSkill(skill);
+      const response = await Api.removeInterest(token, skillWithoutType);
+      console.log(response.data);
+      removeInterest(skill);
     } catch (error) {
       console.log(error.message);
     }
@@ -135,18 +119,18 @@ function SkillCard() {
    * Method to handle the add of a skill to the user
    * @param {*} skill
    */
-  async function handleAddSkillToUser(skill) {
+  async function handleAddInterestToUser(skill) {
     const skillIdName = convertOptionToSkill(skill);
-    addSkillToUser(skillIdName);
+    addInterestToUser(skillIdName);
   }
 
   /**
    * Method to handle the removal of a skill from the user
    * @param {*} skill
    */
-  async function handleRemoveSkillFromUser(skill) {
+  async function handleRemoveInterestFromUser(skill) {
     const skillIdName = convertOptionToSkill(skill);
-    removeSkillFromUser(skillIdName);
+    removeInterestFromUser(skillIdName);
   }
 
   /**
@@ -167,17 +151,16 @@ function SkillCard() {
    * useEffect to get all skills from the API just once
    */
   useEffect(() => {
-    handleGetAllSkillTypes();
-    handleGetAllSkills();
-    handleGetSkills();
+    handleGetAllInterests();
+    handleGetInterests();
   }, []);
 
   /**
    * Method to open the modal when a new skill is detected
    * @param {*} skillName
    */
-  const handleOpenModal = (skillName) => {
-    setNewSkillName(skillName);
+  const handleOpenModal = (interestName) => {
+    setNewInterestName(interestName);
     setIsModalOpen(true);
   };
 
@@ -186,29 +169,30 @@ function SkillCard() {
       <Col md="12" className="mt-5">
         <Card>
           <CardHeader>
-            <CardTitle tag="h4">{t("my-skills")}</CardTitle>
+            <CardTitle tag="h4">{t("my-interests")}</CardTitle>
           </CardHeader>
           <CardBody>
-            <CardText>{t("there-you-can-add-and-remove-your-skills")}</CardText>
+            <CardText>
+              {t("there-you-can-add-and-remove-your-interests")}
+            </CardText>
             <Tag
               handleModalToggle={handleOpenModal}
-              onCreate={onCreateNewSkill}
-              options={allSkills}
-              choices={skills}
-              onAdd={handleAddSkillToUser}
-              onRemove={handleRemoveSkillFromUser}
+              onCreate={onCreateNewInterest}
+              options={allInterests}
+              choices={interests}
+              onAdd={handleAddInterestToUser}
+              onRemove={handleRemoveInterestFromUser}
             />
           </CardBody>
         </Card>
       </Col>
       <ModalDD
-        title={t("do_you_want_to_create_a_new_skill?")}
-        subtitle={t("choose_skill_type")}
-        handleCreateNew={handleCreateNewSkill}
+        title={t("do_you_want_to_create_a_new_interest?")}
+        handleCreateNew={handleCreateNewInterest}
         isOpen={isModalOpen}
         // onClosed={handleModalToggle}
-        skillTypes={skillTypes}
-        newSkillName={newSkillName}
+        // skillTypes={skillTypes}
+        newSkillName={newInterestName}
         onClose={() => setIsModalOpen(false)}
       />
     </>
