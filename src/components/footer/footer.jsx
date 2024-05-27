@@ -13,7 +13,7 @@ const Footer = () => {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
-    window.scrollTo(0, 0);
+    document.getElementById('main-container').scrollTop = 0;
   };
 
   return (

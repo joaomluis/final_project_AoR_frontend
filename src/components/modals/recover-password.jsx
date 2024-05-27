@@ -34,7 +34,7 @@ const RecoverPassword = forwardRef((props, ref) => {
 
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle} {...props} centered={true}>
+      <Modal isOpen={modal} toggle={toggle}  centered={true}>
         <ModalHeader toggle={toggle} style={{ color: "var(--whitey)", fontWeight: "bold" }} className="modal-style">
           Recover Password{" "}
         </ModalHeader>

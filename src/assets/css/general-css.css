@@ -29,8 +29,7 @@
 
 .main-container {
   background-color: var(--primary-color);
-  min-height: 100vh;
-  max-height: 100vh;
+  height: 100%;
   overflow: auto;
   width: 100vw;
   color: var(--whitey);
@@ -39,6 +38,7 @@
 .main-panel {
   height: calc(100vh - 65px);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .main-panel {

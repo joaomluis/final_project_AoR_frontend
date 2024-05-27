@@ -23,13 +23,11 @@ function Main() {
       <MainNavBar />
       <div className="main-panel">
         <Sidebar />
-        <div className="main-container">
+        <div id="main-container" className="main-container">
           <Routes>{getRoutes(routes)}</Routes>
           <Footer />
         </div>
-        
       </div>
-      
     </div>
   );
 }
