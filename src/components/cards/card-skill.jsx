@@ -8,6 +8,7 @@ import {
   CardTitle,
   CardText,
   Col,
+  Row,
 } from "reactstrap";
 import ModalDD from "../modals/modal-dropdown";
 import { Api } from "../../api";
@@ -21,17 +22,17 @@ import { useUserStore } from "../stores/useUserStore";
 function SkillCard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newSkillName, setNewSkillName] = useState("");
-  const [newSkillType, setNewSkillType] = useState("");
+  // const token = useUserStore((state) => state.token);
+  const token = "ccaa096d-bda5-476e-a036-d65bd822cd6f";
   const skills = useUserStore((state) => state.skills);
   const allSkills = useUserStore((state) => state.allSkills);
-  // const token = useUserStore((state) => state.token);
-  const token = "63345579-aa2e-4ac8-a526-97a3cd83715c";
   const skillTypes = useUserStore((state) => state.skillTypes);
   const updateAllSkills = useUserStore((state) => state.updateAllSkills);
   const updateSkills = useUserStore((state) => state.updateSkills);
   const updateSkillTypes = useUserStore((state) => state.updateSkillTypes);
   const email = useUserStore((state) => state.email);
   const addSkill = useUserStore((state) => state.addSkill);
+  const addSkillToAll = useUserStore((state) => state.addSkillToAll);
   const removeSkill = useUserStore((state) => state.removeSkill);
 
   // const handleModalToggle = () => {
@@ -52,6 +53,9 @@ function SkillCard() {
     }
   }
 
+  /**
+   * Method to get user skills from the API
+   */
   async function handleGetSkills() {
     try {
       const response = await Api.getUserSkills(token, email);
@@ -62,6 +66,9 @@ function SkillCard() {
     }
   }
 
+  /**
+   * Method to get all skills from the API
+   */
   async function handleGetAllSkills() {
     try {
       const response = await Api.getAllSkills(token);
@@ -84,22 +91,43 @@ function SkillCard() {
    * Method to handle the creation of a new skill, calling the post method from the API
    * @param {*} skillType
    */
-  const handleCreateNewSkill = (skillType) => {
-    setNewSkillType(skillType);
-    //TODO metodo para criar nova skill no user.
-  };
-
-  async function addSkillToUser(skill) {
+  async function handleCreateNewSkill(skillType) {
+    console.log("entrou em handleCreateNewSkill");
+    let skill = {
+      name: newSkillName,
+      type: skillType,
+    };
     try {
-      console.log(skill);
       const response = await Api.addSkill(token, skill);
-      console.log(response.data);
+      skill = response.data;
+      console.log("a skill de resposta:" + skill);
+      addSkillToAll(skill);
       addSkill(skill);
+
+      setIsModalOpen(false);
     } catch (error) {
       console.log(error.message);
     }
   }
 
+  /**
+   * Method to add a skill to the user, calling the post method from the API
+   * @param {*} skill
+   */
+  async function addSkillToUser(skill) {
+    try {
+      const response = await Api.addSkill(token, skill);
+      addSkill(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  /**
+   * Method to remove a skill from the user, calling the delete method from the API
+   * @param {*} skill
+   */
   async function removeSkillFromUser(skill) {
     try {
       const response = await Api.removeSkill(token, skill);
@@ -110,13 +138,19 @@ function SkillCard() {
     }
   }
 
+  /**
+   * Method to handle the add of a skill to the user
+   * @param {*} skill
+   */
   async function handleAddSkillToUser(skill) {
-    console.log(skill);
     const skillIdName = convertOptionToSkill(skill);
-    console.log(skillIdName);
     addSkillToUser(skillIdName);
   }
 
+  /**
+   * Method to handle the removal of a skill from the user
+   * @param {*} skill
+   */
   async function handleRemoveSkillFromUser(skill) {
     const skillIdName = convertOptionToSkill(skill);
     removeSkillFromUser(skillIdName);
@@ -156,32 +190,36 @@ function SkillCard() {
 
   return (
     <>
-      <Col md="6" className="mt-5">
-        <Card>
-          <CardHeader>
-            <CardTitle tag="h4">{t("my-skills")}</CardTitle>
-          </CardHeader>
-          <CardBody>
-            <CardText>{t("there-you-can-add-and-remove-your-skills")}</CardText>
-            <Tag
-              handleModalToggle={handleOpenModal}
-              onCreate={onCreateNewSkill}
-              options={allSkills}
-              choices={skills}
-              onAdd={handleAddSkillToUser}
-              onRemove={handleRemoveSkillFromUser}
-            />
-          </CardBody>
-        </Card>
-      </Col>
-      <ModalDD
-        handleCreateNewSkill={handleCreateNewSkill}
-        isOpen={isModalOpen}
-        // onClosed={handleModalToggle}
-        skillTypes={skillTypes}
-        newSkillName={newSkillName}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <Row>
+        <Col md="6" className="mt-5">
+          <Card>
+            <CardHeader>
+              <CardTitle tag="h4">{t("my-skills")}</CardTitle>
+            </CardHeader>
+            <CardBody>
+              <CardText>
+                {t("there-you-can-add-and-remove-your-skills")}
+              </CardText>
+              <Tag
+                handleModalToggle={handleOpenModal}
+                onCreate={onCreateNewSkill}
+                options={allSkills}
+                choices={skills}
+                onAdd={handleAddSkillToUser}
+                onRemove={handleRemoveSkillFromUser}
+              />
+            </CardBody>
+          </Card>
+        </Col>
+        <ModalDD
+          handleCreateNewSkill={handleCreateNewSkill}
+          isOpen={isModalOpen}
+          // onClosed={handleModalToggle}
+          skillTypes={skillTypes}
+          newSkillName={newSkillName}
+          onClose={() => setIsModalOpen(false)}
+        />
+      </Row>
     </>
   );
 }

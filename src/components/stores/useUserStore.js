@@ -26,6 +26,8 @@ export const useUserStore = create(
       updateAllSkills: (allSkills) => set({ allSkills }), //new action
       addSkill: (skill) =>
         set((state) => ({ skills: [...state.skills, skill] })),
+      addSkillToAll: (skill) =>
+        set((state) => ({ allSkills: [...state.allSkills, skill] })),
       removeSkill: (skill) =>
         set((state) => ({
           skills: state.skills.filter((s) => s.id !== skill.id),
