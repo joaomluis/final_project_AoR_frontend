@@ -27,8 +27,6 @@ const TagCard = (props) => {
     [props.choices]
   );
 
-  console.log("Em tag:" + choices.length + " e " + options.length);
-
   /**
    * Method to handle the change of the selected option
    */
@@ -83,7 +81,6 @@ const TagCard = (props) => {
     } else if (action.action === "select-option") {
       const lastSelectedOption = selectedOption[selectedOption.length - 1];
       props.onAdd(lastSelectedOption);
-      console.log(lastSelectedOption);
     }
   };
   /**
