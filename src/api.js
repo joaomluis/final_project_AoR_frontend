@@ -105,4 +105,29 @@ export const Api = {
       })
       .then(handleResponse)
       .catch(handleError),
+
+  //INTEREST endpoints
+  addInterest: (token, data) =>
+    apiClient
+      .post("/interests", data, { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+  removeInterest: (token, data) =>
+    apiClient
+      .put("/interests", data, { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+  getAllInterests: (token) =>
+    apiClient
+      .get("/interests", { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+  getUserInterests: (token, email) =>
+    apiClient
+      .get("/interests", {
+        headers: { token },
+        params: { userEmail: email },
+      })
+      .then(handleResponse)
+      .catch(handleError),
 };
