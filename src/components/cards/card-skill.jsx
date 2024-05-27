@@ -23,7 +23,7 @@ function SkillCard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newSkillName, setNewSkillName] = useState("");
   // const token = useUserStore((state) => state.token);
-  const token = "30e6d24c-ee2d-43a6-987f-78ea6813eeed";
+  const token = "123fd8cf-5faa-410a-8d0b-8f2708c37ba1";
   const skills = useUserStore((state) => state.skills);
   const allSkills = useUserStore((state) => state.allSkills);
   const skillTypes = useUserStore((state) => state.skillTypes);
@@ -34,10 +34,6 @@ function SkillCard() {
   const addSkill = useUserStore((state) => state.addSkill);
   const addSkillToAll = useUserStore((state) => state.addSkillToAll);
   const removeSkill = useUserStore((state) => state.removeSkill);
-
-  // const handleModalToggle = () => {
-  //   setIsModalOpen(!isModalOpen);
-  // };
 
   /**
    * Method to get all skill types from the API
@@ -202,6 +198,7 @@ function SkillCard() {
         </Card>
       </Col>
       <ModalDD
+        header={t("new_skill_detected")}
         title={t("do_you_want_to_create_a_new_skill?")}
         subtitle={t("choose_skill_type")}
         handleCreateNew={handleCreateNewSkill}

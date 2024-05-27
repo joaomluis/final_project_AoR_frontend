@@ -18,7 +18,7 @@ function ModalDD(props) {
     <div>
       <Modal isOpen={props.isOpen} toggle={props.onClosed}>
         <ModalHeader toggle={props.onClose}>
-          {t("new_skill_detected")}:{" "}
+          {props.header}:{" "}
           <strong>
             <span>{props.newSkillName}</span>
           </strong>
