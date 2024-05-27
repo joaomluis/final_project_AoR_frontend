@@ -94,3 +94,13 @@
   overflow-y: auto;
   background-color: var(--greyish);
 }
+
+.vertical-line {
+  border-left: 1px solid;
+  height: 100%;
+}
+
+.col-left {
+  border-right: 2px solid #ffffff;
+  padding-right: 15px;
+}

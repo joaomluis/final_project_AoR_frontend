@@ -3,31 +3,32 @@ import {
   Col,
   Row,
   Card,
-  CardHeader,
   CardBody,
   CardTitle,
-  CardText,
-  Button,
   Input,
   CardImg,
   Label,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
 } from "reactstrap";
 import { FaUserCog } from "react-icons/fa";
+import { useRef } from "react";
 
 import { useTranslation } from "react-i18next";
+
+
 
 import "../assets/css/general-css.css";
 import userImageUrl from "../assets/img/user.jpg";
 
+import UserSettings from "../components/modals/user-settings.jsx";
+
 function MyProfile() {
   const { t } = useTranslation();
 
+  const userSettingsRef = useRef();
+
   return (
     <div className="section4">
+      <UserSettings ref={userSettingsRef} />
       <Container>
         <Row>
           <Col md="12" className=" mt-5">
@@ -36,12 +37,12 @@ function MyProfile() {
                 <Col md="12">
                   <CardBody>
                     <Row>
-                      <Col md="12">
+                      <Col className="mb-4" md="12">
                         <CardTitle tag="h4">
                           My Profile
                           <FaUserCog
                             style={{ marginLeft: "10px", cursor: "pointer" }}
-                            onClick={() => {}}
+                            onClick={() => userSettingsRef.current.open()}
                           />
                         </CardTitle>
                       </Col>
@@ -76,26 +77,31 @@ function MyProfile() {
                                 objectFit: "cover",
                                 width: "100%",
                                 height: "100%",
+                                border: "2px solid #000"
                               }}
                             />
                           </div>
                         </label>
-                        <Input
-                          style={{ maxWidth: "20vw" }}
-                          type="text"
-                          placeholder="Enter your name"
-                          onChange={(event) => {
-                            // handle the input here
-                          }}
-                        />
+                        
                       </Col>
                       <Col md="4">
                         <Row>
-                          <Label style={{ fontWeight: "bold" }}>Name</Label>
+                          <Label style={{ fontWeight: "bold" }}>First Name</Label>
                           <Input
                             id="userName"
                             type="text"
-                            placeholder="Enter your name"
+                            placeholder="Enter your first name"
+                            onChange={(event) => {
+                              // handle the input here
+                            }}
+                          />
+                        </Row>
+                        <Row>
+                          <Label style={{ fontWeight: "bold" }}>Last Name</Label>
+                          <Input
+                            id="userName"
+                            type="text"
+                            placeholder="Enter your last name"
                             onChange={(event) => {
                               // handle the input here
                             }}
@@ -133,8 +139,9 @@ function MyProfile() {
             </Card>
           </Col>
         </Row>
+        
         <Row>
-          <Col md="6" className="mt-5">
+          <Col md="6" className="mt-5 mb-5">
             <Card>
               <CardBody>
                 <Label for="aboutYou" style={{ fontWeight: "bold" }}>
@@ -152,101 +159,7 @@ function MyProfile() {
           </Col>
           <Col md="6" className="mt-5"></Col>
         </Row>
-        <Row>
-          <Col md="6" className="mt-5">
-            <Card>
-              <CardBody>
-                <Label for="aboutYou" style={{ fontWeight: "bold" }}>
-                  About you:
-                </Label>
-                <Input
-                  type="textarea"
-                  id="aboutYou"
-                  placeholder="Tell us more about you..."
-                  rows="5"
-                  style={{ resize: "none" }}
-                />
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="6" className="mt-5"></Col>
-        </Row>
-        <Row>
-          <Col md="6" className="mt-5">
-            <Card>
-              <CardBody>
-                <Label for="aboutYou" style={{ fontWeight: "bold" }}>
-                  About you:
-                </Label>
-                <Input
-                  type="textarea"
-                  id="aboutYou"
-                  placeholder="Tell us more about you..."
-                  rows="5"
-                  style={{ resize: "none" }}
-                />
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="6" className="mt-5"></Col>
-        </Row>
-        <Row>
-          <Col md="6" className="mt-5">
-            <Card>
-              <CardBody>
-                <Label for="aboutYou" style={{ fontWeight: "bold" }}>
-                  About you:
-                </Label>
-                <Input
-                  type="textarea"
-                  id="aboutYou"
-                  placeholder="Tell us more about you..."
-                  rows="5"
-                  style={{ resize: "none" }}
-                />
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="6" className="mt-5"></Col>
-        </Row>
-        <Row>
-          <Col md="6" className="mt-5">
-            <Card>
-              <CardBody>
-                <Label for="aboutYou" style={{ fontWeight: "bold" }}>
-                  About you:
-                </Label>
-                <Input
-                  type="textarea"
-                  id="aboutYou"
-                  placeholder="Tell us more about you..."
-                  rows="5"
-                  style={{ resize: "none" }}
-                />
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="6" className="mt-5"></Col>
-        </Row>
-        <Row>
-          <Col md="6" className="mt-5">
-            <Card>
-              <CardBody>
-                <Label for="aboutYou" style={{ fontWeight: "bold" }}>
-                  About you:
-                </Label>
-                <Input
-                  type="textarea"
-                  id="aboutYou"
-                  placeholder="Tell us more about you..."
-                  rows="5"
-                  style={{ resize: "none" }}
-                />
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="6" className="mt-5"></Col>
-        </Row>
+        
       </Container>
     </div>
   );
