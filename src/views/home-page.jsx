@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 
 import "../assets/css/general-css.css";
 import userImageUrl from "../assets/img/user.jpg";
+import ProjectCard from "../components/Project_cards/project-cards.jsx";
 
 function HomePage() {
   const { t } = useTranslation();
@@ -40,7 +41,9 @@ function HomePage() {
                       </Col>
                     </Row>
                     <Row>
-                        
+                      <Col md="4">
+                        <ProjectCard />
+                      </Col>
                     </Row>
                   </CardBody>
                 </Col>
