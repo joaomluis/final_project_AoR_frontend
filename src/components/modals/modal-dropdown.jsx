@@ -4,7 +4,7 @@ import { t } from "i18next";
 
 function ModalDD(props) {
   const [selectedSkillType, setSelectedSkillType] = useState(
-    props.skillTypes && props.skillTypes.length > 0 ? props.skillTypes[0] : ""
+    props.types && props.types.length > 0 ? props.types[0] : ""
   );
   const handleSkillTypeChange = (event) => {
     setSelectedSkillType(event.target.value);
@@ -18,7 +18,7 @@ function ModalDD(props) {
     <div>
       <Modal isOpen={props.isOpen} toggle={props.onClosed}>
         <ModalHeader toggle={props.onClose}>
-          {props.header}:{" "}
+          {props.header}: <strong>{props.newProductName}</strong>
           <strong>
             <span>{props.newSkillName}</span>
           </strong>
@@ -27,9 +27,9 @@ function ModalDD(props) {
           <span>{props.title}</span>
           <br />
           <span>{props.subtitle} </span>
-          {props.skillTypes ? (
+          {props.types ? (
             <select onChange={handleSkillTypeChange}>
-              {props.skillTypes.map((value, index) => (
+              {props.types.map((value, index) => (
                 <option key={index} value={value}>
                   {value}
                 </option>
