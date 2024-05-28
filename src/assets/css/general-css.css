@@ -24,6 +24,7 @@
 
   .section4 {
     background-color: var(--whitey);
+    min-height: 820px;
     
   }
 
@@ -153,3 +154,7 @@
   justify-content: center;
 }
 
+.custom-link {
+  text-decoration: none; 
+  color: inherit; 
+}
