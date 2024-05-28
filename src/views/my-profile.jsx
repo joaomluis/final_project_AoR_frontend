@@ -10,21 +10,33 @@ import {
   Label,
 } from "reactstrap";
 import { FaUserCog } from "react-icons/fa";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { useTranslation } from "react-i18next";
-
-
 
 import "../assets/css/general-css.css";
 import userImageUrl from "../assets/img/user.jpg";
 
 import UserSettings from "../components/modals/user-settings.jsx";
 
+import { Api } from "../api";
+import { tsuccess, terror } from "../components/toasts/message-toasts.jsx";
 function MyProfile() {
   const { t } = useTranslation();
-
+  const token = "12724a56-320a-4c68-b43b-8522f5cb5785";
   const userSettingsRef = useRef();
+
+  async function handleFileChange(event) {
+    const file = event.target.files[0];
+    const filename = file.name;
+    console.log(file.name);
+    try {
+      const response = await Api.uploadImage(token, file, filename);
+      tsuccess(response.data);
+    } catch (error) {
+      terror(error.message);
+    }
+  }
 
   return (
     <div className="section4">
@@ -53,10 +65,8 @@ function MyProfile() {
                           type="file"
                           id="userImage"
                           style={{ display: "none" }}
-                          onChange={(event) => {
-                            const file = event.target.files[0];
-                            // handle the file here
-                          }}
+                          onChange={handleFileChange}
+                          accept="image/*"
                         />
                         <label htmlFor="userImage">
                           <div
@@ -77,16 +87,17 @@ function MyProfile() {
                                 objectFit: "cover",
                                 width: "100%",
                                 height: "100%",
-                                border: "2px solid #000"
+                                border: "2px solid #000",
                               }}
                             />
                           </div>
                         </label>
-                        
                       </Col>
                       <Col md="4">
                         <Row>
-                          <Label style={{ fontWeight: "bold" }}>First Name</Label>
+                          <Label style={{ fontWeight: "bold" }}>
+                            First Name
+                          </Label>
                           <Input
                             id="userName"
                             type="text"
@@ -97,7 +108,9 @@ function MyProfile() {
                           />
                         </Row>
                         <Row>
-                          <Label style={{ fontWeight: "bold" }}>Last Name</Label>
+                          <Label style={{ fontWeight: "bold" }}>
+                            Last Name
+                          </Label>
                           <Input
                             id="userName"
                             type="text"
@@ -128,7 +141,6 @@ function MyProfile() {
                             <option value="John">Coimbra</option>
                             <option value="Jane">Lisboa</option>
                             <option value="Bob">Porto</option>
-                            
                           </Input>
                         </Row>
                       </Col>
@@ -139,7 +151,7 @@ function MyProfile() {
             </Card>
           </Col>
         </Row>
-        
+
         <Row>
           <Col md="6" className="mt-5 mb-5">
             <Card>
@@ -159,7 +171,6 @@ function MyProfile() {
           </Col>
           <Col md="6" className="mt-5"></Col>
         </Row>
-        
       </Container>
     </div>
   );

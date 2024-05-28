@@ -59,13 +59,9 @@ export const Api = {
       .post("/users/confirm-account", data, { headers: { token: token } })
       .then(handleResponse)
       .catch(handleError),
-  changePassword: (password, confirmPassword, token) =>
+  changePassword: (token, data) =>
     apiClient
-      .post(
-        `/users/change-password`,
-        { password, confirmPassword },
-        { headers: { token: token } }
-      )
+      .post(`/users/change-password`, data, { headers: { token: token } })
       .then(handleResponse)
       .catch(handleError),
 
@@ -130,4 +126,24 @@ export const Api = {
       })
       .then(handleResponse)
       .catch(handleError),
+
+  //IMAGE endpoints
+  uploadImage: (token, file, filename) => {
+    // Criar um Blob para enviar como binário
+    const formData = new FormData();
+    formData.append("file", file, filename);
+
+    // Extrair o Blob do FormData
+    const imageData = formData.get("file");
+    return apiClient
+      .post("/images/user", imageData, {
+        headers: {
+          "Content-Type": file.type,
+          token: token,
+          filename: filename,
+        },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
 };
