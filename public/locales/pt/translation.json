@@ -6,12 +6,12 @@
 
   "my-skills": "Minhas habilidades",
   "there-you-can-add-and-remove-your-skills": "Aqui você pode adicionar e remover suas habilidades.",
-  "new_skill_detected": "Nova habilidade detectada",
+  "new_skill": "Nova habilidade detectada",
   "do_you_want_to_create_a_new_skill?": "Quer criar uma nova habilidade?",
   "choose_skill_type": "Escolha o tipo de habilidade: ",
 
   "my-interests": "Meus interesses",
   "there-you-can-add-and-remove-your-interests": "Aqui pode adicionar e remover seus interesses.",
   "do_you_want_to_create_a_new_interest?": "Quer criar um novo interesse?",
-  "new_skill_detected": "Novo interesse detectado"
+  "new_interest": "Novo interesse detectado"
 }
