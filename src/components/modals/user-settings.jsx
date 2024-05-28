@@ -21,6 +21,7 @@ const UserSettings = forwardRef((props, ref) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [state, setState] = useState(false);
 
   const toggle = () => setModal(!modal);
 
@@ -80,17 +81,43 @@ const UserSettings = forwardRef((props, ref) => {
                   />
                   <Label>Confirm Password</Label>
                 </FormGroup>
+                <Button color="light" className="button-style1 mt-3 w-100">
+                  Change Password
+                </Button>
               </Form>
             </Col>
-            <div className="vertical-line"></div>
-            <Col md={6}>
-              <Form>{/* Your second form group goes here */}</Form>
+
+            <Col md={6} className="d-flex flex-column justify-content-center">
+              <Form>
+                <FormGroup switch className="custom-form-group">
+                  <Input
+                    type="switch"
+                    className="custom-switch"
+                    checked={state}
+                    onClick={() => {
+                      setState(!state);
+                    }}
+                  />
+                  <Label check className="label-color">
+                    Change your profile visibility
+                  </Label>
+                </FormGroup>
+                <hr className="custom-hr" />
+                <div className="center-label">
+                  <Label className="label-color">
+                    Your profile is currently:{" "}
+                    {state ? (
+                      <span className="public">Public</span>
+                    ) : (
+                      <span className="private">Private</span>
+                    )}
+                  </Label>
+                </div>
+              </Form>
             </Col>
           </Row>
         </ModalBody>
-        <ModalFooter className="modal-style">
-          <Button className="button-style1">Redifine Password</Button>{" "}
-        </ModalFooter>
+        <ModalFooter className="modal-style"></ModalFooter>
       </Modal>
     </div>
   );
