@@ -10,7 +10,7 @@ import {
   Label,
 } from "reactstrap";
 import { FaUserCog } from "react-icons/fa";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
@@ -23,16 +23,27 @@ import { Api } from "../api";
 import { tsuccess, terror } from "../components/toasts/message-toasts.jsx";
 function MyProfile() {
   const { t } = useTranslation();
-  const token = "12724a56-320a-4c68-b43b-8522f5cb5785";
+  const token = "28bdd334-468c-4167-a453-cd341d602807";
   const userSettingsRef = useRef();
+  const [imageUrl, setImageUrl] = useState(userImageUrl);
 
+  /**
+   * Function to upload the file. Will check first
+   * @param {*} event
+   * @returns
+   */
   async function handleFileChange(event) {
+    if (!(event.target.files.length > 0)) {
+      return;
+    }
     const file = event.target.files[0];
     const filename = file.name;
-    console.log(file.name);
+
     try {
       const response = await Api.uploadImage(token, file, filename);
       tsuccess(response.data);
+      console.log(response.data);
+      setImageUrl(response.data + "?timestamp=" + Date.now());
     } catch (error) {
       terror(error.message);
     }
@@ -78,7 +89,7 @@ function MyProfile() {
                           >
                             <CardImg
                               top
-                              src={userImageUrl}
+                              src={imageUrl}
                               alt="User"
                               style={{
                                 borderRadius: "50%",
