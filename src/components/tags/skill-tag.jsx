@@ -3,9 +3,11 @@ import ItemDropdown from "../tags/item-drop-down";
 import { useUserStore } from "../stores/useUserStore";
 import { Api } from "../../api";
 import { tsuccess, terror } from "../toasts/message-toasts";
+import { use } from "i18next";
 //
 function UserSkills() {
-  const token = "49b51dc4-c4ed-4ee8-8015-4318156d14ee";
+  const token = useUserStore((state) => state.token);
+  console.log(token);
   const email = useUserStore((state) => state.email);
   const skills = useUserStore((state) => state.skills);
   const allSkills = useUserStore((state) => state.allSkills);

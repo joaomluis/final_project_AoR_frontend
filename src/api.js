@@ -64,6 +64,11 @@ export const Api = {
       .post(`/users/change-password`, data, { headers: { token: token } })
       .then(handleResponse)
       .catch(handleError),
+  getUser: (token, email) =>
+    apiClient
+      .get("/users", { headers: { token }, params: { email } })
+      .then(handleResponse)
+      .catch(handleError),
 
   //LOCATION endpoints
   getAllLocations: (token) =>

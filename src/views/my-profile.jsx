@@ -8,6 +8,7 @@ import {
   Input,
   CardImg,
   Label,
+  Form,
 } from "reactstrap";
 import { FaUserCog } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
@@ -15,17 +16,22 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import "../assets/css/general-css.css";
+//TODO use diretory from token JWT
 import userImageUrl from "../assets/img/user.jpg";
-
+import { useUserStore } from "../components/stores/useUserStore";
 import UserSettings from "../components/modals/user-settings.jsx";
+import FormInputLabel from "../components/input/forminputlabel.jsx";
+import FormInput from "../components/input/forminput.jsx";
 
 import { Api } from "../api";
 import { tsuccess, terror } from "../components/toasts/message-toasts.jsx";
 function MyProfile() {
   const { t } = useTranslation();
-  const token = "28bdd334-468c-4167-a453-cd341d602807";
+  const token = useUserStore((state) => state.token);
+  const email = useUserStore((state) => state.email);
   const userSettingsRef = useRef();
   const [imageUrl, setImageUrl] = useState(userImageUrl);
+  const [username, setUsername] = useState("");
 
   /**
    * Function to upload the file. Will check first
@@ -42,12 +48,28 @@ function MyProfile() {
     try {
       const response = await Api.uploadImage(token, file, filename);
       tsuccess(response.data);
-      console.log(response.data);
+
       setImageUrl(response.data + "?timestamp=" + Date.now());
     } catch (error) {
       terror(error.message);
     }
   }
+
+  async function fetchUser() {
+    try {
+      const response = await Api.getUser(token, email);
+      console.log(response.data);
+      setUsername(response.data.username);
+
+      tsuccess(response.data);
+    } catch (error) {
+      terror(error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <div className="section4">
@@ -106,20 +128,30 @@ function MyProfile() {
                       </Col>
                       <Col md="4">
                         <Row>
-                          <Label style={{ fontWeight: "bold" }}>
+                          {/* <Label style={{ fontWeight: "bold" }}>
                             First Name
                           </Label>
                           <Input
                             id="userName"
                             type="text"
-                            placeholder="Enter your first name"
+                            placeholder={
+                              username ? username : "Enter your first name"
+                            }
+                            value={username ? username : ""}
                             onChange={(event) => {
-                              // handle the input here
+                              setUsername(event.target.value);
                             }}
+                          /> */}
+                          <FormInput
+                            label="First Name"
+                            placeholder={username ? username : "Enter your first name}
+                            type="text"
+                            value={username}
+                            setValue={setUsername}
                           />
                         </Row>
                         <Row>
-                          <Label style={{ fontWeight: "bold" }}>
+                          {/* <Label style={{ fontWeight: "bold" }}>
                             Last Name
                           </Label>
                           <Input
@@ -129,10 +161,16 @@ function MyProfile() {
                             onChange={(event) => {
                               // handle the input here
                             }}
+                          /> */}
+                          <FormInputLabel
+                            label="Last Name"
+                            type="text"
+                            value={username}
+                            setValue={setUsername}
                           />
                         </Row>
                         <Row>
-                          <Label style={{ fontWeight: "bold" }}>Username</Label>
+                          {/* <Label style={{ fontWeight: "bold" }}>Username</Label>
                           <Input
                             id="userName"
                             type="text"
@@ -140,10 +178,16 @@ function MyProfile() {
                             onChange={(event) => {
                               // handle the input here
                             }}
+                          /> */}
+                          <FormInputLabel
+                            label="Username"
+                            type="text"
+                            value={username}
+                            setValue={setUsername}
                           />
                         </Row>
                         <Row>
-                          <Label style={{ fontWeight: "bold" }}>
+                          {/* <Label style={{ fontWeight: "bold" }}>
                             Lab Location
                           </Label>
 
@@ -152,7 +196,14 @@ function MyProfile() {
                             <option value="John">Coimbra</option>
                             <option value="Jane">Lisboa</option>
                             <option value="Bob">Porto</option>
-                          </Input>
+                          </Input> */}
+                          <FormInputLabel
+                            label="Lab Location"
+                            type="select"
+                            value={username}
+                            setValue={setUsername}
+                            // data={labs}
+                          />
                         </Row>
                       </Col>
                     </Row>

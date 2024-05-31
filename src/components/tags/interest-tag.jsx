@@ -5,7 +5,9 @@ import { Api } from "../../api";
 import { tsuccess, terror } from "../toasts/message-toasts";
 
 function UserInterests() {
-  const token = "49b51dc4-c4ed-4ee8-8015-4318156d14ee";
+  const token = useUserStore((state) => state.token);
+  console.log(token);
+
   const email = useUserStore((state) => state.email);
   const interests = useUserStore((state) => state.interests);
   const allInterests = useUserStore((state) => state.allInterests);
