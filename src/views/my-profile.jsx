@@ -21,7 +21,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import "../assets/css/general-css.css";
-//TODO use diretory from token JWT
+//TODO correct the label input
 
 import { useUserStore } from "../components/stores/useUserStore";
 import UserSettings from "../components/modals/user-settings.jsx";
