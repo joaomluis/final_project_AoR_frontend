@@ -14,7 +14,7 @@ export const useUserStore = create(
   persist(
     (set) => ({
       // username: "",
-      token: "f16abf18-f0d6-43f1-9dd8-50d3adcca4e8",
+      token: "",
       email: "admin@admin",
       skills: [],
       allSkills: [],
@@ -24,7 +24,7 @@ export const useUserStore = create(
       allInterests: [],
 
       updateEmail: (email) => set({ email }), //new action
-      updateToken: (token) => set({ token }), //new action
+      updateToken: (token) => set(token), //new action
 
       updateInterests: (interests) => set({ interests }),
       updateAllInterests: (allInterests) => set({ allInterests }),

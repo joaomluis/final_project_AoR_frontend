@@ -13,5 +13,14 @@
   "my-interests": "Meus interesses",
   "there-you-can-add-and-remove-your-interests": "Aqui pode adicionar e remover seus interesses.",
   "do_you_want_to_create_a_new_interest?": "Quer criar um novo interesse?",
-  "new_interest": "Novo interesse detectado"
+  "new_interest": "Novo interesse detectado",
+
+  "my-profile": "Meu Perfil",
+  "about-me": "Sobre mim",
+  "about": "Sobre",
+  "first-name": "Nome",
+  "last-name": "Sobrenome",
+  "username": "Nome de utilizador",
+  "select-lab": "Selecione o laboratório",
+  "lab": "Laboratório"
 }

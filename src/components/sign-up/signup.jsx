@@ -17,13 +17,14 @@ import PasswordStrengthBar from "react-password-strength-bar";
 import { useTranslation } from "react-i18next";
 import RecoverPassword from "../modals/recover-password.jsx";
 import { terror, tsuccess } from "../toasts/message-toasts";
+import { useUserStore } from "../stores/useUserStore";
 import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
 
 function SignUp() {
   const { t } = useTranslation();
   const recoverPasswordRef = useRef();
-
+  const updateToken = useUserStore((state) => state.updateToken);
   const [isSignUp, setIsSignUp] = useState(true);
 
   const [email, setEmail] = useState("");
@@ -41,6 +42,8 @@ function SignUp() {
       const response = await Api.signin(email, password);
       if (response.data) {
         tsuccess("Login successful!");
+        updateToken(response.data);
+        console.log(response.data);
         //TODO redirect to home page
       }
     } catch (error) {

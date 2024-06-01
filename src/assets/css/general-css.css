@@ -22,11 +22,10 @@
   justify-content: flex-end;
 }
 
-  .section4 {
-    background-color: var(--whitey);
-    min-height: 820px;
-    
-  }
+.section4 {
+  background-color: var(--whitey);
+  min-height: 820px;
+}
 
 .main-container {
   background-color: var(--primary-color);
@@ -110,7 +109,6 @@
   margin-left: 2em !important;
   margin-right: 3em !important;
   transform: scale(1.5);
- 
 }
 
 .custom-form-group {
@@ -125,15 +123,15 @@
 }
 
 .label-color {
-  color: var(--whitey); 
+  color: var(--whitey);
 }
 
 .custom-hr {
-  border-top: 3px solid var(--whitey); 
+  border-top: 3px solid var(--whitey);
 }
 
 .public {
-  color: var(--yellowy); 
+  color: var(--yellowy);
   font-weight: bold;
 }
 
@@ -155,6 +153,12 @@
 }
 
 .custom-link {
-  text-decoration: none; 
-  color: inherit; 
+  text-decoration: none;
+  color: inherit;
+}
+.form-floating > .form-control-plaintext ~ label::after,
+.form-floating > .form-control:focus ~ label::after,
+.form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+.form-floating > .form-select ~ label::after {
+  position: relative;
 }
