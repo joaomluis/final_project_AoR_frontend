@@ -21,7 +21,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import "../assets/css/general-css.css";
-//TODO correct the label input
+//TODO correct the label
 
 import { useUserStore } from "../components/stores/useUserStore";
 import UserSettings from "../components/modals/user-settings.jsx";
@@ -144,14 +144,18 @@ function MyProfile() {
                   <CardBody>
                     <Row>
                       <Col className="mb-4" md="12">
-                        <CardTitle tag="h4">
-                          {t("my-profile")}
-                          <FaUserCog
-                            style={{ marginLeft: "10px", cursor: "pointer" }}
-                            onClick={() => userSettingsRef.current.open()}
-                          />
+                        <CardTitle tag="h4" className="profile-icons-container">
+                          <div
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            {t("my-profile")}
+                            <FaUserCog
+                              className="btn-title"
+                              onClick={() => userSettingsRef.current.open()}
+                            />
+                          </div>
                           <FaRegSave
-                            style={{ marginLeft: "10px", cursor: "pointer" }}
+                            className="btn-title"
                             onClick={handleSaveChanges}
                           />
                         </CardTitle>
@@ -193,9 +197,9 @@ function MyProfile() {
                       </Col>
                       <Col md="4">
                         <Row>
-                          <FormInput
+                          <FormInputLabel
                             label={t("first-name")}
-                            placeholder={""}
+                            placeholder={t("first-name")}
                             type="text"
                             value={user.firstname}
                             setValue={(value) =>
@@ -204,9 +208,9 @@ function MyProfile() {
                           />
                         </Row>
                         <Row>
-                          <FormInput
+                          <FormInputLabel
                             label={t("last-name")}
-                            placeholder={""}
+                            placeholder={t("last-name")}
                             type="text"
                             value={user.lastname}
                             setValue={(value) =>
@@ -215,9 +219,9 @@ function MyProfile() {
                           />
                         </Row>
                         <Row>
-                          <FormInput
+                          <FormInputLabel
                             label={t("username")}
-                            placeholder={""}
+                            placeholder={t("username")}
                             type="text"
                             value={user.username}
                             setValue={(value) =>
@@ -226,28 +230,18 @@ function MyProfile() {
                           />
                         </Row>
                         <Row>
-                          <FormGroup floating>
-                            <Input
-                              bsSize="md"
-                              type="select"
-                              className="form-select"
-                              onClick={handleLoadLabLocations}
-                              onChange={(e) =>
-                                handleInputChange(e.target.value, "lab")
-                              }
-                              value={user.lab}
-                            >
-                              <option value="">{t("select-lab")}</option>
-                              {labs.map((lab) => (
-                                <option key={lab.id} value={lab.id}>
-                                  {lab.location}
-                                </option>
-                              ))}
-                            </Input>
-                            <Label style={{ fontSize: "small" }}>
-                              {t("lab")}
-                            </Label>
-                          </FormGroup>
+                          <FormInputLabel
+                            label={t("lab")}
+                            placeholder={t("select-lab")}
+                            type="select"
+                            required={false}
+                            value={user.lab}
+                            setValue={(value) =>
+                              handleInputChange(value, "lab")
+                            }
+                            data={labs}
+                            handleClick={handleLoadLabLocations}
+                          />
                         </Row>
                       </Col>
                     </Row>

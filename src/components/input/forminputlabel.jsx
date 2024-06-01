@@ -12,18 +12,20 @@ function FormInput({
 }) {
   return (
     <div>
-      <Label style={{ fontWeight: "bold" }}>{label}</Label>
+      <Label style={{ fontWeight: "bold", marginTop: "1rem" }}>{label}</Label>
       {type === "select" ? (
         <Input
           type={type}
           required={required}
           onChange={(event) => setValue(event.target.value)}
         >
-          <option value="">{placeholder}</option>
+          <option value="" disabled>
+            {placeholder}
+          </option>
           {data &&
             data.map((item, index) => (
               <option key={index} value={item.id}>
-                {item.local}
+                {item.location}
               </option>
             ))}
         </Input>
