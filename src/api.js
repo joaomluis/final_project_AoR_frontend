@@ -156,4 +156,9 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
+
+  //PROJECT endpoints
+
+  getProjects: () =>
+    apiClient.get("/projects/search").then(handleResponse).catch(handleError),
 };

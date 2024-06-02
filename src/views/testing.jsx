@@ -10,47 +10,60 @@ import {
   Button,
   CardImg,
   CardFooter,
+  Badge,
 } from "reactstrap";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import "../assets/css/general-css.css";
+import "../components/cards/project/project-card.css";
 
-import UserSkills from "../components/tags/skill-tag";
-import UserInterests from "../components/tags/interest-tag";
+import { Api } from "../api";
+import { useEffect } from "react";
+import ProjectCard from "../components/cards/project/card-project";
 function Testing() {
   const { t } = useTranslation();
-
-  function card(title, subtitle, dd) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>{title}</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <CardText>{subtitle}</CardText>
-          {dd}
-        </CardBody>
-      </Card>
-    );
+  const [projects, setProjects] = useState([]);
+  async function getProjects() {
+    // fetch projects from the backend
+    try {
+      const response = await Api.getProjects();
+      console.log(response.data);
+      setProjects(response.data);
+    } catch {}
   }
+
+  useEffect(() => {
+    getProjects();
+  }, []);
 
   return (
     <div className="testing-section1" style={{ height: "100vh" }}>
       <Container>
         <Row>
-          <Col md="6" className="mt-5 mb-5">
-            {card(
-              t("my-interests"),
-              t("there-you-can-add-and-remove-your-interests"),
-              <UserInterests />
-            )}
-          </Col>
-          <Col md="6" className="mt-5">
-            {card(
-              t("my-skills"),
-              t("there-you-can-add-and-remove-your-skills"),
-              <UserSkills />
-            )}
-          </Col>
+          <ProjectCard
+            title="Project 2"
+            description="Description of project 2"
+            keywords={[
+              "keyword1",
+              "keyword2",
+              "keyword3",
+              "k2",
+              "keyword4",
+              "keyword5",
+              "kw1",
+            ]}
+            skills={["skill1", "skill2", "skill3", "Skill4", "Skill5"]}
+          />
+
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={index}
+              title={project.title}
+              description={project.description}
+              keywords={project.keywords}
+              skills={project.skills}
+            />
+          ))}
         </Row>
       </Container>
     </div>
