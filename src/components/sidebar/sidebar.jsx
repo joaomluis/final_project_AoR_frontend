@@ -3,13 +3,15 @@ import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { FaHome, FaUsers, FaTools, FaClipboard } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
-import "../../assets/css/general-css.css";
+import "./sidebar.css";
 import { Api } from "../../api";
 function SideNavbar() {
   const [collapsed, setCollapsed] = useState(false);
   const [projects, setProjects] = useState([{}]);
   const token = useUserStore((state) => state.token);
   const email = useUserStore((state) => state.email);
+  let statusClass = "";
+  let statusName = "";
   //useEffect to handle the resizing of the side navbar
   useEffect(() => {
     const handleResize = () => {
@@ -23,18 +25,37 @@ function SideNavbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  function showMyProjects(name, description) {
-    if (description != null && description.length > 10) {
-      description = description.substring(0, 10) + "...";
-    }
+  function showMyProjects(name, status) {
     if (name != null && name.length > 8) {
       name = name.substring(0, 8) + "...";
     }
+
+    if (status === "IN_PROGRESS") {
+      statusClass = "in-progress";
+      statusName = "In progress";
+    }
+    if (status === "PLANNING") {
+      statusClass = "planning";
+      statusName = "Planning";
+    }
+    if (status === "READY") {
+      statusClass = "ready";
+      statusName = "Ready";
+    }
+    if (status === "CANCELED") {
+      statusClass = "cancelled";
+      statusName = "Cancelled";
+    }
+    if (status === "FINISHED") {
+      statusClass = "finished";
+      statusName = "Finished";
+    }
+
     return (
-      <div className="project-label">
+      <div className={`project-label ${statusClass}`}>
         {" "}
         {name}
-        <div className="project-status">{description}</div>
+        {/* <div className={`project-status ${statusClass}`}>{statusName}</div> */}
       </div>
     );
   }
@@ -73,7 +94,7 @@ function SideNavbar() {
           {projects
             ? projects.map((project) => (
                 <MenuItem key={project.id}>
-                  {showMyProjects(project.name, project.description)}
+                  {showMyProjects(project.name, project.status)}
                 </MenuItem>
               ))
             : null}

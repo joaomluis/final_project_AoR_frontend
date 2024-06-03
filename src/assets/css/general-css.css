@@ -5,6 +5,12 @@
   --greyish: #dbe2ef;
   --whitey: #f9f7f7;
   --yellowy: #ffd700;
+
+  --planning: #ffc464;
+  --in-progress: #78c9ff;
+  --ready: #6bffa9;
+  --cancelled: #e74c3c;
+  --finished: #007d0f;
 }
 
 .section1 {
