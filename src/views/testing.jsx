@@ -32,6 +32,23 @@ function Testing() {
     } catch {}
   }
 
+  const project = {};
+
+  const handler = {
+    get(target, prop) {
+      return Reflect.get(...arguments);
+    },
+    set(target, prop, value) {
+      return Reflect.set(...arguments);
+    },
+  };
+
+  const p = new Proxy(project, handler);
+  p.title = "Project 1";
+  p.description = "Description of project 1";
+
+  console.log(p.title);
+
   useEffect(() => {
     getProjects();
   }, []);
