@@ -59,13 +59,19 @@ export const Api = {
       .post("/users/confirm-account", data, { headers: { token: token } })
       .then(handleResponse)
       .catch(handleError),
-  changePassword: (password, confirmPassword, token) =>
+  changePassword: (token, data) =>
     apiClient
-      .post(
-        `/users/change-password`,
-        { password, confirmPassword },
-        { headers: { token: token } }
-      )
+      .post(`/users/change-password`, data, { headers: { token: token } })
+      .then(handleResponse)
+      .catch(handleError),
+  getUser: (token, email) =>
+    apiClient
+      .get("/users", { headers: { token }, params: { email } })
+      .then(handleResponse)
+      .catch(handleError),
+  updateUser: (token, data) =>
+    apiClient
+      .put("/users", data, { headers: { token } })
       .then(handleResponse)
       .catch(handleError),
 
@@ -82,13 +88,77 @@ export const Api = {
       .post("/skills", data, { headers: { token } })
       .then(handleResponse)
       .catch(handleError),
-  getSkillType: (token) => apiClient.get("/skills", { headers: { token } }),
+  removeSkill: (token, data) =>
+    apiClient
+      .put("/skills", data, { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+  getSkillType: (token) =>
+    apiClient
+      .get("/skills/types", { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+  getAllSkills: (token) =>
+    apiClient
+      .get("/skills", { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+  getUserSkills: (token, email) =>
+    apiClient
+      .get("/skills", {
+        headers: { token },
+        params: { userEmail: email },
+      })
+      .then(handleResponse)
+      .catch(handleError),
+
+  //INTEREST endpoints
+  addInterest: (token, data) =>
+    apiClient
+      .post("/interests", data, { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+  removeInterest: (token, data) =>
+    apiClient
+      .put("/interests", data, { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+  getAllInterests: (token) =>
+    apiClient
+      .get("/interests", { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+  getUserInterests: (token, email) =>
+    apiClient
+      .get("/interests", {
+        headers: { token },
+        params: { userEmail: email },
+      })
+      .then(handleResponse)
+      .catch(handleError),
+
+  //IMAGE endpoints
+  uploadImage: (token, file, filename) => {
+    // Criar um Blob para enviar como binário
+    const formData = new FormData();
+    formData.append("file", file, filename);
+
+    // Extrair o Blob do FormData
+    const imageData = formData.get("file");
+    return apiClient
+      .post("/images/user", imageData, {
+        headers: {
+          "Content-Type": file.type,
+          token: token,
+          filename: filename,
+        },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
 
   //PROJECT endpoints
 
-  getProjects: (token) =>
-    apiClient
-      .get("/projects", { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
+  getProjects: () =>
+    apiClient.get("/projects/search").then(handleResponse).catch(handleError),
 };

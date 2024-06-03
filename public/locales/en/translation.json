@@ -6,7 +6,21 @@
 
   "my-skills": "My skills",
   "there-you-can-add-and-remove-your-skills": "There you can add and remove your skills",
-  "new_skill_detected": "New skill detected",
+  "new_skill": "New skill detected",
   "do_you_want_to_create_a_new_skill?": "Do you want to create a new skill?",
-  "choose_skill_type": "Choose skill type"
+  "choose_skill_type": "Choose skill type: ",
+
+  "my-interests": "My interests",
+  "there-you-can-add-and-remove-your-interests": "There you can add and remove your interests",
+  "do_you_want_to_create_a_new_interest?": "Do you want to create a new interest?",
+  "new_interest": "New interest detected",
+
+  "my-profile": "My Profile",
+  "about-me": "About me",
+  "about": "About",
+  "first-name": "First name",
+  "last-name": "Last name",
+  "username": "Username",
+  "select-lab": "Select lab",
+  "lab": "Laboratory"
 }

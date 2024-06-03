@@ -15,12 +15,39 @@ export const useUserStore = create(
     (set) => ({
       // username: "",
       token: "",
+      email: "admin@admin",
       skills: [],
+      allSkills: [],
+      skillTypes: [],
 
+      interests: [],
+      allInterests: [],
+
+      updateEmail: (email) => set({ email }), //new action
+      updateToken: (token) => set(token), //new action
+
+      updateInterests: (interests) => set({ interests }),
+      updateAllInterests: (allInterests) => set({ allInterests }),
+      addInterest: (interest) =>
+        set((state) => ({ interests: [...state.interests, interest] })),
+      addInterestToAll: (interest) =>
+        set((state) => ({ allInterests: [...state.allInterests, interest] })),
+      removeInterest: (interest) =>
+        set((state) => ({
+          interests: state.interests.filter((s) => s.id !== interest.id),
+        })),
+
+      updateSkillTypes: (skillTypes) => set({ skillTypes }),
       updateSkills: (skills) => set({ skills }), //new action
+      updateAllSkills: (allSkills) => set({ allSkills }), //new action
       addSkill: (skill) =>
         set((state) => ({ skills: [...state.skills, skill] })),
-      updateToken: (token) => set({ token }), //new action
+      addSkillToAll: (skill) =>
+        set((state) => ({ allSkills: [...state.allSkills, skill] })),
+      removeSkill: (skill) =>
+        set((state) => ({
+          skills: state.skills.filter((s) => s.id !== skill.id),
+        })),
     }),
     {
       name: "userstore", //name of the storage

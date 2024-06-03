@@ -4,6 +4,7 @@ import ConfirmAccount from "./components/confirm-account/confirm-account.jsx";
 import MyProfile from "./views/my-profile.jsx";
 import HomePage from "./views/home-page.jsx";
 import Testing from "./views/testing.jsx";
+import ChangePassword from "./components/change-password/change-password.jsx";
 
 var routes = [
   {
@@ -35,6 +36,12 @@ var routes = [
     name: "Testing",
     component: <Testing />,
     layout: "/main",
+  },
+  {
+    path: "/change-password/:token",
+    name: "change-password",
+    component: <ChangePassword />,
+    layout: "/landing",
   },
   {
     path: "/home",
