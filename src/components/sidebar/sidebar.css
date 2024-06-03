@@ -1,0 +1,36 @@
+.project-label {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+.project-status {
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.in-progress {
+  color: var(--whitey);
+  background-color: var(--in-progress);
+}
+
+.planning {
+  color: var(--whitey);
+  background-color: var(--planning);
+}
+
+.ready {
+  color: var(--whitey);
+  background-color: var(--ready);
+}
+
+.cancelled {
+  color: var(--whitey);
+  background-color: var(--cancelled);
+}
+
+.finished {
+  color: var(--whitey);
+  background-color: var(--finished);
+}

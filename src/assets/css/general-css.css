@@ -5,6 +5,12 @@
   --greyish: #dbe2ef;
   --whitey: #f9f7f7;
   --yellowy: #ffd700;
+
+  --planning: #ffc464;
+  --in-progress: #78c9ff;
+  --ready: #6bffa9;
+  --cancelled: #e74c3c;
+  --finished: #007d0f;
 }
 
 .section1 {
@@ -195,14 +201,4 @@
   transform: scale(1.3);
   color: var(--primary-color-darker);
   text-align: center;
-}
-
-.project-label {
-  display: flex;
-  justify-content: space-between;
-}
-.project-status {
-  font-weight: bold;
-  border-radius: 10px;
-  padding: 1px;
 }
