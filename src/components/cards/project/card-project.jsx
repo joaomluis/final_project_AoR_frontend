@@ -10,6 +10,7 @@ import {
   Badge,
   Col,
 } from "reactstrap";
+import "./card-project.css";
 
 function ProjectCard({ title, description, keywords, skills }) {
   return (

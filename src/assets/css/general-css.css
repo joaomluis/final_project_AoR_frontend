@@ -194,4 +194,15 @@
 .btn-title:hover {
   transform: scale(1.3);
   color: var(--primary-color-darker);
+  text-align: center;
+}
+
+.project-label {
+  display: flex;
+  justify-content: space-between;
+}
+.project-status {
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 1px;
 }
