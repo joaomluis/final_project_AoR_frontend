@@ -9,6 +9,7 @@ function SideNavbar() {
   const [collapsed, setCollapsed] = useState(false);
   const [projects, setProjects] = useState([{}]);
   const token = useUserStore((state) => state.token);
+  const email = useUserStore((state) => state.email);
   //useEffect to handle the resizing of the side navbar
   useEffect(() => {
     const handleResize = () => {
@@ -22,25 +23,30 @@ function SideNavbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  function showMyProjects(title, description) {
+  function showMyProjects(name, description) {
     if (description != null && description.length > 10) {
       description = description.substring(0, 10) + "...";
     }
-    if (title != null && title.length > 8) {
-      title = title.substring(0, 8) + "...";
+    if (name != null && name.length > 8) {
+      name = name.substring(0, 8) + "...";
     }
     return (
       <div className="project-label">
         {" "}
-        {title}
+        {name}
         <div className="project-status">{description}</div>
       </div>
     );
   }
 
+  const props = {
+    dtoType: "ProjectDto",
+    participant_email: email,
+  };
+
   async function getMyProjects() {
     try {
-      const response = await Api.getProjects(token);
+      const response = await Api.getProjectsByDto(token, props);
       setProjects(response.data);
     } catch (err) {
       console.log(err);
@@ -67,7 +73,7 @@ function SideNavbar() {
           {projects
             ? projects.map((project) => (
                 <MenuItem key={project.id}>
-                  {showMyProjects(project.title, project.description)}
+                  {showMyProjects(project.name, project.description)}
                 </MenuItem>
               ))
             : null}
