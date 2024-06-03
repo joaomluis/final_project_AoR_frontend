@@ -19,10 +19,12 @@ import RecoverPassword from "../modals/recover-password.jsx";
 import { terror, tsuccess } from "../toasts/message-toasts";
 import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   const { t } = useTranslation();
   const recoverPasswordRef = useRef();
+  const navigate = useNavigate();
 
   const [isSignUp, setIsSignUp] = useState(true);
 
@@ -41,7 +43,7 @@ function SignUp() {
       const response = await Api.signin(email, password);
       if (response.data) {
         tsuccess("Login successful!");
-        //TODO redirect to home page
+        navigate("fica-lab/home")
       }
     } catch (error) {
       terror(error.message);

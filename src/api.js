@@ -83,4 +83,12 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError),
   getSkillType: (token) => apiClient.get("/skills", { headers: { token } }),
+
+  //PROJECT endpoints
+
+  getProjects: (token) =>
+    apiClient
+      .get("/projects", { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
 };
