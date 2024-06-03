@@ -19,34 +19,42 @@ import "../assets/css/general-css.css";
 import { Api } from "../api";
 import { useEffect } from "react";
 import ProjectCard from "../components/cards/project/card-project";
+import { useUserStore } from "../components/stores/useUserStore";
 function Testing() {
+  const token = useUserStore((state) => state.token);
+  const email = useUserStore((state) => state.email);
   const { t } = useTranslation();
   const [projects, setProjects] = useState([]);
+  const props = {
+    dtoType: "ProjectCardDto",
+  };
+
   async function getProjects() {
     // fetch projects from the backend
     try {
-      const response = await Api.getProjects();
+      const response = await Api.getProjectsByDto(token, props);
       console.log(response.data);
       setProjects(response.data);
-    } catch {}
+      console.log(projects);
+    } catch {
+      console.log("s");
+    }
   }
 
-  const project = {};
+  // const project = {};
 
-  const handler = {
-    get(target, prop) {
-      return Reflect.get(...arguments);
-    },
-    set(target, prop, value) {
-      return Reflect.set(...arguments);
-    },
-  };
+  // const handler = {
+  //   get(target, prop) {
+  //     return Reflect.get(...arguments);
+  //   },
+  //   set(target, prop, value) {
+  //     return Reflect.set(...arguments);
+  //   },
+  // };
 
-  const p = new Proxy(project, handler);
-  p.title = "Project 1";
-  p.description = "Description of project 1";
-
-  console.log(p.title);
+  // const p = new Proxy(project, handler);
+  // p.title = "Project 1";
+  // p.description = "Description of project 1";
 
   useEffect(() => {
     getProjects();

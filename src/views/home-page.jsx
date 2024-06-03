@@ -32,10 +32,16 @@ function HomePage() {
 
   const [projects, setProjects] = useState([]);
 
+  // Props para enviar ao endpoint
+  const props = {
+    dtoType: "ProjectCardDto",
+    participant_email: email,
+  };
+
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const response = await Api.getProjects(token, email);
+        const response = await Api.getProjectsByDto(token, props);
         setProjects(response.data); // Set the projects data
       } catch (error) {
         console.log(error.message);

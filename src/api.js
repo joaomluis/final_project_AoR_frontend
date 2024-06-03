@@ -157,13 +157,24 @@ export const Api = {
       .catch(handleError);
   },
 
-  //PROJECT endpoints
+  //PROJECT endpoint
 
-  getProjects: (token, email) =>
+  // props é um objecto com todos os possiveis parametros que podem ser passados ao método
+  // apenas para simplificar a chamada e não ter que passar todos os parametros
+  getProjectsByDto: (token, props) =>
     apiClient
-      .get("/projects/search", {
+      .get(`/projects/${props.dtoType}`, {
         headers: { token },
-        params: { participant_email: email },
+        params: {
+          name: props.name,
+          status: props.status,
+          lab_id: props.lab_id,
+          creator_email: props.creator_email,
+          skill: props.skill,
+          interest: props.interest,
+          participant_email: props.participant_email,
+          role: props.role,
+        },
       })
       .then(handleResponse)
       .catch(handleError),
