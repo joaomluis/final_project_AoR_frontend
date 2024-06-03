@@ -15,7 +15,6 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import "../assets/css/general-css.css";
-import "../components/cards/project/project-card.css";
 
 import { Api } from "../api";
 import { useEffect } from "react";
