@@ -68,7 +68,9 @@ function HomePage() {
                     </Row>
                     <Row>
                       {projects.map((project, index) => (
-                        <Col md="4" key={index} className="mt-4">
+                        <Col sm="12" md="4" key={index} className="mt-4">
+                          {" "}
+                          {/* Add sm="12" */}
                           <ProjectCard Project={project} />
                         </Col>
                       ))}

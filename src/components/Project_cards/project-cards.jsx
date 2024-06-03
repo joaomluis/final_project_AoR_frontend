@@ -16,9 +16,7 @@ const ProjectCards = ({ Project }) => {
       <Card
         id={Project.id} 
         color="light"
-        style={{
-          width: "18rem",
-        }}
+        
       >
         <CardBody>
           <CardTitle tag="h5">{Project.title}</CardTitle>
