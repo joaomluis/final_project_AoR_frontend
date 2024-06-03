@@ -14,19 +14,19 @@ const ProjectCards = ({ Project }) => {
   return (
     <>
       <Card
+        id={Project.id} 
         color="light"
         style={{
           width: "18rem",
         }}
       >
         <CardBody>
-          <CardTitle tag="h5">Card title</CardTitle>
+          <CardTitle tag="h5">{Project.title}</CardTitle>
           <CardSubtitle className="mb-2 text-muted" tag="h6">
-            Card subtitle
+            {Project.status}
           </CardSubtitle>
           <CardText>
-            Some quick example text to build on the card title and make up the
-            bulk of the card‘s content.
+            {Project.description}
           </CardText>
           <Button>Button</Button>
         </CardBody>

@@ -159,6 +159,12 @@ export const Api = {
 
   //PROJECT endpoints
 
-  getProjects: () =>
-    apiClient.get("/projects/search").then(handleResponse).catch(handleError),
+  getProjects: (token, email) =>
+    apiClient
+      .get("/projects/search", {
+        headers: { token },
+        params: { participant_email: email },
+      })
+      .then(handleResponse)
+      .catch(handleError),
 };

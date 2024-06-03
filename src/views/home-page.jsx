@@ -11,7 +11,13 @@ import {
 } from "reactstrap";
 import { FaPlus } from "react-icons/fa";
 import { Api } from "../api";
-import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
+import {
+  tsuccess,
+  terror,
+  twarn,
+} from "../components/toasts/message-toasts.jsx";
+import { useUserStore } from "../components/stores/useUserStore.js";
+import { useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
@@ -21,19 +27,25 @@ import { useEffect } from "react";
 
 function HomePage() {
   const { t } = useTranslation();
+  const token = useUserStore((state) => state.token);
+  const email = useUserStore((state) => state.email);
 
-  async function handleGetProjects() {
-    try {
-      const response = await Api.getProjects();
-      console.log(response.data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    handleGetProjects();
+    async function fetchProjects() {
+      try {
+        const response = await Api.getProjects(token, email);
+        setProjects(response.data); // Set the projects data
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    fetchProjects(); // Call the function to fetch projects
   }, []);
+
+  console.log(projects);
 
   return (
     <div className="section4">
@@ -55,9 +67,11 @@ function HomePage() {
                       </Col>
                     </Row>
                     <Row>
-                      <Col md="4">
-                        <ProjectCard />
-                      </Col>
+                      {projects.map((project, index) => (
+                        <Col md="4" key={index} className="mt-4">
+                          <ProjectCard Project={project} />
+                        </Col>
+                      ))}
                     </Row>
                   </CardBody>
                 </Col>
