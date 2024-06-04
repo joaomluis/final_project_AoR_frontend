@@ -54,7 +54,7 @@ function HomePage() {
           <Col md="12" className=" mt-5">
             <Card>
               <Row>
-                <Col md="12">
+                <Col md="12" sm="8">
                   <CardBody>
                     <Row>
                       <Col className="mb-4" md="10">
@@ -70,7 +70,6 @@ function HomePage() {
                       {projects.map((project, index) => (
                         <Col sm="12" md="4" key={index} className="mt-4">
                           {" "}
-                          {/* Add sm="12" */}
                           <ProjectCard Project={project} />
                         </Col>
                       ))}
