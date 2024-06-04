@@ -36,16 +36,15 @@ function HomePage() {
     async function fetchProjects() {
       try {
         const response = await Api.getProjects(token, email);
-        setProjects(response.data); // Set the projects data
+        setProjects(response.data); 
       } catch (error) {
         console.log(error.message);
       }
     }
 
-    fetchProjects(); // Call the function to fetch projects
+    fetchProjects();
   }, []);
 
-  console.log(projects);
 
   return (
     <div className="section4">
