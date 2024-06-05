@@ -51,12 +51,12 @@ function MyProfile() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleInputChange = (value, field) => {
-    console.log(
-      `handleInputChange called with value: ${value} and field: ${field}`
-    );
+    // console.log(
+    //   `handleInputChange called with value: ${value} and field: ${field}`
+    // );
     setUser((prevUser) => {
       const newUser = { ...prevUser, [field]: value };
-      console.log(`newUser: ${JSON.stringify(newUser)}`);
+      // console.log(`newUser: ${JSON.stringify(newUser)}`);
       return newUser;
     });
   };
@@ -86,6 +86,7 @@ function MyProfile() {
 
     try {
       const response = await Api.uploadImage(token, file, filename);
+
       tsuccess(response.data);
       const newImageUrl = response.data + "?timestamp=" + Date.now();
       handleInputChange(newImageUrl, "imagePath");
@@ -103,10 +104,14 @@ function MyProfile() {
     }
   }
 
+  const props = { email: email };
   async function fetchUser() {
     try {
-      const response = await Api.getUser(token, email);
-      setUser(response.data);
+      const response = await Api.getUser(token, props);
+
+      setUser(response.data[0]);
+      console.log(response.data[0].privateProfile);
+      console.log(user.privateProfile);
       tsuccess(response.data);
     } catch (error) {
       terror(error.message);
@@ -134,7 +139,7 @@ function MyProfile() {
 
   return (
     <div className="section4">
-      <UserSettings ref={userSettingsRef} />
+      <UserSettings private={user.privateProfile} ref={userSettingsRef} />
       <Container>
         <Row>
           <Col md="12" className=" mt-5">

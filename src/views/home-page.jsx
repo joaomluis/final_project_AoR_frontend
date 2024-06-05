@@ -52,7 +52,6 @@ function HomePage() {
     fetchProjects();
   }, []);
 
-
   return (
     <div className="section4">
       <Container>

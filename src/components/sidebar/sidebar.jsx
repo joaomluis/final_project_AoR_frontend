@@ -61,7 +61,7 @@ function SideNavbar() {
   }
 
   const props = {
-    dtoType: "ProjectDto",
+    dtoType: "ProjectSideBarDto",
     participant_email: email,
   };
 
@@ -92,11 +92,14 @@ function SideNavbar() {
         <MenuItem icon={<FaUsers />}> Users List </MenuItem>
         <SubMenu icon={<FaClipboard />} label="My Projects">
           {projects
-            ? projects.map((project) => (
-                <MenuItem key={project.id}>
-                  {showMyProjects(project.name, project.status)}
-                </MenuItem>
-              ))
+            ? projects.map((project, index) => {
+                console.log(project.id); // log the id to the console
+                return (
+                  <MenuItem key={`${project.id}-${index}`}>
+                    {showMyProjects(project.name, project.status)}
+                  </MenuItem>
+                );
+              })
             : null}
         </SubMenu>
       </Menu>

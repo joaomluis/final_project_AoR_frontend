@@ -12,18 +12,27 @@ import {
   Row,
   Col,
 } from "reactstrap";
-
+import { useEffect } from "react";
+import { useUserStore } from "../stores/useUserStore";
 import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
-
+import { useTranslation } from "react-i18next";
+import FormInput from "../input/forminput.jsx";
+import { tsuccess, terror } from "../toasts/message-toasts.jsx";
 const UserSettings = forwardRef((props, ref) => {
+  const token = useUserStore((state) => state.token);
   const [modal, setModal] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [state, setState] = useState(false);
+  const [state, setState] = useState(props.private);
+  const { t } = useTranslation();
 
   const toggle = () => setModal(!modal);
+
+  let visibility = {
+    privateProfile: state,
+  };
 
   const handleShow = () => {
     setModal(true);
@@ -34,6 +43,41 @@ const UserSettings = forwardRef((props, ref) => {
     open: handleShow,
   }));
 
+  const passwordDto = {
+    currentPassword,
+    newPassword,
+    confirmPassword,
+  };
+
+  async function handleVisibility() {
+    try {
+      const response = await Api.changeVisibility(token, visibility);
+      tsuccess(response.data);
+    } catch (error) {
+      terror(error.message);
+    }
+  }
+
+  useEffect(() => {
+    console.log("state: ", state);
+    handleVisibility();
+  }, [state]);
+
+  async function handleChangePassword() {
+    if (newPassword !== confirmPassword) {
+      terror("Passwords do not match");
+      return;
+    }
+    console.log(passwordDto);
+    try {
+      const response = await Api.updatePassword(token, passwordDto);
+      tsuccess(response.data);
+      toggle();
+    } catch (error) {
+      terror(error.message);
+    }
+  }
+
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} centered={true} size="lg">
@@ -42,47 +86,40 @@ const UserSettings = forwardRef((props, ref) => {
           style={{ color: "var(--whitey)", fontWeight: "bold" }}
           className="modal-style"
         >
-          User Settings{" "}
+          {t("user-settings")}{" "}
         </ModalHeader>
         <ModalBody className="modal-style">
           <Row>
             <Col md={6} className="col-left">
               <Form>
-                <FormGroup floating>
-                  <Input
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    value={currentPassword}
-                    name="password"
-                    placeholder="Password"
-                    type="password"
-                    required
-                  />
-                  <Label>Current Password</Label>
-                </FormGroup>
-                <FormGroup floating>
-                  <Input
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    value={newPassword}
-                    name="password"
-                    placeholder="Password"
-                    type="password"
-                    required
-                  />
-                  <Label>New Password</Label>
-                </FormGroup>
-                <FormGroup floating>
-                  <Input
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    value={confirmPassword}
-                    name="password"
-                    placeholder="Password"
-                    type="password"
-                    required
-                  />
-                  <Label>Confirm Password</Label>
-                </FormGroup>
-                <Button color="light" className="button-style1 mt-3 w-100">
-                  Change Password
+                <FormInput
+                  label={t("current-password")}
+                  placeholder={t("current-password")}
+                  type="password"
+                  value={currentPassword}
+                  setValue={setCurrentPassword}
+                />
+                <FormInput
+                  label={t("new-password")}
+                  placeholder={t("new-password")}
+                  type="password"
+                  value={newPassword}
+                  setValue={setNewPassword}
+                />
+                <FormInput
+                  label={t("confirm-password")}
+                  placeholder={t("confirm-password")}
+                  type="password"
+                  value={confirmPassword}
+                  setValue={setConfirmPassword}
+                />
+
+                <Button
+                  color="light"
+                  className="button-style1 mt-3 w-100"
+                  onClick={handleChangePassword}
+                >
+                  {t("change-password")}
                 </Button>
               </Form>
             </Col>
@@ -91,25 +128,25 @@ const UserSettings = forwardRef((props, ref) => {
               <Form>
                 <FormGroup switch className="custom-form-group">
                   <Input
-                    type="switch"
+                    type="checkbox"
                     className="custom-switch"
                     checked={state}
-                    onClick={() => {
+                    onChange={() => {
                       setState(!state);
                     }}
                   />
                   <Label check className="label-color">
-                    Change your profile visibility
+                    {t("change-your-profile-visibility")}
                   </Label>
                 </FormGroup>
                 <hr className="custom-hr" />
                 <div className="center-label">
                   <Label className="label-color">
-                    Your profile is currently:{" "}
+                    {t("your-profile-is-currently")}:{" "}
                     {state ? (
-                      <span className="public">Public</span>
+                      <span className="private">{t("private")}</span>
                     ) : (
-                      <span className="private">Private</span>
+                      <span className="public">{t("public")}</span>
                     )}
                   </Label>
                 </div>

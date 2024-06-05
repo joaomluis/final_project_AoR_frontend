@@ -6,7 +6,6 @@ import { tsuccess, terror } from "../toasts/message-toasts";
 
 function UserInterests() {
   const token = useUserStore((state) => state.token);
-  console.log(token);
 
   const email = useUserStore((state) => state.email);
   const interests = useUserStore((state) => state.interests);

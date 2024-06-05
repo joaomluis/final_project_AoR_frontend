@@ -64,9 +64,22 @@ export const Api = {
       .post(`/users/change-password`, data, { headers: { token: token } })
       .then(handleResponse)
       .catch(handleError),
-  getUser: (token, email) =>
+  updatePassword: (token, data) =>
     apiClient
-      .get("/users", { headers: { token }, params: { email } })
+      .put("/users/update-password", data, { headers: { token: token } })
+      .then(handleResponse)
+      .catch(handleError),
+  changeVisibility: (token, data) =>
+    apiClient
+      .put("/users/change-visiblity", data, { headers: { token: token } })
+      .then(handleResponse)
+      .catch(handleError),
+  getUser: (token, props) =>
+    apiClient
+      .get("/users", {
+        headers: { token },
+        params: { email: props.email },
+      })
       .then(handleResponse)
       .catch(handleError),
   updateUser: (token, data) =>
@@ -163,7 +176,7 @@ export const Api = {
   // apenas para simplificar a chamada e não ter que passar todos os parametros
   getProjectsByDto: (token, props) =>
     apiClient
-      .get(`/projects/${props.dtoType}`, {
+      .get(`/projects/`, {
         headers: { token },
         params: {
           name: props.name,
@@ -174,6 +187,7 @@ export const Api = {
           interest: props.interest,
           participant_email: props.participant_email,
           role: props.role,
+          dtoType: props.dtoType,
         },
       })
       .then(handleResponse)
