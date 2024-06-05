@@ -9,6 +9,7 @@ import {
   CardBody,
   CardTitle,
 } from "reactstrap";
+import { useTranslation } from "react-i18next";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -59,6 +60,7 @@ const responsive = {
 };
 
 function LandingPageContent() {
+  const { t } = useTranslation();
   return (
     <Container>
       <div className="section3">
@@ -71,7 +73,7 @@ function LandingPageContent() {
                   fontWeight: "bold",
                 }}
               >
-                Interested in make your idea come to life? Show us what you got!
+                {t("landing-page-section3-title")}
               </h2>
             </Row>
             <Row>
@@ -81,7 +83,7 @@ function LandingPageContent() {
                   textAlign: "center",
                 }}
               >
-                Or check out some awesome ideas we're helping become reality
+                {t("landing-page-section3-subtitle")}
               </h5>
             </Row>
           </Col>
@@ -129,7 +131,7 @@ function LandingPageContent() {
                 border: "none",
               }}
             >
-              See More Projects
+              {t("see-more-projects")}
             </Button>
           </Col>
         </Row>

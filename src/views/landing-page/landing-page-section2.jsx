@@ -1,5 +1,7 @@
 import { Container, Col, Row } from "reactstrap";
 
+import { useTranslation } from "react-i18next";
+
 import "../../assets/css/general-css.css";
 import img1 from "../../assets/img/landing-page-img1.jpg";
 import img3 from "../../assets/img/landing-page-img3.jpg";
@@ -7,6 +9,7 @@ import img2 from "../../assets/img/landing-page-img2.jpg";
 import img4 from "../../assets/img/landing-page-img4.jpg";
 
 function LandingPageContent() {
+  const { t } = useTranslation();
   return (
     <Container>
       <div className="section2">
@@ -14,8 +17,7 @@ function LandingPageContent() {
           <Col md="8">
             <Row>
               <h1 style={{ marginTop: "60px", fontWeight: "bold" }}>
-                Besides helping you with your projects, FicaLab also
-                gives you the best tools to keep track of your progress.
+                {t("landing-page-section2-title")}
               </h1>
             </Row>
           </Col>

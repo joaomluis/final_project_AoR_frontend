@@ -22,5 +22,24 @@
   "last-name": "Last name",
   "username": "Username",
   "select-lab": "Select lab",
-  "lab": "Laboratory"
+  "lab": "Laboratory",
+
+  "sign-up": "Sign up",
+  "sign-up-subtext": "Ready to make your projects a reality? Join us! ",
+  "confirm-password": "Confirm password",
+  "create-account": "Create account",
+  "already-have-account": "Already have an account?",
+  "sign-in": "Sign in",
+  "sign-in-subtext": "Time to get back to work!",
+  "forgot-password": "Forgot password?",
+  "dont-have-account": "Don't have an account?",
+
+  "recover-password": "Recover password",
+  "recover-password-subtext": "Enter your email address and we'll send you a link to reset your password.",
+  "redifine-password": "Redefine password",
+
+  "landing-page-section2-title": "Besides helping you with your projects, FicaLab also gives you the best tools to keep track of your progress.",
+  "landing-page-section3-title": "Interested in make your idea come to life? Show us what you got!",
+  "landing-page-section3-subtitle": "Or check out some awesome ideas we're helping become reality",
+  "see-more-projects": "See more projects"
 }
