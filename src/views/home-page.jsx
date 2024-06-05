@@ -51,8 +51,6 @@ function HomePage() {
     fetchProjects(); // Call the function to fetch projects
   }, []);
 
-  console.log(projects);
-
   return (
     <div className="section4">
       <Container>

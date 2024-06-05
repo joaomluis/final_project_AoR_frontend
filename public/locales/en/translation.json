@@ -22,5 +22,16 @@
   "last-name": "Last name",
   "username": "Username",
   "select-lab": "Select lab",
-  "lab": "Laboratory"
+  "lab": "Laboratory",
+
+  "your-profile-is-currently": "Your profile is currently",
+  "private": "Private",
+  "public": "Public",
+  "change-your-profile-visibility": "Change your profile visibility",
+  "change-password": "Change password",
+  "user-settings": "User settings",
+
+  "current-password": "Current password",
+  "new-password": "New password",
+  "confirm-password": "Confirm password"
 }

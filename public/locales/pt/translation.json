@@ -22,5 +22,16 @@
   "last-name": "Sobrenome",
   "username": "Nome de utilizador",
   "select-lab": "Selecione o laboratório",
-  "lab": "Laboratório"
+  "lab": "Laboratório",
+
+  "your-profile-is-currently": "Seu perfil está atualmente",
+  "private": "Privado",
+  "public": "Público",
+  "change-your-profile-visibility": "Mude a visibilidade do seu perfil",
+  "change-password": "Mudar senha",
+  "user-settings": "Configurações do utilizador",
+
+  "current-password": "Senha atual",
+  "new-password": "Nova senha",
+  "confirm-password": "Confirme a senha"
 }
