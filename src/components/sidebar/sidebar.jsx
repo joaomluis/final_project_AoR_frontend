@@ -84,16 +84,16 @@ function SideNavbar() {
       style={{ minHeight: "100vh", maxHeight: "100vh", overflow: "auto" }}
     >
       <Menu>
-        <Link to="/fica-lab/home" className="custom-link">
-          <MenuItem icon={<FaHome />}> Home </MenuItem>
-        </Link>
+        <MenuItem to="/fica-lab/home" icon={<FaHome />} className="custom-link">
+          {" "}
+          Home{" "}
+        </MenuItem>
         <MenuItem icon={<FaClipboard />}> Projects List </MenuItem>
         <MenuItem icon={<FaTools />}> Components List </MenuItem>
         <MenuItem icon={<FaUsers />}> Users List </MenuItem>
         <SubMenu icon={<FaClipboard />} label="My Projects">
           {projects
             ? projects.map((project, index) => {
-                console.log(project.id); // log the id to the console
                 return (
                   <MenuItem key={`${project.id}-${index}`}>
                     {showMyProjects(project.name, project.status)}

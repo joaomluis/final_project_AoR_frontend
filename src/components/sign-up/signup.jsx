@@ -28,7 +28,7 @@ function SignUp() {
   const updateToken = useUserStore((state) => state.updateToken);
   const navigate = useNavigate();
 
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +48,7 @@ function SignUp() {
         updateToken(response.data);
         console.log(response.data);
         //TODO redirect to home page
-        navigate("fica-lab/home")
+        navigate("fica-lab/home");
       }
     } catch (error) {
       terror(error.message);
@@ -149,7 +149,7 @@ function SignUp() {
             </CardBody>
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
-              {t("already-have-account")}{" "}
+                {t("already-have-account")}{" "}
                 <button
                   className="button-link"
                   onClick={() => setIsSignUp(false)}
@@ -223,7 +223,7 @@ function SignUp() {
             </CardBody>
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
-              {t("dont-have-account")}{" "}
+                {t("dont-have-account")}{" "}
                 <button
                   className="button-link"
                   onClick={() => setIsSignUp(true)}

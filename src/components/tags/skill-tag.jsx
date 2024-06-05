@@ -7,7 +7,6 @@ import { use } from "i18next";
 //
 function UserSkills() {
   const token = useUserStore((state) => state.token);
-  console.log(token);
   const email = useUserStore((state) => state.email);
   const skills = useUserStore((state) => state.skills);
   const allSkills = useUserStore((state) => state.allSkills);
@@ -50,7 +49,6 @@ function UserSkills() {
     try {
       const response = await Api.addSkill(token, skill);
       skill = response.data;
-      console.log(skill);
       addSkillToAll(skill);
       addSkill(skill);
       tsuccess("Skill " + skill.name + " created successfully!");

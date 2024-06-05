@@ -115,7 +115,6 @@ function MyProfile() {
 
       setUser(response.data[0]);
       updatePrivateProfile(response.data[0].privateProfile);
-      console.log(privateProfile);
 
       tsuccess(response.data);
     } catch (error) {

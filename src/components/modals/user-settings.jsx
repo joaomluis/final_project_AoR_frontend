@@ -33,10 +33,6 @@ const UserSettings = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const toggle = () => setModal(!modal);
 
-  let visibility = {
-    privateProfile: state,
-  };
-
   const handleShow = () => {
     setModal(true);
   };
@@ -71,7 +67,6 @@ const UserSettings = forwardRef((props, ref) => {
       terror("Passwords do not match");
       return;
     }
-    console.log(passwordDto);
     try {
       const response = await Api.updatePassword(token, passwordDto);
       tsuccess(response.data);

@@ -18,7 +18,7 @@ import {
 } from "../components/toasts/message-toasts.jsx";
 import { useUserStore } from "../components/stores/useUserStore.js";
 import { useState } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -66,9 +66,11 @@ function HomePage() {
                         <CardTitle tag="h4">Your recent projects</CardTitle>
                       </Col>
                       <Col md="2">
-                        <Link to="/fica-lab/create-project"><Button color="light" className="button-style1 w-100">
-                          <FaPlus /> Create Project
-                        </Button> </Link>
+                        <Link to="/fica-lab/create-project">
+                          <Button color="light" className="button-style1 w-100">
+                            <FaPlus /> Create Project
+                          </Button>{" "}
+                        </Link>
                       </Col>
                     </Row>
                     <Row>
