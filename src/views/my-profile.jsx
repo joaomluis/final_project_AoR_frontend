@@ -181,7 +181,7 @@ function MyProfile() {
                             <CardImg
                               top
                               src={user.imagePath}
-                              alt="User"
+                              
                               style={{
                                 borderRadius: "50%",
                                 cursor: "pointer",

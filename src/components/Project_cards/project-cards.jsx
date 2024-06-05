@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { MdDateRange } from "react-icons/md";
 
 import "../../assets/css/general-css.css";
+import PlusIcon from "../../assets/icons/plus-circle-icon.png";
 
 const ProjectCards = ({ Project }) => {
   const formatStatus = (status) => {
@@ -80,6 +81,32 @@ const ProjectCards = ({ Project }) => {
           <CardText>{truncateDescription(Project.description, 100)}</CardText>
           <div>
             <MdDateRange /> Start date: {Project.startDate}
+          </div>
+          <div>
+            {Project.projectUsers.slice(0, 4).map((user, index) => (
+              <img
+                key={index}
+                src={user.imagePath}
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "50%",
+                  marginRight: "-5px",
+                  marginTop: "10px",
+                }}
+              />
+            ))}
+            <img
+              src={PlusIcon}
+              alt="plus"
+              style={{
+                width: "30px",
+                height: "30px",
+                borderRadius: "50%",
+                marginRight: "-5px",
+                marginTop: "10px",
+              }}
+            />
           </div>
         </CardBody>
         <CardFooter>

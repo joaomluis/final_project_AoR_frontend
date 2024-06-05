@@ -45,6 +45,7 @@ function HomePage() {
     fetchProjects();
   }, []);
 
+  console.log(projects);
 
   return (
     <div className="section4">
