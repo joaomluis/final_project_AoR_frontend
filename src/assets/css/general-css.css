@@ -202,3 +202,43 @@
   color: var(--primary-color-darker);
   text-align: center;
 }
+.btn-sent:hover {
+  transform: scale(1.1);
+}
+.btn-sent {
+  transition: transform 0.3s ease-in-out;
+
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background-color: var(--primary-color);
+}
+
+.project-label {
+  display: flex;
+  justify-content: space-between;
+}
+.project-status {
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 1px;
+}
+
+.project-card-container {
+  display: flex;
+  align-items: stretch;
+}
+
+.equalHeightCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.equalHeightCard .CardBody {
+  flex-grow: 1;
+}

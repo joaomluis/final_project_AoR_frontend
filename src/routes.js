@@ -5,6 +5,8 @@ import MyProfile from "./views/my-profile.jsx";
 import HomePage from "./views/home-page.jsx";
 import Testing from "./views/testing.jsx";
 import ChangePassword from "./components/change-password/change-password.jsx";
+import ProjectPage from "./views/project-page.jsx";
+import CreateProject from "./views/create-project.jsx";
 
 var routes = [
   {
@@ -47,6 +49,18 @@ var routes = [
     path: "/home",
     name: "Home",
     component: <HomePage />,
+    layout: "/main",
+  },
+  {
+    path: "/project/:id",
+    name: "Project",
+    component: <ProjectPage />,
+    layout: "/main",
+  },
+  {
+    path: "/create-project",
+    name: "Create Project",
+    component: <CreateProject />,
     layout: "/main",
   },
 ];

@@ -35,6 +35,10 @@ function MyProfile() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
   const email = useUserStore((state) => state.email);
+  const privateProfile = useUserStore((state) => state.privateProfile);
+  const updatePrivateProfile = useUserStore(
+    (state) => state.updatePrivateProfile
+  );
   const userSettingsRef = useRef();
   const [user, setUser] = useState({
     username: "",
@@ -51,12 +55,12 @@ function MyProfile() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleInputChange = (value, field) => {
-    console.log(
-      `handleInputChange called with value: ${value} and field: ${field}`
-    );
+    // console.log(
+    //   `handleInputChange called with value: ${value} and field: ${field}`
+    // );
     setUser((prevUser) => {
       const newUser = { ...prevUser, [field]: value };
-      console.log(`newUser: ${JSON.stringify(newUser)}`);
+      // console.log(`newUser: ${JSON.stringify(newUser)}`);
       return newUser;
     });
   };
@@ -86,6 +90,7 @@ function MyProfile() {
 
     try {
       const response = await Api.uploadImage(token, file, filename);
+
       tsuccess(response.data);
       const newImageUrl = response.data + "?timestamp=" + Date.now();
       handleInputChange(newImageUrl, "imagePath");
@@ -103,10 +108,14 @@ function MyProfile() {
     }
   }
 
+  const props = { email: email };
   async function fetchUser() {
     try {
-      const response = await Api.getUser(token, email);
-      setUser(response.data);
+      const response = await Api.getUser(token, props);
+
+      setUser(response.data[0]);
+      updatePrivateProfile(response.data[0].privateProfile);
+
       tsuccess(response.data);
     } catch (error) {
       terror(error.message);
@@ -134,7 +143,7 @@ function MyProfile() {
 
   return (
     <div className="section4">
-      <UserSettings ref={userSettingsRef} />
+      <UserSettings private={user.privateProfile} ref={userSettingsRef} />
       <Container>
         <Row>
           <Col md="12" className=" mt-5">
@@ -181,7 +190,6 @@ function MyProfile() {
                             <CardImg
                               top
                               src={user.imagePath}
-                              alt="User"
                               style={{
                                 borderRadius: "50%",
                                 cursor: "pointer",

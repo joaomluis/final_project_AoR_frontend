@@ -28,7 +28,7 @@ function SignUp() {
   const updateToken = useUserStore((state) => state.updateToken);
   const navigate = useNavigate();
 
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +48,7 @@ function SignUp() {
         updateToken(response.data);
         console.log(response.data);
         //TODO redirect to home page
-        navigate("fica-lab/home")
+        navigate("fica-lab/home");
       }
     } catch (error) {
       terror(error.message);
@@ -89,10 +89,10 @@ function SignUp() {
               className="text-center"
               style={{ color: "var(--whitey)" }}
             >
-              <h4>Sign Up</h4>
+              <h2>{t("sign-up")}</h2>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
-                Ready to make your projects a reality? Join us!
+                {t("sign-up-subtext")}
               </CardText>
             </CardHeader>
             <CardBody>
@@ -131,7 +131,7 @@ function SignUp() {
                     type="password"
                     required
                   />
-                  <Label>Confirm Password</Label>
+                  <Label>{t("confirm-password")}</Label>
                 </FormGroup>
                 <Button
                   style={{
@@ -143,19 +143,19 @@ function SignUp() {
                   }}
                   onClick={handleSignUp}
                 >
-                  Create Account
+                  {t("create-account")}
                 </Button>
               </Form>
             </CardBody>
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
-                Already have an account?{" "}
+                {t("already-have-account")}{" "}
                 <button
                   className="button-link"
                   onClick={() => setIsSignUp(false)}
                   style={{ cursor: "pointer", color: "#FFD700" }}
                 >
-                  Sign In
+                  {t("sign-in")}
                 </button>
               </p>
             </CardFooter>
@@ -166,10 +166,10 @@ function SignUp() {
               className="text-center"
               style={{ color: "var(--whitey)" }}
             >
-              <h4>Sign In</h4>
+              <h4>{t("sign-in")}</h4>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
-                Time to get back to work!
+                {t("sign-in-subtext")}
               </CardText>
             </CardHeader>
             <CardBody>
@@ -204,7 +204,7 @@ function SignUp() {
                   style={{ color: "var(--whitey)", fontWeight: "bold" }}
                   onClick={() => recoverPasswordRef.current.open()}
                 >
-                  Forgot password?
+                  {t("forgot-password")}
                 </span>
 
                 <Button
@@ -217,19 +217,19 @@ function SignUp() {
                   }}
                   onClick={handleSignIn}
                 >
-                  Sign In
+                  {t("sign-in")}
                 </Button>
               </Form>
             </CardBody>
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
-                Dont have an account yet?{" "}
+                {t("dont-have-account")}{" "}
                 <button
                   className="button-link"
                   onClick={() => setIsSignUp(true)}
                   style={{ cursor: "pointer", color: "#FFD700" }}
                 >
-                  Sign Up
+                  {t("sign-up")}
                 </button>
               </p>
             </CardFooter>

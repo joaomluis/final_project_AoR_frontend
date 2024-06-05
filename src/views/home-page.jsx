@@ -18,6 +18,7 @@ import {
 } from "../components/toasts/message-toasts.jsx";
 import { useUserStore } from "../components/stores/useUserStore.js";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -48,10 +49,8 @@ function HomePage() {
       }
     }
 
-    fetchProjects(); // Call the function to fetch projects
+    fetchProjects();
   }, []);
-
-  console.log(projects);
 
   return (
     <div className="section4">
@@ -60,23 +59,24 @@ function HomePage() {
           <Col md="12" className=" mt-5">
             <Card>
               <Row>
-                <Col md="12">
+                <Col md="12" sm="8">
                   <CardBody>
                     <Row>
                       <Col className="mb-4" md="10">
                         <CardTitle tag="h4">Your recent projects</CardTitle>
                       </Col>
                       <Col md="2">
-                        <Button color="light" className="button-style1 w-100">
-                          <FaPlus /> Create Project
-                        </Button>
+                        <Link to="/fica-lab/create-project">
+                          <Button color="light" className="button-style1 w-100">
+                            <FaPlus /> Create Project
+                          </Button>{" "}
+                        </Link>
                       </Col>
                     </Row>
                     <Row>
                       {projects.map((project, index) => (
                         <Col sm="12" md="4" key={index} className="mt-4">
                           {" "}
-                          {/* Add sm="12" */}
                           <ProjectCard Project={project} />
                         </Col>
                       ))}

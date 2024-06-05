@@ -28,8 +28,7 @@ function SignIn() {
     <div className="section1" style={{ minHeight: "845px" }}>
       <Container>
         <Row>
-          <Col md="3">
-            </Col>
+          <Col md="3"></Col>
 
           <Col md="6">
             <Card
@@ -65,7 +64,7 @@ function SignIn() {
                     />
                     <Label for="exampleEmail">Email</Label>
                   </FormGroup>
-                  
+
                   <FormGroup floating>
                     <Input
                       name="password"
@@ -78,11 +77,12 @@ function SignIn() {
 
                     <Label for="examplePassword">Password</Label>
                   </FormGroup>
-                  <Link to="/confirm-account">
-                    <a style={{ color: "var(--whitey)", fontWeight:"bold" }}>
-                      Forgot password?
-                    </a>
-                  </Link> 
+                  <Link
+                    to="/confirm-account"
+                    style={{ color: "var(--whitey)", fontWeight: "bold" }}
+                  >
+                    Forgot password?
+                  </Link>
                   <Button
                     style={{
                       backgroundColor: "var(--secondary-color)",
@@ -92,17 +92,13 @@ function SignIn() {
                       border: "none",
                     }}
                   >
-                    Sign In 
+                    Sign In
                   </Button>
                 </Form>
               </CardBody>
               <CardFooter className="text-center">
                 <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
-                  Dont have an account yet?{" "}
-                  <Link to="/">
-                    {" "}
-                    <a>Sign up</a>
-                  </Link>
+                  Dont have an account yet? <Link to="/">Sign up</Link>
                 </p>
               </CardFooter>
             </Card>

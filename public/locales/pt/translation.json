@@ -22,5 +22,36 @@
   "last-name": "Sobrenome",
   "username": "Nome de utilizador",
   "select-lab": "Selecione o laboratório",
-  "lab": "Laboratório"
+  "lab": "Laboratório",
+
+  "your-profile-is-currently": "Seu perfil está atualmente",
+  "private": "Privado",
+  "public": "Público",
+  "change-your-profile-visibility": "Mude a visibilidade do seu perfil",
+  "change-password": "Mudar senha",
+  "user-settings": "Configurações do utilizador",
+
+  "current-password": "Senha atual",
+  "new-password": "Nova senha",
+  "confirm-password": "Confirme a senha",
+  "lab": "Laboratório",
+
+  "sign-up": "Registar",
+  "sign-up-subtext": "Pronto para tornar os teus projetos realidade? Regista-te agora!",
+  "confirm-password": "Confirmar Password",
+  "create-account": "Criar conta",
+  "already-have-account": "Já tens conta?",
+  "sign-in": "Entrar",
+  "sign-in-subtext": "Hora de voltar ao trabalho!",
+  "forgot-password": "Não se lembra da password?",
+  "dont-have-account": "Não tens conta?",
+
+  "recover-password": "Recuperar Password",
+  "recover-password-subtext": "Insira o seu email e enviaremos um link para recuperar a sua password.",
+  "redifine-password": "Redefinir Password",
+
+  "landing-page-section2-title": "Além de ajudar com os vossos projetos, o FicaLab também dá acesso às melhores ferramentas para a gestão do vosso tempo.",
+  "landing-page-section3-title": " Interessado em tornar a ideia realidade? Mostra-nos o que sabes fazer!",
+  "landing-page-section3-subtitle": "Ou descobre outras ideias que estamos a ajudar a desenvolver",
+  "see-more-projects": "Ver mais projetos"
 }
