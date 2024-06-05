@@ -21,18 +21,17 @@ import FormInput from "../input/forminput.jsx";
 import { tsuccess, terror } from "../toasts/message-toasts.jsx";
 const UserSettings = forwardRef((props, ref) => {
   const token = useUserStore((state) => state.token);
+  const privateProfile = useUserStore((state) => state.privateProfile);
+  const updatePrivateProfile = useUserStore(
+    (state) => state.updatePrivateProfile
+  );
   const [modal, setModal] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [state, setState] = useState(props.private);
+
   const { t } = useTranslation();
-
   const toggle = () => setModal(!modal);
-
-  let visibility = {
-    privateProfile: state,
-  };
 
   const handleShow = () => {
     setModal(true);
@@ -51,17 +50,17 @@ const UserSettings = forwardRef((props, ref) => {
 
   async function handleVisibility() {
     try {
-      const response = await Api.changeVisibility(token, visibility);
+      const newPrivateProfile = !privateProfile;
+      updatePrivateProfile(newPrivateProfile);
+      const newVisibility = {
+        privateProfile: newPrivateProfile,
+      };
+      const response = await Api.changeVisibility(token, newVisibility);
       tsuccess(response.data);
     } catch (error) {
       terror(error.message);
     }
   }
-
-  useEffect(() => {
-    console.log("state: ", state);
-    handleVisibility();
-  }, [state]);
 
   async function handleChangePassword() {
     if (newPassword !== confirmPassword) {
@@ -130,9 +129,9 @@ const UserSettings = forwardRef((props, ref) => {
                   <Input
                     type="checkbox"
                     className="custom-switch"
-                    checked={state}
+                    checked={privateProfile}
                     onChange={() => {
-                      setState(!state);
+                      handleVisibility();
                     }}
                   />
                   <Label check className="label-color">
@@ -143,7 +142,7 @@ const UserSettings = forwardRef((props, ref) => {
                 <div className="center-label">
                   <Label className="label-color">
                     {t("your-profile-is-currently")}:{" "}
-                    {state ? (
+                    {privateProfile ? (
                       <span className="private">{t("private")}</span>
                     ) : (
                       <span className="public">{t("public")}</span>

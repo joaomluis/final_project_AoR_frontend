@@ -33,7 +33,7 @@
 
   "current-password": "Senha atual",
   "new-password": "Nova senha",
-  "confirm-password": "Confirme a senha"
+  "confirm-password": "Confirme a senha",
   "lab": "Laboratório",
 
   "sign-up": "Registar",
@@ -49,7 +49,7 @@
   "recover-password": "Recuperar Password",
   "recover-password-subtext": "Insira o seu email e enviaremos um link para recuperar a sua password.",
   "redifine-password": "Redefinir Password",
-  
+
   "landing-page-section2-title": "Além de ajudar com os vossos projetos, o FicaLab também dá acesso às melhores ferramentas para a gestão do vosso tempo.",
   "landing-page-section3-title": " Interessado em tornar a ideia realidade? Mostra-nos o que sabes fazer!",
   "landing-page-section3-subtitle": "Ou descobre outras ideias que estamos a ajudar a desenvolver",

@@ -16,12 +16,14 @@ export const useUserStore = create(
       // username: "",
       token: "",
       email: "admin@admin",
+      privateProfile: "",
       skills: [],
       allSkills: [],
       skillTypes: [],
-
       interests: [],
       allInterests: [],
+
+      updatePrivateProfile: (privateProfile) => set({ privateProfile }),
 
       updateEmail: (email) => set({ email }), //new action
       updateToken: (token) => set(token), //new action

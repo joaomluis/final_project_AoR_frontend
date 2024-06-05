@@ -35,6 +35,10 @@ function MyProfile() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
   const email = useUserStore((state) => state.email);
+  const privateProfile = useUserStore((state) => state.privateProfile);
+  const updatePrivateProfile = useUserStore(
+    (state) => state.updatePrivateProfile
+  );
   const userSettingsRef = useRef();
   const [user, setUser] = useState({
     username: "",
@@ -110,8 +114,9 @@ function MyProfile() {
       const response = await Api.getUser(token, props);
 
       setUser(response.data[0]);
-      console.log(response.data[0].privateProfile);
-      console.log(user.privateProfile);
+      updatePrivateProfile(response.data[0].privateProfile);
+      console.log(privateProfile);
+
       tsuccess(response.data);
     } catch (error) {
       terror(error.message);
@@ -139,7 +144,7 @@ function MyProfile() {
 
   return (
     <div className="section4">
-      <UserSettings private={user.privateProfile} ref={userSettingsRef} />
+      <UserSettings ref={userSettingsRef} />
       <Container>
         <Row>
           <Col md="12" className=" mt-5">
@@ -186,7 +191,6 @@ function MyProfile() {
                             <CardImg
                               top
                               src={user.imagePath}
-                              
                               style={{
                                 borderRadius: "50%",
                                 cursor: "pointer",
