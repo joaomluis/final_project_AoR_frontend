@@ -144,7 +144,7 @@ function MyProfile() {
 
   return (
     <div className="section4">
-      <UserSettings ref={userSettingsRef} />
+      <UserSettings private={user.privateProfile} ref={userSettingsRef} />
       <Container>
         <Row>
           <Col md="12" className=" mt-5">

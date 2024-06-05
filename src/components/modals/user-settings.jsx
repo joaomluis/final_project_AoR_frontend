@@ -33,6 +33,10 @@ const UserSettings = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const toggle = () => setModal(!modal);
 
+  let visibility = {
+    privateProfile: state,
+  };
+
   const handleShow = () => {
     setModal(true);
   };
