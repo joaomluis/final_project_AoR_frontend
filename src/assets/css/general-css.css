@@ -195,3 +195,17 @@
   transform: scale(1.3);
   color: var(--primary-color-darker);
 }
+
+.project-card-container {
+  display: flex;
+  align-items: stretch;
+}
+
+.equalHeightCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.equalHeightCard .CardBody {
+  flex-grow: 1;
+}

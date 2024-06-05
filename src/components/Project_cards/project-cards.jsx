@@ -66,7 +66,10 @@ const ProjectCards = ({ Project }) => {
         style={{ boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)" }}
       >
         <CardHeader style={{ backgroundColor: "var(--greyish)" }}>
-          <CardTitle tag="h4" style={{ fontWeight: "bold" }}>
+          <CardTitle
+            tag="h4"
+            style={{ fontWeight: "bold", textAlign: "center" }}
+          >
             {Project.title}
           </CardTitle>
         </CardHeader>
@@ -78,14 +81,14 @@ const ProjectCards = ({ Project }) => {
           >
             {formattedStatus}
           </CardSubtitle>
-          <CardText>{truncateDescription(Project.description, 100)}</CardText>
+          <CardText>{truncateDescription(Project.description, 95)}</CardText>
           <div>
             <MdDateRange /> Start date: {Project.startDate}
           </div>
           <div>
-            {Project.projectUsers.slice(0, 4).map((user, index) => (
+            {Project.projectUsers.slice(0, 3).map((user, index) => (
               <img
-                key={index}
+                key={user.id}
                 src={user.imagePath}
                 style={{
                   width: "30px",
@@ -96,17 +99,19 @@ const ProjectCards = ({ Project }) => {
                 }}
               />
             ))}
-            <img
-              src={PlusIcon}
-              alt="plus"
-              style={{
-                width: "30px",
-                height: "30px",
-                borderRadius: "50%",
-                marginRight: "-5px",
-                marginTop: "10px",
-              }}
-            />
+            {Project.projectUsers.length > 3 && (
+              <img
+                src={PlusIcon}
+                alt="plus"
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "50%",
+                  marginRight: "-5px",
+                  marginTop: "10px",
+                }}
+              />
+            )}
           </div>
         </CardBody>
         <CardFooter>
