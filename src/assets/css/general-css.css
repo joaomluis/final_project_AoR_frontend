@@ -79,6 +79,8 @@
   background-color: var(--secondary-color);
   color: var(--whitey);
   border: none;
+  width: 100%;
+  white-space: nowrap;
 }
 
 .button-link {

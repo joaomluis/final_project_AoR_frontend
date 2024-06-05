@@ -55,38 +55,29 @@ function HomePage() {
   return (
     <div className="section4">
       <Container>
-        <Row>
-          <Col md="12" className=" mt-5">
-            <Card>
-              <Row>
-                <Col md="12" sm="8">
-                  <CardBody>
-                    <Row>
-                      <Col className="mb-4" md="10">
-                        <CardTitle tag="h4">Your recent projects</CardTitle>
-                      </Col>
-                      <Col md="2">
-                        <Link to="/fica-lab/create-project">
-                          <Button color="light" className="button-style1 w-100">
-                            <FaPlus /> Create Project
-                          </Button>{" "}
-                        </Link>
-                      </Col>
-                    </Row>
-                    <Row>
-                      {projects.map((project, index) => (
-                        <Col sm="12" md="4" key={index} className="mt-4">
-                          {" "}
-                          <ProjectCard Project={project} />
-                        </Col>
-                      ))}
-                    </Row>
-                  </CardBody>
+        <Card>
+          <CardBody>
+            <Row>
+              <Col className="mb-4" lg="9" md="8">
+                <CardTitle tag="h4">Your recent projects</CardTitle>
+              </Col>
+              <Col lg="3" md="4">
+                <Link to="/fica-lab/create-project">
+                  <Button color="light" className="button-style1">
+                    <FaPlus /> Create Project
+                  </Button>
+                </Link>
+              </Col>
+            </Row>
+            <Row>
+              {projects.map((project, index) => (
+                <Col sm="12" md="6" lg="4" key={index} className="mt-4">
+                  <ProjectCard Project={project} />
                 </Col>
-              </Row>
-            </Card>
-          </Col>
-        </Row>
+              ))}
+            </Row>
+          </CardBody>
+        </Card>
       </Container>
     </div>
   );
