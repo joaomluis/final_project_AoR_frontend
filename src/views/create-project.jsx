@@ -1,250 +1,86 @@
 import {
-    Container,
-    Col,
-    Row,
-    Card,
-    CardHeader,
-    CardText,
-    CardBody,
-    CardTitle,
-    Input,
-    CardImg,
-    Label,
-    Form,
-    FormGroup,
-  } from "reactstrap";
-  import { FaUserCog } from "react-icons/fa";
-  import { FaRegSave } from "react-icons/fa";
-  
-  import { useEffect, useRef, useState } from "react";
-  
-  import { useTranslation } from "react-i18next";
-  
-  import "../assets/css/general-css.css";
-  //TODO correct the label
-  
-  import { useUserStore } from "../components/stores/useUserStore";
-  import UserSettings from "../components/modals/user-settings.jsx";
-  import FormInputLabel from "../components/input/forminputlabel.jsx";
+  Container,
+  Col,
+  Row,
+  Card,
+  CardHeader,
+  CardText,
+  CardBody,
+  CardTitle,
+  Input,
+  CardImg,
+  Label,
+  Form,
+  FormGroup,
+  Button,
+} from "reactstrap";
+import { FaUserCog } from "react-icons/fa";
+import { FaRegSave } from "react-icons/fa";
 
-  import { Api } from "../api";
-  import { tsuccess, terror } from "../components/toasts/message-toasts.jsx";
+import { useEffect, useRef, useState } from "react";
 
-  
-  function CreateProject() {
-    const { t } = useTranslation();
-    const token = useUserStore((state) => state.token);
-    const email = useUserStore((state) => state.email);
-    const userSettingsRef = useRef();
-    const [user, setUser] = useState({
-      username: "",
-      firstname: "",
-      lastname: "",
-      lab: "",
-      about: "",
-      role: "",
-      imagePath: "",
-      privateProfile: "",
-    });
-  
-    const [labs, setLabs] = useState([]);
-    const [isLoaded, setIsLoaded] = useState(false);
-  
-    const handleInputChange = (value, field) => {
-      console.log(
-        `handleInputChange called with value: ${value} and field: ${field}`
-      );
-      setUser((prevUser) => {
-        const newUser = { ...prevUser, [field]: value };
-        console.log(`newUser: ${JSON.stringify(newUser)}`);
-        return newUser;
-      });
-    };
-  
-    async function handleLoadLabLocations() {
-      try {
-        if (!isLoaded) {
-          const response = await Api.getAllLocations(token);
-          setLabs(response.data);
-          setIsLoaded(true);
-        }
-      } catch (error) {
-        console.log(error.messsage);
-      }
-    }
-    /**
-     * Function to upload the file. Will check first
-     * @param {*} event
-     * @returns
-     */
-    async function handleFileChange(event) {
-      if (!(event.target.files.length > 0)) {
-        return;
-      }
-      const file = event.target.files[0];
-      const filename = file.name;
-  
-      try {
-        const response = await Api.uploadImage(token, file, filename);
-        tsuccess(response.data);
-        const newImageUrl = response.data + "?timestamp=" + Date.now();
-        handleInputChange(newImageUrl, "imagePath");
-      } catch (error) {
-        terror(error.message);
-      }
-    }
-  
-    async function handleSaveChanges() {
-      try {
-        const response = await Api.updateUser(token, user);
-        tsuccess(response.data);
-      } catch (error) {
-        terror(error.message);
-      }
-    }
-  
-    async function fetchUser() {
-      try {
-        const response = await Api.getUser(token, email);
-        setUser(response.data);
-        tsuccess(response.data);
-      } catch (error) {
-        terror(error.message);
-      }
-    }
-  
-    useEffect(() => {
-      fetchUser();
-      handleLoadLabLocations();
-    }, []);
-  
+import { useTranslation } from "react-i18next";
 
-  
-    return (
-      <div className="section4">
-        <UserSettings ref={userSettingsRef} />
-        <Container>
-          <Row>
-            <Col md="12" className=" mt-5">
-              <Card>
-                <Row>
-                  <Col md="12">
-                    <CardBody>
-                      <Row>
-                        <Col className="mb-4" md="12">
-                          <CardTitle tag="h4" className="profile-icons-container">
-                            <div
-                              style={{ display: "flex", alignItems: "center" }}
-                            >
-                              {t("my-profile")}
-                              <FaUserCog
-                                className="btn-title"
-                                onClick={() => userSettingsRef.current.open()}
-                              />
-                            </div>
-                            <FaRegSave
-                              className="btn-title"
-                              onClick={handleSaveChanges}
-                            />
-                          </CardTitle>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col md="8">
-                          <input
-                            type="file"
-                            id="userImage"
-                            style={{ display: "none" }}
-                            onChange={handleFileChange}
-                            accept="image/*"
-                          />
-                          <label htmlFor="userImage">
-                            <div
-                              style={{
-                                width: "20vw",
-                                height: "20vw",
-                                position: "relative",
-                              }}
-                            >
-                              <CardImg
-                                top
-                                src={user.imagePath}
-                                
-                                style={{
-                                  borderRadius: "50%",
-                                  cursor: "pointer",
-                                  position: "absolute",
-                                  objectFit: "cover",
-                                  width: "100%",
-                                  height: "100%",
-                                  border: "2px solid #000",
-                                }}
-                              />
-                            </div>
-                          </label>
-                        </Col>
-                        <Col md="4">
-                          <Row>
-                            <FormInputLabel
-                              label={t("first-name")}
-                              placeholder={t("first-name")}
-                              type="text"
-                              value={user.firstname}
-                              setValue={(value) =>
-                                handleInputChange(value, "firstname")
-                              }
-                            />
-                          </Row>
-                          <Row>
-                            <FormInputLabel
-                              label={t("last-name")}
-                              placeholder={t("last-name")}
-                              type="text"
-                              value={user.lastname}
-                              setValue={(value) =>
-                                handleInputChange(value, "lastname")
-                              }
-                            />
-                          </Row>
-                          <Row>
-                            <FormInputLabel
-                              label={t("username")}
-                              placeholder={t("username")}
-                              type="text"
-                              value={user.username}
-                              setValue={(value) =>
-                                handleInputChange(value, "username")
-                              }
-                            />
-                          </Row>
-                          <Row>
-                            <FormInputLabel
-                              label={t("lab")}
-                              placeholder={t("select-lab")}
-                              type="select"
-                              required={false}
-                              value={user.lab}
-                              setValue={(value) =>
-                                handleInputChange(value, "lab")
-                              }
-                              data={labs}
-                              handleClick={handleLoadLabLocations}
-                            />
-                          </Row>
-                        </Col>
-                      </Row>
-                    </CardBody>
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
-          </Row>
-  
-          
-        </Container>
-      </div>
-    );
-  }
-  
-  export default CreateProject;
-  
+import "../assets/css/general-css.css";
+//TODO correct the label
+
+import { useUserStore } from "../components/stores/useUserStore";
+import UserSettings from "../components/modals/user-settings.jsx";
+import FormInputLabel from "../components/input/forminputlabel.jsx";
+
+import { Api } from "../api";
+import { tsuccess, terror } from "../components/toasts/message-toasts.jsx";
+
+function CreateProject() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="section4">
+      <Container>
+        <Row>
+          <Col md="10" className=" mt-5">
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h3" className="text-center">
+                  New Project
+                </CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Form>
+                  <FormGroup>
+                    <Label for="projectName">Project Name</Label>
+                    <Input
+                      type="text"
+                      name="projectName"
+                      id="projectName"
+                      placeholder="Enter project name"
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="description">Project Description</Label>
+                    <Input
+                      type="textarea"
+                      name="description"
+                      id="description"
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="startDate">Start Date</Label>
+                    <Input type="date" name="startDate" id="startDate" />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="endDate">End Date</Label>
+                    <Input type="date" name="endDate" id="endDate" />
+                  </FormGroup>
+                  <Button type="submit">Create Project</Button>
+                </Form>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
+}
+
+export default CreateProject;
