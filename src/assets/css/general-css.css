@@ -244,3 +244,14 @@
 .equalHeightCard .CardBody {
   flex-grow: 1;
 }
+
+.bg-secondary-fl {
+  background-color: var(--secondary-color);
+}
+
+.card-header-title {
+  font-size: 2rem; /* Adjust as needed */
+  font-weight: bold; /* Adjust as needed */
+  color: #ffffff; /* Adjust as needed */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Optional: Adds a subtle shadow to the text */
+}

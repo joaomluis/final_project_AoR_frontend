@@ -29,7 +29,8 @@ function MainNavbar(args) {
         light={true}
         dark={true}
       >
-        <NavbarBrand href="/">
+        
+        <NavbarBrand href="/fica-lab/home">
           <img
             alt="logo"
             src={logo}
