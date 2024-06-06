@@ -44,7 +44,7 @@ function FirstStageCreation() {
               <FormGroup floating>
                 <Input bsSize="md" type="select" className="form-select-lg">
                   <option disabled selected>
-                    Lab location*
+                    Select a lab*
                   </option>
                 </Input>
               </FormGroup>

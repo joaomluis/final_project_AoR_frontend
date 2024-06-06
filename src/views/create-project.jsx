@@ -33,6 +33,7 @@ import { tsuccess, terror } from "../components/toasts/message-toasts.jsx";
 
 import FirstStageCreation from "../components/create-project/first-stage-creation.jsx";
 import SecondStageCreation from "../components/create-project/second-stage-creation.jsx";
+import ThirdStageCreation from "../components/create-project/third-stage-creation.jsx";
 
 function CreateProject() {
   const { t } = useTranslation();
@@ -45,7 +46,7 @@ function CreateProject() {
         <Row>
           <Col md="1"></Col>
           <Col md="10" className=" mt-5">
-            <Card className="shadow-lg p-3 mb-5 bg-white rounded">
+            <Card className="shadow-lg p-3 mb-5 bg-white rounded" style={{ minHeight: '500px' }}>
               <CardHeader className="bg-secondary-fl text-white">
                 <CardTitle tag="h3" className="text-center card-header-title">
                   Create a new project
@@ -53,6 +54,7 @@ function CreateProject() {
               </CardHeader>
               {stage === 1 && <FirstStageCreation />}
               {stage === 2 && <SecondStageCreation />}
+              {stage === 3 && <ThirdStageCreation />}
               <CardFooter className="d-flex justify-content-between">
                 {stage > 1 ? (
                   <Button onClick={() => setStage(stage - 1)}>
