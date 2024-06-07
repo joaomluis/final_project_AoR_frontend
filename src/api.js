@@ -1,4 +1,5 @@
 import axios from "axios";
+import { act } from "react";
 
 const BASE_URL = "http://localhost:8080/innovationLab/rest/";
 
@@ -85,6 +86,28 @@ export const Api = {
   updateUser: (token, data) =>
     apiClient
       .put("/users", data, { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+
+
+  getUsersByDto: (token, props) =>
+    apiClient
+      .get("/users/", {
+        headers: { token },
+        params: {
+          firstName: props.firstName,
+          lastName: props.lastName,
+          username: props.username,
+          email: props.email,
+          privateProfile: props.privateProfile,
+          confirmed: props.confirmed,
+          role: props.role,
+          lab_id: props.lab_id,
+          skill: props.skill,
+          interest: props.interest,
+          dtoType: props.dtoType,
+        },
+      })
       .then(handleResponse)
       .catch(handleError),
 

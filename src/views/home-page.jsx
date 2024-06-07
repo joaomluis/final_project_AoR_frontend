@@ -43,7 +43,7 @@ function HomePage() {
     async function fetchProjects() {
       try {
         const response = await Api.getProjectsByDto(token, props);
-        setProjects(response.data); // Set the projects data
+        setProjects(response.data); 
       } catch (error) {
         console.log(error.message);
       }
