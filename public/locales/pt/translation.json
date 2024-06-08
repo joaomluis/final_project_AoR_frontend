@@ -34,11 +34,9 @@
   "current-password": "Senha atual",
   "new-password": "Nova senha",
   "confirm-password": "Confirme a senha",
-  "lab": "Laboratório",
 
   "sign-up": "Registar",
   "sign-up-subtext": "Pronto para tornar os teus projetos realidade? Regista-te agora!",
-  "confirm-password": "Confirmar Password",
   "create-account": "Criar conta",
   "already-have-account": "Já tens conta?",
   "sign-in": "Entrar",
@@ -53,5 +51,17 @@
   "landing-page-section2-title": "Além de ajudar com os vossos projetos, o FicaLab também dá acesso às melhores ferramentas para a gestão do vosso tempo.",
   "landing-page-section3-title": " Interessado em tornar a ideia realidade? Mostra-nos o que sabes fazer!",
   "landing-page-section3-subtitle": "Ou descobre outras ideias que estamos a ajudar a desenvolver",
-  "see-more-projects": "Ver mais projetos"
+  "see-more-projects": "Ver mais projetos",
+  "sign-out": "Sair",
+  "are-you-sure": "Tem a certeza?",
+  "yes": "Sim",
+  "no": "Não",
+  "projects": "Projetos",
+  "participants": "Participantes",
+  "see-project": "Ver projeto",
+  "filter": "Filtro",
+  "status": "Estado",
+  "order": "Ordenar",
+  "keywords": "Palavras-chave",
+  "skills": "Habilidades"
 }

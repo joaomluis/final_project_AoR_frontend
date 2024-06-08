@@ -7,7 +7,7 @@ import Testing from "./views/testing.jsx";
 import ChangePassword from "./components/change-password/change-password.jsx";
 import ProjectPage from "./views/project-page.jsx";
 import CreateProject from "./views/create-project.jsx";
-
+import ProjectList from "./views/project-list.jsx";
 var routes = [
   {
     path: "/",
@@ -15,12 +15,12 @@ var routes = [
     component: <LandingPage />,
     layout: "/landing",
   },
-  {
-    path: "/login",
-    name: "login",
-    component: <SignIn />,
-    layout: "/landing",
-  },
+  // {
+  //   path: "/login",
+  //   name: "login",
+  //   component: <SignIn />,
+  //   layout: "/landing",
+  // },
   {
     path: "/confirm-account/:token",
     name: "confirm-account",
@@ -61,6 +61,12 @@ var routes = [
     path: "/create-project",
     name: "Create Project",
     component: <CreateProject />,
+    layout: "/main",
+  },
+  {
+    path: "/project-list",
+    name: "Project List",
+    component: <ProjectList />,
     layout: "/main",
   },
 ];

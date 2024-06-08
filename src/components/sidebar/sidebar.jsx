@@ -71,7 +71,7 @@ function SideNavbar() {
 
   async function getMyProjects() {
     try {
-      const response = await Api.getProjectsByDto(token, props);
+      const response = await Api.getProjects(token, props);
       setProjects(response.data);
     } catch (err) {
       console.log(err);
@@ -82,11 +82,7 @@ function SideNavbar() {
   }, []);
 
   return (
-    <Sidebar
-      collapsed={collapsed}
-      backgroundColor="#DBE2EF"
-      style={{ minHeight: "100vh", maxHeight: "100vh", overflow: "auto" }}
-    >
+    <Sidebar collapsed={collapsed} backgroundColor="#DBE2EF" style={{ minHeight: "100vh", maxHeight: "100vh", overflow: "auto" }}>
       <Menu>
         <div className="custom-link" onClick={() => navigate("/fica-lab/home")}>
           <MenuItem icon={<FaHome />}> Home </MenuItem>
@@ -97,11 +93,7 @@ function SideNavbar() {
         <SubMenu icon={<FaClipboard />} label="My Projects">
           {projects
             ? projects.map((project, index) => {
-                return (
-                  <MenuItem key={`${project.id}-${index}`}>
-                    {showMyProjects(project.name, project.status)}
-                  </MenuItem>
-                );
+                return <MenuItem key={`${project.id}-${index}`}>{showMyProjects(project.name, project.status)}</MenuItem>;
               })
             : null}
         </SubMenu>
