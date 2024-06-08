@@ -244,3 +244,15 @@
 .equalHeightCard .CardBody {
   flex-grow: 1;
 }
+
+.filter-order-component {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row-no-margin {
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,0 +1,30 @@
+.card-body {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.project-card-view {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  transition: width 1s ease;
+  margin-top: 1rem;
+}
+
+.view-skill-keyword {
+  color: var(--secondary-color); /* Cor do texto para parecer um link */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+  transition: color 0.3s ease, border-bottom-color 0.3s ease;
+}
+
+.view-skill-keyword:hover {
+  box-shadow: 0 1px 0 0 rgb(115, 115, 115); /* Adiciona uma sombra ao "sublinhado" */
+  border-bottom-color: var(--secondary-color-darker);
+  color: var(--secondary-color-darker);
+}
+.user-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+}
