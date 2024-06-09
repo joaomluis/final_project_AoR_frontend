@@ -63,5 +63,7 @@
   "status": "Estado",
   "order": "Ordenar",
   "keywords": "Palavras-chave",
-  "skills": "Habilidades"
+  "skills": "Habilidades",
+  "interests": "Interesses",
+  "users": "Utilizadores"
 }
