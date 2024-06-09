@@ -65,5 +65,7 @@
   "status": "Status",
   "search": "Search",
   "keywords": "Keywords",
-  "skills": "Skills"
+  "skills": "Skills",
+  "interests": "Interests",
+  "users": "Users"
 }

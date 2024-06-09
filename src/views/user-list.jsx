@@ -1,16 +1,18 @@
-import { Container, Col, Row, Card, CardBody, CardTitle, Input, Label, Button } from "reactstrap";
-import { CiFilter } from "react-icons/ci";
-import { RiOrderPlayFill } from "react-icons/ri";
 import { Api } from "../api";
+import { Link } from "react-router-dom";
+
+import { Card, CardBody, CardTitle, CardSubtitle, CardText, CardHeader, CardFooter, Badge, Row, Col } from "reactstrap";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
+import PopoverComponent from "../components/tags/tag-popover-component.jsx";
 import { useUserStore } from "../components/stores/useUserStore.js";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import ProjectCardList from "../components/Project_cards/project-cards-list.jsx";
+import UserCardList from "../components/User_cards/user-cards-list.jsx";
 import { useEffect } from "react";
 import ModalFilter from "../components/modals/modal-filter.jsx";
 import ListLayout from "../layout/list-layout/list.jsx";
-function ProjectList() {
+
+function UserList() {
   const token = useUserStore((state) => state.token);
   const { t } = useTranslation();
 
@@ -20,11 +22,9 @@ function ProjectList() {
   const toggleFilter = () => setModalFilter(!ModalFilters);
   const toggleOrder = () => setModalOrder(!ModalOrders);
 
-  const [projects, setProjects] = useState([]);
-  const [status, setStatus] = useState([]);
-  const [keywords, setKeywords] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [interests, setInterests] = useState([]);
   const [skills, setSkills] = useState([]);
-
   /**
    * Function to handle the selection change in the filters
    * @param {*} selected
@@ -47,30 +47,27 @@ function ProjectList() {
    * @param {*} selected
    * @returns
    */
-  const handleStatusChange = (selected) => handleSelectionChange(selected, status, setStatus);
-  const handleKeywordsChange = (selected) => handleSelectionChange(selected, keywords, setKeywords);
+  const handleInterestsChange = (selected) => handleSelectionChange(selected, interests, setInterests);
   const handleSkillsChange = (selected) => handleSelectionChange(selected, skills, setSkills);
 
   /**
    * Filters to be displayed in the modal filter
    */
   const filters = [
-    { label: t("status"), options: status, handleOnChange: handleStatusChange },
-    { label: t("keywords"), options: keywords, handleOnChange: handleKeywordsChange },
+    { label: t("interests"), options: interests, handleOnChange: handleInterestsChange },
     { label: t("skills"), options: skills, handleOnChange: handleSkillsChange },
   ];
 
   /**
-   * Method to get the filter options from the API
+   * getFilterOptions
    */
   async function getFilterOptions() {
     try {
       const response = await Api.getFilterOptions(token);
-      setKeywords(response.data.interests);
+      setInterests(response.data.interests);
       setSkills(response.data.skills);
-      setStatus(response.data.statuses);
     } catch (error) {
-      terror(error.message);
+      terror("Error", error.message);
     }
   }
 
@@ -78,36 +75,34 @@ function ProjectList() {
    * Method to apply the filters
    */
   async function applyFilters() {
-    const keywordsArray = keywords.filter((item) => item.selected).map((item) => item.name);
-    const skillsArray = skills.filter((item) => item.selected).map((item) => item.name);
-    const statusArray = status.filter((item) => item.selected).map((item) => item.name);
+    const interestsArray = interests ? interests.filter((interest) => interest.selected).map((interest) => interest.name) : [];
+    const skillsArray = skills ? skills.filter((skill) => skill.selected).map((skill) => skill.name) : [];
 
     const props = {
-      dtoType: "ProjectCardDto",
-      interest: keywordsArray,
-      skills: skillsArray,
-      status: statusArray,
+      dtoType: "UserCardDto",
+      interest: interestsArray,
+      skill: skillsArray,
     };
 
     try {
-      const response = await Api.getProjects(token, props);
-      setProjects(response.data);
+      const response = await Api.getUsers(token, props);
+      setUsers(response.data);
     } catch (error) {
-      terror(error.message);
+      terror("Error", error.message);
     }
   }
 
   useEffect(() => {
-    applyFilters();
     getFilterOptions();
+    applyFilters();
   }, []);
 
   return (
-    <ListLayout title={t("projects")} toggleOrder={toggleOrder} toggleFilter={toggleFilter}>
+    <ListLayout title={t("users")} toggleOrder={toggleOrder} toggleFilter={toggleFilter}>
       <Row>
-        {projects.map((project, index) => (
-          <Col sm="12" md="6" lg="4" key={index} className="mt-4">
-            <ProjectCardList Project={project} />
+        {users.map((user) => (
+          <Col sm="12" md="6" lg="4" key={user.id} className="mt-4">
+            <UserCardList User={user} />
           </Col>
         ))}
       </Row>
@@ -116,4 +111,4 @@ function ProjectList() {
   );
 }
 
-export default ProjectList;
+export default UserList;

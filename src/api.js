@@ -72,6 +72,16 @@ export const Api = {
       .catch(handleError),
   updateUser: (token, data) => apiClient.put("/users", data, { headers: { token } }).then(handleResponse).catch(handleError),
 
+  getUsers: (token, props) => {
+    const queryString = qs.stringify(props, { arrayFormat: "repeat" });
+
+    return apiClient
+      .get(`/users/?${queryString}`, {
+        headers: { token },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
   //LOCATION endpoints
   getAllLocations: (token) => apiClient.get("/labs", { headers: { token } }).then(handleResponse).catch(handleError),
 

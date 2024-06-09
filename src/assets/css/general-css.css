@@ -29,8 +29,9 @@
 }
 
 .section4 {
+  padding-top: 1rem;
   background-color: var(--whitey);
-  min-height: 820px;
+  min-height: 100vh;
 }
 
 .main-container {

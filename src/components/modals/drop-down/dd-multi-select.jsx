@@ -5,7 +5,7 @@ const DDMultiSelect = ({ label, options, handleOnChange }) => (
   <div>
     <label>{label}:</label>
     <DropdownMultiselect
-      options={options.map((option) => ({
+      options={(options || []).map((option) => ({
         key: option.id,
         label: option.name,
       }))}
@@ -14,4 +14,5 @@ const DDMultiSelect = ({ label, options, handleOnChange }) => (
     />
   </div>
 );
+
 export default DDMultiSelect;
