@@ -179,6 +179,9 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError),
 
+  // props é um objecto com todos os possiveis parametros que podem ser passados ao método
+  // apenas para simplificar a chamada e não ter que passar todos os parametros
+  // query string é um objecto com todos os possiveis parametros que podem ser passados ao método
   getProjects: (token, props) => {
     const queryString = qs.stringify(props, { arrayFormat: "repeat" });
 
