@@ -1,18 +1,4 @@
-import {
-  Container,
-  Col,
-  Row,
-  Card,
-  CardHeader,
-  CardText,
-  CardBody,
-  CardTitle,
-  Input,
-  CardImg,
-  Label,
-  Form,
-  FormGroup,
-} from "reactstrap";
+import { Container, Col, Row, Card, CardHeader, CardText, CardBody, CardTitle, Input, CardImg, Label, Form, FormGroup } from "reactstrap";
 import { FaUserCog } from "react-icons/fa";
 import { FaRegSave } from "react-icons/fa";
 
@@ -36,9 +22,7 @@ function MyProfile() {
   const token = useUserStore((state) => state.token);
   const email = useUserStore((state) => state.email);
   const privateProfile = useUserStore((state) => state.privateProfile);
-  const updatePrivateProfile = useUserStore(
-    (state) => state.updatePrivateProfile
-  );
+  const updatePrivateProfile = useUserStore((state) => state.updatePrivateProfile);
   const userSettingsRef = useRef();
   const [user, setUser] = useState({
     username: "",
@@ -154,31 +138,17 @@ function MyProfile() {
                     <Row>
                       <Col className="mb-4" md="12">
                         <CardTitle tag="h4" className="profile-icons-container">
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
+                          <div style={{ display: "flex", alignItems: "center" }}>
                             {t("my-profile")}
-                            <FaUserCog
-                              className="btn-title"
-                              onClick={() => userSettingsRef.current.open()}
-                            />
+                            <FaUserCog className="btn-title" onClick={() => userSettingsRef.current.open()} />
                           </div>
-                          <FaRegSave
-                            className="btn-title"
-                            onClick={handleSaveChanges}
-                          />
+                          <FaRegSave className="btn-title" onClick={handleSaveChanges} />
                         </CardTitle>
                       </Col>
                     </Row>
                     <Row>
                       <Col md="8">
-                        <input
-                          type="file"
-                          id="userImage"
-                          style={{ display: "none" }}
-                          onChange={handleFileChange}
-                          accept="image/*"
-                        />
+                        <input type="file" id="userImage" style={{ display: "none" }} onChange={handleFileChange} accept="image/*" />
                         <label htmlFor="userImage">
                           <div
                             style={{
@@ -210,9 +180,7 @@ function MyProfile() {
                             placeholder={t("first-name")}
                             type="text"
                             value={user.firstname}
-                            setValue={(value) =>
-                              handleInputChange(value, "firstname")
-                            }
+                            setValue={(value) => handleInputChange(value, "firstname")}
                           />
                         </Row>
                         <Row>
@@ -221,9 +189,7 @@ function MyProfile() {
                             placeholder={t("last-name")}
                             type="text"
                             value={user.lastname}
-                            setValue={(value) =>
-                              handleInputChange(value, "lastname")
-                            }
+                            setValue={(value) => handleInputChange(value, "lastname")}
                           />
                         </Row>
                         <Row>
@@ -232,9 +198,7 @@ function MyProfile() {
                             placeholder={t("username")}
                             type="text"
                             value={user.username}
-                            setValue={(value) =>
-                              handleInputChange(value, "username")
-                            }
+                            setValue={(value) => handleInputChange(value, "username")}
                           />
                         </Row>
                         <Row>
@@ -244,9 +208,7 @@ function MyProfile() {
                             type="select"
                             required={false}
                             value={user.lab}
-                            setValue={(value) =>
-                              handleInputChange(value, "lab")
-                            }
+                            setValue={(value) => handleInputChange(value, "lab")}
                             data={labs}
                             handleClick={handleLoadLabLocations}
                           />
@@ -261,21 +223,13 @@ function MyProfile() {
         </Row>
 
         <Row>
-          <Col md="6" className="mt-5 mb-5">
-            {cardSkillInterest(
-              t("my-interests"),
-              t("there-you-can-add-and-remove-your-interests"),
-              <InterestTag />
-            )}
+          <Col md="6" className="mt-5">
+            {cardSkillInterest(t("my-interests"), t("there-you-can-add-and-remove-your-interests"), <InterestTag />)}
           </Col>
           <Col md="6" className="mt-5">
-            {cardSkillInterest(
-              t("my-skills"),
-              t("there-you-can-add-and-remove-your-skills"),
-              <SkillTag />
-            )}
+            {cardSkillInterest(t("my-skills"), t("there-you-can-add-and-remove-your-skills"), <SkillTag />)}
           </Col>
-          <Col>
+          <Col className="mt-5">
             <Card>
               <CardHeader>
                 <CardTitle tag="h4">{t("about")}</CardTitle>

@@ -1,0 +1,15 @@
+.product-card {
+  background-color: var(--withey-color);
+  color: var(--primary-color);
+}
+
+.product-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.badge-style {
+  background-color: var(--admin) !important;
+  font-size: small;
+  color: var(--primary-color);
+}

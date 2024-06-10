@@ -67,5 +67,20 @@
   "keywords": "Keywords",
   "skills": "Skills",
   "interests": "Interests",
-  "users": "Users"
+  "users": "Users",
+
+  "since": "Since",
+  "admin": "Admin",
+  "see-user": "See user",
+  "see-product": "See product",
+  "component": "Component",
+  "resource": "Resource",
+  "description": "Description",
+  "supplier": "Supplier",
+  "identifier": "Identifier",
+
+  "home": "Home",
+
+  "products": "Products",
+  "my-projects": "My projects"
 }

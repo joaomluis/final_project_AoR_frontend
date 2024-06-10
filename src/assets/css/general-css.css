@@ -11,6 +11,11 @@
   --ready: #6bffa9;
   --cancelled: #e74c3c;
   --finished: #007d0f;
+
+  --admin: #e4cf4359;
+  --admin-btn: rgba(152, 135, 27, 0.604);
+
+  --box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .section1 {
@@ -30,6 +35,7 @@
 
 .section4 {
   padding-top: 1rem;
+  padding-bottom: 1rem;
   background-color: var(--whitey);
   min-height: 100vh;
 }
@@ -267,4 +273,24 @@
   font-weight: bold; /* Adjust as needed */
   color: #ffffff; /* Adjust as needed */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Optional: Adds a subtle shadow to the text */
+}
+
+.container-transition {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+.container-transition.loading {
+  opacity: 0;
+}
+
+.container2-transition {
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+}
+.container2-transition.loading {
+  transform: translateX(-100%);
+}
+
+.card-title {
+  margin-bottom: 0;
 }

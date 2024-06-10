@@ -193,4 +193,17 @@ export const Api = {
       .catch(handleError);
   },
   getFilterOptions: (token) => apiClient.get("/projects/filter-options", { headers: { token } }).then(handleResponse).catch(handleError),
+
+  //PRODUCTS endpoint
+  getProducts: (token, props) => {
+    const queryString = qs.stringify(props, { arrayFormat: "repeat" });
+
+    return apiClient
+      .get(`/products/?${queryString}`, {
+        headers: { token },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
+  getFilterOptionsProducts: (token) => apiClient.get("/products/filter-options", { headers: { token } }).then(handleResponse).catch(handleError),
 };

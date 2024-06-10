@@ -15,7 +15,7 @@ import ListLayout from "../layout/list-layout/list.jsx";
 function UserList() {
   const token = useUserStore((state) => state.token);
   const { t } = useTranslation();
-
+  const [loading, setLoading] = useState(true);
   //Modal Order & Filter
   const [ModalFilters, setModalFilter] = useState(false);
   const [ModalOrders, setModalOrder] = useState(false);
@@ -87,6 +87,7 @@ function UserList() {
     try {
       const response = await Api.getUsers(token, props);
       setUsers(response.data);
+      setLoading(false);
     } catch (error) {
       terror("Error", error.message);
     }
@@ -98,7 +99,7 @@ function UserList() {
   }, []);
 
   return (
-    <ListLayout title={t("users")} toggleOrder={toggleOrder} toggleFilter={toggleFilter}>
+    <ListLayout title={t("users")} toggleOrder={toggleOrder} toggleFilter={toggleFilter} loading={loading}>
       <Row>
         {users.map((user) => (
           <Col sm="12" md="6" lg="4" key={user.id} className="mt-4">

@@ -1,6 +1,4 @@
 import { Container, Col, Row, Card, CardBody, CardTitle, Input, Label, Button } from "reactstrap";
-import { CiFilter } from "react-icons/ci";
-import { RiOrderPlayFill } from "react-icons/ri";
 import { Api } from "../api";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
 import { useUserStore } from "../components/stores/useUserStore.js";
@@ -13,7 +11,7 @@ import ListLayout from "../layout/list-layout/list.jsx";
 function ProjectList() {
   const token = useUserStore((state) => state.token);
   const { t } = useTranslation();
-
+  const [loading, setLoading] = useState(true);
   //Modal Order & Filter
   const [ModalFilters, setModalFilter] = useState(false);
   const [ModalOrders, setModalOrder] = useState(false);
@@ -92,6 +90,7 @@ function ProjectList() {
     try {
       const response = await Api.getProjects(token, props);
       setProjects(response.data);
+      setLoading(false);
     } catch (error) {
       terror(error.message);
     }
@@ -103,7 +102,7 @@ function ProjectList() {
   }, []);
 
   return (
-    <ListLayout title={t("projects")} toggleOrder={toggleOrder} toggleFilter={toggleFilter}>
+    <ListLayout title={t("projects")} toggleOrder={toggleOrder} toggleFilter={toggleFilter} loading={loading}>
       <Row>
         {projects.map((project, index) => (
           <Col sm="12" md="6" lg="4" key={index} className="mt-4">

@@ -9,6 +9,7 @@ import ProjectPage from "./views/project-page.jsx";
 import CreateProject from "./views/create-project.jsx";
 import ProjectList from "./views/project-list.jsx";
 import UserList from "./views/user-list.jsx";
+import ProductList from "./views/product-list.jsx";
 var routes = [
   {
     path: "/",
@@ -74,6 +75,12 @@ var routes = [
     path: "/user-list/",
     name: "User List",
     component: <UserList />,
+    layout: "/main",
+  },
+  {
+    path: "/product-list",
+    name: "Product List",
+    component: <ProductList />,
     layout: "/main",
   },
 ];

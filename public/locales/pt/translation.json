@@ -65,5 +65,20 @@
   "keywords": "Palavras-chave",
   "skills": "Habilidades",
   "interests": "Interesses",
-  "users": "Utilizadores"
+  "users": "Utilizadores",
+
+  "since": "Desde",
+  "admin": "Administrador",
+  "see-user": "Ver utilizador",
+  "see-product": "Ver produto",
+  "component": "Componente",
+  "resource": "Recurso",
+  "description": "Descrição",
+  "supplier": "Fornecedor",
+  "identifier": "Identificador",
+
+  "home": "Início",
+
+  "products": "Produtos",
+  "my-projects": "Meus projetos"
 }
