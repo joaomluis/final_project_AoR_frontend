@@ -1,6 +1,6 @@
 .card-body {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* overflow: hidden;
+  text-overflow: ellipsis; */
 }
 .project-card-view {
   display: flex;

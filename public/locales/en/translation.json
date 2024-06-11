@@ -73,6 +73,8 @@
   "admin": "Admin",
   "see-user": "See user",
   "see-product": "See product",
+  "see-": "See",
+  "profile": "Profile",
   "component": "Component",
   "resource": "Resource",
   "description": "Description",
@@ -82,5 +84,10 @@
   "home": "Home",
 
   "products": "Products",
-  "my-projects": "My projects"
+  "my-projects": "My projects",
+
+  "view-skills": "View skills",
+  "view-interests": "View interests",
+  "view-keywords": "View keywords",
+  "labs": "Labs"
 }

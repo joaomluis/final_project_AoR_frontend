@@ -84,8 +84,8 @@ const ProjectCardsList = ({ Project }) => {
 
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div className="project-card-view">
-              <PopoverComponent data={Project.keywords} title={t("view-keywords")} id={Project.id} />
-              <PopoverComponent data={Project.skills} title={t("view-skills")} id={Project.id} />
+              <PopoverComponent data={Project.keywords} title={t("view-keywords")} id={Project.id} idText="view-keywords" />
+              <PopoverComponent data={Project.skills} title={t("view-skills")} id={Project.id} idText="view-skills" />
             </div>
           </div>
         </CardBody>

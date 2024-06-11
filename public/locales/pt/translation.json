@@ -71,6 +71,8 @@
   "admin": "Administrador",
   "see-user": "Ver utilizador",
   "see-product": "Ver produto",
+  "see-": "Ver perfil de",
+  "profile": "",
   "component": "Componente",
   "resource": "Recurso",
   "description": "Descrição",
@@ -80,5 +82,11 @@
   "home": "Início",
 
   "products": "Produtos",
-  "my-projects": "Meus projetos"
+  "my-projects": "Meus projetos",
+
+  "view-skills": "Ver habilidades",
+  "view-interests": "Ver interesses",
+  "view-keywords": "Ver palavras-chave",
+
+  "labs": "Laboratórios"
 }

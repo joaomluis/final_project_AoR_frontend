@@ -19,8 +19,8 @@ const UserCardList = ({ User }) => {
         </div>
         <div className="project-card-view-style">
           <div className={`project-card-view `} id={`${User.role === "ADMIN" ? "admin-card-private" : ""}`}>
-            <PopoverComponent data={User.interests} title={t("view-interests")} id={User.id} />
-            <PopoverComponent data={User.skills} title={t("view-skills")} id={User.id} />
+            <PopoverComponent data={User.interests} title={t("view-interests")} id={User.id} idText={"interests"} />
+            <PopoverComponent data={User.skills} title={t("view-skills")} id={User.id} idText={"skills"} />
           </div>
         </div>
       </>
@@ -43,7 +43,7 @@ const UserCardList = ({ User }) => {
             <div className="flex-center padding1rem">
               <div className="role">{User.role === "ADMIN" ? t("admin") : ""}</div>
               <img alt="profile" src={User.imagePath} className={`profile-image ${User.role === "ADMIN" ? "admin-card-img" : ""}`} />
-              {User.firstname} {User.lastname}&nbsp;<span className="card-header-span-style"> ({User.username ? User.username : ""})</span>{" "}
+              {User.firstname} {User.lastname}
             </div>
           </CardTitle>
         </CardHeader>
@@ -54,8 +54,16 @@ const UserCardList = ({ User }) => {
           {User.privateProfile ? privatePart() : publicPart()}
         </CardBody>
         <CardFooter className={`${User.role === "ADMIN" ? "admin-card-footers" : ""}`}>
-          <Link color="light" to={`/fica-lab/user/${User.id}`} className={`btn button-style1 w-100 ${User.role === "ADMIN" ? "admin-card-footer" : ""} `}>
-            {t("see-user")}
+          <Link
+            color="light"
+            to={`/fica-lab/user/${User.id}`}
+            className={`btn button-style1 w-100 ${User.role === "ADMIN" ? "admin-card-footer" : ""} style={{
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
+  }}`}
+          >
+            {t("see-")} <strong className=""> {User.username ? User.username : User.firstname}</strong> {t("profile")}
           </Link>
         </CardFooter>
       </Card>

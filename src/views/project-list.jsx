@@ -22,6 +22,7 @@ function ProjectList() {
   const [status, setStatus] = useState([]);
   const [keywords, setKeywords] = useState([]);
   const [skills, setSkills] = useState([]);
+  const [labs, setLabs] = useState([]);
 
   /**
    * Function to handle the selection change in the filters
@@ -48,7 +49,7 @@ function ProjectList() {
   const handleStatusChange = (selected) => handleSelectionChange(selected, status, setStatus);
   const handleKeywordsChange = (selected) => handleSelectionChange(selected, keywords, setKeywords);
   const handleSkillsChange = (selected) => handleSelectionChange(selected, skills, setSkills);
-
+  const handleLabsChange = (selected) => handleSelectionChange(selected, labs, setLabs);
   /**
    * Filters to be displayed in the modal filter
    */
@@ -56,6 +57,7 @@ function ProjectList() {
     { label: t("status"), options: status, handleOnChange: handleStatusChange },
     { label: t("keywords"), options: keywords, handleOnChange: handleKeywordsChange },
     { label: t("skills"), options: skills, handleOnChange: handleSkillsChange },
+    { label: t("labs"), options: labs, handleOnChange: handleLabsChange },
   ];
 
   /**
@@ -67,6 +69,7 @@ function ProjectList() {
       setKeywords(response.data.interests);
       setSkills(response.data.skills);
       setStatus(response.data.statuses);
+      setLabs(response.data.labs);
     } catch (error) {
       terror(error.message);
     }
@@ -79,13 +82,17 @@ function ProjectList() {
     const keywordsArray = keywords.filter((item) => item.selected).map((item) => item.name);
     const skillsArray = skills.filter((item) => item.selected).map((item) => item.name);
     const statusArray = status.filter((item) => item.selected).map((item) => item.name);
+    const labsArray = labs.filter((item) => item.selected).map((item) => item.name);
 
     const props = {
       dtoType: "ProjectCardDto",
       interest: keywordsArray,
-      skills: skillsArray,
+      skill: skillsArray,
+      lab: labsArray,
       status: statusArray,
     };
+
+    console.log(props.lab);
 
     try {
       const response = await Api.getProjects(token, props);

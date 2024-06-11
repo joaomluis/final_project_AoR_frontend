@@ -25,6 +25,7 @@ function UserList() {
   const [users, setUsers] = useState([]);
   const [interests, setInterests] = useState([]);
   const [skills, setSkills] = useState([]);
+  const [labs, setLabs] = useState([]);
   /**
    * Function to handle the selection change in the filters
    * @param {*} selected
@@ -49,13 +50,14 @@ function UserList() {
    */
   const handleInterestsChange = (selected) => handleSelectionChange(selected, interests, setInterests);
   const handleSkillsChange = (selected) => handleSelectionChange(selected, skills, setSkills);
-
+  const handleLabsChange = (selected) => handleSelectionChange(selected, labs, setLabs);
   /**
    * Filters to be displayed in the modal filter
    */
   const filters = [
     { label: t("interests"), options: interests, handleOnChange: handleInterestsChange },
     { label: t("skills"), options: skills, handleOnChange: handleSkillsChange },
+    { label: t("labs"), options: labs, handleOnChange: handleLabsChange },
   ];
 
   /**
@@ -66,6 +68,7 @@ function UserList() {
       const response = await Api.getFilterOptions(token);
       setInterests(response.data.interests);
       setSkills(response.data.skills);
+      setLabs(response.data.labs);
     } catch (error) {
       terror("Error", error.message);
     }
@@ -77,11 +80,13 @@ function UserList() {
   async function applyFilters() {
     const interestsArray = interests ? interests.filter((interest) => interest.selected).map((interest) => interest.name) : [];
     const skillsArray = skills ? skills.filter((skill) => skill.selected).map((skill) => skill.name) : [];
+    const labsArray = labs ? labs.filter((lab) => lab.selected).map((lab) => lab.name) : [];
 
     const props = {
       dtoType: "UserCardDto",
       interest: interestsArray,
       skill: skillsArray,
+      lab: labsArray,
     };
 
     try {

@@ -2,12 +2,12 @@ import React from "react";
 import { Badge, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import { useState } from "react";
 
-const PopoverComponent = ({ data, title, id }) => {
+const PopoverComponent = ({ data, title, id, idText }) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   const togglePopover = () => setPopoverOpen(!popoverOpen);
 
-  const uniqueId = `Popover-${title}-${id}`;
+  const uniqueId = `${idText}-${id}`;
 
   return (
     <div className="skill-keyword-container tag skill-tag">
@@ -37,7 +37,7 @@ const PopoverComponent = ({ data, title, id }) => {
         </PopoverHeader>
         <PopoverBody>
           {data?.map((element, index) => (
-            <Badge key={index} className="m-1" color="warning">
+            <Badge key={index} className="m-1 badge-style">
               {element}
             </Badge>
           ))}
