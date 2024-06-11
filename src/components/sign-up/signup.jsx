@@ -1,17 +1,6 @@
 //TODO : Retirar o codigo redundante
 //DONE: Alterei os botões Sign Up / Sign In e o Forgot Password
-import {
-  Card,
-  Button,
-  CardHeader,
-  CardBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  CardFooter,
-  CardText,
-} from "reactstrap";
+import { Card, Button, CardHeader, CardBody, Form, FormGroup, Label, Input, CardFooter, CardText } from "reactstrap";
 import { useState, useRef } from "react";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useTranslation } from "react-i18next";
@@ -26,6 +15,7 @@ function SignUp() {
   const { t } = useTranslation();
   const recoverPasswordRef = useRef();
   const updateToken = useUserStore((state) => state.updateToken);
+  const updateEmail = useUserStore((state) => state.updateEmail);
   const navigate = useNavigate();
 
   const [isSignUp, setIsSignUp] = useState(false);
@@ -45,8 +35,10 @@ function SignUp() {
       const response = await Api.signin(email, password);
       if (response.data) {
         tsuccess("Login successful!");
-        updateToken(response.data);
-        console.log(response.data);
+        updateToken(response.data.token);
+        updateEmail(response.data.email);
+        console.log(response.data.email);
+        console.log(response.data.token);
         //TODO redirect to home page
         navigate("fica-lab/home");
       }
@@ -85,10 +77,7 @@ function SignUp() {
       >
         {isSignUp ? (
           <>
-            <CardHeader
-              className="text-center"
-              style={{ color: "var(--whitey)" }}
-            >
+            <CardHeader className="text-center" style={{ color: "var(--whitey)" }}>
               <h2>{t("sign-up")}</h2>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
@@ -98,28 +87,12 @@ function SignUp() {
             <CardBody>
               <Form>
                 <FormGroup floating>
-                  <Input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    name="email"
-                    placeholder="Email"
-                    type="email"
-                    required
-                  />
+                  <Input value={email} onChange={(e) => setEmail(e.target.value)} name="email" placeholder="Email" type="email" required />
                   <Label for="exampleEmail">Email</Label>
                 </FormGroup>
                 <FormGroup floating>
-                  <Input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    name="password"
-                    placeholder="Password"
-                    type="password"
-                    required
-                  />
-                  {password && (
-                    <PasswordStrengthBar minLength={1} password={password} />
-                  )}
+                  <Input value={password} onChange={(e) => setPassword(e.target.value)} name="password" placeholder="Password" type="password" required />
+                  {password && <PasswordStrengthBar minLength={1} password={password} />}
                   <Label for="examplePassword">Password</Label>
                 </FormGroup>
                 <FormGroup floating>
@@ -150,11 +123,7 @@ function SignUp() {
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                 {t("already-have-account")}{" "}
-                <button
-                  className="button-link"
-                  onClick={() => setIsSignUp(false)}
-                  style={{ cursor: "pointer", color: "#FFD700" }}
-                >
+                <button className="button-link" onClick={() => setIsSignUp(false)} style={{ cursor: "pointer", color: "#FFD700" }}>
                   {t("sign-in")}
                 </button>
               </p>
@@ -162,10 +131,7 @@ function SignUp() {
           </>
         ) : (
           <>
-            <CardHeader
-              className="text-center"
-              style={{ color: "var(--whitey)" }}
-            >
+            <CardHeader className="text-center" style={{ color: "var(--whitey)" }}>
               <h4>{t("sign-in")}</h4>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
@@ -175,35 +141,17 @@ function SignUp() {
             <CardBody>
               <Form>
                 <FormGroup floating>
-                  <Input
-                    name="email"
-                    placeholder="Email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
+                  <Input name="email" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                   <Label for="exampleEmail">Email</Label>
                 </FormGroup>
 
                 <FormGroup floating>
-                  <Input
-                    name="password"
-                    placeholder="Password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                  <Input name="password" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
                   <Label for="examplePassword">Password</Label>
                 </FormGroup>
 
-                <span
-                  className="button-link"
-                  style={{ color: "var(--whitey)", fontWeight: "bold" }}
-                  onClick={() => recoverPasswordRef.current.open()}
-                >
+                <span className="button-link" style={{ color: "var(--whitey)", fontWeight: "bold" }} onClick={() => recoverPasswordRef.current.open()}>
                   {t("forgot-password")}
                 </span>
 
@@ -224,11 +172,7 @@ function SignUp() {
             <CardFooter className="text-center">
               <p style={{ color: "var(--whitey)", marginTop: "10px" }}>
                 {t("dont-have-account")}{" "}
-                <button
-                  className="button-link"
-                  onClick={() => setIsSignUp(true)}
-                  style={{ cursor: "pointer", color: "#FFD700" }}
-                >
+                <button className="button-link" onClick={() => setIsSignUp(true)} style={{ cursor: "pointer", color: "#FFD700" }}>
                   {t("sign-up")}
                 </button>
               </p>

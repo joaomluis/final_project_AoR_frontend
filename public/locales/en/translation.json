@@ -42,7 +42,6 @@
   "landing-page-section3-title": "Interested in make your idea come to life? Show us what you got!",
   "landing-page-section3-subtitle": "Or check out some awesome ideas we're helping become reality",
   "see-more-projects": "See more projects",
-  "lab": "Laboratory",
 
   "your-profile-is-currently": "Your profile is currently",
   "private": "Private",
@@ -53,5 +52,44 @@
 
   "current-password": "Current password",
   "new-password": "New password",
-  "confirm-password": "Confirm password"
+  "sign-out": "Sign out",
+  "are-you-sure": "Are you sure?",
+  "yes": "Yes",
+  "no": "No",
+  "projects": "Projects",
+  "participants": "Participants",
+  "see-project": "See project",
+
+  "filter": "Filter",
+  "order": "Order",
+  "status": "Status",
+  "search": "Search",
+  "keywords": "Keywords",
+  "skills": "Skills",
+  "interests": "Interests",
+  "users": "Users",
+
+  "since": "Since",
+  "admin": "Admin",
+  "see-user": "See user",
+  "see-product": "See product",
+  "see-": "See",
+  "profile": "Profile",
+  "component": "Component",
+  "resource": "Resource",
+  "description": "Description",
+  "supplier": "Supplier",
+  "identifier": "Identifier",
+
+  "home": "Home",
+
+  "products": "Products",
+  "my-projects": "My projects",
+
+  "view-skills": "View skills",
+  "view-interests": "View interests",
+  "view-keywords": "View keywords",
+  "labs": "Labs",
+  "brands": "Brands",
+  "types": "Types"
 }

@@ -15,7 +15,7 @@ export const useUserStore = create(
     (set) => ({
       // username: "",
       token: "",
-      email: "admin@admin",
+      email: "",
       privateProfile: "",
       skills: [],
       allSkills: [],
@@ -25,15 +25,13 @@ export const useUserStore = create(
 
       updatePrivateProfile: (privateProfile) => set({ privateProfile }),
 
-      updateEmail: (email) => set({ email }), //new action
-      updateToken: (token) => set(token), //new action
+      updateEmail: (email) => set({ email: email }), //new action
+      updateToken: (token) => set({ token: token }), //new action
 
       updateInterests: (interests) => set({ interests }),
       updateAllInterests: (allInterests) => set({ allInterests }),
-      addInterest: (interest) =>
-        set((state) => ({ interests: [...state.interests, interest] })),
-      addInterestToAll: (interest) =>
-        set((state) => ({ allInterests: [...state.allInterests, interest] })),
+      addInterest: (interest) => set((state) => ({ interests: [...state.interests, interest] })),
+      addInterestToAll: (interest) => set((state) => ({ allInterests: [...state.allInterests, interest] })),
       removeInterest: (interest) =>
         set((state) => ({
           interests: state.interests.filter((s) => s.id !== interest.id),
@@ -42,10 +40,8 @@ export const useUserStore = create(
       updateSkillTypes: (skillTypes) => set({ skillTypes }),
       updateSkills: (skills) => set({ skills }), //new action
       updateAllSkills: (allSkills) => set({ allSkills }), //new action
-      addSkill: (skill) =>
-        set((state) => ({ skills: [...state.skills, skill] })),
-      addSkillToAll: (skill) =>
-        set((state) => ({ allSkills: [...state.allSkills, skill] })),
+      addSkill: (skill) => set((state) => ({ skills: [...state.skills, skill] })),
+      addSkillToAll: (skill) => set((state) => ({ allSkills: [...state.allSkills, skill] })),
       removeSkill: (skill) =>
         set((state) => ({
           skills: state.skills.filter((s) => s.id !== skill.id),

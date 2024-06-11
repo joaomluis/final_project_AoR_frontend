@@ -1,21 +1,7 @@
-import {
-  Container,
-  Col,
-  Row,
-  Card,
-  CardBody,
-  CardTitle,
-  Input,
-  Label,
-  Button,
-} from "reactstrap";
+import { Container, Col, Row, Card, CardBody, CardTitle, Input, Label, Button } from "reactstrap";
 import { FaPlus } from "react-icons/fa";
 import { Api } from "../api";
-import {
-  tsuccess,
-  terror,
-  twarn,
-} from "../components/toasts/message-toasts.jsx";
+import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
 import { useUserStore } from "../components/stores/useUserStore.js";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -42,8 +28,8 @@ function HomePage() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const response = await Api.getProjectsByDto(token, props);
-        setProjects(response.data); // Set the projects data
+        const response = await Api.getProjects(token, props);
+        setProjects(response.data.results); // Set the projects data
       } catch (error) {
         console.log(error.message);
       }

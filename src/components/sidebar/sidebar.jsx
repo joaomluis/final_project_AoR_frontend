@@ -5,7 +5,10 @@ import { Link } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
 import "./sidebar.css";
 import { Api } from "../../api";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 function SideNavbar() {
+  const { t } = useTranslation();
   const [collapsed, setCollapsed] = useState(false);
   const [projects, setProjects] = useState([{}]);
   const token = useUserStore((state) => state.token);
@@ -13,6 +16,9 @@ function SideNavbar() {
   let statusClass = "";
   let statusName = "";
   //useEffect to handle the resizing of the side navbar
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     const handleResize = () => {
       setCollapsed(window.innerWidth < 768);
@@ -67,8 +73,8 @@ function SideNavbar() {
 
   async function getMyProjects() {
     try {
-      const response = await Api.getProjectsByDto(token, props);
-      setProjects(response.data);
+      const response = await Api.getProjects(token, props);
+      setProjects(response.data.results);
     } catch (err) {
       console.log(err);
     }
@@ -78,27 +84,24 @@ function SideNavbar() {
   }, []);
 
   return (
-    <Sidebar
-      collapsed={collapsed}
-      backgroundColor="#DBE2EF"
-      style={{ minHeight: "100vh", maxHeight: "100vh", overflow: "auto" }}
-    >
+    <Sidebar collapsed={collapsed} backgroundColor="#DBE2EF" style={{ minHeight: "100vh", maxHeight: "100vh", overflow: "auto" }}>
       <Menu>
-        <MenuItem to="/fica-lab/home" icon={<FaHome />} className="custom-link">
-          {" "}
-          Home{" "}
-        </MenuItem>
-        <MenuItem icon={<FaClipboard />}> Projects List </MenuItem>
-        <MenuItem icon={<FaTools />}> Components List </MenuItem>
-        <MenuItem icon={<FaUsers />}> Users List </MenuItem>
-        <SubMenu icon={<FaClipboard />} label="My Projects">
+        <div className="custom-link" onClick={() => navigate("/fica-lab/home")}>
+          <MenuItem icon={<FaHome />}> {t("home")} </MenuItem>
+        </div>
+        <div className="custom-link" onClick={() => navigate("/fica-lab/project-list")}>
+          <MenuItem icon={<FaClipboard />}> {t("projects")} </MenuItem>
+        </div>
+        <div className="custom-link" onClick={() => navigate("/fica-lab/product-list")}>
+          <MenuItem icon={<FaTools />}> {t("products")} </MenuItem>
+        </div>
+        <div className="custom-link" onClick={() => navigate("/fica-lab/user-list")}>
+          <MenuItem icon={<FaUsers />}> {t("users")} </MenuItem>
+        </div>
+        <SubMenu icon={<FaClipboard />} label={t("my-projects")}>
           {projects
             ? projects.map((project, index) => {
-                return (
-                  <MenuItem key={`${project.id}-${index}`}>
-                    {showMyProjects(project.name, project.status)}
-                  </MenuItem>
-                );
+                return <MenuItem key={`${project.id}-${index}`}>{showMyProjects(project.name, project.status)}</MenuItem>;
               })
             : null}
         </SubMenu>
