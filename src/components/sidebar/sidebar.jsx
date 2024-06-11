@@ -74,7 +74,7 @@ function SideNavbar() {
   async function getMyProjects() {
     try {
       const response = await Api.getProjects(token, props);
-      setProjects(response.data);
+      setProjects(response.data.results);
     } catch (err) {
       console.log(err);
     }

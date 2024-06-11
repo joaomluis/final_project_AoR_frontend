@@ -29,7 +29,7 @@ function HomePage() {
     async function fetchProjects() {
       try {
         const response = await Api.getProjects(token, props);
-        setProjects(response.data); // Set the projects data
+        setProjects(response.data.results); // Set the projects data
       } catch (error) {
         console.log(error.message);
       }

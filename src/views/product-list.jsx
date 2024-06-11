@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Row, Col } from "reactstrap";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
 import { useUserStore } from "../components/stores/useUserStore.js";
+import useFilterStore from "../components/stores/useFilterStore.js";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
@@ -15,6 +16,7 @@ function ProductList() {
   const token = useUserStore((state) => state.token);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
+  const { productFilters, setProductFilters } = useFilterStore();
   //Modal Order & Filter
   const [ModalFilters, setModalFilter] = useState(false);
   const [ModalOrders, setModalOrder] = useState(false);
@@ -39,8 +41,8 @@ function ProductList() {
   const handleTypeChange = (selected) => handleSelectionChange(selected, types, setTypes);
 
   const filters = [
-    { label: t("brands"), options: brands, handleOnChange: handleBrandChange },
-    { label: t("types"), options: types, handleOnChange: handleTypeChange },
+    { label: "brands", options: brands, handleOnChange: handleBrandChange },
+    { label: "types", options: types, handleOnChange: handleTypeChange },
   ];
 
   /**
@@ -57,22 +59,38 @@ function ProductList() {
       });
   }
 
+  function getSelectedField(array, field) {
+    return array.filter((item) => item.selected).map((item) => item[field]);
+  }
+
   /**
    * Apply filters
    */
   async function applyFilters() {
-    const brandsArray = brands.filter((brand) => brand.selected).map((brand) => brand.name);
-    const typesArray = types.filter((type) => type.selected).map((type) => type.name);
+    const brandsArray = getSelectedField(brands, "name");
+    const typesArray = getSelectedField(types, "name");
+
+    const brandsID = getSelectedField(brands, "id");
+    const typesID = getSelectedField(types, "id");
 
     const props = {
       brand: brandsArray,
       type: typesArray,
     };
 
+    const propsID = {
+      brands: brandsID,
+      types: typesID,
+    };
+
+    setProductFilters(propsID);
+
     try {
       const response = await Api.getProducts(token, props);
-      setProducts(response.data);
+      setProducts(response.data.results);
+      console.log(response.data.totalPages);
       setLoading(false);
+      setModalFilter(false);
     } catch (error) {
       terror("Error", error);
     }
@@ -98,7 +116,7 @@ function ProductList() {
           </Col>
         ))}
       </Row>
-      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} />
+      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={productFilters} />
     </ListLayout>
   );
 }

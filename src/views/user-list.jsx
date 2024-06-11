@@ -5,6 +5,7 @@ import { Card, CardBody, CardTitle, CardSubtitle, CardText, CardHeader, CardFoot
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
 import PopoverComponent from "../components/tags/tag-popover-component.jsx";
 import { useUserStore } from "../components/stores/useUserStore.js";
+import useFilterStore from "../components/stores/useFilterStore.js";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import UserCardList from "../components/User_cards/user-cards-list.jsx";
@@ -15,6 +16,7 @@ import ListLayout from "../layout/list-layout/list.jsx";
 function UserList() {
   const token = useUserStore((state) => state.token);
   const { t } = useTranslation();
+  const { userFilters, setUserFilters } = useFilterStore();
   const [loading, setLoading] = useState(true);
   //Modal Order & Filter
   const [ModalFilters, setModalFilter] = useState(false);
@@ -55,9 +57,9 @@ function UserList() {
    * Filters to be displayed in the modal filter
    */
   const filters = [
-    { label: t("interests"), options: interests, handleOnChange: handleInterestsChange },
-    { label: t("skills"), options: skills, handleOnChange: handleSkillsChange },
-    { label: t("labs"), options: labs, handleOnChange: handleLabsChange },
+    { label: "interests", options: interests, handleOnChange: handleInterestsChange },
+    { label: "skills", options: skills, handleOnChange: handleSkillsChange },
+    { label: "labs", options: labs, handleOnChange: handleLabsChange },
   ];
 
   /**
@@ -74,13 +76,21 @@ function UserList() {
     }
   }
 
+  function getSelectedField(array, field) {
+    return array.filter((item) => item.selected).map((item) => item[field]);
+  }
+
   /**
    * Method to apply the filters
    */
   async function applyFilters() {
-    const interestsArray = interests ? interests.filter((interest) => interest.selected).map((interest) => interest.name) : [];
-    const skillsArray = skills ? skills.filter((skill) => skill.selected).map((skill) => skill.name) : [];
-    const labsArray = labs ? labs.filter((lab) => lab.selected).map((lab) => lab.name) : [];
+    const interestsArray = getSelectedField(interests, "name");
+    const skillsArray = getSelectedField(skills, "name");
+    const labsArray = getSelectedField(labs, "name");
+
+    const interestsID = getSelectedField(interests, "id");
+    const skillsID = getSelectedField(skills, "id");
+    const labsID = getSelectedField(labs, "id");
 
     const props = {
       dtoType: "UserCardDto",
@@ -89,10 +99,20 @@ function UserList() {
       lab: labsArray,
     };
 
+    const propsID = {
+      interests: interestsID,
+      skills: skillsID,
+      labs: labsID,
+    };
+
+    setUserFilters(propsID);
+
     try {
       const response = await Api.getUsers(token, props);
-      setUsers(response.data);
+      setUsers(response.data.results);
       setLoading(false);
+      setModalFilter(false);
+      console.log(response.data.totalPages);
     } catch (error) {
       terror("Error", error.message);
     }
@@ -112,7 +132,7 @@ function UserList() {
           </Col>
         ))}
       </Row>
-      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} />
+      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={userFilters} />
     </ListLayout>
   );
 }

@@ -2,6 +2,7 @@ import { Container, Col, Row, Card, CardBody, CardTitle, Input, Label, Button } 
 import { Api } from "../api";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
 import { useUserStore } from "../components/stores/useUserStore.js";
+import useFilterStore from "../components/stores/useFilterStore.js";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ProjectCardList from "../components/Project_cards/project-cards-list.jsx";
@@ -11,6 +12,7 @@ import ListLayout from "../layout/list-layout/list.jsx";
 function ProjectList() {
   const token = useUserStore((state) => state.token);
   const { t } = useTranslation();
+  const { projectFilters, setProjectFilters } = useFilterStore();
   const [loading, setLoading] = useState(true);
   //Modal Order & Filter
   const [ModalFilters, setModalFilter] = useState(false);
@@ -54,10 +56,10 @@ function ProjectList() {
    * Filters to be displayed in the modal filter
    */
   const filters = [
-    { label: t("status"), options: status, handleOnChange: handleStatusChange },
-    { label: t("keywords"), options: keywords, handleOnChange: handleKeywordsChange },
-    { label: t("skills"), options: skills, handleOnChange: handleSkillsChange },
-    { label: t("labs"), options: labs, handleOnChange: handleLabsChange },
+    { label: "status", options: status, handleOnChange: handleStatusChange },
+    { label: "keywords", options: keywords, handleOnChange: handleKeywordsChange },
+    { label: "skills", options: skills, handleOnChange: handleSkillsChange },
+    { label: "labs", options: labs, handleOnChange: handleLabsChange },
   ];
 
   /**
@@ -75,14 +77,30 @@ function ProjectList() {
     }
   }
 
+  function getSelectedField(array, field) {
+    return array.filter((item) => item.selected).map((item) => item[field]);
+  }
+
   /**
    * Method to apply the filters
    */
   async function applyFilters() {
-    const keywordsArray = keywords.filter((item) => item.selected).map((item) => item.name);
-    const skillsArray = skills.filter((item) => item.selected).map((item) => item.name);
-    const statusArray = status.filter((item) => item.selected).map((item) => item.name);
-    const labsArray = labs.filter((item) => item.selected).map((item) => item.name);
+    const keywordsArray = getSelectedField(keywords, "name");
+    const skillsArray = getSelectedField(skills, "name");
+    const statusArray = getSelectedField(status, "name");
+    const labsArray = getSelectedField(labs, "name");
+
+    const keywordsID = getSelectedField(keywords, "id");
+    const skillsID = getSelectedField(skills, "id");
+    const statusID = getSelectedField(status, "id");
+    const labsID = getSelectedField(labs, "id");
+
+    const propsIDs = {
+      keywords: keywordsID,
+      skills: skillsID,
+      labs: labsID,
+      status: statusID,
+    };
 
     const props = {
       dtoType: "ProjectCardDto",
@@ -92,12 +110,14 @@ function ProjectList() {
       status: statusArray,
     };
 
-    console.log(props.lab);
+    setProjectFilters(propsIDs);
 
     try {
       const response = await Api.getProjects(token, props);
-      setProjects(response.data);
+      setProjects(response.data.results);
+      console.log(response.data.totalPages);
       setLoading(false);
+      setModalFilter(false);
     } catch (error) {
       terror(error.message);
     }
@@ -117,7 +137,7 @@ function ProjectList() {
           </Col>
         ))}
       </Row>
-      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} />
+      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={projectFilters} />
     </ListLayout>
   );
 }
