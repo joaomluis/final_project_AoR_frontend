@@ -48,10 +48,11 @@ function ThirdStageCreation() {
     setMatchedMembers(matched);
   }, [searchTerm, allMembers]);
 
-  useEffect(() => {
-  }, [selectedMembers]);
+  useEffect(() => {}, [selectedMembers]);
 
-  const selectedMemberObjects = selectedMembers.map(id => allMembers.find(member => member.userId === id));
+  const selectedMemberObjects = selectedMembers.map((id) =>
+    allMembers.find((member) => member.userId === id)
+  );
 
   const props = {
     privateProfile: true,
@@ -132,19 +133,40 @@ function ThirdStageCreation() {
                 ))}
               </div>
             </Col>
-            <Col md={6}>
-              <FormGroup style={{ textAlign: "center" }}>
-                <Label style={{ fontWeight: "bold" }}>Group Preview</Label>
+            <Col md={1}> </Col>
+            <Col md={5}>
+              <FormGroup
+                style={{
+                  textAlign: "center",
+                  backgroundColor: "#f0f0f0", // light grey background
+                  borderRadius: "5px", // rounded corners
+                  padding: "10px", // padding around the form group
+                  margin: "10px 0", // margin around the form group
+                }}
+              >
+                <Label
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "20px", // larger font size
+                    color: "#333", // dark grey color
+                  }}
+                >
+                  Group Preview
+                </Label>
               </FormGroup>
 
               <div
                 style={{
-                  maxHeight: "200px",
+                  maxHeight: "175px",
                   overflowY: "auto",
+                  border: "1px solid #ccc",
+                  padding: "10px",
+                  margin: "10px 0",
+                  backgroundColor: "#f0f0f0",
+                  borderRadius: "5px",
                 }}
               >
                 {selectedMemberObjects.map((member) => (
-                  
                   <div
                     key={member.userId}
                     style={{
