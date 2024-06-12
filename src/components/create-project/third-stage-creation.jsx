@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { CardBody, Form, FormGroup, Input, Button, Row, Col } from "reactstrap";
+import {
+  CardBody,
+  Form,
+  FormGroup,
+  Input,
+  Button,
+  Row,
+  Col,
+  Label,
+} from "reactstrap";
 
 import { Api } from "../../api.js";
 import { useUserStore } from "../stores/useUserStore.js";
@@ -11,7 +20,6 @@ function ThirdStageCreation() {
   const [allMembers, setAllMembers] = useState([]);
   const [matchedMembers, setMatchedMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
-
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -30,17 +38,20 @@ function ThirdStageCreation() {
       newSelectedMembers.push(userId);
     }
     setSelectedMembers(newSelectedMembers);
-    
+    console.log(selectedMembers);
   };
-
 
   useEffect(() => {
     const matched = allMembers?.filter((member) =>
       member.firstName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setMatchedMembers(matched);
-    console.log(selectedMembers);
   }, [searchTerm, allMembers]);
+
+  useEffect(() => {
+  }, [selectedMembers]);
+
+  const selectedMemberObjects = selectedMembers.map(id => allMembers.find(member => member.userId === id));
 
   const props = {
     privateProfile: true,
@@ -69,8 +80,7 @@ function ThirdStageCreation() {
         </div>
         <Form onSubmit={handleSearch}>
           <Row>
-            <Col md={2}></Col>
-            <Col md={8}>
+            <Col md={6}>
               <FormGroup>
                 <Input
                   type="text"
@@ -118,6 +128,48 @@ function ThirdStageCreation() {
                       value={member.userId}
                       onChange={() => handleSelect(member.userId)}
                     />
+                  </div>
+                ))}
+              </div>
+            </Col>
+            <Col md={6}>
+              <FormGroup style={{ textAlign: "center" }}>
+                <Label style={{ fontWeight: "bold" }}>Group Preview</Label>
+              </FormGroup>
+
+              <div
+                style={{
+                  maxHeight: "200px",
+                  overflowY: "auto",
+                }}
+              >
+                {selectedMemberObjects.map((member) => (
+                  
+                  <div
+                    key={member.userId}
+                    style={{
+                      border: "1px solid #ccc",
+                      borderRadius: "5px",
+                      padding: "10px",
+                      marginBottom: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      backgroundColor: "#f9f9f9",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <img
+                        src={member.imagePath}
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
+                      {`${member.firstName} ${member.lastName}`}
+                    </div>
                   </div>
                 ))}
               </div>
