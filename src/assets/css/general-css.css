@@ -294,3 +294,15 @@
 .card-title {
   margin-bottom: 0;
 }
+
+/* Pagination */
+.page-link {
+  color: var(--secondary-color);
+}
+.active > .page-link {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  box-shadow: var(--box-shadow);
+  color: var(--whitey);
+}
+/* Pagination */

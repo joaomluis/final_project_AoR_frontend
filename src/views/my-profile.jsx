@@ -95,10 +95,11 @@ function MyProfile() {
   const props = { email: email };
   async function fetchUser() {
     try {
-      const response = await Api.getUser(token, props);
+      const response = await Api.getUsers(token, props);
 
-      setUser(response.data[0]);
-      updatePrivateProfile(response.data[0].privateProfile);
+      console.log(response.data.results[0]);
+      setUser(response.data.results[0]);
+      updatePrivateProfile(response.data.results[0].privateProfile);
 
       tsuccess(response.data);
     } catch (error) {

@@ -12,6 +12,9 @@ function ModalFilter({ isOpen, toggle, title, filters, onSubmit, selected }) {
       </Button>
     </div>
   );
+  // filters.forEach((filter) => {
+  //   console.log("filter", filter);
+  // });
   return (
     <ModalBase isOpen={isOpen} toggle={toggle} title={title} footer={footer}>
       {filters.map((filter, index) => (
