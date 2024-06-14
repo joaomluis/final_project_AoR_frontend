@@ -22,25 +22,7 @@ function SecondStageCreation() {
         <Form>
           <Row>
             <Col md={6}>
-              <FormGroup>
-                <Label for="projectName">Project Name</Label>
-                <Input
-                  type="text"
-                  name="projectName"
-                  id="projectName"
-                  placeholder="Enter project name"
-                  className="form-control-lg"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="description">Project Description</Label>
-                <Input
-                  type="textarea"
-                  name="description"
-                  id="description"
-                  className="form-control-lg"
-                />
-              </FormGroup>
+              
               
             </Col>
             <Col md={6}>

@@ -1,32 +1,62 @@
 import { Col, Row, CardBody, Input, Label, Form, FormGroup } from "reactstrap";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import useCreateProjectStore from "../stores/useCreateProjectStore.js";
+import { useUserStore } from "../stores/useUserStore.js";
+
+import { Api } from "../../api";
 
 function FirstStageCreation() {
-  const [projectName, setProjectName] = useState("");
-  const [description, setDescription] = useState("");
-  const [lab, setLab] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const projectName = useCreateProjectStore((state) => state.projectName);
+  const description = useCreateProjectStore((state) => state.description);
+  const lab = useCreateProjectStore((state) => state.lab);
+  const startDate = useCreateProjectStore((state) => state.startDate);
+  const endDate = useCreateProjectStore((state) => state.endDate);
+
+  const token = useUserStore((state) => state.token);
+  const [labs, setLabs] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  async function handleLoadLabLocations() {
+    try {
+      if (!isLoaded) {
+        const response = await Api.getAllLocations(token);
+        setLabs(response.data);
+        setIsLoaded(true);
+      }
+    } catch (error) {
+      console.log(error.messsage);
+    }
+  }
+
+  useEffect(() => {
+    handleLoadLabLocations();
+  }, []);
+
+  const logCurrentState = () => {
+    console.log(useCreateProjectStore.getState());
+  };
 
   const handleProjectNameChange = (event) => {
-    setProjectName(event.target.value);
+    useCreateProjectStore.getState().setProjectName(event.target.value);
   };
 
   const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
+    useCreateProjectStore.getState().setDescription(event.target.value);
   };
 
   const handleLabChange = (event) => {
-    setLab(event.target.value);
+    useCreateProjectStore.getState().setLab(event.target.value);
   };
 
   const handleStartDateChange = (event) => {
-    setStartDate(event.target.value);
+    useCreateProjectStore.getState().setStartDate(event.target.value);
   };
 
   const handleEndDateChange = (event) => {
-    setEndDate(event.target.value);
+    useCreateProjectStore.getState().setEndDate(event.target.value);
+    logCurrentState();
   };
 
   return (
@@ -63,12 +93,17 @@ function FirstStageCreation() {
                   bsSize="md"
                   type="select"
                   className="form-select-lg"
-                  value={lab}
+                  value={lab || "default"}
                   onChange={handleLabChange}
                 >
-                  <option disabled selected>
-                    Select a lab*
+                  <option disabled value="default">
+                    Select a Lab*
                   </option>
+                  {labs.map((lab) => (
+                    <option key={lab.id} value={lab.id}>
+                      {lab.location}
+                    </option>
+                  ))}
                 </Input>
               </FormGroup>
             </Col>

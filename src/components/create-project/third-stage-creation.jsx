@@ -10,16 +10,29 @@ import {
   Label,
 } from "reactstrap";
 
+import useCreateProjectStore from "../stores/useCreateProjectStore.js";
+
 import { Api } from "../../api.js";
 import { useUserStore } from "../stores/useUserStore.js";
 
 function ThirdStageCreation() {
   const token = useUserStore((state) => state.token);
 
+  const projectUsers = useCreateProjectStore((state) => state.projectUsers);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [allMembers, setAllMembers] = useState([]);
   const [matchedMembers, setMatchedMembers] = useState([]);
-  const [selectedMembers, setSelectedMembers] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState([]); 
+
+  
+
+  const updateProjectMembers = useCreateProjectStore((state) => state.setProjectUsers);
+  useEffect(() => {
+    updateProjectMembers(selectedMembers);
+  }, [selectedMembers, updateProjectMembers]);
+
+  
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -38,7 +51,6 @@ function ThirdStageCreation() {
       newSelectedMembers.push(userId);
     }
     setSelectedMembers(newSelectedMembers);
-    console.log(selectedMembers);
   };
 
   useEffect(() => {
@@ -63,8 +75,7 @@ function ThirdStageCreation() {
     async function fetchUsers() {
       try {
         const response = await Api.getUsersByDto(token, props);
-        setAllMembers(response.data);
-        console.log(response.data);
+        setAllMembers(response.data.results);
       } catch (error) {
         console.log(error.message);
       }
@@ -138,17 +149,17 @@ function ThirdStageCreation() {
               <FormGroup
                 style={{
                   textAlign: "center",
-                  backgroundColor: "#f0f0f0", // light grey background
-                  borderRadius: "5px", // rounded corners
-                  padding: "10px", // padding around the form group
-                  margin: "10px 0", // margin around the form group
+                  backgroundColor: "#f0f0f0", 
+                  borderRadius: "5px", 
+                  padding: "10px", 
+                  margin: "10px 0", 
                 }}
               >
                 <Label
                   style={{
                     fontWeight: "bold",
-                    fontSize: "20px", // larger font size
-                    color: "#333", // dark grey color
+                    fontSize: "20px", 
+                    color: "#333", 
                   }}
                 >
                   Group Preview
