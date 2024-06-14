@@ -22,28 +22,12 @@ function SecondStageCreation() {
         <Form>
           <Row>
             <Col md={6}>
-              
+              <Label for="components">Components</Label>
               
             </Col>
             <Col md={6}>
-              <FormGroup>
-                <Label for="startDate">Start Date</Label>
-                <Input
-                  type="date"
-                  name="startDate"
-                  id="startDate"
-                  className="form-control-lg"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="endDate">End Date</Label>
-                <Input
-                  type="date"
-                  name="endDate"
-                  id="endDate"
-                  className="form-control-lg"
-                />
-              </FormGroup>
+            <Label for="resources">Resources</Label>
+             
             </Col>
           </Row>
           

@@ -23,13 +23,15 @@ function ThirdStageCreation() {
   const [searchTerm, setSearchTerm] = useState("");
   const [allMembers, setAllMembers] = useState([]);
   const [matchedMembers, setMatchedMembers] = useState([]);
-  const [selectedMembers, setSelectedMembers] = useState([]); 
+  const [selectedMembers, setSelectedMembers] = useState([]);
 
   
 
   const updateProjectMembers = useCreateProjectStore((state) => state.setProjectUsers);
   useEffect(() => {
     updateProjectMembers(selectedMembers);
+    console.log("selected members: " + JSON.stringify(selectedMembers));
+    console.log(projectUsers);
   }, [selectedMembers, updateProjectMembers]);
 
   
