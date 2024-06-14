@@ -34,6 +34,7 @@ import { tsuccess, terror } from "../components/toasts/message-toasts.jsx";
 import FirstStageCreation from "../components/create-project/first-stage-creation.jsx";
 import SecondStageCreation from "../components/create-project/second-stage-creation.jsx";
 import ThirdStageCreation from "../components/create-project/third-stage-creation.jsx";
+import FourthStageCreation from "../components/create-project/fourth-stage-creation.jsx";
 
 function CreateProject() {
   const { t } = useTranslation();
@@ -55,6 +56,7 @@ function CreateProject() {
               {stage === 1 && <FirstStageCreation />}
               {stage === 2 && <SecondStageCreation />}
               {stage === 3 && <ThirdStageCreation />}
+              {stage === 4 && <FourthStageCreation />}
               <CardFooter className="d-flex justify-content-between">
                 {stage > 1 ? (
                   <Button onClick={() => setStage(stage - 1)}>
