@@ -13,7 +13,7 @@ function FirstStageCreation() {
   const lab = useCreateProjectStore((state) => state.lab);
   const startDate = useCreateProjectStore((state) => state.startDate);
   const endDate = useCreateProjectStore((state) => state.endDate);
-
+  const projectUsers = useCreateProjectStore((state) => state.projectUsers);
   const token = useUserStore((state) => state.token);
   const [labs, setLabs] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -34,25 +34,22 @@ function FirstStageCreation() {
     handleLoadLabLocations();
   }, []);
 
-  const [labName, setLabName] = useState('');
+  const [labName, setLabName] = useState("");
 
-useEffect(() => {
-  console.log(labs);
-  console.log(lab);
-  
-  const labObject = labs.find(labObj => labObj.id === lab);
+  useEffect(() => {
+    console.log(labs);
+    console.log(lab);
 
-  console.log(labObject);
+    const labObject = labs.find((labObj) => labObj.id === lab);
 
-  
-  const newLabName = labObject ? labObject.location : '';
+    console.log(labObject);
 
-  
-  setLabName(newLabName);
-}, [lab, labs]);
+    const newLabName = labObject ? labObject.location : "";
 
+    setLabName(newLabName);
+  }, [lab, labs]);
 
-const selectedMemberObjects = [];
+  const selectedMemberObjects = [];
 
   return (
     <>
@@ -74,67 +71,37 @@ const selectedMemberObjects = [];
               </FormGroup>
               <FormGroup>
                 <Label for="description">Project Description</Label>
-                <Input
-                  type="textarea"
-                  name="description"
-                  id="description"
-                  className="form-control-lg"
-                  value={description}
-                  readOnly
-                />
+                <Input type="textarea" name="description" id="description" className="form-control-lg" value={description} readOnly />
               </FormGroup>
-              <FormGroup >
-              <Label for="labLocation">Lab Location</Label>
-                <Input
-                  type="text"
-                  name="labLocation"
-                  id="labLocation"
-                  
-                  className="form-control-lg"
-                  value={lab}
-                  readOnly
-                />
+              <FormGroup>
+                <Label for="labLocation">Lab Location</Label>
+                <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={lab} readOnly />
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
                 <Label for="startDate">Start Date</Label>
-                <Input
-                  type="date"
-                  name="startDate"
-                  id="startDate"
-                  className="form-control-lg"
-                  value={startDate}
-                  readOnly
-                  
-                />
+                <Input type="date" name="startDate" id="startDate" className="form-control-lg" value={startDate} readOnly />
               </FormGroup>
               <FormGroup>
                 <Label for="endDate">End Date</Label>
-                <Input
-                  type="date"
-                  name="endDate"
-                  id="endDate"
-                  className="form-control-lg"
-                  value={endDate}
-                  readOnly
-                />
+                <Input type="date" name="endDate" id="endDate" className="form-control-lg" value={endDate} readOnly />
               </FormGroup>
 
               <FormGroup
                 style={{
                   textAlign: "center",
-                  backgroundColor: "#f0f0f0", 
-                  borderRadius: "5px", 
-                  padding: "10px", 
-                  margin: "10px 0", 
+                  backgroundColor: "#f0f0f0",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  margin: "10px 0",
                 }}
               >
                 <Label
                   style={{
                     fontWeight: "bold",
-                    fontSize: "20px", 
-                    color: "#333", 
+                    fontSize: "20px",
+                    color: "#333",
                   }}
                 >
                   Group Preview
@@ -152,7 +119,7 @@ const selectedMemberObjects = [];
                   borderRadius: "5px",
                 }}
               >
-                {selectedMemberObjects.map((member) => (
+                {projectUsers.map((member) => (
                   <div
                     key={member.userId}
                     style={{
