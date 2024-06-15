@@ -16,7 +16,7 @@ function ModalFilter({ isOpen, toggle, title, filters, onSubmit, selected }) {
     <ModalBase isOpen={isOpen} toggle={toggle} title={title} footer={footer}>
       {filters.map((filter, index) => (
         <div key={index}>
-          <DDMultiSelect label={t(filter.label)} options={filter.options} handleOnChange={filter.handleOnChange} selected={selected[filter.label]} />
+          <DDMultiSelect label={filter.label} options={filter.options} handleOnChange={filter.handleOnChange} />
         </div>
       ))}
     </ModalBase>
