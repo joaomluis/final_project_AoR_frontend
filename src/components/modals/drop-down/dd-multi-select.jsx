@@ -1,5 +1,6 @@
 import React from "react";
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
+import { useTranslation } from "react-i18next";
 /**
  * Component to render a dropdown with multiple selection
  * @param {*} label
@@ -9,6 +10,7 @@ import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
  * @returns
  */
 function DDMultiSelect({ label, options, handleOnChange, selected }) {
+  const { t } = useTranslation();
   return (
     <div>
       <label>{label}:</label>
@@ -18,6 +20,7 @@ function DDMultiSelect({ label, options, handleOnChange, selected }) {
           label: option.name,
         }))}
         name={label}
+        selectDeselectLabel={t("select-all")}
         handleOnChange={handleOnChange}
         selected={selected}
       />

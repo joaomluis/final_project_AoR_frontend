@@ -15,30 +15,30 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 function ProjectList() {
   const token = useUserStore((state) => state.token);
   const { t } = useTranslation();
-  const { projectFilters, setProjectFilters } = useFilterStore();
   const [loading, setLoading] = useState(true);
   //Modal Order & Filter
   const [ModalFilters, setModalFilter] = useState(false);
   const [ModalOrders, setModalOrder] = useState(false);
   const toggleFilter = () => setModalFilter(!ModalFilters);
   const toggleOrder = () => setModalOrder(!ModalOrders);
-  const navigate = useNavigate();
 
   const [projects, setProjects] = useState([]);
   const [status, setStatus] = useState([]);
   const [keywords, setKeywords] = useState([]);
   const [skills, setSkills] = useState([]);
   const [labs, setLabs] = useState([]);
-  const [filterIds, setFilterIds] = useState({});
-
-  const [selectedKeywords, setSelectedKeywords] = useState([]);
-  const [selectedSkills, setSelectedSkills] = useState([]);
-  const [selectedLabs, setSelectedLabs] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState([]);
+  const [ids, setIds] = useState({});
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const query = new URLSearchParams(useLocation().search);
+  const location = useLocation();
+
+  const [searchParams, setSearchParams] = useSearchParams({ page: 1, status: [], keywords: [], skills: [], labs: [] });
+  const statusParam = searchParams.get("status") || [];
+  const keywordParam = searchParams.get("keywords") || [];
+  const skillParam = searchParams.get("skills") || [];
+  const labParam = searchParams.get("labs") || [];
+  const pageParam = searchParams.get("page") || 1;
 
   /**
    * Function to handle the selection change in the filters
@@ -47,40 +47,27 @@ function ProjectList() {
    * @param {*} setItems
    * @returns
    */
-  const handleSelectionChange = (selected, items, setItems, param, currentPage) => {
-    const selectedNumbers = selected.map(Number);
-    const newItems = [];
-    const selectedItems = [];
-    const selectedItemsId = [];
+  const handleSelectionChange = (selected, items, setItems, paramName) => {
+    const newItems = items.map((item) => ({
+      ...item,
+      selected: selected.map(Number).includes(item.id),
+    }));
+    setItems(newItems);
+    const filteredItems = newItems.filter((item) => selected.map(Number).includes(item.id));
 
-    items.forEach((item) => {
-      const isSelected = selectedNumbers.includes(item.id);
-      newItems.push({ ...item, selected: isSelected });
-      if (isSelected) {
-        console.log(item.name);
-        console.log(item.id);
-        selectedItems.push(item.name);
-        selectedItemsId.push(item.id);
-      }
-    });
+    const selectedIds = filteredItems.map((item) => item.id);
+    // Update the respective array in the ids object
+    setIds((prevState) => ({
+      ...prevState,
+      [paramName]: selectedIds,
+    }));
 
-    //update URL
-    query.set(param, selectedItems.join(","));
-    navigate(`?${query.toString()}`);
-    query.set("page", currentPage); // Adicionando a página atual na URL
+    const selectedNames = filteredItems.map((item) => item.name);
 
-    //delete param if no items are selected
-    if (selectedItems.length === 0) {
-      query.delete(param);
-      navigate(`?${query.toString()}`);
-    }
-
-    console.log(selectedItems);
-    console.log(selectedItemsId);
-    setItems(selectedItems);
-    setFilterIds((prevState) => ({ ...prevState, [param]: selectedItemsId }));
-
-    return selectedItemsId.map((id, index) => ({ id, name: selectedItems[index] }));
+    // Atualizar os parâmetros de consulta no URL
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set(paramName, selectedNames.join(","));
+    setSearchParams(newSearchParams);
   };
 
   /**
@@ -88,10 +75,10 @@ function ProjectList() {
    * @param {*} selected
    * @returns
    */
-  const handleStatusChange = (selected) => handleSelectionChange(selected, status, setSelectedStatus, "status", currentPage);
-  const handleKeywordsChange = (selected) => handleSelectionChange(selected, keywords, setSelectedKeywords, "keywords", currentPage);
-  const handleSkillsChange = (selected) => handleSelectionChange(selected, skills, setSelectedSkills, "skills", currentPage);
-  const handleLabsChange = (selected) => handleSelectionChange(selected, labs, setSelectedLabs, "labs", currentPage);
+  const handleStatusChange = (selected) => handleSelectionChange(selected, status, setStatus, "status");
+  const handleKeywordsChange = (selected) => handleSelectionChange(selected, keywords, setKeywords, "keywords");
+  const handleSkillsChange = (selected) => handleSelectionChange(selected, skills, setSkills, "skills");
+  const handleLabsChange = (selected) => handleSelectionChange(selected, labs, setLabs, "labs");
   /**
    * Filters to be displayed in the modal filter
    */
@@ -117,30 +104,30 @@ function ProjectList() {
     }
   }
 
-  useEffect(() => {
-    getFilterOptions();
-  }, []);
-
-  function getSelectedField(array, field) {
-    return array.filter((item) => item.selected).map((item) => item[field]);
-  }
-
   /**
    * Method to apply the filters
    */
   async function applyFilters() {
+    const skill = skillParam.length > 0 ? skillParam.split(",") : [];
+    const keyword = keywordParam.length > 0 ? keywordParam.split(",") : [];
+    const lab = labParam.length > 0 ? labParam.split(",") : [];
+    const status = statusParam.length > 0 ? statusParam.split(",") : [];
+    const page = parseInt(pageParam, 10) || 1;
     const props = {
       dtoType: "ProjectCardDto",
-      interest: selectedKeywords,
-      skill: selectedSkills,
-      lab: selectedLabs,
-      status: selectedStatus,
+      interest: keyword,
+      skill: skill,
+      lab: lab,
+      status: status,
       page_size: 9,
+      page_number: page,
     };
+    console.log(props);
 
     try {
       const response = await Api.getProjects(token, props);
       setProjects(response.data.results);
+      setTotalPages(response.data.totalPages);
       console.log(response.data.totalPages);
       setLoading(false);
       setModalFilter(false);
@@ -149,18 +136,50 @@ function ProjectList() {
     }
   }
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+  useEffect(() => {
+    applyFilters();
+    getFilterOptions();
+  }, [token]);
 
-    console.log("newPage", newPage);
-    // Atualiza a URL com a nova página
-    query.set("page", newPage);
-    navigate(`?${query.toString()}`);
-    if (newPage === 1) {
-      query.delete("page");
-      navigate(`?${query.toString()}`);
-    }
+  const handlePageChange = (newPage) => {
+    searchParams.set("page", newPage);
+    setSearchParams(searchParams);
   };
+
+  useEffect(() => {
+    const page = searchParams.get("page");
+    if (page) {
+      setCurrentPage(parseInt(page, 10));
+    }
+    applyFilters();
+  }, [pageParam]);
+
+  //limpar os filtros quando não houver nada selecionado, ou for a primeira página
+  useEffect(() => {
+    if (parseInt(pageParam, 10) === 1) {
+      searchParams.delete("page");
+    }
+    if (skillParam.length === 0) {
+      searchParams.delete("skills");
+    }
+    if (keywordParam.length === 0) {
+      searchParams.delete("keywords");
+    }
+    if (labParam.length === 0) {
+      searchParams.delete("labs");
+    }
+    if (statusParam.length === 0) {
+      searchParams.delete("status");
+    }
+    setSearchParams(searchParams);
+  }, [location.search]);
+
+  // useEffect(() => {
+  //   if (currentPage > totalPages) {
+  //     searchParams.set("page", 1);
+  //     setSearchParams(searchParams);
+  //   }
+  // }, [totalPages]);
 
   return (
     <ListLayout title={t("projects")} toggleOrder={toggleOrder} toggleFilter={toggleFilter} loading={loading}>
@@ -172,7 +191,7 @@ function ProjectList() {
         ))}
       </Row>
       <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />
-      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={filterIds} />
+      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={ids} />
     </ListLayout>
   );
 }

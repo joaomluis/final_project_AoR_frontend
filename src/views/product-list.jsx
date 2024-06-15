@@ -1,5 +1,5 @@
 import { Api } from "../api";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams, useLocation } from "react-router-dom";
 
 import { Row, Col } from "reactstrap";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
@@ -11,34 +11,60 @@ import { useEffect } from "react";
 import ModalFilter from "../components/modals/modal-filter.jsx";
 import ListLayout from "../layout/list-layout/list.jsx";
 import ProductCardList from "../components/Product_cards/product-cards-list.jsx";
+import PaginationComponent from "../components/pagination/pagination.jsx";
+import { parse } from "qs";
 
 function ProductList() {
   const token = useUserStore((state) => state.token);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const { productFilters, setProductFilters } = useFilterStore();
   //Modal Order & Filter
   const [ModalFilters, setModalFilter] = useState(false);
   const [ModalOrders, setModalOrder] = useState(false);
   const toggleFilter = () => setModalFilter(!ModalFilters);
   const toggleOrder = () => setModalOrder(!ModalOrders);
 
+  //Filter options
   const [brands, setBrands] = useState([]);
   const [types, setTypes] = useState([]);
+  //Products
   const [products, setProducts] = useState([]);
+  //Search Params
+  const [searchParams, setSearchParams] = useSearchParams({ page: 1, types: [], brands: [] });
+  const typeParam = searchParams.get("types") || [];
+  const brandParam = searchParams.get("brands") || [];
+  const pageParam = searchParams.get("page") || 1;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const location = useLocation();
 
-  const handleSelectionChange = (selected, items, setItems) => {
+  const [ids, setIds] = useState({ brands: [], types: [] });
+
+  const handleSelectionChange = (selected, items, setItems, paramName) => {
     const newItems = items.map((item) => ({
       ...item,
       selected: selected.map(Number).includes(item.id),
     }));
     setItems(newItems);
     const filteredItems = newItems.filter((item) => selected.map(Number).includes(item.id));
-    return filteredItems.map((item) => item.name);
+
+    const selectedIds = filteredItems.map((item) => item.id);
+    // Update the respective array in the ids object
+    setIds((prevState) => ({
+      ...prevState,
+      [paramName]: selectedIds,
+    }));
+
+    const selectedNames = filteredItems.map((item) => item.name);
+
+    // Atualizar os parâmetros de consulta no URL
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set(paramName, selectedNames.join(","));
+    setSearchParams(newSearchParams);
   };
 
-  const handleBrandChange = (selected) => handleSelectionChange(selected, brands, setBrands);
-  const handleTypeChange = (selected) => handleSelectionChange(selected, types, setTypes);
+  const handleBrandChange = (selected) => handleSelectionChange(selected, brands, setBrands, "brands");
+  const handleTypeChange = (selected) => handleSelectionChange(selected, types, setTypes, "types");
 
   const filters = [
     { label: "brands", options: brands, handleOnChange: handleBrandChange },
@@ -59,35 +85,26 @@ function ProductList() {
       });
   }
 
-  function getSelectedField(array, field) {
-    return array.filter((item) => item.selected).map((item) => item[field]);
-  }
-
   /**
    * Apply filters
    */
   async function applyFilters() {
-    const brandsArray = getSelectedField(brands, "name");
-    const typesArray = getSelectedField(types, "name");
-
-    const brandsID = getSelectedField(brands, "id");
-    const typesID = getSelectedField(types, "id");
-
+    const brand = brandParam.length > 0 ? brandParam.split(",") : [];
+    const type = typeParam.length > 0 ? typeParam.split(",") : [];
+    const page = parseInt(pageParam, 10) || 1;
     const props = {
-      brand: brandsArray,
-      type: typesArray,
+      brand: brand,
+      type: type,
+      page_size: 9,
+      page_number: page,
     };
 
-    const propsID = {
-      brands: brandsID,
-      types: typesID,
-    };
-
-    setProductFilters(propsID);
-
+    console.log(props);
     try {
       const response = await Api.getProducts(token, props);
+      console.log(response);
       setProducts(response.data.results);
+      setTotalPages(response.data.totalPages);
       console.log(response.data.totalPages);
       setLoading(false);
       setModalFilter(false);
@@ -99,6 +116,41 @@ function ProductList() {
     applyFilters();
     getFilterOptions();
   }, [token]);
+
+  const handlePageChange = (newPage) => {
+    console.log(newPage);
+    searchParams.set("page", newPage);
+    setSearchParams(searchParams);
+  };
+
+  useEffect(() => {
+    const page = searchParams.get("page");
+    if (page) {
+      setCurrentPage(parseInt(page, 10));
+    }
+    applyFilters();
+  }, [pageParam]);
+
+  //limpar os filtros quando não houver nada selecionado, ou for a primeira página
+  useEffect(() => {
+    if (parseInt(pageParam, 10) === 1) {
+      searchParams.delete("page");
+    }
+    if (typeParam.length === 0) {
+      searchParams.delete("types");
+    }
+    if (brandParam.length === 0) {
+      searchParams.delete("brands");
+    }
+    setSearchParams(searchParams);
+  }, [location.search]);
+
+  // useEffect(() => {
+  //   if (currentPage > totalPages) {
+  //     searchParams.set("page", 1);
+  //     setSearchParams(searchParams);
+  //   }
+  // }, [totalPages]);
 
   return (
     <ListLayout
@@ -116,7 +168,8 @@ function ProductList() {
           </Col>
         ))}
       </Row>
-      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={productFilters} />
+      <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />
+      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={ids} />
     </ListLayout>
   );
 }

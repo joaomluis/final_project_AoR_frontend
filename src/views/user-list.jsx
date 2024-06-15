@@ -25,69 +25,46 @@ function UserList() {
   const [ModalOrders, setModalOrder] = useState(false);
   const toggleFilter = () => setModalFilter(!ModalFilters);
   const toggleOrder = () => setModalOrder(!ModalOrders);
+
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedInterests, setSelectedInterests] = useState([]);
-  const [selectedSkills, setSelectedSkills] = useState([]);
-  const [selectedLabs, setSelectedLabs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filterIds, setFilterIds] = useState({});
 
   /* filter options */
   const [users, setUsers] = useState([]);
   const [interests, setInterests] = useState([]);
   const [skills, setSkills] = useState([]);
   const [labs, setLabs] = useState([]);
-  /**
-   * Function to handle the selection change in the filters
-   * @param {*} selected
-   * @param {*} items
-   * @param {*} setItems
-   * @returns
-   */
-  // const handleSelectionChange = (selected, items, setItems) => {
-  //   const newItems = items.map((item) => ({
-  //     ...item,
-  //     selected: selected.map(Number).includes(item.id),
-  //   }));
-  //   setItems(newItems);
-  //   const filteredItems = newItems.filter((item) => selected.map(Number).includes(item.id));
-  //   return filteredItems.map((item) => item.name);
-  // };
 
-  const handleSelectionChange = (selected, items, setItems, param, currentPage) => {
-    const selectedNumbers = selected.map(Number);
-    const newItems = [];
-    const selectedItems = [];
-    const selectedItemsId = [];
+  const location = useLocation();
+  const [ids, setIds] = useState({ brands: [], types: [] });
 
-    items.forEach((item) => {
-      const isSelected = selectedNumbers.includes(item.id);
-      newItems.push({ ...item, selected: isSelected });
-      if (isSelected) {
-        console.log(item.name);
-        console.log(item.id);
-        selectedItems.push(item.name);
-        selectedItemsId.push(item.id);
-      }
-    });
+  const [searchParams, setSearchParams] = useSearchParams({ page: 1, interests: [], skills: [], labs: [] });
+  const interestParam = searchParams.get("interests") || [];
+  const skillParam = searchParams.get("skills") || [];
+  const labParam = searchParams.get("labs") || [];
+  const pageParam = searchParams.get("page") || 1;
 
-    //update URL
-    query.set(param, selectedItems.join(","));
-    navigate(`?${query.toString()}`);
-    query.set("page", currentPage); // Adicionando a página atual na URL
+  const handleSelectionChange = (selected, items, setItems, paramName) => {
+    const newItems = items.map((item) => ({
+      ...item,
+      selected: selected.map(Number).includes(item.id),
+    }));
+    setItems(newItems);
+    const filteredItems = newItems.filter((item) => selected.map(Number).includes(item.id));
 
-    //delete param if no items are selected
-    if (selectedItems.length === 0) {
-      query.delete(param);
-      navigate(`?${query.toString()}`);
-    }
+    const selectedIds = filteredItems.map((item) => item.id);
+    // Update the respective array in the ids object
+    setIds((prevState) => ({
+      ...prevState,
+      [paramName]: selectedIds,
+    }));
 
-    console.log(selectedItems);
-    console.log(selectedItemsId);
-    setItems(selectedItems);
-    setFilterIds((prevState) => ({ ...prevState, [param]: selectedItemsId }));
+    const selectedNames = filteredItems.map((item) => item.name);
 
-    return selectedItemsId.map((id, index) => ({ id, name: selectedItems[index] }));
+    // Atualizar os parâmetros de consulta no URL
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set(paramName, selectedNames.join(","));
+    setSearchParams(newSearchParams);
   };
 
   /**
@@ -95,9 +72,9 @@ function UserList() {
    * @param {*} selected
    * @returns
    */
-  const handleInterestsChange = (selected) => handleSelectionChange(selected, interests, setSelectedInterests, "interests", currentPage);
-  const handleSkillsChange = (selected) => handleSelectionChange(selected, skills, setSelectedSkills, "skills", currentPage);
-  const handleLabsChange = (selected) => handleSelectionChange(selected, labs, setSelectedLabs, "labs", currentPage);
+  const handleInterestsChange = (selected) => handleSelectionChange(selected, interests, setInterests, "interests");
+  const handleSkillsChange = (selected) => handleSelectionChange(selected, skills, setSkills, "skills");
+  const handleLabsChange = (selected) => handleSelectionChange(selected, labs, setLabs, "labs");
   /**
    * Filters to be displayed in the modal filter
    */
@@ -106,23 +83,41 @@ function UserList() {
     { label: "skills", options: skills, handleOnChange: handleSkillsChange },
     { label: "labs", options: labs, handleOnChange: handleLabsChange },
   ];
+
+  async function getFilterOptions() {
+    try {
+      const response = await Api.getFilterOptions(token);
+      setInterests(response.data.interests);
+      setSkills(response.data.skills);
+      setLabs(response.data.labs);
+    } catch (error) {
+      terror("Error", error.message);
+    }
+  }
+
   /**
    * Method to apply the filters
    */
   async function applyFilters() {
+    const interest = interestParam.length > 0 ? interestParam.split(",") : [];
+    const skill = skillParam.length > 0 ? skillParam.split(",") : [];
+    const lab = labParam.length > 0 ? labParam.split(",") : [];
+
+    const page = parseInt(pageParam, 10) || 1;
     const props = {
       dtoType: "UserCardDto",
-      interest: selectedInterests,
-      skill: selectedSkills,
-      lab: selectedLabs,
+      interest: interest,
+      skill: skill,
+      lab: lab,
       page_size: 9,
-      page_number: currentPage,
+      page_number: page,
     };
 
     try {
       const response = await Api.getUsers(token, props);
       setUsers(response.data.results);
       setTotalPages(response.data.totalPages);
+      console.log(response.data.totalPages);
       setLoading(false);
       setModalFilter(false);
       // Include all filters in the URL
@@ -131,59 +126,47 @@ function UserList() {
     }
   }
 
-  /**
-   * getFilterOptions
-   */
-  useEffect(() => {
-    async function getFilterOptions() {
-      try {
-        const response = await Api.getFilterOptions(token);
-        setInterests(response.data.interests);
-        setSkills(response.data.skills);
-        setLabs(response.data.labs);
-      } catch (error) {
-        terror("Error", error.message);
-      }
-    }
-    getFilterOptions();
-  }, []);
-
-  /**
-   * If the total pages change, the current page will be set to 1, to avoid black pages
-   */
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [totalPages]);
-
-  // /**
-  //  * function to get the selected fields, to reuse the code for name and id.
-  //  * @param {*} array
-  //  * @param {*} field
-  //  * @returns
-  //  */
-  // function getSelectedField(array, field) {
-  //   return array.filter((item) => item.selected).map((item) => item[field]);
-  // }
-
-  /**
-   * update the cards when the filters change or the page change
-   */
   useEffect(() => {
     applyFilters();
-  }, [currentPage]);
+    getFilterOptions();
+  }, [token]);
 
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-
-    console.log("newPage", newPage);
-    // Atualiza a URL com a nova página
-    query.set("page", newPage);
-    navigate(`?${query.toString()}`);
-    if (newPage === 1) {
-      query.delete("page");
-      navigate(`?${query.toString()}`);
-    }
+    searchParams.set("page", newPage);
+    setSearchParams(searchParams);
   };
+
+  useEffect(() => {
+    const page = searchParams.get("page");
+    if (page) {
+      setCurrentPage(parseInt(page, 10));
+    }
+    applyFilters();
+  }, [pageParam]);
+
+  //limpar os filtros quando não houver nada selecionado, ou for a primeira página
+  useEffect(() => {
+    if (parseInt(pageParam, 10) === 1) {
+      searchParams.delete("page");
+    }
+    if (interestParam.length === 0) {
+      searchParams.delete("interests");
+    }
+    if (skillParam.length === 0) {
+      searchParams.delete("skills");
+    }
+    if (labParam.length === 0) {
+      searchParams.delete("labs");
+    }
+    setSearchParams(searchParams);
+  }, [location.search]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      searchParams.set("page", 1);
+      setSearchParams(searchParams);
+    }
+  }, [totalPages]);
 
   return (
     <ListLayout title={t("users")} toggleOrder={toggleOrder} toggleFilter={toggleFilter} loading={loading}>
@@ -196,7 +179,7 @@ function UserList() {
       </Row>
 
       <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />
-      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={filterIds} />
+      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={ids} />
     </ListLayout>
   );
 }
