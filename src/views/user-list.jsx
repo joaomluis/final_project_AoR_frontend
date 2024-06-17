@@ -10,12 +10,11 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import UserCardList from "../components/User_cards/user-cards-list.jsx";
 import { useEffect } from "react";
 import ModalFilter from "../components/modals/modal-filter.jsx";
+import ModalOrder from "../components/modals/modal-order.jsx";
 import ListLayout from "../layout/list-layout/list.jsx";
 import PaginationComponent from "../components/pagination/pagination.jsx";
 
 function UserList() {
-  const query = new URLSearchParams(useLocation().search);
-  const navigate = useNavigate();
   const token = useUserStore((state) => state.token);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
@@ -43,6 +42,8 @@ function UserList() {
   const skillParam = searchParams.get("skills") || [];
   const labParam = searchParams.get("labs") || [];
   const pageParam = searchParams.get("page") || 1;
+  const orderFieldParam = searchParams.get("field") || "";
+  const orderDirectionParam = searchParams.get("direction") || "";
 
   const handleSelectionChange = (selected, items, setItems, paramName) => {
     const newItems = items.map((item) => ({
@@ -83,6 +84,7 @@ function UserList() {
     { label: "skills", options: skills, handleOnChange: handleSkillsChange },
     { label: "labs", options: labs, handleOnChange: handleLabsChange },
   ];
+  const ofilters = [{ label: "username" }, { label: "firstname" }, { label: "privateProfile" }];
 
   async function getFilterOptions() {
     try {
@@ -104,6 +106,8 @@ function UserList() {
     const lab = labParam.length > 0 ? labParam.split(",") : [];
 
     const page = parseInt(pageParam, 10) || 1;
+    const orderField = orderFieldParam;
+    const orderDirection = orderDirectionParam;
     const props = {
       dtoType: "UserCardDto",
       interest: interest,
@@ -111,6 +115,9 @@ function UserList() {
       lab: lab,
       page_size: 9,
       page_number: page,
+
+      order_field: orderField,
+      order_direction: orderDirection,
     };
 
     try {
@@ -120,6 +127,7 @@ function UserList() {
       console.log(response.data.totalPages);
       setLoading(false);
       setModalFilter(false);
+      setModalOrder(false);
       // Include all filters in the URL
     } catch (error) {
       terror("Error", error.message);
@@ -179,7 +187,8 @@ function UserList() {
       </Row>
 
       <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />
-      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} />
+      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={ids} />
+      <ModalOrder isOpen={ModalOrders} toggle={toggleOrder} title={t("order")} filters={ofilters} onSubmit={applyFilters} />
     </ListLayout>
   );
 }

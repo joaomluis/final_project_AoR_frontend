@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import ProjectCardList from "../components/Project_cards/project-cards-list.jsx";
 import { useEffect } from "react";
 import ModalFilter from "../components/modals/modal-filter.jsx";
+import ModalOrder from "../components/modals/modal-order.jsx";
 import ListLayout from "../layout/list-layout/list.jsx";
 import PaginationComponent from "../components/pagination/pagination.jsx";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
@@ -39,6 +40,8 @@ function ProjectList() {
   const skillParam = searchParams.get("skills") || [];
   const labParam = searchParams.get("labs") || [];
   const pageParam = searchParams.get("page") || 1;
+  const orderFieldParam = searchParams.get("field") || "";
+  const orderDirectionParam = searchParams.get("direction") || "";
 
   /**
    * Function to handle the selection change in the filters
@@ -88,6 +91,21 @@ function ProjectList() {
     { label: "skills", options: skills, handleOnChange: handleSkillsChange },
     { label: "labs", options: labs, handleOnChange: handleLabsChange },
   ];
+  const ofilters = [{ label: "createdDate" }, { label: "status" }, { label: "vacancies" }];
+
+  // useEffect(() => {
+  //   if (order.filter && order.direction) {
+  //     const sortedProjects = [...projects].sort((a, b) => {
+  //       if (order.direction === "asc") {
+  //         return a[order.filter] > b[order.filter] ? 1 : -1;
+  //       } else {
+  //         return a[order.filter] < b[order.filter] ? 1 : -1;
+  //       }
+  //     });
+
+  //     setProjects(sortedProjects);
+  //   }
+  // }, [order]);
 
   /**
    * Method to get the filter options from the API
@@ -113,6 +131,8 @@ function ProjectList() {
     const lab = labParam.length > 0 ? labParam.split(",") : [];
     const status = statusParam.length > 0 ? statusParam.split(",") : [];
     const page = parseInt(pageParam, 10) || 1;
+    const orderField = orderFieldParam;
+    const orderDirection = orderDirectionParam;
     const props = {
       dtoType: "ProjectCardDto",
       interest: keyword,
@@ -121,6 +141,9 @@ function ProjectList() {
       status: status,
       page_size: 9,
       page_number: page,
+
+      order_field: orderField, //TODO: criar um campo com nome de ordenação
+      order_direction: orderDirection, //TODO: criar um campo para a direção da ordenação
     };
     console.log(props);
 
@@ -129,8 +152,10 @@ function ProjectList() {
       setProjects(response.data.results);
       setTotalPages(response.data.totalPages);
       console.log(response.data.totalPages);
+      console.log(response.data.results);
       setLoading(false);
       setModalFilter(false);
+      setModalOrder(false);
     } catch (error) {
       terror(error.message);
     }
@@ -192,6 +217,7 @@ function ProjectList() {
       </Row>
       <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />
       <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={ids} />
+      <ModalOrder isOpen={ModalOrders} toggle={toggleOrder} title={t("order")} filters={ofilters} onSubmit={applyFilters} />
     </ListLayout>
   );
 }

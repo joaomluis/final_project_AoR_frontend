@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import ModalFilter from "../components/modals/modal-filter.jsx";
+import ModalOrder from "../components/modals/modal-order.jsx";
 import ListLayout from "../layout/list-layout/list.jsx";
 import ProductCardList from "../components/Product_cards/product-cards-list.jsx";
 import PaginationComponent from "../components/pagination/pagination.jsx";
@@ -34,6 +35,8 @@ function ProductList() {
   const typeParam = searchParams.get("types") || [];
   const brandParam = searchParams.get("brands") || [];
   const pageParam = searchParams.get("page") || 1;
+  const orderFieldParam = searchParams.get("field") || "";
+  const orderDirectionParam = searchParams.get("direction") || "";
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const location = useLocation();
@@ -70,6 +73,7 @@ function ProductList() {
     { label: "brands", options: brands, handleOnChange: handleBrandChange },
     { label: "types", options: types, handleOnChange: handleTypeChange },
   ];
+  const ofilters = [{ label: "identifier" }, { label: "type" }, { label: "brand" }, { label: "name" }, { label: "supplier" }];
 
   /**
    * Get filter options
@@ -92,11 +96,15 @@ function ProductList() {
     const brand = brandParam.length > 0 ? brandParam.split(",") : [];
     const type = typeParam.length > 0 ? typeParam.split(",") : [];
     const page = parseInt(pageParam, 10) || 1;
+    const orderField = orderFieldParam;
+    const orderDirection = orderDirectionParam;
     const props = {
       brand: brand,
       type: type,
       page_size: 9,
       page_number: page,
+      order_field: orderField,
+      order_direction: orderDirection,
     };
 
     console.log(props);
@@ -108,6 +116,7 @@ function ProductList() {
       console.log(response.data.totalPages);
       setLoading(false);
       setModalFilter(false);
+      setModalOrder(false);
     } catch (error) {
       terror("Error", error);
     }
@@ -170,6 +179,7 @@ function ProductList() {
       </Row>
       <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />
       <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={ids} />
+      <ModalOrder isOpen={ModalOrders} toggle={toggleOrder} title={t("order")} filters={ofilters} onSubmit={applyFilters} />
     </ListLayout>
   );
 }
