@@ -91,5 +91,8 @@
   "view-keywords": "View keywords",
   "labs": "Labs",
   "brands": "Brands",
-  "types": "Types"
+  "types": "Types",
+
+  "recent-project": "Recent project",
+  "create-project": "Create project"
 }

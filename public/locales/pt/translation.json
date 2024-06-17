@@ -90,5 +90,8 @@
 
   "labs": "Laboratórios",
   "brands": "Marcas",
-  "types": "Tipos"
+  "types": "Tipos",
+
+  "recent-projects": "Os teus projetos recentes",
+  "create-project": "Criar projeto"
 }

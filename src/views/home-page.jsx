@@ -45,12 +45,12 @@ function HomePage() {
           <CardBody>
             <Row>
               <Col className="mb-4" lg="9" md="8">
-                <CardTitle tag="h4">Your recent projects</CardTitle>
+                <CardTitle tag="h4">{t("recent-projects")}</CardTitle>
               </Col>
               <Col lg="3" md="4">
                 <Link to="/fica-lab/create-project">
                   <Button color="light" className="button-style1">
-                    <FaPlus /> Create Project
+                    <FaPlus /> {t("create-project")}
                   </Button>
                 </Link>
               </Col>
