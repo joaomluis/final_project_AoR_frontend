@@ -93,5 +93,10 @@
   "types": "Tipos",
 
   "recent-projects": "Os teus projetos recentes",
-  "create-project": "Criar projeto"
+  "create-project": "Criar projeto",
+
+  "load-more": "Carregar mais",
+  "user-interests": "Interesses do utilizador",
+  "user-skills": "Habilidades do utilizador",
+  "no-projects": "Sem projetos"
 }

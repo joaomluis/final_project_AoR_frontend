@@ -94,5 +94,10 @@
   "types": "Types",
 
   "recent-project": "Recent project",
-  "create-project": "Create project"
+  "create-project": "Create project",
+
+  "load-more": "Load more",
+  "user-interests": "User interests",
+  "user-skills": "User skills",
+  "no-projects": "No projects"
 }
