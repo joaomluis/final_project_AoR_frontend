@@ -98,5 +98,8 @@
   "load-more": "Carregar mais",
   "user-interests": "Interesses do utilizador",
   "user-skills": "Habilidades do utilizador",
-  "no-projects": "Sem projetos"
+  "no-projects": "Sem projetos",
+
+  "invite-to-project": "Convidar para o projeto",
+  "send-msg": "Enviar mensagem"
 }

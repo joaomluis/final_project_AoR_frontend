@@ -110,10 +110,9 @@ function ProductList() {
     console.log(props);
     try {
       const response = await Api.getProducts(token, props);
-      console.log(response);
       setProducts(response.data.results);
       setTotalPages(response.data.totalPages);
-      console.log(response.data.totalPages);
+      console.log(response.data);
       setLoading(false);
       setModalFilter(false);
       setModalOrder(false);

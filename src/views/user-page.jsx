@@ -1,23 +1,26 @@
 import { Container, Button, Col, Row, Card, CardHeader, CardText, CardBody, CardTitle, Input, CardImg, Label, Form, FormGroup } from "reactstrap";
 
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 import { useEffect, useRef, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 import { Api } from "../api";
+import ModalInviteToProject from "../components/modals/modal-inv-project.jsx";
 import "../assets/css/general-css.css";
-//TODO correct the label
 
 import { useUserStore } from "../components/stores/useUserStore.js";
 
 function MyProfile() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
+  const navigate = useNavigate();
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
+  const [isOpenModalInvite, setIsOpenModalInvite] = useState(false);
+  const myOwnProjects = useUserStore((state) => state.myOwnProjects);
+  const toggleModalInvite = () => setIsOpenModalInvite(!isOpenModalInvite);
   const [user, setUser] = useState({
     username: "",
     firstname: "",
@@ -31,6 +34,7 @@ function MyProfile() {
     skills: [],
     interests: [],
   });
+
   const [projectsUser, setProjectsUser] = useState([]);
 
   async function handleGetUser() {
@@ -59,7 +63,7 @@ function MyProfile() {
       dtoType: "ProjectSideBarDto",
       participant_email: user.email,
       page_number: page,
-      page_size: 2,
+      page_size: 3,
       order_field: "createddate",
       order_direction: "asc",
     };
@@ -81,6 +85,9 @@ function MyProfile() {
       </Row>
     </>
   );
+  function handleClickProject(id) {
+    navigate(`/fica-lab/project/${id}`);
+  }
 
   const projectsCard = (projects) => {
     if (!projectsUser) {
@@ -99,14 +106,16 @@ function MyProfile() {
               ) : (
                 <Row>
                   {projectsUser?.map((project, index) => (
-                    <Col md="6" className="">
-                      <Card className={`mb-3 project-card ${project.status}`}>
-                        <CardBody>
-                          <CardTitle>
-                            <strong>{project.name}</strong>
-                          </CardTitle>
-                          <CardText>{project.status}</CardText>
-                        </CardBody>
+                    <Col md="6" lg="4" className="">
+                      <Card>
+                        <Button className={` project-card ${project.status}`} onClick={() => handleClickProject(project.id)}>
+                          <CardBody>
+                            <CardTitle>
+                              <strong>{project.name}</strong>
+                            </CardTitle>
+                            <CardText>{project.status}</CardText>
+                          </CardBody>
+                        </Button>
                       </Card>
                     </Col>
                   ))}
@@ -185,7 +194,7 @@ function MyProfile() {
             <Card>
               <CardBody>
                 <Row className="mb-4">
-                  <Col className="mb-4" xl="8" lg="6" md="6" sm="12">
+                  <Col className="mb-4" xl="8" lg="6" md="12" sm="12">
                     <CardTitle tag="h4" className="profile-icons-container">
                       {user.firstname} {user.lastname}&nbsp;{user.username && `(${user.username})`}
                     </CardTitle>
@@ -193,12 +202,18 @@ function MyProfile() {
                   <Col
                     xl="4"
                     lg="6"
-                    md="6"
+                    md="12"
                     sm="12"
                     style={{ display: "flex", justifyContent: "space-between", paddingLeft: "1rem", paddingRight: "1rem" }}
                   >
-                    <Button style={{ width: "45%", margin: "0 5px" }}>{t("send-msg")}</Button>
-                    <Button style={{ width: "45%", margin: "0 5px" }}>{t("invite-to-project")}</Button>
+                    <Button outline style={{ width: "100%", margin: "0 5px" }}>
+                      {t("send-msg")}
+                    </Button>
+                    {myOwnProjects.length > 0 ? (
+                      <Button outline onClick={toggleModalInvite} style={{ width: "100%", margin: "0 5px" }}>
+                        {t("invite-to-project")}
+                      </Button>
+                    ) : null}
                   </Col>
                 </Row>
                 <Row>
@@ -221,8 +236,19 @@ function MyProfile() {
             </Card>
           </Col>
         </Row>
-        {user.privateProfile ? <label>private</label> : publicProfile()}
+        {user.privateProfile ? <></> : publicProfile()}
       </Container>
+      <ModalInviteToProject
+        isOpen={isOpenModalInvite}
+        onClose={toggleModalInvite}
+        header={t("invite-to-project")}
+        // title={t("select-project")}
+        subtitle={t("select-project-to-invite")}
+        projects={myOwnProjects.map((project) => project.name)}
+        handleInviteUser={(selectedProject) => {
+          console.log(selectedProject);
+        }}
+      />
     </div>
   );
 }

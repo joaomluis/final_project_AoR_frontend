@@ -99,5 +99,7 @@
   "load-more": "Load more",
   "user-interests": "User interests",
   "user-skills": "User skills",
-  "no-projects": "No projects"
+  "no-projects": "No projects",
+  "invite-to-project": "Invite to project",
+  "send-msg": "Send message"
 }

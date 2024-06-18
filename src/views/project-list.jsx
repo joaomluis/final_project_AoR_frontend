@@ -11,7 +11,7 @@ import ModalFilter from "../components/modals/modal-filter.jsx";
 import ModalOrder from "../components/modals/modal-order.jsx";
 import ListLayout from "../layout/list-layout/list.jsx";
 import PaginationComponent from "../components/pagination/pagination.jsx";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 function ProjectList() {
   const token = useUserStore((state) => state.token);
