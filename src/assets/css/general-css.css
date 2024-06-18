@@ -335,3 +335,16 @@
   color: var(--primary-color);
   font-weight: bold;
 }
+
+/* button-email */
+.button-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.button-icon:hover {
+  color: var(--cancelled);
+}
