@@ -22,6 +22,9 @@ export const useUserStore = create(
       skillTypes: [],
       interests: [],
       allInterests: [],
+      myOwnProjects: [],
+
+      updateMyOwnProjects: (myOwnProjects) => set({ myOwnProjects }),
 
       updatePrivateProfile: (privateProfile) => set({ privateProfile }),
 

@@ -10,9 +10,10 @@ import { useTranslation } from "react-i18next";
 function SideNavbar() {
   const { t } = useTranslation();
   const [collapsed, setCollapsed] = useState(false);
-  const [projects, setProjects] = useState([{}]);
   const token = useUserStore((state) => state.token);
   const email = useUserStore((state) => state.email);
+  const myOwnProjects = useUserStore((state) => state.myOwnProjects);
+  const setMyOwnProjects = useUserStore((state) => state.updateMyOwnProjects);
   let statusClass = "";
   let statusName = "";
   //useEffect to handle the resizing of the side navbar
@@ -69,12 +70,14 @@ function SideNavbar() {
   const props = {
     dtoType: "ProjectSideBarDto",
     participant_email: email,
+    creator_email: email,
   };
 
   async function getMyProjects() {
     try {
       const response = await Api.getProjects(token, props);
-      setProjects(response.data.results);
+      setMyOwnProjects(response.data.results);
+      // setProjects(response.data.results);
     } catch (err) {
       console.log(err);
     }
@@ -99,8 +102,8 @@ function SideNavbar() {
           <MenuItem icon={<FaUsers />}> {t("users")} </MenuItem>
         </div>
         <SubMenu icon={<FaClipboard />} label={t("my-projects")}>
-          {projects
-            ? projects.map((project, index) => {
+          {myOwnProjects
+            ? myOwnProjects.map((project, index) => {
                 return <MenuItem key={`${project.id}-${index}`}>{showMyProjects(project.name, project.status)}</MenuItem>;
               })
             : null}

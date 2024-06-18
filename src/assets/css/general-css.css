@@ -8,7 +8,7 @@
 
   --planning: #ffc464;
   --in-progress: #78c9ff;
-  --ready: #6bffa9;
+  --ready: #479d6b;
   --cancelled: #e74c3c;
   --finished: #007d0f;
 
@@ -16,6 +16,30 @@
   --admin-btn: rgba(152, 135, 27, 0.604);
 
   --box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.PLANNING {
+  background-color: var(--planning);
+  color: var(--whitey);
+}
+.IN_PROGRESS {
+  background-color: var(--in-progress);
+  color: var(--whitey);
+}
+
+.READY {
+  background-color: var(--ready);
+  color: var(--whitey);
+}
+
+.CANCELLED {
+  background-color: var(--cancelled);
+  color: var(--whitey);
+}
+
+.FINISHED {
+  background-color: var(--finished);
+  color: var(--whitey);
 }
 
 .section1 {
@@ -306,3 +330,8 @@
   color: var(--whitey);
 }
 /* Pagination */
+
+.profile-label {
+  color: var(--primary-color);
+  font-weight: bold;
+}
