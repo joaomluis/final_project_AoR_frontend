@@ -14,11 +14,12 @@ function FirstStageCreation() {
   const startDate = useCreateProjectStore((state) => state.startDate);
   const endDate = useCreateProjectStore((state) => state.endDate);
   const projectUsers = useCreateProjectStore((state) => state.projectUsers);
-  const projectResources = useCreateProjectStore((state) => state.projectResources);
+  const projectResources = useCreateProjectStore(
+    (state) => state.projectResources
+  );
   const token = useUserStore((state) => state.token);
   const [labs, setLabs] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-
 
   async function handleLoadLabLocations() {
     try {
@@ -39,8 +40,6 @@ function FirstStageCreation() {
   const [labName, setLabName] = useState("");
 
   useEffect(() => {
-   
-
     const labObject = labs.find((labObj) => labObj.id === lab);
 
     console.log(labObject);
@@ -50,7 +49,22 @@ function FirstStageCreation() {
     setLabName(newLabName);
   }, [lab, labs]);
 
-  const selectedMemberObjects = [];
+  async function createProject () {
+    try {
+      const response = await Api.createProject(token, {
+        name: projectName,
+        description: description,
+        lab: lab,
+        startDate: startDate,
+        endDate: endDate,
+        users: projectUsers,
+        resources: projectResources,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   return (
     <>
@@ -72,11 +86,25 @@ function FirstStageCreation() {
               </FormGroup>
               <FormGroup>
                 <Label for="description">Project Description</Label>
-                <Input type="textarea" name="description" id="description" className="form-control-lg" value={description} readOnly />
+                <Input
+                  type="textarea"
+                  name="description"
+                  id="description"
+                  className="form-control-lg"
+                  value={description}
+                  readOnly
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="labLocation">Lab Location</Label>
-                <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={lab} readOnly />
+                <Input
+                  type="text"
+                  name="labLocation"
+                  id="labLocation"
+                  className="form-control-lg"
+                  value={lab}
+                  readOnly
+                />
               </FormGroup>
               <FormGroup
                 style={{
@@ -123,7 +151,6 @@ function FirstStageCreation() {
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center" }}>
-                      
                       {`${resource.name}`}
                     </div>
                   </div>
@@ -133,11 +160,25 @@ function FirstStageCreation() {
             <Col md={6}>
               <FormGroup>
                 <Label for="startDate">Start Date</Label>
-                <Input type="date" name="startDate" id="startDate" className="form-control-lg" value={startDate} readOnly />
+                <Input
+                  type="date"
+                  name="startDate"
+                  id="startDate"
+                  className="form-control-lg"
+                  value={startDate}
+                  readOnly
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="endDate">End Date</Label>
-                <Input type="date" name="endDate" id="endDate" className="form-control-lg" value={endDate} readOnly />
+                <Input
+                  type="date"
+                  name="endDate"
+                  id="endDate"
+                  className="form-control-lg"
+                  value={endDate}
+                  readOnly
+                />
               </FormGroup>
 
               <FormGroup
@@ -200,8 +241,6 @@ function FirstStageCreation() {
                   </div>
                 ))}
               </div>
-
-              
             </Col>
           </Row>
         </Form>

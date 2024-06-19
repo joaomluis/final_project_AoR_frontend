@@ -30,6 +30,7 @@ import FormInputLabel from "../components/input/forminputlabel.jsx";
 
 import { Api } from "../api";
 import { tsuccess, terror } from "../components/toasts/message-toasts.jsx";
+import useCreateProjectStore from "../components/stores/useCreateProjectStore.js";
 
 import FirstStageCreation from "../components/create-project/first-stage-creation.jsx";
 import SecondStageCreation from "../components/create-project/second-stage-creation.jsx";
@@ -38,8 +39,36 @@ import FourthStageCreation from "../components/create-project/fourth-stage-creat
 
 function CreateProject() {
   const { t } = useTranslation();
+  const token = useUserStore((state) => state.token);
+  const projectName = useCreateProjectStore((state) => state.projectName);
+  const description = useCreateProjectStore((state) => state.description);
+  const lab = useCreateProjectStore((state) => state.lab);
+  const startDate = useCreateProjectStore((state) => state.startDate);
+  const endDate = useCreateProjectStore((state) => state.endDate);
+  const projectUsers = useCreateProjectStore((state) => state.projectUsers);
+  const projectResources = useCreateProjectStore(
+    (state) => state.projectResources
+  );
 
   const [stage, setStage] = useState(1);
+
+  async function createProject () {
+    try {
+      const response = await Api.createProject(token, {
+        name: projectName,
+        description: description,
+        lab_id: lab,
+        startDate: startDate,
+        endDate: endDate,
+        users: projectUsers,
+        resources: projectResources,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
 
   return (
     <div className="section4">
@@ -70,7 +99,7 @@ function CreateProject() {
                     Next <FaArrowRight />
                   </Button>
                 ) : (
-                  <Button>
+                  <Button onClick={createProject}>
                     Create <FaCheck />
                   </Button>
                 )}
