@@ -27,10 +27,6 @@ import { useUserStore } from "../stores/useUserStore.js";
 function SecondStageCreation() {
   const token = useUserStore((state) => state.token);
 
-  const [resources, setResources] = useState([]);
-  const [selectedResources, setSelectedResources] = useState([]);
-  const [filter, setFilter] = useState("All");
-
   const updateProjectResources = useCreateProjectStore(
     (state) => state.setProjectResources
   );
@@ -38,14 +34,14 @@ function SecondStageCreation() {
     (state) => state.projectResources
   );
 
+  const [resources, setResources] = useState([]);
+  const [selectedResources, setSelectedResources] = useState(projectResources);
+  const [filter, setFilter] = useState("All");
+
   const props = {
     dtoType: "ProductDto",
     page_size: 200,
   };
-
-  useEffect(() => {
-    console.log(projectResources);
-  }, [selectedResources]);
 
   useEffect(() => {
     async function fetchResources() {
@@ -62,20 +58,24 @@ function SecondStageCreation() {
 
   function handleCheckboxChange(resource) {
     setSelectedResources((prevSelectedResources) => {
-      const resourceExists = prevSelectedResources.some(prevResource => prevResource.id === resource.id);
+      const resourceExists = prevSelectedResources.some(
+        (prevResource) => prevResource.id === resource.id
+      );
 
       if (resourceExists) {
-        // If the resource is already selected, remove it from the array
-        return prevSelectedResources.filter(prevResource => prevResource.id !== resource.id);
+        return prevSelectedResources.filter(
+          (prevResource) => prevResource.id !== resource.id
+        );
       } else {
-        // If the resource is not selected, add it to the array
         return [...prevSelectedResources, resource];
       }
     });
+  }
 
-    // Update the store with the new selected resources
+  //update na array da store sempre que o array de resources selecionados muda
+  useEffect(() => {
     updateProjectResources(selectedResources);
-}
+  }, [selectedResources]);
 
   return (
     <>
@@ -129,32 +129,36 @@ function SecondStageCreation() {
                   .filter(
                     (resource) => filter === "All" || resource.type === filter
                   )
-                  .map((resource, index) => (
-                    <div
-                      key={resource.id}
-                      style={{
-                        border: "1px solid #ccc",
-                        borderRadius: "5px",
-                        padding: "10px",
-                        marginBottom: "10px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        backgroundColor: "#f9f9f9",
-                      }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        {`${resource.name}`}
+                  .map((resource, index) => {
+
+                    const isSelected = projectResources.some((projectResources) => projectResources.id === resource.id);
+                    return (
+                      <div
+                        key={resource.id}
+                        style={{
+                          border: "1px solid #ccc",
+                          borderRadius: "5px",
+                          padding: "10px",
+                          marginBottom: "10px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          backgroundColor: "#f9f9f9",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          {`${resource.name}`}
+                        </div>
+                        <input
+                          type="checkbox"
+                          name="memberSelect"
+                          value={resource}
+                          checked={isSelected}
+                          onChange={() => handleCheckboxChange(resource)}
+                        />
                       </div>
-                      <input
-                        type="checkbox"
-                        name="memberSelect"
-                        value={resource}
-                        checked={selectedResources.includes(resource)}
-                        onChange={() => handleCheckboxChange(resource)}
-                      />
-                    </div>
-                  ))}
+                    );
+                  })}
               </div>
             </Col>
           </Row>
