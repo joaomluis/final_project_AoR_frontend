@@ -14,6 +14,8 @@ const useCreateProjectStore = create(set => ({
   setEndDate: (value) => set(() => ({ endDate: value })),
   projectUsers: [],
   setProjectUsers: (value) => set(() => ({ projectUsers: value })),
+  projectResources: [],
+  setProjectResources: (value) => set(() => ({ projectResources: value })),
 }));
 
 export default useCreateProjectStore;
