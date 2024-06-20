@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { FaHome, FaUsers, FaTools, FaClipboard } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+
 import { Link } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
 import "./sidebar.css";
@@ -91,6 +93,9 @@ function SideNavbar() {
       <Menu>
         <div className="custom-link" onClick={() => navigate("/fica-lab/home")}>
           <MenuItem icon={<FaHome />}> {t("home")} </MenuItem>
+        </div>
+        <div className="custom-link" onClick={() => navigate("/fica-lab/email-list")}>
+          <MenuItem icon={<MdEmail />}> {t("email")} </MenuItem>
         </div>
         <div className="custom-link" onClick={() => navigate("/fica-lab/project-list")}>
           <MenuItem icon={<FaClipboard />}> {t("projects")} </MenuItem>

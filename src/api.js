@@ -269,4 +269,22 @@ export const Api = {
       .get("/products/filter-options", { headers: { token } })
       .then(handleResponse)
       .catch(handleError),
+  getFilterOptionsProducts: (token) => apiClient.get("/products/filter-options", { headers: { token } }).then(handleResponse).catch(handleError),
+
+  //MAILS endpoint
+  getMails: (token, props) => {
+    const queryString = qs.stringify(props, { arrayFormat: "repeat" });
+
+    return apiClient
+      .get(`/emails/?${queryString}`, {
+        headers: { token },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
+  deleteMail: (token, id) => apiClient.post(`/emails/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  markAsRead: (token, id) => apiClient.put(`/emails/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  sendResponse: (token, id, props) => apiClient.post(`/emails/${id}/response`, props, { headers: { token } }).then(handleResponse).catch(handleError),
 };
