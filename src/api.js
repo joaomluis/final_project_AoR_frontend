@@ -218,4 +218,9 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
+  deleteMail: (token, id) => apiClient.post(`/emails/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  markAsRead: (token, id) => apiClient.put(`/emails/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  sendResponse: (token, id, props) => apiClient.post(`/emails/${id}/response`, props, { headers: { token } }).then(handleResponse).catch(handleError),
 };

@@ -102,5 +102,15 @@
   "no-projects": "No projects",
   "invite-to-project": "Invite to project",
   "send-msg": "Send message",
-  "emails": "Emails"
+  "emails": "Emails",
+  "email": "Email",
+  "sent-emails": "Sent",
+  "received-emails": "Received",
+  "response": "Response",
+  "send": "Send",
+  "from": "From",
+  "to": "To",
+  "subject": "Subject",
+  "message": "Message",
+  "date": "Date"
 }

@@ -102,5 +102,15 @@
 
   "invite-to-project": "Convidar para o projeto",
   "send-msg": "Enviar mensagem",
-  "emails": "Emails"
+  "emails": "Emails",
+  "email": "Email",
+  "sent-emails": "Enviados",
+  "received-emails": "Recebidos",
+  "response": "Resposta",
+  "send": "Enviar",
+  "from": "De",
+  "to": "Para",
+  "subject": "Assunto",
+  "message": "Mensagem",
+  "date": "Data"
 }
