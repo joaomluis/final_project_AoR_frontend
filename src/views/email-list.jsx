@@ -48,9 +48,10 @@ function EmailList() {
     setSearchParams(searchParams);
   };
 
-  const handleSearchSubmit = () => {
+  function handleSearchSubmit(event) {
+    event.preventDefault();
     getMails();
-  };
+  }
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -139,9 +140,9 @@ function EmailList() {
     setSelectedMail(null);
   }
 
-  function EmailLineLarge(mail) {
+  function EmailLineLarge(mail, key) {
     return (
-      <div className="email-container" onClick={() => handleClickEmail(mail)}>
+      <div className="email-container" onClick={() => handleClickEmail(mail)} key={key}>
         {" "}
         <div
           style={{
@@ -150,7 +151,8 @@ function EmailList() {
             width: "10rem",
           }}
         >
-          {truncate(mail.fromName, 9)}
+          {mail.from === email ? t("me") : truncate(mail.fromName, 9)}
+
           <div>{truncate(mail.subject, 16)}</div>
         </div>
         <div
@@ -168,6 +170,7 @@ function EmailList() {
           {windowWidth > 1030 ? truncate(mail.body, 70) : truncate(mail.body, 20)}
           <div
             style={{
+              fontSize: "small",
               position: "absolute",
               top: "0",
               right: "0",
@@ -193,13 +196,15 @@ function EmailList() {
     );
   }
 
-  function EmailLineSmall(mail) {
+  function EmailLineSmall(mail, key) {
     return (
-      <div className="email-container" onClick={() => handleClickEmail(mail)}>
+      <div className="email-container" onClick={() => handleClickEmail(mail)} key={key}>
         <div style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{ fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>{mail.fromName}</div>
-            <div style={{ fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>{new Date(mail.sentDate).toLocaleDateString()}</div>
+            <div style={{ fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>{mail.from === mail ? t("me") : mail.fromName}</div>
+            <div style={{ fontSize: "small", fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>
+              {new Date(mail.sentDate).toLocaleDateString()}
+            </div>
           </div>
           <div style={{ fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>{truncate(mail.subject, 20)}</div>
           <div> {truncate(mail.body, 50)}</div>
@@ -225,18 +230,18 @@ function EmailList() {
                 </InputGroupText>
               </InputGroup>
             </Col>
-            <Col xl="2" lg="2" md="6" xs="12" className="margin-row">
+            <Col xl="2" lg="2" md="6" xs="6" className="margin-row">
               <Button color="light" className="button-style1" onClick={() => setFilter("to")}>
                 {t("received-emails")}
               </Button>
             </Col>
-            <Col xl="2" lg="2" md="6" xs="12" className="margin-row">
+            <Col xl="2" lg="2" md="6" xs="6" className="margin-row">
               <Button color="light" className="button-style1" onClick={() => setFilter("from")}>
                 {t("sent-emails")}
               </Button>
             </Col>
           </Row>
-          <div style={{ margin: "1rem" }}>{mails.map((mail) => (windowWidth > 580 ? EmailLineLarge(mail) : EmailLineSmall(mail)))}</div>
+          <div style={{ margin: "1rem" }}>{mails.map((mail) => (windowWidth > 580 ? EmailLineLarge(mail, mail.id) : EmailLineSmall(mail, mail.id)))}</div>
           <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />
         </ListLayout>
       )}

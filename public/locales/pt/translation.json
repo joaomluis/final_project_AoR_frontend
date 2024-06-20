@@ -112,5 +112,7 @@
   "to": "Para",
   "subject": "Assunto",
   "message": "Mensagem",
-  "date": "Data"
+  "date": "Data",
+  "me": "Eu",
+  "search-mail": "Pesquisar email"
 }

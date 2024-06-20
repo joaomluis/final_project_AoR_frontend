@@ -112,5 +112,7 @@
   "to": "To",
   "subject": "Subject",
   "message": "Message",
-  "date": "Date"
+  "date": "Date",
+  "me": "Me",
+  "search-mail": "Search email"
 }

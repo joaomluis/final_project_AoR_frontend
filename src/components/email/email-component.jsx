@@ -7,6 +7,7 @@ import { useUserStore } from "../stores/useUserStore";
 import { Api } from "../../api";
 import { use } from "i18next";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { tsuccess } from "../toasts/message-toasts";
 
 function EmailComponent({ mail, loading, children, back, deleteToggle }) {
   const { t } = useTranslation();
@@ -15,7 +16,6 @@ function EmailComponent({ mail, loading, children, back, deleteToggle }) {
   const token = useUserStore((state) => state.token);
   const toMe = mail.to === usermail;
   const [responseBody, setResponseBody] = useState("");
-  console.log(mail);
 
   async function handleMarkAsRead() {
     try {
@@ -35,11 +35,15 @@ function EmailComponent({ mail, loading, children, back, deleteToggle }) {
   }, []);
 
   async function handleSendResponse() {
-    const props = { body: responseBody };
-    console.log("send response");
+    const props = { id: mail.id, body: responseBody };
+    console.log(responseBody);
     try {
       const response = await Api.sendResponse(token, mail.id, props);
-      console.log(response);
+
+      if (response.status === 200) {
+        tsuccess(t("response-sent"));
+        back();
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -59,7 +63,7 @@ function EmailComponent({ mail, loading, children, back, deleteToggle }) {
               </Col>
               <Col xs="8" sm="10" md="10" lg="10" style={{ display: "flex", justifyContent: "center" }}>
                 <CardTitle tag="h4">
-                  <h2>{mail.subject}</h2>
+                  <p style={{ fontSize: "2rem" }}>{mail.subject}</p>
                 </CardTitle>
               </Col>
               <Col xs="2" sm="1" md="1" lg="1">
@@ -74,26 +78,28 @@ function EmailComponent({ mail, loading, children, back, deleteToggle }) {
               </Col>
             </Row>
             <div style={{ display: "flex", justifyContent: "space-around" }}>
-              <Row className="" style={{ margin: "20px 0" }}>
+              <Row className="" style={{ margin: "20px 0", fontSize: "1rem" }}>
                 {t("from")}: {mail.fromName} {`<${mail.from}>`}
               </Row>
-              <Row className="" style={{ margin: "20px 0" }}>
+              <Row className="" style={{ margin: "20px 0", fontSize: "1rem" }}>
                 {t("date")}: {new Date(mail.sentDate).toLocaleDateString()}
               </Row>
             </div>
             <Row className="row-no-margin" style={{ margin: "20px 0" }}>
               <Col lg="12" md="12" sm="12">
-                {mail.body}
+                {mail.body.split("<hr/>").map((part, index) => (
+                  <div style={{ fontSize: "1.5rem" }} key={index} dangerouslySetInnerHTML={{ __html: part }} />
+                ))}
               </Col>
             </Row>
             <Row className="row-no-margin" style={{ margin: "20px 0" }}>
               {toMe ? (
-                <Form onSubmit={handleSendResponse}>
+                <Form>
                   <FormGroup>
                     <Label for="response">{t("response")}</Label>
                     <Input type="textarea" name="response" id="response" onChange={handleChangeResponse} />
                   </FormGroup>
-                  <Button type="submit" outline className="my-custom-btn">
+                  <Button onClick={handleSendResponse} outline className="my-custom-btn">
                     {t("send")}
                   </Button>
                 </Form>
