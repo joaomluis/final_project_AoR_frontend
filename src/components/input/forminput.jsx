@@ -1,16 +1,7 @@
 import React from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 
-function FormInput({
-  label,
-  placeholder,
-  type,
-  required,
-  value,
-  setValue,
-  data,
-  handleClick,
-}) {
+function FormInput({ label, placeholder, type, required, value, setValue, data, handleClick }) {
   if (type === "select") {
     return (
       <FormGroup floating>
@@ -21,13 +12,14 @@ function FormInput({
           onClick={handleClick}
           onChange={(e) => setValue(e.target.value)}
           value={value}
+          required={required}
         >
           <option value="" disabled>
             {placeholder}
           </option>
           {data.map((option) => (
             <option key={option.id} value={option.id}>
-              {option.location}
+              {option.location ? option.location : option.name}
             </option>
           ))}
         </Input>
@@ -37,14 +29,7 @@ function FormInput({
   } else {
     return (
       <FormGroup floating>
-        <Input
-          name="text"
-          placeholder={placeholder}
-          type={type}
-          required={required}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
+        <Input name="text" placeholder={placeholder} type={type} required={required} value={value} onChange={(e) => setValue(e.target.value)} />
         <Label style={{}}>{label}</Label>
       </FormGroup>
     );

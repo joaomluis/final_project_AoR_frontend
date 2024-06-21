@@ -2,9 +2,10 @@ import React from "react";
 import { Container, Card, CardBody, Row, Col, CardTitle, Button } from "reactstrap";
 import { RiOrderPlayFill } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
+import { RiAddFill } from "react-icons/ri";
 import { useTranslation } from "react-i18next";
 import Loading from "../../components/loading/loading-overlay";
-function ListLayout({ title, toggleOrder, toggleFilter, children, loading }) {
+function ListLayout({ title, toggleOrder, toggleFilter, toggleCreate, children, loading }) {
   const { t } = useTranslation();
   return (
     <div className="section4" style={{ position: "relative" }}>
@@ -14,26 +15,37 @@ function ListLayout({ title, toggleOrder, toggleFilter, children, loading }) {
         <Card>
           <CardBody>
             <Row className="row-no-margin">
-              {!toggleOrder && !toggleFilter ? (
+              {!toggleOrder && !toggleFilter && !toggleCreate ? (
                 <Col className="mb-4" lg="12" md="12" sm="12">
                   <CardTitle tag="h4">{title}</CardTitle>
                 </Col>
+              ) : toggleCreate ? (
+                <Col className="mb-4" lg="6" md="12" sm="12">
+                  <CardTitle tag="h4">{title}</CardTitle>
+                </Col>
               ) : (
-                <Col className="mb-4" lg="8" md="4" sm="12">
+                <Col className="mb-4" lg="8" md="12" sm="12" cs>
                   <CardTitle tag="h4">{title}</CardTitle>
                 </Col>
               )}
 
+              {toggleCreate && (
+                <Col lg="2" md="12" sm="12" xs="12">
+                  <Button color="light" className="button-style1 mt-1" onClick={toggleCreate}>
+                    <RiAddFill /> {t("create")}
+                  </Button>
+                </Col>
+              )}
               {toggleOrder && (
-                <Col lg="2" md="4" sm="6" xs="6">
-                  <Button color="light" className="button-style1" onClick={toggleOrder}>
+                <Col lg="2" md="6" sm="6" xs="6">
+                  <Button color="light" className="button-style1 mt-1" onClick={toggleOrder}>
                     <RiOrderPlayFill /> {t("order")}
                   </Button>
                 </Col>
               )}
               {toggleFilter && (
-                <Col lg="2" md="4" sm="6" xs="6">
-                  <Button color="light" className="button-style1" onClick={toggleFilter}>
+                <Col lg="2" md="6" sm="6" xs="6">
+                  <Button color="light" className="button-style1 mt-1" onClick={toggleFilter}>
                     <CiFilter /> {t("filter")}
                   </Button>
                 </Col>

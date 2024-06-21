@@ -36,26 +36,14 @@ const handleError = (error) => {
 
 export const Api = {
   //USER endpoints
-  signin: (email, password) =>
-    apiClient
-      .post("/users/login", { email, password })
-      .then(handleResponse)
-      .catch(handleError),
-  signup: (registerUser) =>
-    apiClient
-      .post("/users", registerUser)
-      .then(handleResponse)
-      .catch(handleError),
+  signin: (email, password) => apiClient.post("/users/login", { email, password }).then(handleResponse).catch(handleError),
+  signup: (registerUser) => apiClient.post("/users", registerUser).then(handleResponse).catch(handleError),
   signout: (token) =>
     apiClient
       .post("/users/logout", {}, { headers: { token: token } })
       .then(handleResponse)
       .catch(handleError),
-  forgotPassword: (email) =>
-    apiClient
-      .post(`/users/reset-password/${email}`, {})
-      .then(handleResponse)
-      .catch(handleError),
+  forgotPassword: (email) => apiClient.post(`/users/reset-password/${email}`, {}).then(handleResponse).catch(handleError),
   confirmAccount: (token, data) =>
     apiClient
       .post("/users/confirm-account", data, { headers: { token: token } })
@@ -84,11 +72,7 @@ export const Api = {
       })
       .then(handleResponse)
       .catch(handleError),
-  updateUser: (token, data) =>
-    apiClient
-      .put("/users", data, { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
+  updateUser: (token, data) => apiClient.put("/users", data, { headers: { token } }).then(handleResponse).catch(handleError),
 
   getUsers: (token, props) => {
     const queryString = qs.stringify(props, { arrayFormat: "repeat" });
@@ -123,33 +107,13 @@ export const Api = {
       .catch(handleError),
 
   //LOCATION endpoints
-  getAllLocations: (token) =>
-    apiClient
-      .get("/labs", { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
+  getAllLocations: (token) => apiClient.get("/labs", { headers: { token } }).then(handleResponse).catch(handleError),
 
   //SKILL endpoints
-  addSkill: (token, data) =>
-    apiClient
-      .post("/skills", data, { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
-  removeSkill: (token, data) =>
-    apiClient
-      .put("/skills", data, { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
-  getSkillType: (token) =>
-    apiClient
-      .get("/skills/types", { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
-  getAllSkills: (token) =>
-    apiClient
-      .get("/skills", { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
+  addSkill: (token, data) => apiClient.post("/skills", data, { headers: { token } }).then(handleResponse).catch(handleError),
+  removeSkill: (token, data) => apiClient.put("/skills", data, { headers: { token } }).then(handleResponse).catch(handleError),
+  getSkillType: (token) => apiClient.get("/skills/types", { headers: { token } }).then(handleResponse).catch(handleError),
+  getAllSkills: (token) => apiClient.get("/skills", { headers: { token } }).then(handleResponse).catch(handleError),
   getUserSkills: (token, email) =>
     apiClient
       .get("/skills", {
@@ -160,21 +124,9 @@ export const Api = {
       .catch(handleError),
 
   //INTEREST endpoints
-  addInterest: (token, data) =>
-    apiClient
-      .post("/interests", data, { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
-  removeInterest: (token, data) =>
-    apiClient
-      .put("/interests", data, { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
-  getAllInterests: (token) =>
-    apiClient
-      .get("/interests", { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
+  addInterest: (token, data) => apiClient.post("/interests", data, { headers: { token } }).then(handleResponse).catch(handleError),
+  removeInterest: (token, data) => apiClient.put("/interests", data, { headers: { token } }).then(handleResponse).catch(handleError),
+  getAllInterests: (token) => apiClient.get("/interests", { headers: { token } }).then(handleResponse).catch(handleError),
   getUserInterests: (token, email) =>
     apiClient
       .get("/interests", {
@@ -240,18 +192,9 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
-  getFilterOptions: (token) =>
-    apiClient
-      .get("/projects/filter-options", { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
+  getFilterOptions: (token) => apiClient.get("/projects/filter-options", { headers: { token } }).then(handleResponse).catch(handleError),
 
-  
-  createProject: (token, data) =>
-    apiClient
-      .post("/projects", data, { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
+  createProject: (token, data) => apiClient.post("/projects", data, { headers: { token } }).then(handleResponse).catch(handleError),
 
   //PRODUCTS endpoint
   getProducts: (token, props) => {
@@ -264,12 +207,9 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
-  getFilterOptionsProducts: (token) =>
-    apiClient
-      .get("/products/filter-options", { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
   getFilterOptionsProducts: (token) => apiClient.get("/products/filter-options", { headers: { token } }).then(handleResponse).catch(handleError),
+  getBrands: (token) => apiClient.get("/products/brands", { headers: { token } }).then(handleResponse).catch(handleError),
+  createProduct: (token, data) => apiClient.post("/products", data, { headers: { token } }).then(handleResponse).catch(handleError),
 
   //MAILS endpoint
   getMails: (token, props) => {
@@ -287,4 +227,17 @@ export const Api = {
   markAsRead: (token, id) => apiClient.put(`/emails/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
   sendResponse: (token, id, props) => apiClient.post(`/emails/${id}/response`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  //SUPPLIER endpoints
+  getSuppliers: (token, props) => {
+    const queryString = qs.stringify(props, { arrayFormat: "repeat" });
+
+    return apiClient
+      .get(`/suppliers/?${queryString}`, {
+        headers: { token },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
+  updateProductSupplier: (token, props) => apiClient.put(`/products/${props.id}`, props, { headers: { token } }).then(handleResponse).catch(handleError),
 };

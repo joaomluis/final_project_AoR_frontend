@@ -13,3 +13,13 @@
   font-size: small;
   color: var(--primary-color);
 }
+
+.badge-style1 {
+  background-color: var(--admin) !important;
+  font-size: small;
+  color: var(--primary-color);
+  height: 2.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

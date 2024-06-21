@@ -18,6 +18,10 @@
   --box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+h4 {
+  padding: 0.5rem;
+}
+
 .PLANNING {
   background-color: var(--planning);
   color: var(--whitey);
@@ -219,6 +223,7 @@
 
 .profile-icons-container {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -398,4 +403,17 @@
   .email-container {
     padding: 0.9rem;
   }
+}
+
+.product-details {
+  width: 100%;
+  display: flex;
+
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.supplier-product {
+  background-color: var(--greyish);
+  border-radius: 5px;
 }
