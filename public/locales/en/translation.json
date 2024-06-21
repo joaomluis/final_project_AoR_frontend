@@ -114,5 +114,15 @@
   "message": "Message",
   "date": "Date",
   "me": "Me",
-  "search-mail": "Search email"
+  "search-mail": "Search email",
+  "edit-profile": "Edit profile",
+  "p-identifier": "Identifier number",
+  "p-description": "Description",
+  "p-notes": "Notes",
+  "p-supplier": "Supplier",
+  "p-brand": "Brand",
+  "p-type": "Type",
+  "p-supplier-phone": "Supplier phone",
+  "edit-product": "Edit product",
+  "p-quantity": "Quantity"
 }

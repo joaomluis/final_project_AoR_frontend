@@ -114,5 +114,14 @@
   "message": "Mensagem",
   "date": "Data",
   "me": "Eu",
-  "search-mail": "Pesquisar email"
+  "search-mail": "Pesquisar email",
+  "p-identifier": "Número de identificação",
+  "p-description": "Descrição",
+  "p-notes": "Notas",
+  "p-supplier": "Fornecedor",
+  "p-brand": "Marca",
+  "p-type": "Tipo",
+  "p-supplier-phone": "Telefone do fornecedor",
+  "edit-product": "Editar produto",
+  "p-quantity": "Quantidade"
 }

@@ -14,7 +14,7 @@ import ListLayout from "../layout/list-layout/list.jsx";
 import ProductCardList from "../components/Product_cards/product-cards-list.jsx";
 import PaginationComponent from "../components/pagination/pagination.jsx";
 import { parse } from "qs";
-
+import CreateProductModal from "../components/create-product/create-product-modal.jsx";
 function ProductList() {
   const token = useUserStore((state) => state.token);
   const { t } = useTranslation();
@@ -22,8 +22,10 @@ function ProductList() {
   //Modal Order & Filter
   const [ModalFilters, setModalFilter] = useState(false);
   const [ModalOrders, setModalOrder] = useState(false);
+  const [ModalCreate, setModalCreate] = useState(false);
   const toggleFilter = () => setModalFilter(!ModalFilters);
   const toggleOrder = () => setModalOrder(!ModalOrders);
+  const toggleCreate = () => setModalCreate(!ModalCreate);
 
   //Filter options
   const [brands, setBrands] = useState([]);
@@ -165,8 +167,10 @@ function ProductList() {
       title={t("products")}
       toggleFilter={toggleFilter}
       toggleOrder={toggleOrder}
+      toggleCreate={toggleCreate}
       ModalFilters={ModalFilters}
       ModalOrders={ModalOrders}
+      ModalCreate={ModalCreate}
       loading={loading}
     >
       <Row>
@@ -179,6 +183,7 @@ function ProductList() {
       <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />
       <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={ids} />
       <ModalOrder isOpen={ModalOrders} toggle={toggleOrder} title={t("order")} filters={ofilters} onSubmit={applyFilters} />
+      <CreateProductModal isOpen={ModalCreate} toggle={toggleCreate} />
     </ListLayout>
   );
 }

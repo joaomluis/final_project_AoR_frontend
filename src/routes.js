@@ -6,6 +6,7 @@ import HomePage from "./views/home-page.jsx";
 import Testing from "./views/testing.jsx";
 import ChangePassword from "./components/change-password/change-password.jsx";
 import ProjectPage from "./views/project-page.jsx";
+import ProductPage from "./views/product-page.jsx";
 import CreateProject from "./views/create-project.jsx";
 import ProjectList from "./views/project-list.jsx";
 import UserList from "./views/user-list.jsx";
@@ -85,6 +86,7 @@ var routes = [
     component: <ProductList />,
     layout: "/main",
   },
+  { path: "/product/:id", name: "Product", component: <ProductPage />, layout: "/main" },
   {
     path: "/user/:id",
     name: "User",
