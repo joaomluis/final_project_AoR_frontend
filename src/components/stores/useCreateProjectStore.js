@@ -8,7 +8,8 @@ const initialState = {
   endDate: null,
   projectUsers: [],
   projectResources: [],
-  // Add other initial state properties here
+  projectKeywords: [],
+  projectSkills: [],
 };
 
 const useCreateProjectStore = create((set) => ({
@@ -19,7 +20,11 @@ const useCreateProjectStore = create((set) => ({
   setStartDate: (value) => set(() => ({ startDate: value })),
   setEndDate: (value) => set(() => ({ endDate: value })),
   setProjectUsers: (value) => set(() => ({ users: value })), 
-  setProjectResources: (value) => set(() => ({ resources: value })), 
+  setProjectResources: (value) => set(() => ({ resources: value })),
+  setProjectKeywords: (value) => set(() => ({ keywords: value })),
+  addProjectKeyword: (keyword) => set((state) => ({ projectKeywords: [...state.projectKeywords, keyword] })),
+  removeProjectKeyword: (keyword) => set((state) => ({ projectKeywords: state.projectKeywords.filter(k => k !== keyword) })),
+  setProjectSkills: (value) => set(() => ({ skills: value })),
   reset: () => set(() => ({ ...initialState })), 
 }));
 

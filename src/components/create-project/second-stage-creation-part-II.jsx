@@ -23,8 +23,8 @@ import { useState, useEffect } from "react";
 
 import useCreateProjectStore from "../stores/useCreateProjectStore.js";
 
-import SkillTag from "../tags/skill-tag.jsx";
-import InterestTag from "../tags/interest-tag.jsx";
+import SkillTag from "../tags/skill-project-tag.jsx";
+import InterestTag from "../tags/interest-project-tag.jsx";
 
 import { Api } from "../../api.js";
 import { useUserStore } from "../stores/useUserStore.js";
