@@ -29,6 +29,7 @@ import useCreateProjectStore from "../components/stores/useCreateProjectStore.js
 
 import FirstStageCreation from "../components/create-project/first-stage-creation.jsx";
 import SecondStageCreation from "../components/create-project/second-stage-creation.jsx";
+import SecondStageCreationPartII from "../components/create-project/second-stage-creation-part-II.jsx";
 import ThirdStageCreation from "../components/create-project/third-stage-creation.jsx";
 import FourthStageCreation from "../components/create-project/fourth-stage-creation.jsx";
 
@@ -84,8 +85,9 @@ function CreateProject() {
               </CardHeader>
               {stage === 1 && <FirstStageCreation />}
               {stage === 2 && <SecondStageCreation />}
-              {stage === 3 && <ThirdStageCreation />}
-              {stage === 4 && <FourthStageCreation />}
+              {stage === 3 && <SecondStageCreationPartII />}
+              {stage === 4 && <ThirdStageCreation />}
+              {stage === 5 && <FourthStageCreation />}
               <CardFooter className="d-flex justify-content-between">
                 {stage > 1 ? (
                   <Button onClick={() => setStage(stage - 1)}>
@@ -94,8 +96,8 @@ function CreateProject() {
                 ) : (
                   <div></div>
                 )}
-                {stage < 4 ? (
-                  <Button onClick={() => stage < 4 && setStage(stage + 1)}>
+                {stage < 5 ? (
+                  <Button onClick={() => stage < 5 && setStage(stage + 1)}>
                     Next <FaArrowRight />
                   </Button>
                 ) : (
