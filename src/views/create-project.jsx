@@ -4,14 +4,7 @@ import {
   Row,
   Card,
   CardHeader,
-  CardText,
-  CardBody,
   CardTitle,
-  Input,
-  CardImg,
-  Label,
-  Form,
-  FormGroup,
   Button,
   CardFooter,
 } from "reactstrap";
@@ -20,6 +13,8 @@ import { FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 
 import { useTranslation } from "react-i18next";
+
+import { useNavigate } from "react-router-dom";
 
 import "../assets/css/general-css.css";
 //TODO correct the label
@@ -39,6 +34,7 @@ import FourthStageCreation from "../components/create-project/fourth-stage-creat
 
 function CreateProject() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const token = useUserStore((state) => state.token);
   const projectName = useCreateProjectStore((state) => state.projectName);
   const description = useCreateProjectStore((state) => state.description);
@@ -49,6 +45,8 @@ function CreateProject() {
   const projectResources = useCreateProjectStore(
     (state) => state.projectResources
   );
+
+  const clearStore = useCreateProjectStore((state) => state.reset);
 
   const [stage, setStage] = useState(1);
 
@@ -63,9 +61,11 @@ function CreateProject() {
         users: projectUsers,
         resources: projectResources,
       });
-      console.log(response);
+      tsuccess(response.data);
+      clearStore(); //limpa a store depois de criar o projeto
+      navigate('/fica-lab/home'); //redireciona para a home
     } catch (error) {
-      console.log(error.message);
+      terror(error.message);
     }
   }
 
