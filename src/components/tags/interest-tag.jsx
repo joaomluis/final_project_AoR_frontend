@@ -19,7 +19,9 @@ function UserInterests() {
   async function fetchInterests() {
     try {
       const response = await Api.getUserInterests(token, email);
+      console.log(response.data);
       updateInterests(response.data);
+      console.log(response.data);
     } catch (error) {
       terror(error.message);
     }

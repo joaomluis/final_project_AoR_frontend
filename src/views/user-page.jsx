@@ -3,10 +3,11 @@ import { Container, Button, Col, Row, Card, CardHeader, CardText, CardBody, Card
 import { useParams, Link, useNavigate } from "react-router-dom";
 
 import { useEffect, useRef, useState } from "react";
-
+import { tsuccess, terror } from "../components/toasts/message-toasts.jsx";
 import { useTranslation } from "react-i18next";
 import { Api } from "../api";
 import ModalInviteToProject from "../components/modals/modal-inv-project.jsx";
+import ModalMail from "../components/modals/modal-mail.jsx";
 import "../assets/css/general-css.css";
 
 import { useUserStore } from "../components/stores/useUserStore.js";
@@ -21,6 +22,8 @@ function MyProfile() {
   const [isOpenModalInvite, setIsOpenModalInvite] = useState(false);
   const myOwnProjects = useUserStore((state) => state.myOwnProjects);
   const toggleModalInvite = () => setIsOpenModalInvite(!isOpenModalInvite);
+  const [isOpenModalMail, setIsOpenModalMail] = useState(false);
+  const toggleModalMail = () => setIsOpenModalMail(!isOpenModalMail);
   const [user, setUser] = useState({
     username: "",
     firstname: "",
@@ -75,6 +78,22 @@ function MyProfile() {
       console.log(error.message);
     }
   }
+
+  async function handleInviteUser(projectName) {
+    const project = myOwnProjects.find((p) => p.name === projectName);
+    const props = {
+      id: project.id,
+      invitedUserEmail: user.email,
+    };
+    try {
+      const response = await Api.inviteUserToProject(token, props);
+      toggleModalInvite();
+      tsuccess("User invited to project");
+    } catch (error) {
+      terror(error.message);
+    }
+  }
+
   const LabelText = ({ label, text }) => (
     <>
       <Row className="mb-2">
@@ -206,7 +225,7 @@ function MyProfile() {
                     sm="12"
                     style={{ display: "flex", justifyContent: "space-between", paddingLeft: "1rem", paddingRight: "1rem" }}
                   >
-                    <Button outline style={{ width: "100%", margin: "0 5px" }}>
+                    <Button outline onClick={toggleModalMail} style={{ width: "100%", margin: "0 5px" }}>
                       {t("send-msg")}
                     </Button>
                     {myOwnProjects.length > 0 ? (
@@ -242,13 +261,12 @@ function MyProfile() {
         isOpen={isOpenModalInvite}
         onClose={toggleModalInvite}
         header={t("invite-to-project")}
-        // title={t("select-project")}
-        subtitle={t("select-project-to-invite")}
+        title={t("select-project")}
+        // subtitle={t("select-project-to-invite")}
         projects={myOwnProjects.map((project) => project.name)}
-        handleInviteUser={(selectedProject) => {
-          console.log(selectedProject);
-        }}
+        handleInviteUser={handleInviteUser}
       />
+      <ModalMail isOpen={isOpenModalMail} onClose={toggleModalMail} user={user} />
     </div>
   );
 }

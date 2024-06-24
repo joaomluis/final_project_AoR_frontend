@@ -124,5 +124,11 @@
   "p-type": "Type",
   "p-supplier-phone": "Supplier phone",
   "edit-product": "Edit product",
-  "p-quantity": "Quantity"
+  "p-quantity": "Quantity",
+
+  "send-email": "Send email",
+  "recipient": "Recipient",
+  "enter-email": "Enter email",
+  "email-subject": "Email subject",
+  "email-message": "Email message"
 }

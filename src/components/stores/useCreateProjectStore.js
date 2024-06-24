@@ -1,16 +1,15 @@
-import {create} from 'zustand';
+import { create } from "zustand";
 
-
-const useCreateProjectStore = create(set => ({
-  projectName: '',
+const useCreateProjectStore = create((set) => ({
+  projectName: "",
   setProjectName: (value) => set(() => ({ projectName: value })),
-  description: '',
+  description: "",
   setDescription: (value) => set(() => ({ description: value })),
-  lab: '',
+  lab: "",
   setLab: (value) => set(() => ({ lab: value })),
-  startDate: '',
+  startDate: "",
   setStartDate: (value) => set(() => ({ startDate: value })),
-  endDate: '',
+  endDate: "",
   setEndDate: (value) => set(() => ({ endDate: value })),
   projectUsers: [],
   setProjectUsers: (value) => set(() => ({ projectUsers: value })),

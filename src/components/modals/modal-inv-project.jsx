@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import Select from "react-select";
 import { t } from "i18next";
 
 function ModalInviteToProject(props) {
   const [selectedProject, setSelectedProject] = useState(props.projects && props.projects.length > 0 ? props.projects[0] : "");
 
-  const handleProjectChange = (event) => {
-    setSelectedProject(event.target.value);
-  };
-
   const handleInviteClick = () => {
     props.handleInviteUser(selectedProject);
+  };
+
+  const handleSelectChange = (selectedOption) => {
+    setSelectedProject(selectedOption.value);
   };
 
   return (
@@ -21,19 +22,17 @@ function ModalInviteToProject(props) {
           <span>{props.title}</span>
           <br />
           <span>{props.subtitle} </span>
-          {props.projects ? (
-            <select onChange={handleProjectChange}>
-              {props.projects.map((value, index) => (
-                <option key={index} value={value}>
-                  {value}
-                </option>
-              ))}
-            </select>
-          ) : null}
+          {props.projects ? <Select options={props.projects.map((value) => ({ value: value, label: value }))} onChange={handleSelectChange} /> : null}
         </ModalBody>
-        <ModalFooter>
-          <Button onClick={handleInviteClick}>{t("invite")}</Button>
-          <Button onClick={props.onClose}>{t("cancel")}</Button>
+        <ModalFooter style={{ display: "flex", justifyContent: "flex-end" }}>
+          <div style={{ width: "50%", display: "flex" }}>
+            <Button onClick={handleInviteClick} className="button-style1" style={{ width: "50%" }}>
+              {t("invite")}
+            </Button>
+            <Button onClick={props.onClose} className="button-style1" style={{ width: "50%", marginLeft: "1rem" }}>
+              {t("cancel")}
+            </Button>
+          </div>
         </ModalFooter>
       </Modal>
     </div>

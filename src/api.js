@@ -240,4 +240,8 @@ export const Api = {
       .catch(handleError);
   },
   updateProductSupplier: (token, props) => apiClient.put(`/products/${props.id}`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  //extra project
+
+  inviteUserToProject: (token, data) => apiClient.post("/projects/invite", data, { headers: { token } }).then(handleResponse).catch(handleError),
 };

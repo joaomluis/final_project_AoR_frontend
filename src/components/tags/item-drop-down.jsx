@@ -73,6 +73,9 @@ function ItemDropdown({
     const itemIdName = convertOptionToItem(item);
     try {
       await removeItem(itemIdName);
+      console.log("Item removed" + itemIdName);
+      console.log(itemIdName.id);
+      console.log(itemIdName.name);
     } catch (error) {
       console.log(error.message);
     }
@@ -112,11 +115,7 @@ function ItemDropdown({
       />
       <ModalDD
         header={hasTypes ? t("new_skill") : t("new_interest")}
-        title={
-          hasTypes
-            ? t("do_you_want_to_create_a_new_skill?")
-            : t("do_you_want_to_create_a_new_interest?")
-        }
+        title={hasTypes ? t("do_you_want_to_create_a_new_skill?") : t("do_you_want_to_create_a_new_interest?")}
         newProductName={newItemName}
         subtitle={hasTypes ? t("choose_skill_type") : ""}
         handleCreateNew={handleCreateNewItem}
