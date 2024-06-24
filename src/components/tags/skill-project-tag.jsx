@@ -1,12 +1,19 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ItemDropdown from "./item-drop-down";
 import { useUserStore } from "../stores/useUserStore";
 import { Api } from "../../api";
 import { tsuccess, terror } from "../toasts/message-toasts";
-import { use } from "i18next";
+import useCreateProjectStore from "../stores/useCreateProjectStore";
 //
 function UserSkills() {
   const token = useUserStore((state) => state.token);
+
+
+  const projectSkills = useCreateProjectStore((state) => state.projectSkills);
+  const addProjectSkill = useCreateProjectStore((state) => state.addProjectSkill);
+  const removeProjectSkill = useCreateProjectStore((state) => state.removeProjectSkill);
+
+
   const email = useUserStore((state) => state.email);
   const skills = useUserStore((state) => state.skills);
   const allSkills = useUserStore((state) => state.allSkills);
@@ -17,6 +24,21 @@ function UserSkills() {
   const addSkill = useUserStore((state) => state.addSkill);
   const addSkillToAll = useUserStore((state) => state.addSkillToAll);
   const removeSkill = useUserStore((state) => state.removeSkill);
+
+
+
+  const handleSelectedSkill = (newSkill) => {
+    addProjectSkill(newSkill);
+  }
+
+  const removeSelectedSkill = (skill) => {
+    removeProjectSkill(skill);
+  }
+
+  useEffect(() => {
+    console.log(projectSkills);
+  }, [projectSkills]);
+
 
   async function fetchSkillTypes() {
     try {
@@ -80,12 +102,12 @@ function UserSkills() {
   return (
     <ItemDropdown
       fetchTypes={fetchSkillTypes}
-      fetchItems={fetchSkills}
+      fetchItems={projectSkills}
       fetchAllItems={fetchAllSkills}
       createItem={createSkill}
-      addItem={addUserSkill}
-      removeItem={removeUserSkill}
-      items={skills}
+      addItem={handleSelectedSkill}
+      removeItem={removeSelectedSkill}
+      items={projectSkills}
       allItems={allSkills}
       types={skillTypes}
       hasTypes={true}

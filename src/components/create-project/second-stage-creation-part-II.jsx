@@ -74,8 +74,8 @@ function SecondStageCreation() {
               </FormGroup>
 
               {cardSkillInterest(
-                t("my-skills"),
-                t("there-you-can-add-and-remove-your-skills"),
+                "Select Skills",
+                "Add skills that are relevant to your project. You can add and remove them as you wish.",
                 <SkillTag />
               )}
             </Col>
@@ -102,8 +102,8 @@ function SecondStageCreation() {
               </FormGroup>
 
               {cardSkillInterest(
-                t("my-interests"),
-                t("there-you-can-add-and-remove-your-interests"),
+                "Select Keywords",
+                "Add keywords that are relevant to your project. You can add and remove them as you wish.",
                 <InterestTag />
               )}
             </Col>

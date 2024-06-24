@@ -46,8 +46,9 @@ function CreateProject() {
   const projectResources = useCreateProjectStore(
     (state) => state.projectResources
   );
+  const projectKeywords = useCreateProjectStore((state) => state.projectKeywords);
 
-  const clearStore = useCreateProjectStore((state) => state.reset);
+  const cleanStore = useCreateProjectStore((state) => state.cleanStore);
 
   const [stage, setStage] = useState(1);
 
@@ -61,9 +62,10 @@ function CreateProject() {
         endDate: endDate,
         users: projectUsers,
         resources: projectResources,
+        keywords: projectKeywords,
       });
       tsuccess(response.data);
-      clearStore(); //limpa a store depois de criar o projeto
+      cleanStore();//da reset à store
       navigate('/fica-lab/home'); //redireciona para a home
     } catch (error) {
       terror(error.message);

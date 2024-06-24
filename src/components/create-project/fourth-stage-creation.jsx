@@ -7,7 +7,7 @@ import { useUserStore } from "../stores/useUserStore.js";
 
 import { Api } from "../../api.js";
 
-function FirstStageCreation() {
+function FourthStageCreation() {
   const projectName = useCreateProjectStore((state) => state.projectName);
   const description = useCreateProjectStore((state) => state.description);
   const lab = useCreateProjectStore((state) => state.lab);
@@ -180,7 +180,7 @@ function FirstStageCreation() {
                   readOnly
                 />
               </FormGroup>
-
+                
               <FormGroup
                 style={{
                   textAlign: "center",
@@ -241,6 +241,9 @@ function FirstStageCreation() {
                   </div>
                 ))}
               </div>
+
+
+              
             </Col>
           </Row>
         </Form>
@@ -249,4 +252,4 @@ function FirstStageCreation() {
   );
 }
 
-export default FirstStageCreation;
+export default FourthStageCreation;

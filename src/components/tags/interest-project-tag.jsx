@@ -9,23 +9,16 @@ function UserInterests() {
   const token = useUserStore((state) => state.token);
 
   const projectKeywords = useCreateProjectStore((state) => state.projectKeywords);
-  const updateProjectResources = useCreateProjectStore(
-    (state) => state.setProjectKeywords
-  );
+
   const addProjectKeyword = useCreateProjectStore((state) => state.addProjectKeyword);
   const removeProjectKeyword = useCreateProjectStore((state) => state.removeProjectKeyword);
 
-  const [selectedProjectKeywords, setSelectedProjectKeywords] = useState(projectKeywords);
-  
-  const email = useUserStore((state) => state.email);
-  const interests = useUserStore((state) => state.interests);
+
   const allInterests = useUserStore((state) => state.allInterests);
   const updateAllInterests = useUserStore((state) => state.updateAllInterests);
-  const updateInterests = useUserStore((state) => state.updateInterests);
   const addInterest = useUserStore((state) => state.addInterest);
   const addInterestToAll = useUserStore((state) => state.addInterestToAll);
-  const removeInterest = useUserStore((state) => state.removeInterest);
-
+ 
 
   const handleSelectedKeyword = (newKeyword) => {
     addProjectKeyword(newKeyword);
@@ -63,24 +56,8 @@ function UserInterests() {
     }
   }
 
-  async function addUserInterest(interest) {
-    try {
-      const response = await Api.addInterest(token, interest);
-      addInterest(response.data);
-    } catch (error) {
-      terror(error.message);
-    }
-  }
 
-  async function removeUserInterest(interest) {
-    try {
-      const response = await Api.removeInterest(token, interest);
-      removeInterest(interest);
-      tsuccess("Interest " + interest.name + " removed successfully!");
-    } catch (error) {
-      terror(error.message);
-    }
-  }
+  
 
   return (
     <ItemDropdown
