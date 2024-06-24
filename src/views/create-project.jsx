@@ -47,6 +47,7 @@ function CreateProject() {
     (state) => state.projectResources
   );
   const projectKeywords = useCreateProjectStore((state) => state.projectKeywords);
+  const projectSkills = useCreateProjectStore((state) => state.projectSkills);
 
   const cleanStore = useCreateProjectStore((state) => state.cleanStore);
 
@@ -63,6 +64,7 @@ function CreateProject() {
         users: projectUsers,
         resources: projectResources,
         keywords: projectKeywords,
+        skills: projectSkills,
       });
       tsuccess(response.data);
       cleanStore();//da reset à store
