@@ -7,14 +7,25 @@ import { useUserStore } from "../stores/useUserStore.js";
 
 import { Api } from "../../api.js";
 
-function FirstStageCreation() {
+import ProjectPreview from "../Preview/project-preview.jsx";
+
+function FourthStageCreation() {
   const projectName = useCreateProjectStore((state) => state.projectName);
   const description = useCreateProjectStore((state) => state.description);
   const lab = useCreateProjectStore((state) => state.lab);
   const startDate = useCreateProjectStore((state) => state.startDate);
   const endDate = useCreateProjectStore((state) => state.endDate);
   const projectUsers = useCreateProjectStore((state) => state.projectUsers);
-  const projectResources = useCreateProjectStore((state) => state.projectResources);
+
+  const projectResources = useCreateProjectStore(
+    (state) => state.projectResources
+  );
+
+  const projectKeywords = useCreateProjectStore(
+    (state) => state.projectKeywords
+  );
+  const projectSkills = useCreateProjectStore((state) => state.projectSkills);
+
   const token = useUserStore((state) => state.token);
   const [labs, setLabs] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -90,54 +101,12 @@ function FirstStageCreation() {
                 <Label for="labLocation">Lab Location</Label>
                 <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={lab} readOnly />
               </FormGroup>
-              <FormGroup
-                style={{
-                  textAlign: "center",
-                  backgroundColor: "#f0f0f0",
-                  borderRadius: "5px",
-                  padding: "10px",
-                  margin: "10px 0",
-                }}
-              >
-                <Label
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "20px",
-                    color: "#333",
-                  }}
-                >
-                  Resources Preview
-                </Label>
-              </FormGroup>
-              <div
-                style={{
-                  maxHeight: "175px",
-                  overflowY: "auto",
-                  border: "1px solid #ccc",
-                  padding: "10px",
-                  margin: "10px 0",
-                  backgroundColor: "#f0f0f0",
-                  borderRadius: "5px",
-                }}
-              >
-                {projectResources.map((resource) => (
-                  <div
-                    key={resource.id}
-                    style={{
-                      border: "1px solid #ccc",
-                      borderRadius: "5px",
-                      padding: "10px",
-                      marginBottom: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      backgroundColor: "#f9f9f9",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center" }}>{`${resource.name}`}</div>
-                  </div>
-                ))}
-              </div>
+
+              <ProjectPreview
+                data={projectResources}
+                name="Resources Preview"
+              />
+              <ProjectPreview data={projectKeywords} name="Keywords Preview" />
             </Col>
             <Col md={6}>
               <FormGroup>
@@ -149,66 +118,8 @@ function FirstStageCreation() {
                 <Input type="date" name="endDate" id="endDate" className="form-control-lg" value={endDate} readOnly />
               </FormGroup>
 
-              <FormGroup
-                style={{
-                  textAlign: "center",
-                  backgroundColor: "#f0f0f0",
-                  borderRadius: "5px",
-                  padding: "10px",
-                  margin: "10px 0",
-                }}
-              >
-                <Label
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "20px",
-                    color: "#333",
-                  }}
-                >
-                  Group Preview
-                </Label>
-              </FormGroup>
-
-              <div
-                style={{
-                  maxHeight: "175px",
-                  overflowY: "auto",
-                  border: "1px solid #ccc",
-                  padding: "10px",
-                  margin: "10px 0",
-                  backgroundColor: "#f0f0f0",
-                  borderRadius: "5px",
-                }}
-              >
-                {projectUsers.map((member) => (
-                  <div
-                    key={member.userId}
-                    style={{
-                      border: "1px solid #ccc",
-                      borderRadius: "5px",
-                      padding: "10px",
-                      marginBottom: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      backgroundColor: "#f9f9f9",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <img
-                        src={member.imagePath}
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          borderRadius: "50%",
-                          marginRight: "10px",
-                        }}
-                      />
-                      {`${member.firstName} ${member.lastName}`}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <ProjectPreview data={projectUsers} name="Users Preview" />
+              <ProjectPreview data={projectSkills} name="Skills Preview" />
             </Col>
           </Row>
         </Form>
@@ -217,4 +128,4 @@ function FirstStageCreation() {
   );
 }
 
-export default FirstStageCreation;
+export default FourthStageCreation;

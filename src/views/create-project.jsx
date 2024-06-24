@@ -4,14 +4,7 @@ import {
   Row,
   Card,
   CardHeader,
-  CardText,
-  CardBody,
   CardTitle,
-  Input,
-  CardImg,
-  Label,
-  Form,
-  FormGroup,
   Button,
   CardFooter,
 } from "reactstrap";
@@ -20,6 +13,8 @@ import { FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 
 import { useTranslation } from "react-i18next";
+
+import { useNavigate } from "react-router-dom";
 
 import "../assets/css/general-css.css";
 //TODO correct the label
@@ -34,11 +29,13 @@ import useCreateProjectStore from "../components/stores/useCreateProjectStore.js
 
 import FirstStageCreation from "../components/create-project/first-stage-creation.jsx";
 import SecondStageCreation from "../components/create-project/second-stage-creation.jsx";
+import SecondStageCreationPartII from "../components/create-project/second-stage-creation-part-II.jsx";
 import ThirdStageCreation from "../components/create-project/third-stage-creation.jsx";
 import FourthStageCreation from "../components/create-project/fourth-stage-creation.jsx";
 
 function CreateProject() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const token = useUserStore((state) => state.token);
   const projectName = useCreateProjectStore((state) => state.projectName);
   const description = useCreateProjectStore((state) => state.description);
@@ -49,6 +46,10 @@ function CreateProject() {
   const projectResources = useCreateProjectStore(
     (state) => state.projectResources
   );
+  const projectKeywords = useCreateProjectStore((state) => state.projectKeywords);
+  const projectSkills = useCreateProjectStore((state) => state.projectSkills);
+
+  const cleanStore = useCreateProjectStore((state) => state.cleanStore);
 
   const [stage, setStage] = useState(1);
 
@@ -62,10 +63,14 @@ function CreateProject() {
         endDate: endDate,
         users: projectUsers,
         resources: projectResources,
+        keywords: projectKeywords,
+        skills: projectSkills,
       });
-      console.log(response);
+      tsuccess(response.data);
+      cleanStore();//da reset à store
+      navigate('/fica-lab/home'); //redireciona para a home
     } catch (error) {
-      console.log(error.message);
+      terror(error.message);
     }
   }
 
@@ -84,8 +89,9 @@ function CreateProject() {
               </CardHeader>
               {stage === 1 && <FirstStageCreation />}
               {stage === 2 && <SecondStageCreation />}
-              {stage === 3 && <ThirdStageCreation />}
-              {stage === 4 && <FourthStageCreation />}
+              {stage === 3 && <SecondStageCreationPartII />}
+              {stage === 4 && <ThirdStageCreation />}
+              {stage === 5 && <FourthStageCreation />}
               <CardFooter className="d-flex justify-content-between">
                 {stage > 1 ? (
                   <Button onClick={() => setStage(stage - 1)}>
@@ -94,8 +100,8 @@ function CreateProject() {
                 ) : (
                   <div></div>
                 )}
-                {stage < 4 ? (
-                  <Button onClick={() => stage < 4 && setStage(stage + 1)}>
+                {stage < 5 ? (
+                  <Button onClick={() => stage < 5 && setStage(stage + 1)}>
                     Next <FaArrowRight />
                   </Button>
                 ) : (
