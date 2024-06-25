@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { Button, Input, InputGroup, InputGroupText } from "reactstrap";
 import { FaSearch } from "react-icons/fa";
-import { useUserStore } from "../components/stores/useUserStore.js";
+import { useUserStore } from "../stores/useUserStore.js";
 import { Card, Col, Row } from "react-bootstrap";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
 import PaginationComponent from "../components/pagination/pagination.jsx";

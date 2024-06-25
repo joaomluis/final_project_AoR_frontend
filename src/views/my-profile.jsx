@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import "../assets/css/general-css.css";
 //TODO correct the label
 
-import { useUserStore } from "../components/stores/useUserStore";
+import { useUserStore } from "../stores/useUserStore.js";
 import UserSettings from "../components/modals/user-settings.jsx";
 import FormInputLabel from "../components/input/forminputlabel.jsx";
 import FormInput from "../components/input/forminput.jsx";

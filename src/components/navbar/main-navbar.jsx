@@ -1,20 +1,12 @@
 import React, { useState } from "react";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  Container,
-  Button,
-} from "reactstrap";
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, Container, Button } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { Api } from "../../api";
 import { FaBell, FaInbox, FaUser } from "react-icons/fa";
 
 import logo from "../../assets/img/logo_pl.jpg";
 import { tsuccess, terror } from "../toasts/message-toasts";
-import { useUserStore } from "../stores/useUserStore";
+import { useUserStore } from "../../stores/useUserStore";
 import ConfirmModal from "../modals/modal-confirm";
 import { useTranslation } from "react-i18next";
 function MainNavbar(args) {
@@ -42,15 +34,7 @@ function MainNavbar(args) {
 
   return (
     <div>
-      <Navbar
-        {...args}
-        expand="lg"
-        color="dark"
-        fixed="top"
-        light={true}
-        dark={true}
-      >
-        
+      <Navbar {...args} expand="lg" color="dark" fixed="top" light={true} dark={true}>
         <NavbarBrand href="/fica-lab/home">
           <img
             alt="logo"
@@ -70,23 +54,14 @@ function MainNavbar(args) {
           <FaBell color="white" size="1.5em" style={{ marginRight: "15px" }} />
           <FaInbox color="white" size="1.5em" style={{ marginRight: "15px" }} />
           <Link to="/fica-lab/my-profile">
-            <FaUser
-              color="white"
-              size="1.5em"
-              style={{ marginRight: "15px" }}
-            />
+            <FaUser color="white" size="1.5em" style={{ marginRight: "15px" }} />
           </Link>
           <Button onClick={handleSignOutConfirm} color="primary" size="sm">
             Log out
           </Button>{" "}
         </Collapse>
       </Navbar>
-      <ConfirmModal
-        title={t("sign-out")}
-        isOpen={isConfirmModalOpen}
-        toggle={() => setIsConfirmModalOpen(false)}
-        onConfirm={handleSignOut}
-      />
+      <ConfirmModal title={t("sign-out")} isOpen={isConfirmModalOpen} toggle={() => setIsConfirmModalOpen(false)} onConfirm={handleSignOut} />
     </div>
   );
 }

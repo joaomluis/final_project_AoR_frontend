@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useUserStore } from "../../components/stores/useUserStore";
+import { useUserStore } from "../../stores/useUserStore";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup, Form } from "reactstrap";
 import FormInput from "../input/forminput";
 import { useTranslation } from "react-i18next";

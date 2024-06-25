@@ -2,8 +2,8 @@ import { Col, Row, CardBody, Input, Label, Form, FormGroup, Select } from "react
 
 import { useEffect, useState } from "react";
 
-import useCreateProjectStore from "../stores/useCreateProjectStore.js";
-import { useUserStore } from "../stores/useUserStore.js";
+import useCreateProjectStore from "../../stores/useCreateProjectStore.js";
+import { useUserStore } from "../../stores/useUserStore.js";
 
 import { Api } from "../../api.js";
 
@@ -17,13 +17,9 @@ function FourthStageCreation() {
   const endDate = useCreateProjectStore((state) => state.endDate);
   const projectUsers = useCreateProjectStore((state) => state.projectUsers);
 
-  const projectResources = useCreateProjectStore(
-    (state) => state.projectResources
-  );
+  const projectResources = useCreateProjectStore((state) => state.projectResources);
 
-  const projectKeywords = useCreateProjectStore(
-    (state) => state.projectKeywords
-  );
+  const projectKeywords = useCreateProjectStore((state) => state.projectKeywords);
   const projectSkills = useCreateProjectStore((state) => state.projectSkills);
 
   const token = useUserStore((state) => state.token);
@@ -58,7 +54,6 @@ function FourthStageCreation() {
     setLabName(newLabName);
   }, [lab, labs]);
 
-
   return (
     <>
       <CardBody>
@@ -86,10 +81,7 @@ function FourthStageCreation() {
                 <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={lab} readOnly />
               </FormGroup>
 
-              <ProjectPreview
-                 data={Object.values(projectResources)}
-                name="Resources Preview"
-              />
+              <ProjectPreview data={Object.values(projectResources)} name="Resources Preview" />
               <ProjectPreview data={projectKeywords} name="Keywords Preview" />
             </Col>
             <Col md={6}>

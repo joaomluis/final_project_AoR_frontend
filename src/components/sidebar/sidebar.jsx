@@ -4,7 +4,7 @@ import { FaHome, FaUsers, FaTools, FaClipboard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
 import { Link } from "react-router-dom";
-import { useUserStore } from "../stores/useUserStore";
+import { useUserStore } from "../../stores/useUserStore";
 import "./sidebar.css";
 import { Api } from "../../api";
 import { useNavigate } from "react-router-dom";

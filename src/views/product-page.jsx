@@ -14,7 +14,7 @@ import { Api } from "../api";
 import LabelDD from "../components/tags/label-dd";
 import "../assets/css/general-css.css";
 import { terror, tsuccess } from "../components/toasts/message-toasts.jsx";
-import { useUserStore } from "../components/stores/useUserStore.js";
+import { useUserStore } from "../stores/useUserStore.js";
 
 function ProductPage() {
   const { t } = useTranslation();

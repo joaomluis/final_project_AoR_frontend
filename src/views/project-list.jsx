@@ -1,8 +1,8 @@
 import { Container, Col, Row, Card, CardBody, CardTitle, Input, Label, Button } from "reactstrap";
 import { Api } from "../api";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
-import { useUserStore } from "../components/stores/useUserStore.js";
-import useFilterStore from "../components/stores/useFilterStore.js";
+import { useUserStore } from "../stores/useUserStore.js";
+import useFilterStore from "../stores/useFilterStore.js";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ProjectCardList from "../components/Project_cards/project-cards-list.jsx";

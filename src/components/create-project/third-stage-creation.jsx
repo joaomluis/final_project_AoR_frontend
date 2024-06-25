@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { CardBody, Form, FormGroup, Input, Button, Row, Col, Label } from "reactstrap";
 
-import useCreateProjectStore from "../stores/useCreateProjectStore.js";
+import useCreateProjectStore from "../../stores/useCreateProjectStore.js";
 
 import { Api } from "../../api.js";
-import { useUserStore } from "../stores/useUserStore.js";
+import { useUserStore } from "../../stores/useUserStore.js";
 
 function ThirdStageCreation() {
   const token = useUserStore((state) => state.token);

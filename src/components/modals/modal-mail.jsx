@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useUserStore } from "../stores/useUserStore";
+import { useUserStore } from "../../stores/useUserStore";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { Api } from "../../api";
@@ -21,6 +21,8 @@ function ModalMail(props) {
     try {
       const response = await Api.sendMail(token, dto);
       tsuccess(t("email-sent"));
+      setSubject("");
+      setBody("");
     } catch (error) {
       console.log(error.message);
     }

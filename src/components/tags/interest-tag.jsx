@@ -1,6 +1,6 @@
 import React from "react";
 import ItemDropdown from "../tags/item-drop-down";
-import { useUserStore } from "../stores/useUserStore";
+import { useUserStore } from "../../stores/useUserStore";
 import { Api } from "../../api";
 import { tsuccess, terror } from "../toasts/message-toasts";
 

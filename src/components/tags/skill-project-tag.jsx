@@ -1,18 +1,16 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import ItemDropdown from "./item-drop-down";
-import { useUserStore } from "../stores/useUserStore";
+import { useUserStore } from "../../stores/useUserStore";
 import { Api } from "../../api";
 import { tsuccess, terror } from "../toasts/message-toasts";
-import useCreateProjectStore from "../stores/useCreateProjectStore";
+import useCreateProjectStore from "../../stores/useCreateProjectStore";
 //
 function UserSkills() {
   const token = useUserStore((state) => state.token);
 
-
   const projectSkills = useCreateProjectStore((state) => state.projectSkills);
   const addProjectSkill = useCreateProjectStore((state) => state.addProjectSkill);
   const removeProjectSkill = useCreateProjectStore((state) => state.removeProjectSkill);
-
 
   const email = useUserStore((state) => state.email);
   const skills = useUserStore((state) => state.skills);
@@ -25,18 +23,15 @@ function UserSkills() {
   const addSkillToAll = useUserStore((state) => state.addSkillToAll);
   const removeSkill = useUserStore((state) => state.removeSkill);
 
-
-
   const handleSelectedSkill = (newSkill) => {
     addProjectSkill(newSkill);
-  }
+  };
 
   const removeSelectedSkill = (skill) => {
     console.log(skill);
-    
-    removeProjectSkill(skill.id);
-  }
 
+    removeProjectSkill(skill.id);
+  };
 
   async function fetchSkillTypes() {
     try {

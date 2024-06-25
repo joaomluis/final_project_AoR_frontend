@@ -6,7 +6,7 @@ import PasswordStrengthBar from "react-password-strength-bar";
 import { useTranslation } from "react-i18next";
 import RecoverPassword from "../modals/recover-password.jsx";
 import { terror, tsuccess } from "../toasts/message-toasts";
-import { useUserStore } from "../stores/useUserStore";
+import { useUserStore } from "../../stores/useUserStore.js";
 import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
 import { useNavigate } from "react-router-dom";

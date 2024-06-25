@@ -3,7 +3,7 @@ import Loading from "../loading/loading-overlay";
 import { Container, Card, CardBody, Row, Col, CardTitle, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { IoIosArrowBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
-import { useUserStore } from "../stores/useUserStore";
+import { useUserStore } from "../../stores/useUserStore";
 import { Api } from "../../api";
 import { use } from "i18next";
 import { FaRegTrashAlt } from "react-icons/fa";

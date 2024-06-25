@@ -10,7 +10,7 @@ import ModalInviteToProject from "../components/modals/modal-inv-project.jsx";
 import ModalMail from "../components/modals/modal-mail.jsx";
 import "../assets/css/general-css.css";
 
-import { useUserStore } from "../components/stores/useUserStore.js";
+import { useUserStore } from "../stores/useUserStore.js";
 
 function MyProfile() {
   const { t } = useTranslation();

@@ -1,18 +1,10 @@
-import {
-  Container,
-  Col,
-  Row,
-  ButtonGroup,
-  Button,
-  Card,
-  CardBody,
-} from "reactstrap";
+import { Container, Col, Row, ButtonGroup, Button, Card, CardBody } from "reactstrap";
 import "react-chat-elements/dist/main.css";
 import "../components/chat/chat.css";
 import { useState, useRef } from "react";
 import LogsCard from "../components/logs/logs";
 import "../assets/css/general-css.css";
-import { useUserStore } from "../components/stores/useUserStore";
+import { useUserStore } from "../stores/useUserStore";
 import ChatCard from "../components/chat/chat-card";
 import "../components/logs/logs.css";
 function Testing() {
@@ -101,21 +93,13 @@ function Testing() {
   function messageCard() {
     return (
       <Col lg={12} md={12} sm={12}>
-        <ChatCard
-          messages={messages}
-          handleInputSubmit={handleInputSubmit}
-          handleInputChange={handleInputChange}
-          messageInput={messageInput}
-        />
+        <ChatCard messages={messages} handleInputSubmit={handleInputSubmit} handleInputChange={handleInputChange} messageInput={messageInput} />
       </Col>
     );
   }
 
   return (
-    <div
-      className="testing-section1"
-      style={{ height: "100vh", padding: "1rem" }}
-    >
+    <div className="testing-section1" style={{ height: "100vh", padding: "1rem" }}>
       <Container>
         <h1 className="mb-3">Project Name Logs</h1>
 
