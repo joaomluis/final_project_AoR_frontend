@@ -1,17 +1,31 @@
 import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap"; // Exemplo com React-Bootstrap
+import { useUserStore } from "../stores/useUserStore";
+import { Modal, Button, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { Api } from "../../api";
+import { tsuccess } from "../toasts/message-toasts";
 function ModalMail(props) {
   const { t } = useTranslation();
-
+  const token = useUserStore((state) => state.token);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log({ subject, body });
+    const dto = {
+      subject: subject,
+      body: body,
+      to: props.user.email,
+    };
+    console.log(dto);
+    try {
+      const response = await Api.sendMail(token, dto);
+      tsuccess(t("email-sent"));
+    } catch (error) {
+      console.log(error.message);
+    }
     props.onClose(); // Fechar o modal após o envio
-  };
+  }
 
   return (
     <Modal show={props.isOpen} onHide={props.onClose}>

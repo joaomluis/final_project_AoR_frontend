@@ -21,7 +21,7 @@ function MyProfile() {
   const [totalPages, setTotalPages] = useState(1);
   const [isOpenModalInvite, setIsOpenModalInvite] = useState(false);
   const myOwnProjects = useUserStore((state) => state.myOwnProjects);
-  const toggleModalInvite = () => setIsOpenModalInvite(!isOpenModalInvite);
+
   const [isOpenModalMail, setIsOpenModalMail] = useState(false);
   const toggleModalMail = () => setIsOpenModalMail(!isOpenModalMail);
   const [user, setUser] = useState({
@@ -107,6 +107,27 @@ function MyProfile() {
   function handleClickProject(id) {
     navigate(`/fica-lab/project/${id}`);
   }
+  const [projectsToInvite, setProjectsToInvite] = useState([]);
+
+  async function handleGetProjectsToInvite() {
+    console.log(token);
+    try {
+      const response = await Api.getProjectsToInviteUser(token, user.email);
+      setProjectsToInvite(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const toggleModalInvite = async () => {
+    console.log("toggle");
+    console.log(token);
+    console.log(user.email);
+    await handleGetProjectsToInvite();
+
+    setIsOpenModalInvite(!isOpenModalInvite);
+  };
 
   const projectsCard = (projects) => {
     if (!projectsUser) {
@@ -263,7 +284,7 @@ function MyProfile() {
         header={t("invite-to-project")}
         title={t("select-project")}
         // subtitle={t("select-project-to-invite")}
-        projects={myOwnProjects.map((project) => project.name)}
+        projects={projectsToInvite ? projectsToInvite.map((project) => project.name) : []}
         handleInviteUser={handleInviteUser}
       />
       <ModalMail isOpen={isOpenModalMail} onClose={toggleModalMail} user={user} />

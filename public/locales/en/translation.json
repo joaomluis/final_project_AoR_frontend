@@ -80,6 +80,8 @@
   "description": "Description",
   "supplier": "Supplier",
   "identifier": "Identifier",
+  "select-type": "Select type",
+  "select-supplier": "Select supplier",
 
   "home": "Home",
 
@@ -125,10 +127,26 @@
   "p-supplier-phone": "Supplier phone",
   "edit-product": "Edit product",
   "p-quantity": "Quantity",
+  "notes": "Notes",
+  "quantity": "Quantity",
+  "type": "Type",
+  "name": "Name",
+  "brand": "Brand",
 
   "send-email": "Send email",
   "recipient": "Recipient",
   "enter-email": "Enter email",
   "email-subject": "Email subject",
-  "email-message": "Email message"
+  "email-message": "Email message",
+  "no-projects-to-invite": "No projects to invite",
+  "select-project": "Select project",
+  "invite": "Invite",
+  "cancel": "Cancel",
+  "enter-subject": "Enter subject",
+  "enter-message": "Enter message",
+
+  "order-asc": "Asc.",
+  "order-desc": "Desc.",
+  "clear": "Clear",
+  "apply": "Apply"
 }

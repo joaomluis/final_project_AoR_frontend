@@ -20,11 +20,16 @@ function EmailList() {
   const { t } = useTranslation();
   const email = useUserStore((state) => state.email);
   const token = useUserStore((state) => state.token);
-  const [searchParams, setSearchParams] = useSearchParams({ page: 1, to: email, from: "", search: "" });
+  const [searchParams, setSearchParams] = useSearchParams({ page: 1, to: email, from: "", search: "", tokenAuth: "", accept: "" });
   const pageParam = searchParams.get("page") || 1;
   const toParam = searchParams.get("to") || email;
   const fromParam = searchParams.get("from") || "";
   const searchParam = searchParams.get("search") || "";
+  const navigate = useNavigate();
+
+  const tokenAuthParam = searchParams.get("tokenAuth");
+  const acceptParam = searchParams.get("accept");
+
   const [loading, setLoading] = useState(true);
 
   const [totalPages, setTotalPages] = useState(1);
@@ -34,13 +39,29 @@ function EmailList() {
 
   const toggleDelete = (id) => {
     setDeleteModal(!deleteModal);
-    setDeleteMailId(id); // Armazene o id no estado
+    setDeleteMailId(id);
   };
+
   const [mails, setMails] = useState([]);
   const [selectedMail, setSelectedMail] = useState(null);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const storeEmail = useUserStore((state) => state.email);
+
+  useEffect(() => {
+    if (tokenAuthParam && acceptParam) {
+      console.log(tokenAuthParam, acceptParam);
+      try {
+        const response = Api.acceptInvite(token, tokenAuthParam, acceptParam);
+        searchParams.delete("tokenAuth");
+        searchParams.delete("accept");
+        setSearchParams(searchParam);
+        navigate(`?${searchParams.toString()}`, { replace: true });
+      } catch (error) {
+        terror(error.message);
+      }
+    }
+  }, [tokenAuthParam, acceptParam]);
 
   const handleSearchChange = (event) => {
     console.log(event.target.value);
@@ -98,7 +119,7 @@ function EmailList() {
 
   useEffect(() => {
     getMails();
-  }, [pageParam, toParam, fromParam]);
+  }, [pageParam, toParam, fromParam, tokenAuthParam, acceptParam]);
 
   useEffect(() => {
     const page = searchParams.get("page");

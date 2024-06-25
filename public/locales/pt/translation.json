@@ -78,6 +78,8 @@
   "description": "Descrição",
   "supplier": "Fornecedor",
   "identifier": "Identificador",
+  "select-type": "Selecione o tipo",
+  "select-supplier": "Selecione o fornecedor",
 
   "home": "Início",
 
@@ -124,10 +126,26 @@
   "p-supplier-phone": "Telefone do fornecedor",
   "edit-product": "Editar produto",
   "p-quantity": "Quantidade",
+  "notes": "Notas",
+  "quantity": "Quantidade",
+  "type": "Tipo",
+  "name": "Nome",
+  "brand": "Marca",
 
   "send-email": "Enviar email",
   "recipient": "Destinatário",
   "enter-email": "Insira o email",
   "email-subject": "Assunto",
-  "email-message": "Mensagem"
+  "email-message": "Mensagem",
+  "no-project-to-invite": "Não há projetos para convidar",
+  "select-project": "Selecione o projeto",
+  "invite": "Convidar",
+  "cancel": "Cancelar",
+  "enter-subject": "Insira o assunto",
+  "enter-message": "Insira a mensagem",
+
+  "order-asc": "Cresc.",
+  "order-desc": "Desc.",
+  "clear": "Limpar",
+  "apply": "Aplicar"
 }
