@@ -8,6 +8,8 @@ import { Api } from "../../api";
 import { use } from "i18next";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { tsuccess } from "../toasts/message-toasts";
+import DOMPurify from "dompurify";
+import parse from "html-react-parser";
 
 function EmailComponent({ mail, loading, children, back, deleteToggle }) {
   const { t } = useTranslation();
@@ -87,9 +89,17 @@ function EmailComponent({ mail, loading, children, back, deleteToggle }) {
             </div>
             <Row className="row-no-margin" style={{ margin: "20px 0" }}>
               <Col lg="12" md="12" sm="12">
-                {mail.body.split("<hr/>").map((part, index) => (
-                  <div style={{ fontSize: "1.5rem" }} key={index} dangerouslySetInnerHTML={{ __html: part }} />
-                ))}
+                {mail.body.split("<hr/>").map((part, index) => {
+                  // Sanitize the HTML part
+                  const sanitizedHTML = DOMPurify.sanitize(part);
+                  // Parse the sanitized HTML into React elements
+                  const content = parse(sanitizedHTML);
+                  return (
+                    <div style={{ fontSize: "1rem" }} key={index}>
+                      {content}
+                    </div>
+                  );
+                })}
               </Col>
             </Row>
             <Row className="row-no-margin" style={{ margin: "20px 0" }}>

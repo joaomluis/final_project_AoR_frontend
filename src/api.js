@@ -196,6 +196,12 @@ export const Api = {
 
   createProject: (token, data) => apiClient.post("/projects", data, { headers: { token } }).then(handleResponse).catch(handleError),
 
+  acceptInvite: (token, tokenAuthorization, accept) =>
+    apiClient.post(`/projects/invite/${tokenAuthorization}/${accept}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  getProjectsToInviteUser: (token, email) =>
+    apiClient.get(`/projects/invite-projects?email=${email}`, { headers: { token } }).then(handleResponse).catch(handleError),
+
   //PRODUCTS endpoint
   getProducts: (token, props) => {
     const queryString = qs.stringify(props, { arrayFormat: "repeat" });
@@ -222,11 +228,13 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
-  deleteMail: (token, id) => apiClient.post(`/emails/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
+  deleteMail: (token, id) => apiClient.post(`/emails/delete/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
   markAsRead: (token, id) => apiClient.put(`/emails/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
   sendResponse: (token, id, props) => apiClient.post(`/emails/${id}/response`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  sendMail: (token, props) => apiClient.post("/emails/send", props, { headers: { token } }).then(handleResponse).catch(handleError),
 
   //SUPPLIER endpoints
   getSuppliers: (token, props) => {
