@@ -23,6 +23,7 @@ function FirstStageCreation() {
       if (!isLoaded) {
         const response = await Api.getAllLocations(token);
         setLabs(response.data);
+        
         setIsLoaded(true);
       }
     } catch (error) {

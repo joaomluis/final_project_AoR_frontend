@@ -29,11 +29,6 @@ function UserInterests() {
   }
   
 
-  useEffect(() => {
-    console.log(projectKeywords);
-  }, [projectKeywords]);
-
-
 
   async function fetchAllInterests() {
     try {

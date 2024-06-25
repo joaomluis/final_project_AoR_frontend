@@ -32,12 +32,10 @@ function UserSkills() {
   }
 
   const removeSelectedSkill = (skill) => {
-    removeProjectSkill(skill);
+    console.log(skill);
+    
+    removeProjectSkill(skill.id);
   }
-
-  useEffect(() => {
-    console.log(projectSkills);
-  }, [projectSkills]);
 
 
   async function fetchSkillTypes() {

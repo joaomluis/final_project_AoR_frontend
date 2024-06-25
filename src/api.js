@@ -2,8 +2,8 @@ import axios from "axios";
 import { act } from "react";
 
 import qs from "qs";
-const BASE_URL = "http://localhost:8080/innovationLab/rest/";
-// const BASE_URL = "https://localhost:8443/innovationLab/rest/";
+//const BASE_URL = "http://localhost:8080/innovationLab/rest/";
+ const BASE_URL = "https://localhost:8443/innovationLab/rest/";
 const apiClient = axios.create({
   baseURL: BASE_URL,
   headers: {

@@ -58,22 +58,6 @@ function FourthStageCreation() {
     setLabName(newLabName);
   }, [lab, labs]);
 
-  async function createProject() {
-    try {
-      const response = await Api.createProject(token, {
-        name: projectName,
-        description: description,
-        lab: lab,
-        startDate: startDate,
-        endDate: endDate,
-        users: projectUsers,
-        resources: projectResources,
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
 
   return (
     <>
@@ -103,7 +87,7 @@ function FourthStageCreation() {
               </FormGroup>
 
               <ProjectPreview
-                data={projectResources}
+                 data={Object.values(projectResources)}
                 name="Resources Preview"
               />
               <ProjectPreview data={projectKeywords} name="Keywords Preview" />

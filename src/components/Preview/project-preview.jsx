@@ -66,6 +66,11 @@ const ProjectPreview = ({ data, name }) => {
                 {`${data.name}`}
               </div>
             )}
+            {data.quantity && (
+              <div style={{ display: "flex", alignItems: "center" }}>
+               Qt: {`${data.quantity}`}
+              </div>
+            )}
           </div>
         ))}
       </div>

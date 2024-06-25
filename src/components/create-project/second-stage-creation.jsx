@@ -38,6 +38,42 @@ function SecondStageCreation() {
   const [selectedResources, setSelectedResources] = useState(projectResources);
   const [filter, setFilter] = useState("All");
 
+  const [resourceQuantity, setResourceQuantity] = useState(projectResources);
+
+  function handleQuantityChange(resourceId, value) {
+    // Convert the input value to a number
+    const numericValue = Number(value);
+  
+    // Assuming getResourceName is a function that returns the resource's name given its ID
+    const resourceName = getResourceName(resourceId);
+  
+    // Update the state with the new object
+    setResourceQuantity((prevQuantities) => ({
+      ...prevQuantities,
+      [resourceId]: {
+        id: resourceId,
+        name: resourceName,
+        quantity: numericValue,
+      },
+    }));
+  }
+
+  function getResourceName(resourceId) {
+    return resources.find((resource) => resource.id === resourceId).name;
+  }
+
+  const handleResourceChange = (resourceId, quantity) => {
+    setSelectedResources(prevResources =>
+      prevResources.map(resource =>
+        resource.id === resourceId ? { ...resource, quantity: quantity } : resource
+      )
+    );
+  };
+
+  useEffect(() => {
+    console.log(resourceQuantity);
+  }, [resourceQuantity]);
+
   const props = {
     dtoType: "ProductDto",
     page_size: 200,
@@ -56,26 +92,12 @@ function SecondStageCreation() {
     fetchResources();
   }, []);
 
-  function handleCheckboxChange(resource) {
-    setSelectedResources((prevSelectedResources) => {
-      const resourceExists = prevSelectedResources.some(
-        (prevResource) => prevResource.id === resource.id
-      );
 
-      if (resourceExists) {
-        return prevSelectedResources.filter(
-          (prevResource) => prevResource.id !== resource.id
-        );
-      } else {
-        return [...prevSelectedResources, resource];
-      }
-    });
-  }
 
   //update na array da store sempre que o array de resources selecionados muda
   useEffect(() => {
-    updateProjectResources(selectedResources);
-  }, [selectedResources]);
+    updateProjectResources(resourceQuantity);
+  }, [resourceQuantity]);
 
   return (
     <>
@@ -131,7 +153,7 @@ function SecondStageCreation() {
                   )
                   .map((resource, index) => {
 
-                    const isSelected = projectResources.some((projectResources) => projectResources.id === resource.id);
+                   
                     return (
                       <div
                         key={resource.id}
@@ -150,11 +172,12 @@ function SecondStageCreation() {
                           {`${resource.name}`}
                         </div>
                         <input
-                          type="checkbox"
-                          name="memberSelect"
-                          value={resource}
-                          checked={isSelected}
-                          onChange={() => handleCheckboxChange(resource)}
+                          type="number"
+                          name="resourceQuantity"
+                          min="0"
+                          value={resourceQuantity[resource.id]?.quantity || 0}
+                          onChange={(e) => handleQuantityChange(resource.id, e.target.value)}
+                          style={{ width: "60px" }}
                         />
                       </div>
                     );
