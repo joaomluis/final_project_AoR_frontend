@@ -2,15 +2,45 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import classnames from "classnames";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { Card, CardBody, CardTitle, Col, Container, Row } from "reactstrap";
+import {Api} from "../api.js";
+import { useEffect } from "react";
+import { useUserStore } from "../components/stores/useUserStore.js";
 
 function ProjectPage() {
   const { t } = useTranslation();
+  const token = useUserStore((state) => state.token);
   const [activeTab, setActiveTab] = useState("1");
 
+  const { id } = useParams(); 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  const [projectData, setProjectData] = useState({});
+
+  const props = {
+    dtoType: "ProjectDto",
+    id: id,
+  };
+
+  useEffect(() => {
+    async function fetchProject() {
+      try {
+        const response = await Api.getProjectsByDto(token, props);
+        console.log(response.data.results);
+        setProjectData(response.data.results);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    fetchProject();
+    
+    console.log(projectData);
+  }, []);
+
 
   return (
     <div className="section4">
@@ -23,7 +53,7 @@ function ProjectPage() {
                   <CardBody>
                     <Row>
                       <Col className="mb-4" md="10">
-                        <CardTitle tag="h4">Project Name</CardTitle>
+                        <CardTitle tag="h4">{projectData.name}</CardTitle>
                       </Col>
                       <Col md="2"></Col>
                     </Row>
