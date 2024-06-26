@@ -43,32 +43,44 @@ function SecondStageCreation() {
   function handleQuantityChange(resourceId, value) {
     // Convert the input value to a number
     const numericValue = Number(value);
-  
+
     // Assuming getResourceName is a function that returns the resource's name given its ID
     const resourceName = getResourceName(resourceId);
-  
+
     // Update the state with the new object
-    setResourceQuantity((prevQuantities) => ({
-      ...prevQuantities,
-      [resourceId]: {
-        id: resourceId,
-        name: resourceName,
-        quantity: numericValue,
-      },
-    }));
+    setResourceQuantity((prevQuantities) => {
+
+      const numericValueToAdd =
+        typeof numericValue === "number"
+          ? numericValue
+          : parseInt(numericValue, 10);
+
+      const resourceIndex = prevQuantities.findIndex(
+        (resource) => resource.id === resourceId
+      );
+
+      if (resourceIndex !== -1) {
+        
+        const updatedQuantities = prevQuantities.map((resource, index) =>
+          index === resourceIndex
+            ? { ...resource, quantity: resource.quantity + numericValueToAdd }
+            : resource
+        );
+        return updatedQuantities;
+      } else {
+        const updatedQuantities = [
+          ...prevQuantities,
+          { id: resourceId, name: resourceName, quantity: numericValueToAdd },
+        ];
+        return updatedQuantities;
+      }
+    });
   }
 
   function getResourceName(resourceId) {
     return resources.find((resource) => resource.id === resourceId).name;
   }
 
-  const handleResourceChange = (resourceId, quantity) => {
-    setSelectedResources(prevResources =>
-      prevResources.map(resource =>
-        resource.id === resourceId ? { ...resource, quantity: quantity } : resource
-      )
-    );
-  };
 
   useEffect(() => {
     console.log(resourceQuantity);
@@ -91,8 +103,6 @@ function SecondStageCreation() {
 
     fetchResources();
   }, []);
-
-
 
   //update na array da store sempre que o array de resources selecionados muda
   useEffect(() => {
@@ -152,8 +162,6 @@ function SecondStageCreation() {
                     (resource) => filter === "All" || resource.type === filter
                   )
                   .map((resource, index) => {
-
-                   
                     return (
                       <div
                         key={resource.id}
@@ -176,7 +184,9 @@ function SecondStageCreation() {
                           name="resourceQuantity"
                           min="0"
                           value={resourceQuantity[resource.id]?.quantity || 0}
-                          onChange={(e) => handleQuantityChange(resource.id, e.target.value)}
+                          onChange={(e) =>
+                            handleQuantityChange(resource.id, e.target.value)
+                          }
                           style={{ width: "60px" }}
                         />
                       </div>
