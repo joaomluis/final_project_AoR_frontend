@@ -23,6 +23,10 @@ function EmailComponent({ mail, loading, children, back, deleteToggle }) {
     try {
       const response = await Api.markAsRead(token, mail.id);
       console.log(response);
+      if (mail.read === false && mail.to === usermail) {
+        useUserStore.getState().readMail();
+        mail.read = true;
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -41,7 +45,6 @@ function EmailComponent({ mail, loading, children, back, deleteToggle }) {
     console.log(responseBody);
     try {
       const response = await Api.sendResponse(token, mail.id, props);
-
       if (response.status === 200) {
         tsuccess(t("response-sent"));
         back();

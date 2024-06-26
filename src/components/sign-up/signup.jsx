@@ -16,6 +16,8 @@ function SignUp() {
   const recoverPasswordRef = useRef();
   const updateToken = useUserStore((state) => state.updateToken);
   const updateEmail = useUserStore((state) => state.updateEmail);
+  const updateUnreadEmails = useUserStore((state) => state.updateUnreadEmails);
+  const updateUnreadNotifications = useUserStore((state) => state.updateUnreadNotifications);
   const navigate = useNavigate();
 
   const [isSignUp, setIsSignUp] = useState(false);
@@ -37,6 +39,8 @@ function SignUp() {
         tsuccess("Login successful!");
         updateToken(response.data.token);
         updateEmail(response.data.email);
+        updateUnreadEmails(response.data.unreadEmails);
+        updateUnreadNotifications(response.data.unreadNotifications);
         console.log(response.data.email);
         console.log(response.data.token);
         //TODO redirect to home page

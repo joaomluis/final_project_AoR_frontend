@@ -24,6 +24,17 @@ export const useUserStore = create(
       allInterests: [],
       myOwnProjects: [],
 
+      mailsFirstPage: [],
+      unreadNotifications: 0,
+      unreadEmails: 0,
+
+      updateMailsFirstPage: (mailsFirstPage) => set({ mailsFirstPage }),
+
+      updateUnreadNotifications: (unreadNotifications) => set({ unreadNotifications }),
+      updateUnreadEmails: (unreadEmails) => set({ unreadEmails }),
+
+      readMail: () => set((state) => ({ unreadEmails: state.unreadEmails - 1 })),
+
       updateMyOwnProjects: (myOwnProjects) => set({ myOwnProjects }),
 
       updatePrivateProfile: (privateProfile) => set({ privateProfile }),

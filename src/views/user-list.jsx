@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Card, CardBody, CardTitle, CardSubtitle, CardText, CardHeader, CardFooter, Badge, Row, Col } from "reactstrap";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
 import { useUserStore } from "../stores/useUserStore.js";
-import useFilterStore from "../stores/useFilterStore.js";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";

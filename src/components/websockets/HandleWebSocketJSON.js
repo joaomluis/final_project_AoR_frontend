@@ -1,8 +1,10 @@
 import { tsuccess, twarn, tinfo, tdefault } from "../toasts/message-toasts";
 import MessageType from "./MessageType";
-// import { South } from "@mui/icons-material";
+import { useUserStore } from "../../stores/useUserStore";
 
 function handleWebSocketJSON(json) {
+  const userStore = useUserStore.getState();
+
   let data;
   try {
     data = JSON.parse(json);
@@ -26,6 +28,7 @@ function handleWebSocketJSON(json) {
       break;
     case MessageType.EMAIL_SEND_TO:
       tinfo("Email recebido");
+      handleReceivedMail(data);
       break;
     case MessageType.EMAIL_SEND_FROM:
       tinfo("Email enviado");
@@ -39,6 +42,11 @@ function handleWebSocketJSON(json) {
       break;
     default:
       console.error("Tipo desconhecido, ou não contem type", data);
+  }
+
+  function handleReceivedMail(data) {
+    console.log(data);
+    // userStore.addMail(data);
   }
 }
 export { handleWebSocketJSON };

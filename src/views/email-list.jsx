@@ -32,6 +32,12 @@ function EmailList() {
 
   const [loading, setLoading] = useState(true);
 
+  const [unreadCount, setUnreadCount] = useState(0);
+  const unreadEmailsCount = useUserStore((state) => state.unreadEmails);
+  const setUnreadEmailsCount = useUserStore((state) => state.updateUnreadEmails);
+  const mailFirstPage = useUserStore((state) => state.mailsFirstPage);
+  const updateMailsFirstPage = useUserStore((state) => state.updateMailsFirstPage);
+
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteMailId, setDeleteMailId] = useState(null);
@@ -69,6 +75,15 @@ function EmailList() {
     setSearchParams(searchParams);
   };
 
+  // useEffect(() => {
+  //   // Verifica se o parâmetro 'to' está presente
+  //   if (!searchParams.has("to")) {
+  //     // Define o parâmetro 'to' com o e-mail do usuário
+  //     searchParams.set("to", email);
+  //     setSearchParams(searchParams);
+  //   }
+  // }, [email]); // Adiciona 'email' ao array de dependências
+
   function handleSearchSubmit(event) {
     event.preventDefault();
     getMails();
@@ -95,6 +110,13 @@ function EmailList() {
       const response = await Api.getMails(token, props);
       setMails(response.data.results);
       setTotalPages(response.data.totalPages);
+
+      //if the request is
+      if (props.from === null || props.from === "") {
+        setUnreadEmailsCount(response.data.unreadCount);
+      }
+
+      console.log(response.data.unreadCount);
       setLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -118,7 +140,13 @@ function EmailList() {
   }
 
   useEffect(() => {
+    // allways search to=user email if no search params are set, to avoid white pages
+    if (((searchParams.get("to") === null || searchParams.get("to") === "") && searchParams.get("from") === null) || searchParams.get("from") === "") {
+      searchParams.set("to", email);
+      setSearchParams(searchParams);
+    }
     getMails();
+    console.log("useEffect");
   }, [pageParam, toParam, fromParam, tokenAuthParam, acceptParam]);
 
   useEffect(() => {
@@ -143,19 +171,23 @@ function EmailList() {
 
   function setFilter(filter) {
     if (filter === "to") {
+      console.log("to");
       searchParams.set("to", email);
       searchParams.delete("from");
+      console.log(email);
     }
     if (filter === "from") {
       searchParams.set("from", email);
       searchParams.delete("to");
+      console.log(email);
     }
+    console.log(Array.from(searchParams.entries()));
     setSearchParams(searchParams);
   }
 
   function handleClickEmail(mail) {
     setSelectedMail(mail);
-    mail.read = true;
+    // mail.read = true;
   }
   function backToMailPage() {
     setSelectedMail(null);
