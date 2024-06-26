@@ -23,7 +23,7 @@ function FirstStageCreation() {
       if (!isLoaded) {
         const response = await Api.getAllLocations(token);
         setLabs(response.data);
-        
+
         setIsLoaded(true);
       }
     } catch (error) {
@@ -90,18 +90,12 @@ function FirstStageCreation() {
                 />
               </FormGroup>
               <FormGroup floating>
-                <Input
-                  bsSize="md"
-                  type="select"
-                  className="form-select-lg"
-                  value={lab || "default"}
-                  onChange={handleLabChange}
-                >
+                <Input bsSize="md" type="select" className="form-select-lg" value={lab || "default"} onChange={handleLabChange}>
                   <option disabled value="default">
                     Select a Lab*
                   </option>
                   {labs.map((lab) => (
-                    <option key={lab.id} value={lab.id}>
+                    <option key={lab.id} value={lab.location}>
                       {lab.location}
                     </option>
                   ))}
@@ -111,25 +105,11 @@ function FirstStageCreation() {
             <Col md={6}>
               <FormGroup>
                 <Label for="startDate">Start Date</Label>
-                <Input
-                  type="date"
-                  name="startDate"
-                  id="startDate"
-                  className="form-control-lg"
-                  value={startDate}
-                  onChange={handleStartDateChange}
-                />
+                <Input type="date" name="startDate" id="startDate" className="form-control-lg" value={startDate} onChange={handleStartDateChange} />
               </FormGroup>
               <FormGroup>
                 <Label for="endDate">End Date</Label>
-                <Input
-                  type="date"
-                  name="endDate"
-                  id="endDate"
-                  className="form-control-lg"
-                  value={endDate}
-                  onChange={handleEndDateChange}
-                />
+                <Input type="date" name="endDate" id="endDate" className="form-control-lg" value={endDate} onChange={handleEndDateChange} />
               </FormGroup>
             </Col>
           </Row>
