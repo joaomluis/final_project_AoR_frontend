@@ -16,8 +16,10 @@ import ModalOrder from "../components/modals/modal-order.jsx";
 import EmailComponent from "../components/email/email-component.jsx";
 import ConfirmModal from "../components/modals/modal-confirm.jsx";
 import "../components/email/email-component.css";
+import { format } from "date-fns";
 function EmailList() {
   const { t } = useTranslation();
+
   const email = useUserStore((state) => state.email);
   const token = useUserStore((state) => state.token);
   const [searchParams, setSearchParams] = useSearchParams({ page: 1, to: email, from: "", search: "", tokenAuth: "", accept: "" });
@@ -70,6 +72,9 @@ function EmailList() {
     searchParams.set("search", event.target.value);
     setSearchParams(searchParams);
   };
+  function formatNotificationTime(time) {
+    return format(new Date(time), "HH:mm, d MMM yyyy ");
+  }
 
   // useEffect(() => {
   //   // Verifica se o parâmetro 'to' está presente
@@ -238,7 +243,7 @@ function EmailList() {
               fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold",
             }}
           >
-            {new Date(mail.sentDate).toLocaleDateString()}
+            {formatNotificationTime(mail.sentDate)}
           </div>
           <div style={{ position: "absolute", right: "0", bottom: "0", top: "0", display: "flex", alignItems: "center", marginRight: "1rem" }}>
             <button
@@ -263,7 +268,7 @@ function EmailList() {
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>{mail.from === mail ? t("me") : mail.fromName}</div>
             <div style={{ fontSize: "small", fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>
-              {new Date(mail.sentDate).toLocaleDateString()}
+              {formatNotificationTime(mail.sentDate)}
             </div>
           </div>
           <div style={{ fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>{truncate(mail.subject, 20)}</div>

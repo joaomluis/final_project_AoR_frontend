@@ -1,5 +1,5 @@
 import { tsuccess, twarn, tinfo, tdefault } from "../toasts/message-toasts";
-import MessageType from "./MessageType";
+import NotificationType from "./NotificationType";
 import { useUserStore } from "../../stores/useUserStore";
 
 function handleWebSocketJSON(json) {
@@ -8,44 +8,38 @@ function handleWebSocketJSON(json) {
   let data;
   try {
     data = JSON.parse(json);
+    console.log(data.notificationType);
+    console.log(data.type);
   } catch (e) {
     console.error("Erro ao fazer parse do JSON", json);
     return;
   }
 
   switch (data.type) {
-    case MessageType.EMAIL_INVITE_SEND:
-      tsuccess("Convite enviado");
-      break;
-    case MessageType.EMAIL_INVITE_RECEIVER:
-      tinfo("Convite recebido");
-      break;
-    case MessageType.EMAIL_RESPONSE_FROM:
-      tinfo("Resposta enviada");
-      break;
-    case MessageType.EMAIL_RESPONSE_TO:
-      // tinfo("Resposta recebida");
-      break;
-    case MessageType.EMAIL_SEND_TO:
-      // tinfo("Email recebido");
-      handleReceivedMail(data);
-      break;
-    case MessageType.EMAIL_SEND_FROM:
-      break;
-    case MessageType.EMAIL_DELETE:
-      tinfo("Email Eliminado");
+    case NotificationType.NOTIFICATION:
+      tinfo("new notification!");
+      handleNewNotification(data);
       break;
 
-    case "error":
-      console.error("Erro recebido", data);
-      break;
     default:
       console.error("Tipo desconhecido, ou não contem type", data);
   }
 
-  function handleReceivedMail(data) {
-    console.log(data);
-    userStore.addMail();
+  function handleNewNotification(data) {
+    switch (data.notificationType) {
+      case NotificationType.NEW_MAIL:
+        userStore.addNotification(data);
+        userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);
+        userStore.addMail();
+        break;
+
+      case NotificationType.INVITE:
+        userStore.addNotification(data);
+        userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);
+        break;
+      default:
+        console.error("Tipo de notificação desconhecido", data);
+    }
   }
 }
 export { handleWebSocketJSON };

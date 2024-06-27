@@ -3,7 +3,7 @@ import { act } from "react";
 
 import qs from "qs";
 //const BASE_URL = "http://localhost:8080/innovationLab/rest/";
- const BASE_URL = "https://localhost:8443/innovationLab/rest/";
+const BASE_URL = "https://localhost:8443/innovationLab/rest/";
 const apiClient = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -252,4 +252,16 @@ export const Api = {
   //extra project
 
   inviteUserToProject: (token, data) => apiClient.post("/projects/invite", data, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  //NOTIFICATION endpoints
+  getNotifications: (token, props) => {
+    const queryString = qs.stringify(props, { arrayFormat: "repeat" });
+
+    return apiClient
+      .get(`/notifications/?${queryString}`, {
+        headers: { token },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
 };

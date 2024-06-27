@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #112d4e;
-  --primary-color-darker: #020e1bcb;
+  --primary-color: hsl(212, 64%, 19%);
+  --primary-color-darker: #020e1b;
   --secondary-color: #3f72af;
   --greyish: #dbe2ef;
   --whitey: #f9f7f7;
@@ -416,4 +416,43 @@ h4 {
 .supplier-product {
   background-color: var(--greyish);
   border-radius: 5px;
+}
+
+#dropdown-basic {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  content: none;
+  font-size: 1.3rem;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+
+.bg-dark {
+  background-color: var(--primary-color-darker) !important;
+}
+
+/* Para remover o padding de todos os itens do dropdown */
+.dropdown-item {
+  padding: 0 !important;
+}
+
+/* Ou, para remover o padding do contêiner do menu dropdown */
+.dropdown-menu {
+  padding: 0 !important;
+}
+
+.notification:hover {
+  background-color: var(--greyish);
+  box-shadow: var(--box-shadow);
+}
+
+.notification.read {
+  opacity: 0.6;
+}
+
+.notification.unread {
+  opacity: 1;
 }

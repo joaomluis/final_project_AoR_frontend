@@ -24,8 +24,19 @@ export const useUserStore = create(
       allInterests: [],
       myOwnProjects: [],
       sendCount: 0,
-      unreadNotifications: 0,
+
       unreadEmails: 0,
+
+      //notifications:
+      notifications: [],
+      unreadNotifications: 0,
+      setNotifications: (notifications) => set({ notifications }),
+      addNotification: (notification) => set((state) => ({ notifications: [notification, ...state.notifications] })),
+      addNotifications: (newNotifications) => set((state) => ({ notifications: [...state.notifications, ...newNotifications] })),
+      markNotificationAsRead: (notificationId) =>
+        set((state) => ({
+          notifications: state.notifications.map((notification) => (notification.id === notificationId ? { ...notification, read: true } : notification)),
+        })),
 
       //addNew mail:
       addSendMail: () => set((state) => ({ sendCount: state.sendCount + 1 })),
