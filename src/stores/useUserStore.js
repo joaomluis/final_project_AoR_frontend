@@ -23,10 +23,13 @@ export const useUserStore = create(
       interests: [],
       allInterests: [],
       myOwnProjects: [],
-
-      mailsFirstPage: [],
+      sendCount: 0,
       unreadNotifications: 0,
       unreadEmails: 0,
+
+      //addNew mail:
+      addSendMail: () => set((state) => ({ sendCount: state.sendCount + 1 })),
+      addMail: () => set((state) => ({ unreadEmails: state.unreadEmails + 1 })),
 
       updateMailsFirstPage: (mailsFirstPage) => set({ mailsFirstPage }),
 

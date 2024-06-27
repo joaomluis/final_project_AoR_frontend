@@ -32,16 +32,13 @@ function EmailList() {
 
   const [loading, setLoading] = useState(true);
 
-  const [unreadCount, setUnreadCount] = useState(0);
-  const unreadEmailsCount = useUserStore((state) => state.unreadEmails);
-  const setUnreadEmailsCount = useUserStore((state) => state.updateUnreadEmails);
-  const mailFirstPage = useUserStore((state) => state.mailsFirstPage);
-  const updateMailsFirstPage = useUserStore((state) => state.updateMailsFirstPage);
-
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteMailId, setDeleteMailId] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const storeEmail = useUserStore((state) => state.email);
 
   const toggleDelete = (id) => {
     setDeleteModal(!deleteModal);
@@ -51,9 +48,8 @@ function EmailList() {
   const [mails, setMails] = useState([]);
   const [selectedMail, setSelectedMail] = useState(null);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const storeEmail = useUserStore((state) => state.email);
-
+  const setUnreadEmailsCount = useUserStore((state) => state.updateUnreadEmails);
+  const unreadCount = useUserStore((state) => state.unreadEmails);
   useEffect(() => {
     if (tokenAuthParam && acceptParam) {
       console.log(tokenAuthParam, acceptParam);
@@ -116,7 +112,6 @@ function EmailList() {
         setUnreadEmailsCount(response.data.unreadCount);
       }
 
-      console.log(response.data.unreadCount);
       setLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -138,6 +133,18 @@ function EmailList() {
       terror("Error deleting mail");
     }
   }
+
+  useEffect(() => {
+    // Verifica se está na página 1 e se os parâmetros 'from' ou 'to' estão definidos
+    const isPageOne = pageParam === "1" || pageParam === 1 || pageParam === null;
+    // const hasFromParam = searchParams.get("from") !== null && searchParams.get("from") !== "";
+    const hasToParam = searchParams.get("to") !== null && searchParams.get("to") !== "";
+    // console.log(isPageOne, hasFromParam, hasToParam);
+    console.log(searchParams.get("from"), searchParams.get("to"));
+    if (isPageOne && hasToParam) {
+      getMails();
+    }
+  }, [unreadCount]);
 
   useEffect(() => {
     // allways search to=user email if no search params are set, to avoid white pages

@@ -24,14 +24,13 @@ function handleWebSocketJSON(json) {
       tinfo("Resposta enviada");
       break;
     case MessageType.EMAIL_RESPONSE_TO:
-      tinfo("Resposta recebida");
+      // tinfo("Resposta recebida");
       break;
     case MessageType.EMAIL_SEND_TO:
-      tinfo("Email recebido");
+      // tinfo("Email recebido");
       handleReceivedMail(data);
       break;
     case MessageType.EMAIL_SEND_FROM:
-      tinfo("Email enviado");
       break;
     case MessageType.EMAIL_DELETE:
       tinfo("Email Eliminado");
@@ -46,7 +45,7 @@ function handleWebSocketJSON(json) {
 
   function handleReceivedMail(data) {
     console.log(data);
-    // userStore.addMail(data);
+    userStore.addMail();
   }
 }
 export { handleWebSocketJSON };
