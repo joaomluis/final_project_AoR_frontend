@@ -7,6 +7,7 @@ import { Card, CardBody, CardTitle, Col, Container, Row } from "reactstrap";
 import {Api} from "../api.js";
 import { useEffect } from "react";
 import { useUserStore } from "../components/stores/useUserStore.js";
+import ProjectSettings from "../components/Project/project-settings.jsx";
 
 function ProjectPage() {
   const { t } = useTranslation();
@@ -29,16 +30,13 @@ function ProjectPage() {
     async function fetchProject() {
       try {
         const response = await Api.getProjectsByDto(token, props);
-        console.log(response.data.results);
-        setProjectData(response.data.results);
+        setProjectData(response.data.results[0]);
       } catch (error) {
         console.log(error.message);
       }
     }
 
-    fetchProject();
-    
-    console.log(projectData);
+    fetchProject();  
   }, []);
 
 
@@ -96,6 +94,18 @@ function ProjectPage() {
                               Logs
                             </NavLink>
                           </NavItem>
+                          <NavItem>
+                            <NavLink
+                              className={classnames({
+                                active: activeTab === "4",
+                              })}
+                              onClick={() => {
+                                toggle("4");
+                              }}
+                            >
+                              Settings
+                            </NavLink>
+                          </NavItem>
                         </Nav>
                         <TabContent activeTab={activeTab}>
                           <TabPane tabId="1">
@@ -103,6 +113,9 @@ function ProjectPage() {
                           </TabPane>
                           <TabPane tabId="2">
                             <p>Tab 2 content</p>
+                          </TabPane>
+                          <TabPane tabId="4">
+                            <ProjectSettings data={projectData}/>
                           </TabPane>
                         </TabContent>
                       </Col>
