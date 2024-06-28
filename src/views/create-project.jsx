@@ -43,19 +43,21 @@ function CreateProject() {
   const [stage, setStage] = useState(1);
 
   async function createProject() {
-    console.log(projectResources);
+    const props = {
+      name: projectName,
+      description: description,
+      lab_id: lab.id,
+      startDate: startDate,
+      endDate: endDate,
+      users: projectUsers,
+      resources: projectResources,
+      keywords: projectKeywords,
+      skills: projectSkills,
+    };
+
+    console.log(props);
     try {
-      const response = await Api.createProject(token, {
-        name: projectName,
-        description: description,
-        lab_id: lab,
-        startDate: startDate,
-        endDate: endDate,
-        users: projectUsers,
-        resources: projectResources,
-        keywords: projectKeywords,
-        skills: projectSkills,
-      });
+      const response = await Api.createProject(token, props);
       tsuccess(response.data);
       cleanStore(); //da reset à store
       navigate("/fica-lab/home"); //redireciona para a home

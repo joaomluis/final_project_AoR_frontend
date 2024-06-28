@@ -48,7 +48,9 @@ function FirstStageCreation() {
   };
 
   const handleLabChange = (event) => {
-    useCreateProjectStore.getState().setLab(event.target.value);
+    const selectedLabId = event.target.value;
+    const selectedLab = labs.find((lab) => lab.id.toString() === selectedLabId);
+    useCreateProjectStore.getState().setLab(selectedLab);
   };
 
   const handleStartDateChange = (event) => {
@@ -90,12 +92,12 @@ function FirstStageCreation() {
                 />
               </FormGroup>
               <FormGroup floating>
-                <Input bsSize="md" type="select" className="form-select-lg" value={lab || "default"} onChange={handleLabChange}>
+                <Input bsSize="md" type="select" className="form-select-lg" value={lab.id || "default"} onChange={handleLabChange}>
                   <option disabled value="default">
                     Select a Lab*
                   </option>
                   {labs.map((lab) => (
-                    <option key={lab.id} value={lab.location}>
+                    <option key={lab.id} value={lab.id}>
                       {lab.location}
                     </option>
                   ))}

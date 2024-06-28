@@ -78,7 +78,7 @@ function FourthStageCreation() {
               </FormGroup>
               <FormGroup>
                 <Label for="labLocation">Lab Location</Label>
-                <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={lab} readOnly />
+                <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={lab.location} readOnly />
               </FormGroup>
               <ProjectPreview
                 data={Object.entries(projectResources)
