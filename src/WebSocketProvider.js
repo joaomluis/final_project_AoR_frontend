@@ -27,6 +27,7 @@ function WebSocketProvider({ children, token }) {
     };
 
     ws.onclose = function (e) {
+      console.log(Date());
       if (e.code !== 1000) {
         let times = 0;
         setTimeout(() => {
