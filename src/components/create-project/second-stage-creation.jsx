@@ -1,38 +1,19 @@
-import {
-  Container,
-  Col,
-  Row,
-  Card,
-  CardHeader,
-  CardText,
-  CardBody,
-  CardTitle,
-  Input,
-  CardImg,
-  Label,
-  Form,
-  FormGroup,
-  Button,
-} from "reactstrap";
+import { Container, Col, Row, Card, CardHeader, CardText, CardBody, CardTitle, Input, CardImg, Label, Form, FormGroup, Button } from "reactstrap";
 
 import "../../assets/css/general-css.css";
 
 import { useState, useEffect } from "react";
 
-import useCreateProjectStore from "../stores/useCreateProjectStore.js";
+import useCreateProjectStore from "../../stores/useCreateProjectStore.js";
 
 import { Api } from "../../api.js";
-import { useUserStore } from "../stores/useUserStore.js";
+import { useUserStore } from "../../stores/useUserStore.js";
 
 function SecondStageCreation() {
   const token = useUserStore((state) => state.token);
 
-  const updateProjectResources = useCreateProjectStore(
-    (state) => state.setProjectResources
-  );
-  const projectResources = useCreateProjectStore(
-    (state) => state.projectResources
-  );
+  const updateProjectResources = useCreateProjectStore((state) => state.setProjectResources);
+  const projectResources = useCreateProjectStore((state) => state.projectResources);
 
   const [resources, setResources] = useState([]);
   const [selectedResources, setSelectedResources] = useState(projectResources);
@@ -43,10 +24,10 @@ function SecondStageCreation() {
   function handleQuantityChange(resourceId, value) {
     // Convert the input value to a number
     const numericValue = Number(value);
-  
+
     // Assuming getResourceName is a function that returns the resource's name given its ID
     const resourceName = getResourceName(resourceId);
-  
+
     // Update the state with the new object
     setResourceQuantity((prevQuantities) => ({
       ...prevQuantities,
@@ -63,10 +44,8 @@ function SecondStageCreation() {
   }
 
   const handleResourceChange = (resourceId, quantity) => {
-    setSelectedResources(prevResources =>
-      prevResources.map(resource =>
-        resource.id === resourceId ? { ...resource, quantity: quantity } : resource
-      )
+    setSelectedResources((prevResources) =>
+      prevResources.map((resource) => (resource.id === resourceId ? { ...resource, quantity: quantity } : resource))
     );
   };
 
@@ -92,8 +71,6 @@ function SecondStageCreation() {
     fetchResources();
   }, []);
 
-
-
   //update na array da store sempre que o array de resources selecionados muda
   useEffect(() => {
     updateProjectResources(resourceQuantity);
@@ -113,31 +90,13 @@ function SecondStageCreation() {
                   marginBottom: "1rem",
                 }}
               >
-                <Button
-                  className="button-style1"
-                  color="primary"
-                  size="sm"
-                  onClick={() => setFilter("All")}
-                  style={{ flex: 1, margin: "0.5rem" }}
-                >
+                <Button className="button-style1" color="primary" size="sm" onClick={() => setFilter("All")} style={{ flex: 1, margin: "0.5rem" }}>
                   All
                 </Button>
-                <Button
-                  className="button-style1"
-                  color="primary"
-                  size="sm"
-                  onClick={() => setFilter("COMPONENT")}
-                  style={{ flex: 1, margin: "0.5rem" }}
-                >
+                <Button className="button-style1" color="primary" size="sm" onClick={() => setFilter("COMPONENT")} style={{ flex: 1, margin: "0.5rem" }}>
                   Components
                 </Button>
-                <Button
-                  className="button-style1"
-                  color="primary"
-                  size="sm"
-                  onClick={() => setFilter("RESOURCE")}
-                  style={{ flex: 1, margin: "0.5rem" }}
-                >
+                <Button className="button-style1" color="primary" size="sm" onClick={() => setFilter("RESOURCE")} style={{ flex: 1, margin: "0.5rem" }}>
                   Resources
                 </Button>
               </div>
@@ -148,12 +107,8 @@ function SecondStageCreation() {
                 }}
               >
                 {resources
-                  .filter(
-                    (resource) => filter === "All" || resource.type === filter
-                  )
+                  .filter((resource) => filter === "All" || resource.type === filter)
                   .map((resource, index) => {
-
-                   
                     return (
                       <div
                         key={resource.id}
@@ -168,9 +123,7 @@ function SecondStageCreation() {
                           backgroundColor: "#f9f9f9",
                         }}
                       >
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                          {`${resource.name}`}
-                        </div>
+                        <div style={{ display: "flex", alignItems: "center" }}>{`${resource.name}`}</div>
                         <input
                           type="number"
                           name="resourceQuantity"

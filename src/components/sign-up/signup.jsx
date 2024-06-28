@@ -6,7 +6,7 @@ import PasswordStrengthBar from "react-password-strength-bar";
 import { useTranslation } from "react-i18next";
 import RecoverPassword from "../modals/recover-password.jsx";
 import { terror, tsuccess } from "../toasts/message-toasts";
-import { useUserStore } from "../stores/useUserStore";
+import { useUserStore } from "../../stores/useUserStore.js";
 import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,8 @@ function SignUp() {
   const recoverPasswordRef = useRef();
   const updateToken = useUserStore((state) => state.updateToken);
   const updateEmail = useUserStore((state) => state.updateEmail);
+  const updateUnreadEmails = useUserStore((state) => state.updateUnreadEmails);
+  const updateUnreadNotifications = useUserStore((state) => state.updateUnreadNotifications);
   const navigate = useNavigate();
 
   const [isSignUp, setIsSignUp] = useState(false);
@@ -37,6 +39,8 @@ function SignUp() {
         tsuccess("Login successful!");
         updateToken(response.data.token);
         updateEmail(response.data.email);
+        updateUnreadEmails(response.data.unreadEmails);
+        updateUnreadNotifications(response.data.unreadNotifications);
         console.log(response.data.email);
         console.log(response.data.token);
         //TODO redirect to home page

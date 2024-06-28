@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { Button, Input, InputGroup, InputGroupText } from "reactstrap";
 import { FaSearch } from "react-icons/fa";
-import { useUserStore } from "../components/stores/useUserStore.js";
+import { useUserStore } from "../stores/useUserStore.js";
 import { Card, Col, Row } from "react-bootstrap";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
 import PaginationComponent from "../components/pagination/pagination.jsx";
@@ -16,8 +16,10 @@ import ModalOrder from "../components/modals/modal-order.jsx";
 import EmailComponent from "../components/email/email-component.jsx";
 import ConfirmModal from "../components/modals/modal-confirm.jsx";
 import "../components/email/email-component.css";
+import { format } from "date-fns";
 function EmailList() {
   const { t } = useTranslation();
+
   const email = useUserStore((state) => state.email);
   const token = useUserStore((state) => state.token);
   const [searchParams, setSearchParams] = useSearchParams({ page: 1, to: email, from: "", search: "", tokenAuth: "", accept: "" });
@@ -37,6 +39,9 @@ function EmailList() {
   const [deleteMailId, setDeleteMailId] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const storeEmail = useUserStore((state) => state.email);
+
   const toggleDelete = (id) => {
     setDeleteModal(!deleteModal);
     setDeleteMailId(id);
@@ -45,9 +50,8 @@ function EmailList() {
   const [mails, setMails] = useState([]);
   const [selectedMail, setSelectedMail] = useState(null);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const storeEmail = useUserStore((state) => state.email);
-
+  const setUnreadEmailsCount = useUserStore((state) => state.updateUnreadEmails);
+  const unreadCount = useUserStore((state) => state.unreadEmails);
   useEffect(() => {
     if (tokenAuthParam && acceptParam) {
       console.log(tokenAuthParam, acceptParam);
@@ -68,6 +72,18 @@ function EmailList() {
     searchParams.set("search", event.target.value);
     setSearchParams(searchParams);
   };
+  function formatNotificationTime(time) {
+    return format(new Date(time), "HH:mm, d MMM yyyy ");
+  }
+
+  // useEffect(() => {
+  //   // Verifica se o parâmetro 'to' está presente
+  //   if (!searchParams.has("to")) {
+  //     // Define o parâmetro 'to' com o e-mail do usuário
+  //     searchParams.set("to", email);
+  //     setSearchParams(searchParams);
+  //   }
+  // }, [email]); // Adiciona 'email' ao array de dependências
 
   function handleSearchSubmit(event) {
     event.preventDefault();
@@ -95,6 +111,12 @@ function EmailList() {
       const response = await Api.getMails(token, props);
       setMails(response.data.results);
       setTotalPages(response.data.totalPages);
+
+      //if the request is
+      if (props.from === null || props.from === "") {
+        setUnreadEmailsCount(response.data.unreadCount);
+      }
+
       setLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -118,7 +140,25 @@ function EmailList() {
   }
 
   useEffect(() => {
+    // Verifica se está na página 1 e se os parâmetros 'from' ou 'to' estão definidos
+    const isPageOne = pageParam === "1" || pageParam === 1 || pageParam === null;
+    // const hasFromParam = searchParams.get("from") !== null && searchParams.get("from") !== "";
+    const hasToParam = searchParams.get("to") !== null && searchParams.get("to") !== "";
+    // console.log(isPageOne, hasFromParam, hasToParam);
+    console.log(searchParams.get("from"), searchParams.get("to"));
+    if (isPageOne && hasToParam) {
+      getMails();
+    }
+  }, [unreadCount]);
+
+  useEffect(() => {
+    // allways search to=user email if no search params are set, to avoid white pages
+    if (((searchParams.get("to") === null || searchParams.get("to") === "") && searchParams.get("from") === null) || searchParams.get("from") === "") {
+      searchParams.set("to", email);
+      setSearchParams(searchParams);
+    }
     getMails();
+    console.log("useEffect");
   }, [pageParam, toParam, fromParam, tokenAuthParam, acceptParam]);
 
   useEffect(() => {
@@ -143,19 +183,23 @@ function EmailList() {
 
   function setFilter(filter) {
     if (filter === "to") {
+      console.log("to");
       searchParams.set("to", email);
       searchParams.delete("from");
+      console.log(email);
     }
     if (filter === "from") {
       searchParams.set("from", email);
       searchParams.delete("to");
+      console.log(email);
     }
+    console.log(Array.from(searchParams.entries()));
     setSearchParams(searchParams);
   }
 
   function handleClickEmail(mail) {
     setSelectedMail(mail);
-    mail.read = true;
+    // mail.read = true;
   }
   function backToMailPage() {
     setSelectedMail(null);
@@ -199,7 +243,7 @@ function EmailList() {
               fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold",
             }}
           >
-            {new Date(mail.sentDate).toLocaleDateString()}
+            {formatNotificationTime(mail.sentDate)}
           </div>
           <div style={{ position: "absolute", right: "0", bottom: "0", top: "0", display: "flex", alignItems: "center", marginRight: "1rem" }}>
             <button
@@ -224,7 +268,7 @@ function EmailList() {
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>{mail.from === mail ? t("me") : mail.fromName}</div>
             <div style={{ fontSize: "small", fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>
-              {new Date(mail.sentDate).toLocaleDateString()}
+              {formatNotificationTime(mail.sentDate)}
             </div>
           </div>
           <div style={{ fontWeight: mail.read || mail.from === storeEmail ? "normal" : "bold" }}>{truncate(mail.subject, 20)}</div>

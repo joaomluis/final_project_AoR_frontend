@@ -1,19 +1,4 @@
-import {
-  Container,
-  Col,
-  Row,
-  Card,
-  CardHeader,
-  CardText,
-  CardBody,
-  CardTitle,
-  Input,
-  CardImg,
-  Label,
-  Form,
-  FormGroup,
-  Button,
-} from "reactstrap";
+import { Container, Col, Row, Card, CardHeader, CardText, CardBody, CardTitle, Input, CardImg, Label, Form, FormGroup, Button } from "reactstrap";
 
 import "../../assets/css/general-css.css";
 
@@ -21,13 +6,13 @@ import { useTranslation } from "react-i18next";
 
 import { useState, useEffect } from "react";
 
-import useCreateProjectStore from "../stores/useCreateProjectStore.js";
+import useCreateProjectStore from "../../stores/useCreateProjectStore.js";
 
 import SkillTag from "../tags/skill-project-tag.jsx";
 import InterestTag from "../tags/interest-project-tag.jsx";
 
 import { Api } from "../../api.js";
-import { useUserStore } from "../stores/useUserStore.js";
+import { useUserStore } from "../../stores/useUserStore.js";
 
 function SecondStageCreation() {
   const { t } = useTranslation();
@@ -73,11 +58,7 @@ function SecondStageCreation() {
                 </Label>
               </FormGroup>
 
-              {cardSkillInterest(
-                "Select Skills",
-                "Add skills that are relevant to your project. You can add and remove them as you wish.",
-                <SkillTag />
-              )}
+              {cardSkillInterest("Select Skills", "Add skills that are relevant to your project. You can add and remove them as you wish.", <SkillTag />)}
             </Col>
 
             <Col md="6" className="mt-3">

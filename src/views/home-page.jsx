@@ -2,7 +2,7 @@ import { Container, Col, Row, Card, CardBody, CardTitle, Input, Label, Button } 
 import { FaPlus } from "react-icons/fa";
 import { Api } from "../api";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
-import { useUserStore } from "../components/stores/useUserStore.js";
+import { useUserStore } from "../stores/useUserStore.js";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 

@@ -3,8 +3,7 @@ import { Link, useSearchParams, useLocation } from "react-router-dom";
 
 import { Row, Col } from "reactstrap";
 import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
-import { useUserStore } from "../components/stores/useUserStore.js";
-import useFilterStore from "../components/stores/useFilterStore.js";
+import { useUserStore } from "../stores/useUserStore.js";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";

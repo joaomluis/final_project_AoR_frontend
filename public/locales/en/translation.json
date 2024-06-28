@@ -149,5 +149,7 @@
   "order-asc": "Asc.",
   "order-desc": "Desc.",
   "clear": "Clear",
-  "apply": "Apply"
+  "apply": "Apply",
+  "you-have-received-a-new-email": "You have received a new email",
+  "you-have-received-an-invite": "You have received an invite"
 }

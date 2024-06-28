@@ -147,5 +147,8 @@
   "order-asc": "Cresc.",
   "order-desc": "Desc.",
   "clear": "Limpar",
-  "apply": "Aplicar"
+  "apply": "Aplicar",
+
+  "you-have-received-a-new-email": "Recebeu um novo email",
+  "you-have-received-an-invite": "Recebeu um convite"
 }

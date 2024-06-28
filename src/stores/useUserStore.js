@@ -23,6 +23,34 @@ export const useUserStore = create(
       interests: [],
       allInterests: [],
       myOwnProjects: [],
+      sendCount: 0,
+
+      unreadEmails: 0,
+
+      //notifications:
+      notifications: [],
+      unreadNotifications: 0,
+      setNotifications: (notifications) => set({ notifications }),
+      addNotification: (notification) => set((state) => ({ notifications: [notification, ...state.notifications] })),
+      addNotifications: (newNotifications) => set((state) => ({ notifications: [...state.notifications, ...newNotifications] })),
+      markNotificationAsRead: (notificationId) =>
+        set((state) => ({
+          notifications: state.notifications.map((notification) => (notification.id === notificationId ? { ...notification, read: true } : notification)),
+        })),
+
+      currentPage: 1, // Valor inicial para o número da página
+      setCurrentPage: (page, token) => set({ currentPage: page, token: token }),
+
+      //addNew mail:
+      addSendMail: () => set((state) => ({ sendCount: state.sendCount + 1 })),
+      addMail: () => set((state) => ({ unreadEmails: state.unreadEmails + 1 })),
+
+      updateMailsFirstPage: (mailsFirstPage) => set({ mailsFirstPage }),
+
+      updateUnreadNotifications: (unreadNotifications) => set({ unreadNotifications }),
+      updateUnreadEmails: (unreadEmails) => set({ unreadEmails }),
+
+      readMail: () => set((state) => ({ unreadEmails: state.unreadEmails - 1 })),
 
       updateMyOwnProjects: (myOwnProjects) => set({ myOwnProjects }),
 
