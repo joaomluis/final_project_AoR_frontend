@@ -264,4 +264,6 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
+
+  markNotificationAsRead: (token, id) => apiClient.put(`/notifications/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 };

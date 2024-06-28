@@ -38,6 +38,9 @@ export const useUserStore = create(
           notifications: state.notifications.map((notification) => (notification.id === notificationId ? { ...notification, read: true } : notification)),
         })),
 
+      currentPage: 1, // Valor inicial para o número da página
+      setCurrentPage: (page, token) => set({ currentPage: page, token: token }),
+
       //addNew mail:
       addSendMail: () => set((state) => ({ sendCount: state.sendCount + 1 })),
       addMail: () => set((state) => ({ unreadEmails: state.unreadEmails + 1 })),

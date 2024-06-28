@@ -26,6 +26,7 @@ function MainNavbar(args) {
   const navigator = useNavigate();
   const { t } = useTranslation();
   console.log(page);
+
   async function fetchNotifications(page) {
     if (page === undefined) {
       page = 1;
@@ -39,7 +40,6 @@ function MainNavbar(args) {
       if (page === 1) {
         useUserStore.getState().setNotifications(response.data.results);
       } else {
-        console.log(response.data.results);
         useUserStore.getState().addNotifications(response.data.results);
       }
       useUserStore.getState().updateUnreadNotifications(response.data.unreadCount);
@@ -49,9 +49,20 @@ function MainNavbar(args) {
     }
   }
 
+  async function markNotifyAsRead(notificationId) {
+    try {
+      const response = await Api.markNotificationAsRead(token, notificationId);
+      console.log(response);
+      tsuccess(response.data);
+      useUserStore.getState().markNotificationAsRead(notificationId);
+    } catch (e) {
+      terror(e.message);
+    }
+  }
+
   useEffect(() => {
     fetchNotifications();
-  }, [token]);
+  }, []);
 
   function handleSignOutConfirm() {
     console.log("signout");
@@ -102,6 +113,7 @@ function MainNavbar(args) {
                     <Notification
                       notifications={notifications}
                       fetchNotifications={fetchNotifications}
+                      markNotifyAsRead={markNotifyAsRead}
                       maxPages={maxPages}
                       currentPage={page}
                       setPage={setPage}

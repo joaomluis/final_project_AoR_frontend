@@ -3,12 +3,14 @@ import { Dropdown } from "react-bootstrap";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import NotificationType from "../websockets/NotificationType";
-const NotificationItem = ({ notification }) => {
+
+const NotificationItem = ({ notification, onClick }) => {
   function formatNotificationTime(time) {
     return format(new Date(time), "d MMM yyyy, HH:mm");
   }
   console.log(notification);
   console.log(notification.notificationType);
+  const { t } = useTranslation();
   const isEmail = NotificationType.NEW_MAIL === notification.notificationType;
   const isInvite = NotificationType.INVITE === notification.notificationType;
   const notificationStyles = {
@@ -43,11 +45,10 @@ const NotificationItem = ({ notification }) => {
       display: "block",
     };
   }
-  const { t } = useTranslation();
 
   return (
     <Dropdown.Item
-      //   href={`/users/${notification.sender}`}
+      onClick={onClick}
       href={isEmail ? `/fica-lab/email-list/` : isInvite ? `/fica-lab/project/${notification.projectId}` : `/messages/${notification.id}`}
       style={
         isEmail
@@ -93,7 +94,7 @@ const notificationContainerStyle = {
   overflowY: "auto",
 };
 
-export const Notification = ({ notifications, fetchNotifications, maxPages, currentPage, setPage }) => {
+export const Notification = ({ notifications, fetchNotifications, markNotifyAsRead, maxPages, currentPage, setPage }) => {
   const { t } = useTranslation();
 
   const loadMore = async () => {
@@ -103,10 +104,14 @@ export const Notification = ({ notifications, fetchNotifications, maxPages, curr
     setPage(nextPage); // Atualiza o estado da página atual
   };
 
+  async function markAsRead(id) {
+    await markNotifyAsRead(id);
+  }
+
   return notifications.length > 0 ? (
     <div style={notificationContainerStyle}>
       {notifications.map((notification, index) => (
-        <NotificationItem key={index} notification={notification} />
+        <NotificationItem key={index} notification={notification} onClick={() => markAsRead(notification.id)} />
       ))}
       {currentPage + 1 <= maxPages ? (
         <button onClick={loadMore} className="button-style1" style={{ backgroundColor: "var(--primary-color-darker)" }}>
