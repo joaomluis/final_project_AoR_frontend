@@ -25,8 +25,8 @@ function MainNavbar(args) {
   const toggle = () => setIsOpen(!isOpen);
   const navigator = useNavigate();
   const { t } = useTranslation();
-  console.log(page);
 
+  console.log("unreadNotifications", unreadNotifications);
   async function fetchNotifications(page) {
     if (page === undefined) {
       page = 1;
@@ -52,9 +52,10 @@ function MainNavbar(args) {
   async function markNotifyAsRead(notificationId) {
     try {
       const response = await Api.markNotificationAsRead(token, notificationId);
-      console.log(response);
       tsuccess(response.data);
       useUserStore.getState().markNotificationAsRead(notificationId);
+      useUserStore.getState().updateUnreadNotifications(response.data.unreadCount);
+      console.log(response.data.unreadCount);
     } catch (e) {
       terror(e.message);
     }

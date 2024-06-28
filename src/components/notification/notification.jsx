@@ -3,6 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import NotificationType from "../websockets/NotificationType";
+import { Link } from "react-router-dom";
 
 const NotificationItem = ({ notification, onClick }) => {
   function formatNotificationTime(time) {
@@ -49,7 +50,6 @@ const NotificationItem = ({ notification, onClick }) => {
   return (
     <Dropdown.Item
       onClick={onClick}
-      href={isEmail ? `/fica-lab/email-list/` : isInvite ? `/fica-lab/project/${notification.projectId}` : `/messages/${notification.id}`}
       style={
         isEmail
           ? getNotificationStyle("email", notification.read)
@@ -58,29 +58,34 @@ const NotificationItem = ({ notification, onClick }) => {
           : getNotificationStyle("message", notification.read)
       }
     >
-      <div
-        key={notification.id}
-        className="notification"
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}
+      <Link
+        to={isEmail ? `/fica-lab/email-list/` : isInvite ? `/fica-lab/project/${notification.projectId}` : `/messages/${notification.id}`}
+        style={{ textDecoration: "none", color: "inherit" }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <img src={notification.senderImg} alt="Sender" style={{ width: "40px", height: "40px", borderRadius: "50%", marginRight: "10px" }} />
-          <div style={{ padding: "0.5rem" }}>
-            <p style={{ margin: 0 }}>
-              <strong>{notification.senderName}</strong>
-              <span style={{ fontSize: "small" }}> &lt;{notification.senderEmail}&gt; </span>
-            </p>
-            <p style={{ fontSize: "0.8rem", color: "#666", margin: "5px 0" }}>{formatNotificationTime(notification.instant)}</p>
-            {/* <strong>{truncate(notification.content, 40)}</strong> */}
-            <strong>
-              {isEmail ? t("you-have-received-a-new-email") : isInvite ? t("you-have-received-an-invite") : t("you-have-received-a-new-message")}
-            </strong>
+        <div
+          key={notification.id}
+          className="notification"
+          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}
+        >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img src={notification.senderImg} alt="Sender" style={{ width: "40px", height: "40px", borderRadius: "50%", marginRight: "10px" }} />
+            <div style={{ padding: "0.5rem" }}>
+              <p style={{ margin: 0 }}>
+                <strong>{notification.senderName}</strong>
+                <span style={{ fontSize: "small" }}> &lt;{notification.senderEmail}&gt; </span>
+              </p>
+              <p style={{ fontSize: "0.8rem", color: "#666", margin: "5px 0" }}>{formatNotificationTime(notification.instant)}</p>
+              {/* <strong>{truncate(notification.content, 40)}</strong> */}
+              <strong>
+                {isEmail ? t("you-have-received-a-new-email") : isInvite ? t("you-have-received-an-invite") : t("you-have-received-a-new-message")}
+              </strong>
+            </div>
           </div>
+          <button style={{ border: "none", background: "none", cursor: "pointer" }}>
+            <i className="fa fa-reply" aria-hidden="true"></i>
+          </button>
         </div>
-        <button style={{ border: "none", background: "none", cursor: "pointer" }}>
-          <i className="fa fa-reply" aria-hidden="true"></i>
-        </button>
-      </div>
+      </Link>
     </Dropdown.Item>
   );
 };

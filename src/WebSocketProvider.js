@@ -4,9 +4,10 @@ import { handleWebSocketJSON } from "./components/websockets/HandleWebSocketJSON
 import { webSocketStore } from "./stores/useWebSocketStore";
 
 function WebSocketProvider({ children, token }) {
+  console.log("WebSocketProvider");
   const { setSocket } = webSocketStore();
   const [connected, setConnected] = useState(false);
-
+  console.log("connected", connected);
   useEffect(() => {
     if (!token) {
       return;
