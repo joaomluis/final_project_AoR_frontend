@@ -95,7 +95,7 @@ function FirstStageCreation() {
                     Select a Lab*
                   </option>
                   {labs.map((lab) => (
-                    <option key={lab.id} value={lab.id}>
+                    <option key={lab.id} value={lab.location}>
                       {lab.location}
                     </option>
                   ))}

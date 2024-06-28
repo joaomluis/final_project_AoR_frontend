@@ -43,6 +43,7 @@ function CreateProject() {
   const [stage, setStage] = useState(1);
 
   async function createProject() {
+    console.log(projectResources);
     try {
       const response = await Api.createProject(token, {
         name: projectName,

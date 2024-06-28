@@ -2,15 +2,42 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import classnames from "classnames";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { Card, CardBody, CardTitle, Col, Container, Row } from "reactstrap";
+import { Api } from "../api.js";
+import { useEffect } from "react";
+import { useUserStore } from "../stores/useUserStore.js";
+import ProjectSettings from "../components/Project/project-settings.jsx";
 
 function ProjectPage() {
   const { t } = useTranslation();
+  const token = useUserStore((state) => state.token);
   const [activeTab, setActiveTab] = useState("1");
 
+  const { id } = useParams();
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  const [projectData, setProjectData] = useState({});
+
+  const props = {
+    dtoType: "ProjectDto",
+    id: id,
+  };
+
+  useEffect(() => {
+    async function fetchProject() {
+      try {
+        const response = await Api.getProjectsByDto(token, props);
+        setProjectData(response.data.results[0]);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    fetchProject();
+  }, []);
 
   return (
     <div className="section4">
@@ -23,7 +50,7 @@ function ProjectPage() {
                   <CardBody>
                     <Row>
                       <Col className="mb-4" md="10">
-                        <CardTitle tag="h4">Project Name</CardTitle>
+                        <CardTitle tag="h4">{projectData.name}</CardTitle>
                       </Col>
                       <Col md="2"></Col>
                     </Row>
@@ -66,6 +93,18 @@ function ProjectPage() {
                               Logs
                             </NavLink>
                           </NavItem>
+                          <NavItem>
+                            <NavLink
+                              className={classnames({
+                                active: activeTab === "4",
+                              })}
+                              onClick={() => {
+                                toggle("4");
+                              }}
+                            >
+                              Settings
+                            </NavLink>
+                          </NavItem>
                         </Nav>
                         <TabContent activeTab={activeTab}>
                           <TabPane tabId="1">
@@ -73,6 +112,9 @@ function ProjectPage() {
                           </TabPane>
                           <TabPane tabId="2">
                             <p>Tab 2 content</p>
+                          </TabPane>
+                          <TabPane tabId="4">
+                            <ProjectSettings data={projectData} />
                           </TabPane>
                         </TabContent>
                       </Col>

@@ -173,6 +173,7 @@ export const Api = {
           interest: props.interest,
           participant_email: props.participant_email,
           role: props.role,
+          id: props.id,
           dtoType: props.dtoType,
         },
       })
