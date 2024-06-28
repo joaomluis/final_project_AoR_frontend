@@ -1,13 +1,4 @@
-import {
-  Container,
-  Col,
-  Row,
-  Card,
-  CardHeader,
-  CardTitle,
-  Button,
-  CardFooter,
-} from "reactstrap";
+import { Container, Col, Row, Card, CardHeader, CardTitle, Button, CardFooter } from "reactstrap";
 import { FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa";
 
 import { useEffect, useRef, useState } from "react";
@@ -43,9 +34,7 @@ function CreateProject() {
   const startDate = useCreateProjectStore((state) => state.startDate);
   const endDate = useCreateProjectStore((state) => state.endDate);
   const projectUsers = useCreateProjectStore((state) => state.projectUsers);
-  const projectResources = useCreateProjectStore(
-    (state) => state.projectResources
-  );
+  const projectResources = useCreateProjectStore((state) => state.projectResources);
   const projectKeywords = useCreateProjectStore((state) => state.projectKeywords);
   const projectSkills = useCreateProjectStore((state) => state.projectSkills);
 
@@ -53,7 +42,8 @@ function CreateProject() {
 
   const [stage, setStage] = useState(1);
 
-  async function createProject () {
+  async function createProject() {
+    console.log(projectResources);
     try {
       const response = await Api.createProject(token, {
         name: projectName,
@@ -67,13 +57,12 @@ function CreateProject() {
         skills: projectSkills,
       });
       tsuccess(response.data);
-      cleanStore();//da reset à store
-      navigate('/fica-lab/home'); //redireciona para a home
+      cleanStore(); //da reset à store
+      navigate("/fica-lab/home"); //redireciona para a home
     } catch (error) {
       terror(error.message);
     }
   }
-
 
   return (
     <div className="section4">
@@ -81,7 +70,7 @@ function CreateProject() {
         <Row>
           <Col md="1"></Col>
           <Col md="10" className=" mt-5">
-            <Card className="shadow-lg p-3 mb-5 bg-white rounded" style={{ minHeight: '500px' }}>
+            <Card className="shadow-lg p-3 mb-5 bg-white rounded" style={{ minHeight: "500px" }}>
               <CardHeader className="bg-secondary-fl text-white">
                 <CardTitle tag="h3" className="text-center card-header-title">
                   Create a new project

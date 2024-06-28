@@ -17,47 +17,42 @@ function FourthStageCreation() {
   const endDate = useCreateProjectStore((state) => state.endDate);
   const projectUsers = useCreateProjectStore((state) => state.projectUsers);
 
-  const projectResources = useCreateProjectStore(
-    (state) => state.projectResources
-  );
+  const projectResources = useCreateProjectStore((state) => state.projectResources);
 
-  const projectKeywords = useCreateProjectStore(
-    (state) => state.projectKeywords
-  );
+  const projectKeywords = useCreateProjectStore((state) => state.projectKeywords);
   const projectSkills = useCreateProjectStore((state) => state.projectSkills);
 
   const token = useUserStore((state) => state.token);
-  const [labs, setLabs] = useState([]);
+  // const [labs, setLabs] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  async function handleLoadLabLocations() {
-    try {
-      if (!isLoaded) {
-        const response = await Api.getAllLocations(token);
-        setLabs(response.data);
-        setIsLoaded(true);
-      }
-    } catch (error) {
-      console.log(error.messsage);
-    }
-  }
+  // async function handleLoadLabLocations() {
+  //   try {
+  //     if (!isLoaded) {
+  //       const response = await Api.getAllLocations(token);
+  //       setLabs(response.data);
+  //       setIsLoaded(true);
+  //     }
+  //   } catch (error) {
+  //     console.log(error.messsage);
+  //   }
+  // }
 
-  useEffect(() => {
-    handleLoadLabLocations();
-  }, []);
+  // useEffect(() => {
+  //   handleLoadLabLocations();
+  // }, []);
 
-  const [labName, setLabName] = useState("");
+  // const [labName, setLabName] = useState("");
 
-  useEffect(() => {
-    const labObject = labs.find((labObj) => labObj.id === lab);
+  // useEffect(() => {
+  //   const labObject = labs.find((labObj) => labObj.id === lab);
 
-    console.log(labObject);
+  //   console.log(labObject);
 
-    const newLabName = labObject ? labObject.location : "";
+  //   const newLabName = labObject ? labObject.location : "";
 
-    setLabName(newLabName);
-  }, [lab, labs]);
-
+  //   setLabName(newLabName);
+  // }, [lab, labs]);
 
   return (
     <>
@@ -85,11 +80,12 @@ function FourthStageCreation() {
                 <Label for="labLocation">Lab Location</Label>
                 <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={lab} readOnly />
               </FormGroup>
-
               <ProjectPreview
-                 data={Object.values(projectResources)}
+                data={Object.entries(projectResources)
+                  .filter(([key, value]) => value.quantity > 0)
+                  .map(([key, value]) => value)}
                 name="Resources Preview"
-              />
+              />{" "}
               <ProjectPreview data={projectKeywords} name="Keywords Preview" />
             </Col>
             <Col md={6}>
