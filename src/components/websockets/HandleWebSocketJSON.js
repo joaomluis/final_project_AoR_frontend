@@ -37,6 +37,12 @@ function handleWebSocketJSON(json) {
         userStore.addNotification(data);
         userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);
         break;
+
+      case NotificationType.LOGOUT:
+        userStore.logout();
+        tsuccess("logout");
+        break;
+
       default:
         console.error("Tipo de notificação desconhecido", data);
     }

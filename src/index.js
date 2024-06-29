@@ -13,6 +13,7 @@ import { useUserStore } from "./stores/useUserStore";
 import "./i18n";
 
 const App = () => {
+  console.log("App");
   // Diretamente acessa o token do estado global
   const token = useUserStore((state) => state.token);
 

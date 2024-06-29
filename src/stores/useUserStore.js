@@ -77,6 +77,9 @@ export const useUserStore = create(
         set((state) => ({
           skills: state.skills.filter((s) => s.id !== skill.id),
         })),
+      logout() {
+        set({ token: "" });
+      },
     }),
     {
       name: "userstore", //name of the storage

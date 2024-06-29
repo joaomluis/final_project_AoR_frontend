@@ -15,6 +15,7 @@ import LabelDD from "../components/tags/label-dd";
 import "../assets/css/general-css.css";
 import { terror, tsuccess } from "../components/toasts/message-toasts.jsx";
 import { useUserStore } from "../stores/useUserStore.js";
+import UserType from "../components/enums/UserType.js";
 
 function ProductPage() {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ function ProductPage() {
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [saveModal, setSaveModal] = useState(false);
+  const [userType, setUserType] = useState(UserType.GUEST);
   const toggleSaveModal = () => {
     setSaveModal(!setSaveModal);
   };
@@ -81,7 +83,8 @@ function ProductPage() {
     try {
       const response = await Api.getProducts(token, props);
       setProduct(response.data.results[0]);
-      console.log(response.data);
+      setUserType(response.data.userType);
+      console.log(response.data.userType);
       setLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -149,6 +152,7 @@ function ProductPage() {
     handleGetSuppliers();
   }, []);
 
+  console.log(userType);
   return (
     <ListLayout title={t("products")} loading={loading}>
       <Card style={{ boxShadow: "0 0 10px rgba(0,0,0,0.1)", borderRadius: "10px" }}>
@@ -160,9 +164,11 @@ function ProductPage() {
               {editMode ? <FaRegWindowClose className="btn-title" onClick={handleRestoreProduct} /> : ""}
               {editMode ? <FaRegSave className="btn-title" onClick={handleClickSaveProduct} /> : ""}
 
-              <Button className={"my-custom-btn"} outline onClick={toggleEditMode}>
-                {t("edit-product")}
-              </Button>
+              {userType === UserType.ADMIN ? (
+                <Button className={"my-custom-btn"} outline onClick={toggleEditMode}>
+                  {t("edit-product")}
+                </Button>
+              ) : null}
             </div>
           </CardTitle>
         </CardHeader>
