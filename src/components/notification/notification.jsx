@@ -4,16 +4,16 @@ import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import NotificationType from "../websockets/NotificationType";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const NotificationItem = ({ notification, onClick }) => {
   function formatNotificationTime(time) {
     return format(new Date(time), "d MMM yyyy, HH:mm");
   }
-  console.log(notification);
-  console.log(notification.notificationType);
+
   const { t } = useTranslation();
   const isEmail = NotificationType.NEW_MAIL === notification.notificationType;
   const isInvite = NotificationType.INVITE === notification.notificationType;
+  const navigate = useNavigate();
   const notificationStyles = {
     email: {
       backgroundColor: "var(--whitey)",
@@ -29,9 +29,9 @@ const NotificationItem = ({ notification, onClick }) => {
     },
   };
 
-  function truncate(text, maxLength) {
-    return text.length > maxLength ? text.substring(0, maxLength - 3) + "..." : text;
-  }
+  // function truncate(text, maxLength) {
+  //   return text.length > maxLength ? text.substring(0, maxLength - 3) + "..." : text;
+  // }
 
   function getNotificationStyle(type, isRead) {
     return {
@@ -47,6 +47,11 @@ const NotificationItem = ({ notification, onClick }) => {
     };
   }
 
+  const navigateTo = () => {
+    const path = isEmail ? `/fica-lab/email-list/?page=1` : isInvite ? `/fica-lab/project/${notification.projectId}` : `/messages/${notification.id}`;
+    navigate(path);
+  };
+
   return (
     <Dropdown.Item
       onClick={onClick}
@@ -58,10 +63,7 @@ const NotificationItem = ({ notification, onClick }) => {
           : getNotificationStyle("message", notification.read)
       }
     >
-      <Link
-        to={isEmail ? `/fica-lab/email-list/` : isInvite ? `/fica-lab/project/${notification.projectId}` : `/messages/${notification.id}`}
-        style={{ textDecoration: "none", color: "inherit" }}
-      >
+      <div onClick={navigateTo} style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
         <div
           key={notification.id}
           className="notification"
@@ -85,7 +87,7 @@ const NotificationItem = ({ notification, onClick }) => {
             <i className="fa fa-reply" aria-hidden="true"></i>
           </button>
         </div>
-      </Link>
+      </div>
     </Dropdown.Item>
   );
 };

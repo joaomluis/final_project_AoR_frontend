@@ -59,8 +59,11 @@ function SignUp() {
     }
     try {
       const response = await Api.signup(registerUser);
-      //TODO redirect to login page
       tsuccess(response.data);
+      setPassword("");
+      setConfirmPassword("");
+      setEmail("");
+      setIsSignUp(false);
     } catch (error) {
       terror(error.message);
     }

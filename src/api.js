@@ -20,6 +20,7 @@ const handleError = (error) => {
   if (error.response) {
     let errorMessage = "Something went wrong";
     if (typeof error.response.data === "string") {
+      console.log(error.response.data);
       errorMessage = error.response.data;
     } else if (error.response.data && error.response.data.message) {
       errorMessage = error.response.data.message;
@@ -203,6 +204,8 @@ export const Api = {
   getProjectsToInviteUser: (token, email) =>
     apiClient.get(`/projects/invite-projects?email=${email}`, { headers: { token } }).then(handleResponse).catch(handleError),
 
+  getProjectMessages: (token, id) => apiClient.get(`/projects/${id}/messages`, { headers: { token } }).then(handleResponse).catch(handleError),
+
   //PRODUCTS endpoint
   getProducts: (token, props) => {
     const queryString = qs.stringify(props, { arrayFormat: "repeat" });
@@ -267,4 +270,5 @@ export const Api = {
   },
 
   markNotificationAsRead: (token, id) => apiClient.put(`/notifications/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
+  verifyToken: (token) => apiClient.post("/users/verify-token", { headers: { token } }).then(handleResponse).catch(handleError),
 };

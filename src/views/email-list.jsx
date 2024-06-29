@@ -19,7 +19,6 @@ import "../components/email/email-component.css";
 import { format } from "date-fns";
 function EmailList() {
   const { t } = useTranslation();
-
   const email = useUserStore((state) => state.email);
   const token = useUserStore((state) => state.token);
   const [searchParams, setSearchParams] = useSearchParams({ page: 1, to: email, from: "", search: "", tokenAuth: "", accept: "" });
@@ -141,7 +140,7 @@ function EmailList() {
 
   useEffect(() => {
     // Verifica se está na página 1 e se os parâmetros 'from' ou 'to' estão definidos
-    const isPageOne = pageParam === "1" || pageParam === 1 || pageParam === null;
+    const isPageOne = pageParam === "1" || pageParam === 1 || pageParam === null || pageParam === "";
     // const hasFromParam = searchParams.get("from") !== null && searchParams.get("from") !== "";
     const hasToParam = searchParams.get("to") !== null && searchParams.get("to") !== "";
     // console.log(isPageOne, hasFromParam, hasToParam);

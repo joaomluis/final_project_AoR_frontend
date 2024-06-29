@@ -1,15 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Input,
-  Label,
-  Form,
-  FormGroup,
-} from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from "reactstrap";
+import ModalBase from "./modal-base.jsx";
 import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
 import { terror, tsuccess } from "../toasts/message-toasts.jsx";
@@ -46,38 +37,39 @@ const RecoverPassword = forwardRef((props, ref) => {
 
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle} centered={true}>
-        <ModalHeader
-          toggle={toggle}
-          style={{ color: "var(--whitey)", fontWeight: "bold" }}
-          className="modal-style"
-        >
+      <ModalBase isOpen={modal} toggle={toggle} title={t("recover-password")}>
+        <p style={{ textAlign: "left" }}>{t("recover-password-subtext")}</p>
+        <Form>
+          <FormGroup floating>
+            <Input onChange={(e) => setEmail(e.target.value)} value={email} name="email" placeholder="Email" type="email" required />
+            <Label for="exampleEmail">Email</Label>
+          </FormGroup>
+        </Form>
+        <ModalFooter>
+          <Button className="button-style1" onClick={handleRedifinePw}>
+            {t("redifine-password")}
+          </Button>{" "}
+        </ModalFooter>
+      </ModalBase>
+      {/* <Modal isOpen={modal} toggle={toggle} centered={true}>
+        <ModalHeader toggle={toggle} style={{ color: "var(--whitey)", fontWeight: "bold" }} className="modal-style">
           {t("recover-password")}{" "}
         </ModalHeader>
         <ModalBody className="modal-style">
-          <p style={{ color: "var(--whitey)", textAlign: "center" }}>
-            {t("recover-password-subtext")}
-          </p>
+          <p style={{ color: "var(--whitey)", textAlign: "center" }}>{t("recover-password-subtext")}</p>
           <Form>
             <FormGroup floating>
-              <Input
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                name="email"
-                placeholder="Email"
-                type="email"
-                required
-              />
+              <Input onChange={(e) => setEmail(e.target.value)} value={email} name="email" placeholder="Email" type="email" required />
               <Label for="exampleEmail">Email</Label>
             </FormGroup>
           </Form>
         </ModalBody>
         <ModalFooter className="modal-style">
           <Button className="button-style1" onClick={handleRedifinePw}>
-          {t("redifine-password")}
+            {t("redifine-password")}
           </Button>{" "}
         </ModalFooter>
-      </Modal>
+      </Modal> */}
     </div>
   );
 });

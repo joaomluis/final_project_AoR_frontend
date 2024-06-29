@@ -13,14 +13,11 @@ const Footer = () => {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
-    document.getElementById('main-container').scrollTop = 0;
+    document.getElementById("main-container").scrollTop = 0;
   };
 
   return (
-    <Container
-      fluid={true}
-      style={{ backgroundColor: "var(--primary-color-darker)" }}
-    >
+    <Container fluid={true} style={{ backgroundColor: "var(--primary-color-darker)" }}>
       <Row>
         <Col md="6" className="text-center mt-3">
           <img
@@ -71,14 +68,10 @@ const Footer = () => {
       <hr style={{ borderColor: "white" }} />
       <Row>
         <Col md="6" className="text-left mt-1">
-          <p style={{ color: "white" }}>
-            &copy; {new Date().getFullYear()} FicaLab. All rights reserved.
-          </p>
+          <p style={{ color: "white" }}>&copy; {new Date().getFullYear()} FicaLab. All rights reserved.</p>
         </Col>
         <Col md="6" className="align-right mt-1">
-          <p style={{ color: "white" }}>
-            Developed by: Ricardo Carvalho and João Luís - AoR
-          </p>
+          <p style={{ color: "white" }}>Developed by: Ricardo Carvalho and João Luís - AoR</p>
         </Col>
       </Row>
     </Container>

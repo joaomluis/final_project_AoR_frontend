@@ -8,8 +8,6 @@ function handleWebSocketJSON(json) {
   let data;
   try {
     data = JSON.parse(json);
-    console.log(data.notificationType);
-    console.log(data.type);
   } catch (e) {
     console.error("Erro ao fazer parse do JSON", json);
     return;
@@ -30,7 +28,7 @@ function handleWebSocketJSON(json) {
       case NotificationType.NEW_MAIL:
         userStore.addNotification(data);
         userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);
-        userStore.addMail();
+        userStore.updateUnreadEmails(userStore.unreadEmails + 1);
         break;
 
       case NotificationType.INVITE:

@@ -150,5 +150,7 @@
   "apply": "Aplicar",
 
   "you-have-received-a-new-email": "Recebeu um novo email",
-  "you-have-received-an-invite": "Recebeu um convite"
+  "you-have-received-an-invite": "Recebeu um convite",
+  "view-project": "Ver projeto",
+  "no-notify": "Sem notificações"
 }

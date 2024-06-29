@@ -44,11 +44,10 @@ export const useUserStore = create(
       //addNew mail:
       addSendMail: () => set((state) => ({ sendCount: state.sendCount + 1 })),
       addMail: () => set((state) => ({ unreadEmails: state.unreadEmails + 1 })),
-
+      updateUnreadEmails: (unreadEmails) => set({ unreadEmails }),
       updateMailsFirstPage: (mailsFirstPage) => set({ mailsFirstPage }),
 
       updateUnreadNotifications: (unreadNotifications) => set({ unreadNotifications }),
-      updateUnreadEmails: (unreadEmails) => set({ unreadEmails }),
 
       readMail: () => set((state) => ({ unreadEmails: state.unreadEmails - 1 })),
 

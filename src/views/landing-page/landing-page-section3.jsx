@@ -1,14 +1,4 @@
-import {
-  Container,
-  Col,
-  Row,
-  Card,
-  CardFooter,
-  Button,
-  CardImg,
-  CardBody,
-  CardTitle,
-} from "reactstrap";
+import { Container, Col, Row, Card, CardFooter, Button, CardImg, CardBody, CardTitle } from "reactstrap";
 import { useTranslation } from "react-i18next";
 
 import Carousel from "react-multi-carousel";
@@ -89,22 +79,11 @@ function LandingPageContent() {
           </Col>
         </Row>
         <Row style={{ marginTop: "20px" }}>
-          <Carousel
-            responsive={responsive}
-            infinite
-            autoPlaySpeed={3000}
-            centerMode={false}
-          >
+          <Carousel responsive={responsive} infinite autoPlaySpeed={3000} centerMode={false}>
             {items.map((item, index) => (
               <div key={index} style={{ padding: "10px" }}>
                 <Card key={index}>
-                  <CardImg
-                    top
-                    width="100%"
-                    height={"200px"}
-                    src={item.src}
-                    alt={item.altText}
-                  />
+                  <CardImg top width="100%" height={"200px"} src={item.src} alt={item.altText} />
                   <CardBody>
                     <CardTitle tag="h5">{item.caption}</CardTitle>
                   </CardBody>
@@ -115,7 +94,7 @@ function LandingPageContent() {
                         border: "none",
                       }}
                     >
-                      Open Project
+                      {t("view-project")}
                     </Button>
                   </CardFooter>
                 </Card>

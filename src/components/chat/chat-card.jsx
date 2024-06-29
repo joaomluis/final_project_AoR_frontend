@@ -4,14 +4,14 @@ import CustomMessageBox from "./custom-messagebox";
 import { Input } from "react-chat-elements";
 import { FaPaperPlane } from "react-icons/fa";
 import "./chat.css";
-function ChatCard({
-  messages,
-  handleInputSubmit,
-  handleInputChange,
-  messageInput,
-}) {
+import { format } from "date-fns";
+import { useUserStore } from "../../stores/useUserStore";
+function ChatCard({ messages, handleInputSubmit, handleInputChange, messageInput }) {
   const messagesDivRef = useRef(null);
-
+  const email = useUserStore((state) => state.email);
+  function formatNotificationTime(time) {
+    return format(new Date(time), "d MMM yyyy, HH:mm");
+  }
   useEffect(() => {
     if (messagesDivRef.current) {
       messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight;
@@ -37,16 +37,16 @@ function ChatCard({
             borderRadius: "0.5rem",
           }}
         >
-          {messages.map((message, index) => (
+          {messages?.map((message, index) => (
             <CustomMessageBox
-              key={index}
-              position={message.sender === "me" ? "right" : "left"}
+              key={message.id}
+              position={message.userEmail === email ? "right" : "left"}
               type="text"
               text={message.message}
               date={true}
-              dateString={message.time}
-              status={message.read ? "read" : "delivered"}
-              senderName={message.sender}
+              dateString={formatNotificationTime(message.createdAt)}
+              // status={message.read ? "read" : "delivered"}
+              senderName={message.userFirstName}
             />
           ))}
         </div>
@@ -57,11 +57,7 @@ function ChatCard({
             value={messageInput}
             onChange={handleInputChange}
             rightButtons={
-              <Button
-                text="Send"
-                className="btn-sent"
-                onClick={handleInputSubmit}
-              >
+              <Button text="Send" className="btn-sent" onClick={handleInputSubmit}>
                 <FaPaperPlane />
               </Button>
             }

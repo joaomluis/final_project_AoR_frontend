@@ -151,5 +151,7 @@
   "clear": "Clear",
   "apply": "Apply",
   "you-have-received-a-new-email": "You have received a new email",
-  "you-have-received-an-invite": "You have received an invite"
+  "you-have-received-an-invite": "You have received an invite",
+  "view-project": "View project",
+  "no-notify": "No notifications"
 }

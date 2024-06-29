@@ -5,6 +5,7 @@ import FormInput from "../input/forminput";
 import { tsuccess, terror, twarn } from "../toasts/message-toasts";
 import { Api } from "../../api";
 import { t } from "i18next";
+import { useNavigate } from "react-router-dom";
 
 function ConfirmAccount() {
   const token = useParams().token;
@@ -15,6 +16,7 @@ function ConfirmAccount() {
   const [about, setAbout] = useState("");
   const [labs, setLabs] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const navigate = useNavigate();
 
   let data = {
     firstName,
@@ -40,8 +42,7 @@ function ConfirmAccount() {
     try {
       const response = await Api.confirmAccount(token, data);
       tsuccess(response.data);
-      data = {};
-      //TODO redirect to login page
+      navigate("/");
     } catch (error) {
       terror(error.message);
     }

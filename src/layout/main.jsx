@@ -4,16 +4,21 @@ import Footer from "../components/footer/footer.jsx";
 
 import routes from "../routes.js";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
+import PrivateRoute from "../PrivateRoute.js";
 
 function Main() {
+  const privateRoutes = routes.filter((route) => route.private);
+  const publicRoutes = routes.filter((route) => !route.private);
+
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/main") {
-        return (
-          <Route path={prop.path} element={prop.component} key={key} exact />
-        );
-      } else {
-        return null;
+        console.log(prop.private);
+        if (prop.public) {
+          return <Route path={prop.path} element={prop.component} key={key} exact />;
+        } else {
+          return <Route path={prop.path} element={<PrivateRoute>{prop.component}</PrivateRoute>} key={key} exact />;
+        }
       }
     });
   };

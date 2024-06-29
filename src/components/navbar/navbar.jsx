@@ -1,38 +1,25 @@
 import React, { useState } from "react";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Container,
-  Button,
-} from "reactstrap";
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from "reactstrap";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import logo from "../../assets/img/logo_pl.jpg";
 
 function Example(args) {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-
+  const navigate = useNavigate();
   const toggle = () => setIsOpen(!isOpen);
-
+  // const handleClickSignIn = () => {
+  //   navigate("/");
+  // };
+  const handleClickLogo = () => {
+    navigate("/");
+  };
   return (
     <div>
-      <Navbar
-        {...args}
-        expand="lg"
-        color="dark"
-        fixed="top"
-        light={true}
-        dark={true}
-      >
-        <NavbarBrand href="/">
+      <Navbar {...args} expand="lg" color="dark" fixed="top" light={true} dark={true}>
+        <NavbarBrand style={{ cursor: "pointer" }} onClick={handleClickLogo}>
           <img
             alt="logo"
             src={logo}
@@ -43,8 +30,8 @@ function Example(args) {
           />{" "}
           FicaLab
         </NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
+        {/* <NavbarToggler onClick={toggle} /> */}
+        {/* <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
             <Container className="d-flex justify-content-center">
               <NavItem>
@@ -64,10 +51,10 @@ function Example(args) {
               </UncontrolledDropdown>
             </Container>
           </Nav>
-          <Button color="primary" size="sm">
-            Sign In
+          <Button color="button-style1" style={{ color: "white", backgroundColor: "var(--secondary-color)" }} size="sm" onClick={handleClickSignIn}>
+            {t("sign-in")}
           </Button>{" "}
-        </Collapse>
+        </Collapse> */}
       </Navbar>
     </div>
   );

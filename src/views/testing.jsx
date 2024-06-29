@@ -1,37 +1,56 @@
 import { Container, Col, Row, ButtonGroup, Button, Card, CardBody } from "reactstrap";
 import "react-chat-elements/dist/main.css";
 import "../components/chat/chat.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import LogsCard from "../components/logs/logs";
 import "../assets/css/general-css.css";
 import { useUserStore } from "../stores/useUserStore";
 import ChatCard from "../components/chat/chat-card";
 import "../components/logs/logs.css";
+import { Api } from "../api";
+import useMessageStore from "../stores/useMessageStore";
 function Testing() {
+  const token = useUserStore((state) => state.token);
+  const id = 1;
   const [messageInput, setMessageInput] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      message: "Olá, como você está?",
-      // read: true,
-      sender: "me",
-      time: new Date().toLocaleString(),
-    },
-    {
-      id: 2,
-      message: "Estou bem, obrigado! E você?",
-      // read: true,
-      sender: "user2",
-      time: new Date().toLocaleString(),
-    },
-    {
-      id: 3,
-      message: "Também estou bem, obrigado por perguntar!",
-      // read: false,
-      sender: "Ricardo",
-      time: new Date().toLocaleString(),
-    },
-  ]);
+  // const [messages, setMessages] = useState([
+  //   {
+  //     id: 1,
+  //     message: "Olá, como você está?",
+  //     // read: true,
+  //     sender: "me",
+  //     time: new Date().toLocaleString(),
+  //   },
+  //   {
+  //     id: 2,
+  //     message: "Estou bem, obrigado! E você?",
+  //     // read: true,
+  //     sender: "user2",
+  //     time: new Date().toLocaleString(),
+  //   },
+  //   {
+  //     id: 3,
+  //     message: "Também estou bem, obrigado por perguntar!",
+  //     // read: false,
+  //     sender: "Ricardo",
+  //     time: new Date().toLocaleString(),
+  //   },
+  // ]);
+  const messages = useMessageStore((state) => state.messages);
+  const setMessages = useMessageStore((state) => state.setMessages);
+
+  async function getMessages() {
+    try {
+      const response = await Api.getProjectMessages(token, id);
+      setMessages(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getMessages();
+  }, []);
 
   const handleInputChange = (e) => {
     console.log(e.target.value);
@@ -41,16 +60,7 @@ function Testing() {
   const handleInputSubmit = (e) => {
     e.preventDefault();
 
-    // Adicione a nova mensagem ao array de mensagens
-    const newMessage = {
-      id: messages.length + 1,
-      message: messageInput,
-      sender: "me",
-
-      time: new Date().toLocaleString(),
-    };
-
-    setMessages([...messages, newMessage]);
+    // setMessages([...messages, newMessage]);
     setMessageInput("");
   };
 
@@ -90,16 +100,24 @@ function Testing() {
     // Adicione mais logs conforme necessário
   ];
 
-  function messageCard() {
-    return (
-      <Col lg={12} md={12} sm={12}>
-        <ChatCard messages={messages} handleInputSubmit={handleInputSubmit} handleInputChange={handleInputChange} messageInput={messageInput} />
-      </Col>
-    );
-  }
+  // function messageCard() {
+  //   return (
+  //     <Col lg={12} md={12} sm={12}>
+  //       <ChatCard messages={messages} handleInputSubmit={handleInputSubmit} handleInputChange={handleInputChange} messageInput={messageInput} />
+  //     </Col>
+  //   );
+  // }
 
   return (
     <div className="testing-section1" style={{ height: "100vh", padding: "1rem" }}>
+      <Container>
+        <ChatCard
+          messages={Array.isArray(messages) ? messages : []}
+          handleInputSubmit={handleInputSubmit}
+          handleInputChange={handleInputChange}
+          messageInput={messageInput}
+        />
+      </Container>
       <Container>
         <h1 className="mb-3">Project Name Logs</h1>
 
