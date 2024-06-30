@@ -172,13 +172,13 @@ function SideNavbar() {
             {t("users")}
           </MenuItem>
         </div>
-        <SubMenu icon={<FaClipboard style={collapsed ? collapsedStyle : ""} />} label={t("my-projects")}>
+        {/* <SubMenu icon={<FaClipboard style={collapsed ? collapsedStyle : ""} />} label={t("my-projects")}>
           {myOwnProjects
             ? myOwnProjects.map((project, index) => {
                 return <MenuItem key={`${project.id}-${index}`}>{showMyProjects(project.name, project.status, project.id)}</MenuItem>;
               })
             : null}
-        </SubMenu>
+        </SubMenu> */}
       </Menu>
     </Sidebar>
   );

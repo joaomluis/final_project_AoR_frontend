@@ -1,4 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 import { Card, CardHeader, CardTitle, CardBody, Button } from "reactstrap";
 import CustomMessageBox from "./custom-messagebox";
 import { Input } from "react-chat-elements";
@@ -24,6 +26,7 @@ function ChatCard({ id }) {
   const addMessagePage = useMessageStore((state) => state.addMessagePage);
   const email = useUserStore((state) => state.email);
   const [page, setPage] = useState(1);
+  const location = useLocation(); // Obtendo o objeto de localização
 
   async function getMessages() {
     const props = {
@@ -60,7 +63,7 @@ function ChatCard({ id }) {
 
   useEffect(() => {
     getMessages();
-  }, [page]);
+  }, [page, location]);
 
   const handleInputChange = (e) => {
     console.log(e.target.value);
@@ -114,7 +117,11 @@ function ChatCard({ id }) {
             borderRadius: "0.5rem",
           }}
         >
-          {page < totalPages ? <button onClick={loadMoreMessages}>{t("load-more")}</button> : null}
+          {page < totalPages ? (
+            <Button outline className="button-style1" style={{ backgroundColor: "var(--whitey)", color: "var(--greyish)" }} onClick={loadMoreMessages}>
+              {t("load-more")}
+            </Button>
+          ) : null}
           {messages.map((message, index) => {
             // Verifica se a mensagem anterior foi enviada pelo mesmo usuário
             const showSenderName = index === 0 || messages[index - 1].userEmail !== message.userEmail;

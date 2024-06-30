@@ -6,6 +6,12 @@ const useMessageStore = create((set) => ({
   addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
   clearMessages: () => set({ messages: [] }),
   addMessagePage: (messages) => set((state) => ({ messages: [...messages, ...state.messages] })),
+  clear: () => set({ messages: [] }),
+
+  activeTab: "4",
+  setActiveTab: (activeTab) => set({ activeTab }),
+  hasNewItems: false,
+  setHasNewItems: (hasNewItems) => set({ hasNewItems }),
 }));
 
 export default useMessageStore;

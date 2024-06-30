@@ -22,6 +22,10 @@ function handleWebSocketJSON(json) {
       break;
     case NotificationType.MESSAGE:
       messageStore.addMessage(data);
+      if (messageStore.activeTab !== "1") {
+        useMessageStore.getState().setHasNewItems(true);
+      }
+
       break;
 
     default:
@@ -38,6 +42,7 @@ function handleWebSocketJSON(json) {
 
       case NotificationType.INVITE:
         userStore.addNotification(data);
+        userStore.updateUnreadEmails(userStore.unreadEmails + 1);
         userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);
         break;
 

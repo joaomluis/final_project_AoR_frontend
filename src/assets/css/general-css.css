@@ -458,3 +458,12 @@ h4 {
 .notification.unread {
   opacity: 1;
 }
+
+.has-new-items .new-items-dot {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  margin-left: 5px;
+}

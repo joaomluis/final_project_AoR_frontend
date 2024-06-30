@@ -12,10 +12,14 @@ import { webSocketStore } from "../stores/useWebSocketStore";
 import NotificationType from "../components/websockets/NotificationType.js";
 import ProjectMainPage from "../components/Project/project-main-page.jsx";
 import UserType from "../components/enums/UserType.js";
+import useMessageStore from "../stores/useMessageStore.js";
+import { use } from "i18next";
 function ProjectPage() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
-  const [activeTab, setActiveTab] = useState("1");
+  const activeTab = useMessageStore((state) => state.activeTab);
+  const hasNewItems = useMessageStore((state) => state.hasNewItems);
+  const setActiveTab = useMessageStore((state) => state.setActiveTab);
   const socket = webSocketStore((state) => state.socket);
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,6 +34,7 @@ function ProjectPage() {
   };
 
   const [projectData, setProjectData] = useState({});
+  const clearMessages = useMessageStore((state) => state.clear); // Acessando a ação clear da store
 
   const props = {
     dtoType: "ProjectDto",
@@ -38,6 +43,8 @@ function ProjectPage() {
 
   useEffect(() => {
     async function fetchProject() {
+      useMessageStore.getState().setHasNewItems(false);
+      clearMessages(); // Limpa as mensagens ao carregar a página
       try {
         const response = await Api.getProjectsByDto(token, props);
         setProjectData(response.data.results[0]);
@@ -78,6 +85,10 @@ function ProjectPage() {
     };
   }, [socket, id, location.pathname]);
 
+  if (activeTab === "1") {
+    useMessageStore.getState().setHasNewItems(false);
+  }
+
   return (
     <div className="section4">
       <Container>
@@ -102,12 +113,14 @@ function ProjectPage() {
                                 <NavLink
                                   className={classnames({
                                     active: activeTab === "1",
+                                    "has-new-items": hasNewItems, // Adiciona uma classe condicionalmente
                                   })}
                                   onClick={() => {
                                     toggle("1");
                                   }}
                                 >
                                   Gantt Chart
+                                  {hasNewItems && <span className="new-items-dot"></span>} {/* Renderiza o ponto vermelho se houver novidades */}
                                 </NavLink>
                               </NavItem>
                               <NavItem>
