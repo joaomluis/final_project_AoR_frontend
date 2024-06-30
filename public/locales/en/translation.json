@@ -152,6 +152,10 @@
   "apply": "Apply",
   "you-have-received-a-new-email": "You have received a new email",
   "you-have-received-an-invite": "You have received an invite",
+  "you-have-received-a-new-project-message": "You have received a new project message",
+  "you-have-received-a-new-message": "You have received a new message",
   "view-project": "View project",
-  "no-notify": "No notifications"
+  "no-notify": "No notifications",
+  "type-message": "Type message",
+  "chat": "Chat"
 }

@@ -151,6 +151,10 @@
 
   "you-have-received-a-new-email": "Recebeu um novo email",
   "you-have-received-an-invite": "Recebeu um convite",
+  "you-have-received-a-new-project-message": "Recebeu uma nova mensagem de projeto",
+  "you-have-received-a-new-message": "Recebeu uma nova mensagem",
   "view-project": "Ver projeto",
-  "no-notify": "Sem notificações"
+  "no-notify": "Sem notificações",
+  "type-message": "Escreva a mensagem",
+  "chat": "Chat"
 }
