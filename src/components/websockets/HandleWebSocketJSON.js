@@ -1,10 +1,10 @@
 import { tsuccess, twarn, tinfo, tdefault } from "../toasts/message-toasts";
 import NotificationType from "./NotificationType";
 import { useUserStore } from "../../stores/useUserStore";
-
+import useMessageStore from "../../stores/useMessageStore";
 function handleWebSocketJSON(json) {
   const userStore = useUserStore.getState();
-
+  const messageStore = useMessageStore.getState();
   let data;
   try {
     data = JSON.parse(json);
@@ -12,11 +12,16 @@ function handleWebSocketJSON(json) {
     console.error("Erro ao fazer parse do JSON", json);
     return;
   }
+  console.log(data);
 
   switch (data.type) {
     case NotificationType.NOTIFICATION:
       tinfo("new notification!");
       handleNewNotification(data);
+      console.log("data", data.notificationType);
+      break;
+    case NotificationType.MESSAGE:
+      messageStore.addMessage(data);
       break;
 
     default:
@@ -41,6 +46,11 @@ function handleWebSocketJSON(json) {
         tsuccess("logout");
         break;
 
+      case NotificationType.PROJECT_MESSAGE:
+        console.log("data", data);
+        userStore.addNotification(data);
+        userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);
+        break;
       default:
         console.error("Tipo de notificação desconhecido", data);
     }

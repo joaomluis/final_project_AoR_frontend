@@ -204,7 +204,10 @@ export const Api = {
   getProjectsToInviteUser: (token, email) =>
     apiClient.get(`/projects/invite-projects?email=${email}`, { headers: { token } }).then(handleResponse).catch(handleError),
 
-  getProjectMessages: (token, id) => apiClient.get(`/projects/${id}/messages`, { headers: { token } }).then(handleResponse).catch(handleError),
+  getProjectMessages: (token, id, props) => {
+    const queryString = qs.stringify(props, { arrayFormat: "repeat" });
+    return apiClient.get(`/projects/${id}/msg?${queryString}`, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
 
   //PRODUCTS endpoint
   getProducts: (token, props) => {

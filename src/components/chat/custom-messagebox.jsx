@@ -16,7 +16,7 @@ function CustomMessageBox({ ...props }) {
               fontWeight: "bold",
               marginBottom: "0px",
               fontSize: "12px",
-              color: "var(--primary-color-darker)",
+              color: "var(--primary-color-darker1)",
             }}
           >
             {props.senderName}

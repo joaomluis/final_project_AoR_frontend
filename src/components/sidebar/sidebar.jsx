@@ -42,7 +42,11 @@ function SideNavbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  function showMyProjects(name, status) {
+  function handleClickInProject(id) {
+    navigate(`/fica-lab/project/${id}`);
+  }
+
+  function showMyProjects(name, status, id) {
     if (name != null && name.length > 8) {
       name = name.substring(0, 8) + "...";
     }
@@ -69,10 +73,9 @@ function SideNavbar() {
     }
 
     return (
-      <div className={`project-label ${statusClass}`}>
-        {" "}
-        {name}
-        {/* <div className={`project-status ${statusClass}`}>{statusName}</div> */}
+      <div style={{ display: "flex", justifyContent: "space-between" }} onClick={() => handleClickInProject(id)}>
+        <div className="project-name">{name}</div>
+        <div className={`project-label ${statusClass}`}>{/* <div className={`project-status ${statusClass}`}>{statusName}</div> */}</div>
       </div>
     );
   }
@@ -80,7 +83,7 @@ function SideNavbar() {
   const props = {
     dtoType: "ProjectSideBarDto",
     participant_email: email,
-    creator_email: email,
+    // creator_email: email,
   };
 
   async function getMyProjects() {
@@ -172,7 +175,7 @@ function SideNavbar() {
         <SubMenu icon={<FaClipboard style={collapsed ? collapsedStyle : ""} />} label={t("my-projects")}>
           {myOwnProjects
             ? myOwnProjects.map((project, index) => {
-                return <MenuItem key={`${project.id}-${index}`}>{showMyProjects(project.name, project.status)}</MenuItem>;
+                return <MenuItem key={`${project.id}-${index}`}>{showMyProjects(project.name, project.status, project.id)}</MenuItem>;
               })
             : null}
         </SubMenu>
