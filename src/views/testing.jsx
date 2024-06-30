@@ -9,39 +9,23 @@ import ChatCard from "../components/chat/chat-card";
 import "../components/logs/logs.css";
 import { Api } from "../api";
 import useMessageStore from "../stores/useMessageStore";
+import NotificationType from "../components/websockets/NotificationType";
+import { webSocketStore as useWebSocketStore } from "../stores/useWebSocketStore";
 function Testing() {
   const token = useUserStore((state) => state.token);
   const id = 1;
   const [messageInput, setMessageInput] = useState("");
-  // const [messages, setMessages] = useState([
-  //   {
-  //     id: 1,
-  //     message: "Olá, como você está?",
-  //     // read: true,
-  //     sender: "me",
-  //     time: new Date().toLocaleString(),
-  //   },
-  //   {
-  //     id: 2,
-  //     message: "Estou bem, obrigado! E você?",
-  //     // read: true,
-  //     sender: "user2",
-  //     time: new Date().toLocaleString(),
-  //   },
-  //   {
-  //     id: 3,
-  //     message: "Também estou bem, obrigado por perguntar!",
-  //     // read: false,
-  //     sender: "Ricardo",
-  //     time: new Date().toLocaleString(),
-  //   },
-  // ]);
+  const socket = useWebSocketStore((state) => state.socket);
   const messages = useMessageStore((state) => state.messages);
   const setMessages = useMessageStore((state) => state.setMessages);
-
+  const email = useUserStore((state) => state.email);
+  const [page, setPage] = useState(1);
   async function getMessages() {
+    const props = {
+      page_number: page,
+    };
     try {
-      const response = await Api.getProjectMessages(token, id);
+      const response = await Api.getProjectMessages(token, id, props);
       setMessages(response.data);
     } catch (error) {
       console.log(error);
@@ -58,9 +42,23 @@ function Testing() {
   };
 
   const handleInputSubmit = (e) => {
+    console.log("handleInputSubmit");
     e.preventDefault();
 
-    // setMessages([...messages, newMessage]);
+    console.log("Socket:", socket);
+    console.log("Socket State:", socket ? socket.readyState : "Socket not defined");
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      console.log("socket open");
+      const newMessage = {
+        message: messageInput,
+        sendUser: email,
+        projectId: id,
+        type: NotificationType.PROJECT_MESSAGE,
+      };
+      let messageJSON = JSON.stringify(newMessage);
+      socket.send(messageJSON);
+      console.log(messageJSON);
+    }
     setMessageInput("");
   };
 

@@ -12,11 +12,13 @@ function handleWebSocketJSON(json) {
     console.error("Erro ao fazer parse do JSON", json);
     return;
   }
+  console.log("data", data.type);
 
   switch (data.type) {
     case NotificationType.NOTIFICATION:
       tinfo("new notification!");
       handleNewNotification(data);
+      console.log("data", data.notificationType);
       break;
 
     default:
@@ -41,6 +43,11 @@ function handleWebSocketJSON(json) {
         tsuccess("logout");
         break;
 
+      case NotificationType.PROJECT_MESSAGE:
+        console.log("data", data);
+        userStore.addNotification(data);
+        userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);
+        break;
       default:
         console.error("Tipo de notificação desconhecido", data);
     }

@@ -27,7 +27,7 @@ function Loading({ loading }) {
         transition: "opacity 0.3s ease-in-out",
       }}
     >
-      <DotLoader color={"var(--secondary-color"} loading={loading} css={override} size={30} />
+      <DotLoader color={"var(--secondary-color)"} loading={loading} css={override} size={30} />
     </div>
   );
 }

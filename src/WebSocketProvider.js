@@ -26,6 +26,15 @@ function WebSocketProvider({ children, token }) {
       terror("Erro websocket");
     };
 
+    ws.send = function (e) {
+      if (this.readyState === WebSocket.OPEN) {
+        console.log("Enviando mensagem: " + e);
+        WebSocket.prototype.send.call(this, e);
+      } else {
+        console.error("WebSocket is not open.");
+      }
+    };
+
     ws.onclose = function (e) {
       console.log(Date());
       if (e.code !== 1000) {

@@ -13,6 +13,7 @@ const NotificationItem = ({ notification, onClick }) => {
   const { t } = useTranslation();
   const isEmail = NotificationType.NEW_MAIL === notification.notificationType;
   const isInvite = NotificationType.INVITE === notification.notificationType;
+  const isProjectMessage = NotificationType.PROJECT_MESSAGE === notification.notificationType;
   const navigate = useNavigate();
   const notificationStyles = {
     email: {
@@ -24,6 +25,12 @@ const NotificationItem = ({ notification, onClick }) => {
     invite: {
       backgroundColor: "var(--whitey)",
       borderLeft: "0.3rem solid var(--primary-color)",
+      padding: "0.5rem",
+      fontSize: "1rem",
+    },
+    project_message: {
+      backgroundColor: "var(--whitey)",
+      borderLeft: "0.3rem solid var(--greyish)",
       padding: "0.5rem",
       fontSize: "1rem",
     },
@@ -48,7 +55,13 @@ const NotificationItem = ({ notification, onClick }) => {
   }
 
   const navigateTo = () => {
-    const path = isEmail ? `/fica-lab/email-list/?page=1` : isInvite ? `/fica-lab/project/${notification.projectId}` : `/messages/${notification.id}`;
+    const path = isEmail
+      ? `/fica-lab/email-list/?page=1`
+      : isInvite
+      ? `/fica-lab/project/${notification.projectId}`
+      : isProjectMessage
+      ? `/fica-lab/project/${notification.projectId}`
+      : `/fica-lab/email-list/?page=1`;
     navigate(path);
   };
 
@@ -60,6 +73,8 @@ const NotificationItem = ({ notification, onClick }) => {
           ? getNotificationStyle("email", notification.read)
           : isInvite
           ? getNotificationStyle("invite", notification.read)
+          : isProjectMessage
+          ? getNotificationStyle("project_message", notification.read)
           : getNotificationStyle("message", notification.read)
       }
     >
@@ -79,7 +94,13 @@ const NotificationItem = ({ notification, onClick }) => {
               <p style={{ fontSize: "0.8rem", color: "#666", margin: "5px 0" }}>{formatNotificationTime(notification.instant)}</p>
               {/* <strong>{truncate(notification.content, 40)}</strong> */}
               <strong>
-                {isEmail ? t("you-have-received-a-new-email") : isInvite ? t("you-have-received-an-invite") : t("you-have-received-a-new-message")}
+                {isEmail
+                  ? t("you-have-received-a-new-email")
+                  : isInvite
+                  ? t("you-have-received-an-invite")
+                  : isProjectMessage
+                  ? t("you-have-received-a-new-project-message")
+                  : t("you-have-received-a-new-message")}
               </strong>
             </div>
           </div>

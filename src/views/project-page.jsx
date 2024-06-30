@@ -2,17 +2,21 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import classnames from "classnames";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Card, CardBody, CardTitle, Col, Container, Row } from "reactstrap";
 import { Api } from "../api.js";
 import { useEffect } from "react";
 import { useUserStore } from "../stores/useUserStore.js";
 import ProjectSettings from "../components/Project/project-settings.jsx";
-
+import { webSocketStore } from "../stores/useWebSocketStore";
+import NotificationType from "../components/websockets/NotificationType.js";
 function ProjectPage() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
   const [activeTab, setActiveTab] = useState("1");
+  const socket = webSocketStore((state) => state.socket);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { id } = useParams();
   const toggle = (tab) => {
@@ -38,6 +42,33 @@ function ProjectPage() {
 
     fetchProject();
   }, []);
+
+  /**
+   * Envia uma mensagem ao backend informando que o usuário fechou a página ou está navegando para outra
+   */
+  useEffect(() => {
+    // Função que envia uma mensagem ao backend informando que o usuário fechou a página ou está navegando para outra
+    const informBackendOnCloseOrNavigate = () => {
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        const closeMessage = {
+          id: id,
+          type: NotificationType.PROJECT_CLOSE,
+        };
+        let messageJSON = JSON.stringify(closeMessage);
+        console.log("Enviando mensagem ao backend:", messageJSON);
+        socket.send(messageJSON);
+      }
+    };
+
+    // Listener para o evento beforeunload
+    window.addEventListener("beforeunload", informBackendOnCloseOrNavigate);
+
+    return () => {
+      window.removeEventListener("beforeunload", informBackendOnCloseOrNavigate);
+      // Chama a função ao desmontar o componente ou quando a rota muda
+      informBackendOnCloseOrNavigate();
+    };
+  }, [socket, id, location.pathname]);
 
   return (
     <div className="section4">

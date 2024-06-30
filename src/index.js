@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,11 +6,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import LandingLayout from "./layout/landing";
-import MainLayout from "./layout/main";
 import WebSocketProvider from "./WebSocketProvider";
 import { useUserStore } from "./stores/useUserStore";
 import "./i18n";
+import Loading from "./components/loading/loading-overlay";
+const LandingLayout = lazy(() => import("./layout/landing"));
+const MainLayout = lazy(() => import("./layout/main"));
 
 const App = () => {
   console.log("App");
@@ -21,10 +22,12 @@ const App = () => {
     <BrowserRouter>
       <WebSocketProvider token={token}>
         <ToastContainer />
-        <Routes>
-          <Route path="/*" element={<LandingLayout />} />
-          <Route path="/fica-lab/*" element={<MainLayout />} />
-        </Routes>
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/*" element={<LandingLayout />} />
+            <Route path="/fica-lab/*" element={<MainLayout />} />
+          </Routes>
+        </Suspense>
       </WebSocketProvider>
     </BrowserRouter>
   );
