@@ -29,7 +29,7 @@ function SecondStageCreation() {
 
         const initialQuantities = response.data.results.map((resource) => ({
           id: resource.id,
-          label: resource.name,
+          name: resource.name,
           quantity: 0,
         }));
 
@@ -51,11 +51,10 @@ function SecondStageCreation() {
   useEffect(() => {
     // Update project resources in the store whenever resourceQuantities changes
     setProjectResources(resourceQuantities);
-    console.log(resourceQuantities);
+    
   }, [resourceQuantities, setProjectResources]);
 
   const handleQuantityChange = (resourceId, resourceN, value) => {
-    console.log(resourceId, resourceN, value);
 
     setResourceQuantities((prevQuantities) => {
       // Encontrar o índice do recurso a ser atualizado
@@ -74,6 +73,11 @@ function SecondStageCreation() {
       return updatedQuantities;
     });
   };
+
+  useEffect(() => {
+    const filteredResourceQuantities = resourceQuantities.filter(resource => resource.quantity > 0);
+    setProjectResources(filteredResourceQuantities);
+  }, [resourceQuantities, setProjectResources]);
 
   const filteredResources = resources.filter(
     (resource) => filter === "All" || resource.type === filter
