@@ -16,6 +16,7 @@ function ProjectSettings({ data }) {
   const { id } = useParams();
 
   const [projectUsers, setProjectUsers] = useState([]);
+  const [projectResources, setProjectResources] = useState([]);
   const [projectSkills, setProjectSkills] = useState([]);
   const [projectKeywords, setProjectKeywords] = useState([]);
 
@@ -30,7 +31,18 @@ function ProjectSettings({ data }) {
       }
     }
 
+    async function fetchProjectKeywords() {
+      try {
+        const response = await Api.getInterestsForProject(token, id);
+        console.log(response.data);
+        setProjectKeywords(response.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
     fetchProjectUsers();
+    fetchProjectKeywords();
   }, []);
 
 
@@ -43,7 +55,15 @@ function ProjectSettings({ data }) {
       </Row>
       <Row>
         <Col md={6}>
-          
+          <ProjectAdditionalInfo data={projectKeywords} title="Project Keywords" />
+        </Col>
+        <Col md={6}>
+          <ProjectAdditionalInfo data={projectUsers} title="Project Users" />
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+          <ProjectAdditionalInfo data={projectKeywords} title="Project Keywords" />
         </Col>
         <Col md={6}>
           <ProjectAdditionalInfo data={projectUsers} title="Project Users" />
