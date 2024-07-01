@@ -156,5 +156,42 @@
   "view-project": "Ver projeto",
   "no-notify": "Sem notificações",
   "type-message": "Escreva a mensagem",
-  "chat": "Chat"
+  "chat": "Chat",
+  "today": "Hoje",
+  "yesterday": "Ontem",
+  "other-day": "Outro dia",
+  "user-log": "Utilizador",
+  "at": "dia",
+
+  "USER_JOIN": "Utilizador entrou",
+  "USER_LEAVE": "Utilizador saiu",
+  "USER_CHANGE": "Utilizador alterado",
+  "USER_KICKED": "Utilizador expulso",
+
+  "TASK_CREATE": "Tarefa criada",
+  "TASK_CHANGE": "Tarefa alterada",
+  "TASK_DELETE": "Tarefa eliminada",
+  "TASK_COMPLETE": "Tarefa concluída",
+  "TASK_STATE_CHANGE": "Estado da tarefa alterado",
+
+  "PROJECT_CHANGE": "Projeto alterado",
+  "PROJECT_DELETE": "Projeto eliminado",
+  "PROJECT_STATE_CHANGE": "Estado do projeto alterado",
+
+  "add-user": "adicionou",
+  "to-the-project": "ao projeto",
+  "created-task": "criou a tarefa",
+  "task-changed": "alterou a tarefa",
+  "deleted-task": "eliminou a tarefa",
+  "completed-task": "completou a tarefa",
+  "changed-task-state": "alterou o estado da tarefa",
+  "left-the-project": "saiu do projeto",
+  "changed-user": "alterou o tipo de utilizador",
+  "remove-user": "removeu o utilizador",
+  "from-the-project": "do projeto",
+  "changed-project-details": "alterou os detalhes do projeto",
+  "in-the-project": "no projeto",
+  "changed-project-state": "alterou o estado do projeto",
+  "log-to": "para",
+  "log-from": "de"
 }

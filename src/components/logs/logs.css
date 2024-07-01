@@ -3,3 +3,27 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.logContainer {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.logTitle {
+  margin: 0;
+  font-weight: bold;
+}
+
+.logDetail {
+  margin: 5px 0;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}

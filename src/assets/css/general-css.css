@@ -467,3 +467,37 @@ h4 {
   position: absolute;
   margin-left: 5px;
 }
+
+.logTypeUserJoin {
+  background-color: hsl(199, 89%, 93%);
+}
+.logTypeUserLeave {
+  background-color: hsl(0, 100%, 96%);
+}
+.logTypeTaskCreate {
+  background-color: hsl(123, 33%, 94%);
+}
+.logTypeProjectChange {
+  background-color: hsl(39, 100%, 95%);
+}
+.logTypeTaskChange {
+  background-color: hsl(197, 100%, 94%);
+}
+.logTypeTaskDelete {
+  background-color: hsl(5, 100%, 96%);
+}
+.logTypeTaskComplete {
+  background-color: hsl(174, 100%, 94%);
+}
+.logTypeTaskStateChange {
+  background-color: hsl(283, 65%, 95%);
+}
+.logTypeUserChange {
+  background-color: hsl(60, 100%, 95%);
+}
+.logTypeUserKicked {
+  background-color: hsl(25, 33%, 94%);
+}
+.logTypeProjectStateChange {
+  background-color: hsl(261, 45%, 95%);
+}

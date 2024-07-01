@@ -14,6 +14,7 @@ import ProjectMainPage from "../components/Project/project-main-page.jsx";
 import UserType from "../components/enums/UserType.js";
 import useMessageStore from "../stores/useMessageStore.js";
 import { use } from "i18next";
+import LogsCard from "../components/logs/logs.jsx";
 function ProjectPage() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
@@ -113,7 +114,7 @@ function ProjectPage() {
                                 <NavLink
                                   className={classnames({
                                     active: activeTab === "1",
-                                    "has-new-items": hasNewItems, // Adiciona uma classe condicionalmente
+                                    "has-new-items": hasNewItems,
                                   })}
                                   onClick={() => {
                                     toggle("1");
@@ -173,7 +174,7 @@ function ProjectPage() {
                                 <p>Tab 2 content</p>
                               </TabPane>
                               <TabPane tabId="3">
-                                <p>Logs content</p>
+                                <LogsCard id={numericId} />
                               </TabPane>
                             </>
                           ) : null}

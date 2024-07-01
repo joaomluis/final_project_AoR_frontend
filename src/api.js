@@ -209,6 +209,11 @@ export const Api = {
     return apiClient.get(`/projects/${id}/msg?${queryString}`, { headers: { token } }).then(handleResponse).catch(handleError);
   },
 
+  getProjectLogs: (token, id, props) => {
+    const queryString = qs.stringify(props, { arrayFormat: "repeat" });
+    return apiClient.get(`/projects/${id}/logs?${queryString}`, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
   //PRODUCTS endpoint
   getProducts: (token, props) => {
     const queryString = qs.stringify(props, { arrayFormat: "repeat" });

@@ -20,47 +20,6 @@ function Testing() {
   const setMessages = useMessageStore((state) => state.setMessages);
   const email = useUserStore((state) => state.email);
   const [page, setPage] = useState(1);
-  async function getMessages() {
-    const props = {
-      page_number: page,
-    };
-    try {
-      const response = await Api.getProjectMessages(token, id, props);
-      setMessages(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getMessages();
-  }, []);
-
-  const handleInputChange = (e) => {
-    console.log(e.target.value);
-    setMessageInput(e.target.value);
-  };
-
-  const handleInputSubmit = (e) => {
-    console.log("handleInputSubmit");
-    e.preventDefault();
-
-    console.log("Socket:", socket);
-    console.log("Socket State:", socket ? socket.readyState : "Socket not defined");
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      console.log("socket open");
-      const newMessage = {
-        message: messageInput,
-        sendUser: email,
-        projectId: id,
-        type: NotificationType.PROJECT_MESSAGE,
-      };
-      let messageJSON = JSON.stringify(newMessage);
-      socket.send(messageJSON);
-      console.log(messageJSON);
-    }
-    setMessageInput("");
-  };
 
   const logs = [
     {
@@ -98,33 +57,12 @@ function Testing() {
     // Adicione mais logs conforme necessário
   ];
 
-  // function messageCard() {
-  //   return (
-  //     <Col lg={12} md={12} sm={12}>
-  //       <ChatCard messages={messages} handleInputSubmit={handleInputSubmit} handleInputChange={handleInputChange} messageInput={messageInput} />
-  //     </Col>
-  //   );
-  // }
-
   return (
     <div className="testing-section1" style={{ height: "100vh", padding: "1rem" }}>
-      <Container>
-        <ChatCard
-          messages={Array.isArray(messages) ? messages : []}
-          handleInputSubmit={handleInputSubmit}
-          handleInputChange={handleInputChange}
-          messageInput={messageInput}
-        />
-      </Container>
       <Container>
         <h1 className="mb-3">Project Name Logs</h1>
 
         <div className="logs-header mb-3">
-          <ButtonGroup>
-            <Button outline>All</Button>
-            <Button outline>Logs</Button>
-            <Button outline>Notes</Button>
-          </ButtonGroup>
           <Button style={{ whiteSpace: "nowrap" }}>Add Note</Button>
         </div>
 
@@ -132,11 +70,10 @@ function Testing() {
           <Col lg={12}>
             <Card className="mb-3">
               <CardBody>
-                <LogsCard logs={logs} />
+                <LogsCard id={1} />
               </CardBody>
             </Card>
           </Col>
-          {/* <Col lg={6}>{messageCard()}</Col> */}
         </Row>
       </Container>
     </div>

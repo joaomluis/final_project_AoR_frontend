@@ -1,4 +1,5 @@
 import React from "react";
+import LogsCard from "../logs/logs";
 
 import { Row, Col } from "reactstrap";
 import ChatCard from "../chat/chat-card";
