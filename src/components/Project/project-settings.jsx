@@ -19,49 +19,29 @@ function ProjectSettings({ data }) {
   const [projectSkills, setProjectSkills] = useState([]);
   const [projectKeywords, setProjectKeywords] = useState([]);
 
+  console.log("projectKeywords", projectKeywords);
+
   //GETTERS com a informação sobre o projeto aberto vão buscar a info através do id que está no url
   useEffect(() => {
-    async function fetchProjectUsers() {
+    async function fetchData() {
       try {
-        const response = await Api.getUsersForProject(token, id);
-        setProjectUsers(response.data);
+        const usersPromise = Api.getUsersForProject(token, id);
+        const keywordsPromise = Api.getInterestsForProject(token, id);
+        const resourcesPromise = Api.getProductsForProject(token, id);
+        const skillsPromise = Api.getSkillsForProject(token, id);
+  
+        const [usersResponse, keywordsResponse, resourcesResponse, skillsResponse] = await Promise.all([usersPromise, keywordsPromise, resourcesPromise, skillsPromise]);
+  
+        setProjectUsers(usersResponse.data);
+        setProjectKeywords(keywordsResponse.data);
+        setProjectResources(resourcesResponse.data);
+        setProjectSkills(skillsResponse.data);
       } catch (error) {
         console.log(error.message);
       }
     }
-
-    async function fetchProjectKeywords() {
-      try {
-        const response = await Api.getInterestsForProject(token, id);
-        setProjectKeywords(response.data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-
-    async function fetchProjectResources() {
-      try {
-        const response = await Api.getProductsForProject(token, id);
-        setProjectResources(response.data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-
-    async function fetchProjectSkills() {
-      try {
-        const response = await Api.getSkillsForProject(token, id);
-        setProjectSkills(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-
-    fetchProjectSkills();
-    fetchProjectResources();
-    fetchProjectUsers();
-    fetchProjectKeywords();
+  
+    fetchData();
   }, []);
 
   //Renderização dos modals para edição 
@@ -77,7 +57,7 @@ function ProjectSettings({ data }) {
 
   return (
     <>
-    <EditKeywords ref={editKeywordsRef} />
+    <EditKeywords ref={editKeywordsRef} projectKeywordsData={projectKeywords} />
     <EditSkills ref={editSkillsRef} />
       <Row>
         <Col md={12}>
@@ -88,23 +68,23 @@ function ProjectSettings({ data }) {
         <Col md={6}>
           <ProjectAdditionalInfo
             data={projectResources}
-            title="Project Resources"
+            title="Resources"
           />
         </Col>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectUsers} title="Project Users" />
+          <ProjectAdditionalInfo data={projectUsers} title="Users" />
         </Col>
       </Row>
       <Row>
         <Col md={6}>
           <ProjectAdditionalInfo
             data={projectKeywords}
-            title="Project Keywords"
+            title="Keywords"
             editButton={openEditKeywordsModal}
           />
         </Col>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectSkills} title="Project Skills" editButton={openEditSkillsModal}/>
+          <ProjectAdditionalInfo data={projectSkills} title="Skills" editButton={openEditSkillsModal}/>
         </Col>
       </Row>
     </>
