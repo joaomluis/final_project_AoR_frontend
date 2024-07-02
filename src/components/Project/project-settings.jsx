@@ -24,7 +24,6 @@ function ProjectSettings({ data }) {
     async function fetchProjectUsers() {
       try {
         const response = await Api.getUsersForProject(token, id);
-        console.log(response.data);
         setProjectUsers(response.data);
       } catch (error) {
         console.log(error.message);
@@ -34,13 +33,23 @@ function ProjectSettings({ data }) {
     async function fetchProjectKeywords() {
       try {
         const response = await Api.getInterestsForProject(token, id);
-        console.log(response.data);
         setProjectKeywords(response.data);
       } catch (error) {
         console.log(error.message);
       }
     }
 
+    async function fetchProjectResources() {
+      try {
+        const response = await Api.getProductsForProject(token, id);
+        console.log(response.data);
+        setProjectResources(response.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    fetchProjectResources();
     fetchProjectUsers();
     fetchProjectKeywords();
   }, []);
@@ -55,7 +64,7 @@ function ProjectSettings({ data }) {
       </Row>
       <Row>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectKeywords} title="Project Keywords" />
+          <ProjectAdditionalInfo data={projectResources} title="Project Resources" />
         </Col>
         <Col md={6}>
           <ProjectAdditionalInfo data={projectUsers} title="Project Users" />

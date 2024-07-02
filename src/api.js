@@ -292,6 +292,13 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
+
+  getProductsForProject: (token, projectId) =>
+    apiClient
+      .get(`/products/${projectId}`, { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+
   getFilterOptionsProducts: (token) =>
     apiClient
       .get("/products/filter-options", { headers: { token } })
