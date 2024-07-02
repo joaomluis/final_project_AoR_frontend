@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Row, Col } from "reactstrap";
 
 import ProjectBasicInfo from "./project-basic-info.jsx";
 import ProjectAdditionalInfo from "./project-additional-info.jsx";
+import EditKeywords from "./edit-keywords-modal.jsx";
+import EditSkills from "./edit-skills-modal.jsx";
 
 import { useUserStore } from "../../stores/useUserStore.js";
 import { Api } from "../../api.js";
@@ -17,6 +19,7 @@ function ProjectSettings({ data }) {
   const [projectSkills, setProjectSkills] = useState([]);
   const [projectKeywords, setProjectKeywords] = useState([]);
 
+  //GETTERS com a informação sobre o projeto aberto vão buscar a info através do id que está no url
   useEffect(() => {
     async function fetchProjectUsers() {
       try {
@@ -61,8 +64,21 @@ function ProjectSettings({ data }) {
     fetchProjectKeywords();
   }, []);
 
+  //Renderização dos modals para edição 
+  const editKeywordsRef = useRef();
+  const openEditKeywordsModal = () => {
+    editKeywordsRef.current.open();
+  };
+
+  const editSkillsRef = useRef();
+  const openEditSkillsModal = () => {
+    editSkillsRef.current.open();
+  };
+
   return (
     <>
+    <EditKeywords ref={editKeywordsRef} />
+    <EditSkills ref={editSkillsRef} />
       <Row>
         <Col md={12}>
           <ProjectBasicInfo data={data} />
@@ -84,10 +100,11 @@ function ProjectSettings({ data }) {
           <ProjectAdditionalInfo
             data={projectKeywords}
             title="Project Keywords"
+            editButton={openEditKeywordsModal}
           />
         </Col>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectSkills} title="Project Skills" />
+          <ProjectAdditionalInfo data={projectSkills} title="Project Skills" editButton={openEditSkillsModal}/>
         </Col>
       </Row>
     </>
