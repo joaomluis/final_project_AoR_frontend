@@ -8,10 +8,7 @@ import { useUserStore } from "../../stores/useUserStore.js";
 import { Api } from "../../api.js";
 import { useParams } from "react-router-dom";
 
-
-
 function ProjectSettings({ data }) {
-
   const token = useUserStore((state) => state.token);
   const { id } = useParams();
 
@@ -42,18 +39,27 @@ function ProjectSettings({ data }) {
     async function fetchProjectResources() {
       try {
         const response = await Api.getProductsForProject(token, id);
-        console.log(response.data);
         setProjectResources(response.data);
       } catch (error) {
         console.log(error.message);
       }
     }
 
+    async function fetchProjectSkills() {
+      try {
+        const response = await Api.getSkillsForProject(token, id);
+        setProjectSkills(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    fetchProjectSkills();
     fetchProjectResources();
     fetchProjectUsers();
     fetchProjectKeywords();
   }, []);
-
 
   return (
     <>
@@ -64,7 +70,10 @@ function ProjectSettings({ data }) {
       </Row>
       <Row>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectResources} title="Project Resources" />
+          <ProjectAdditionalInfo
+            data={projectResources}
+            title="Project Resources"
+          />
         </Col>
         <Col md={6}>
           <ProjectAdditionalInfo data={projectUsers} title="Project Users" />
@@ -72,10 +81,13 @@ function ProjectSettings({ data }) {
       </Row>
       <Row>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectKeywords} title="Project Keywords" />
+          <ProjectAdditionalInfo
+            data={projectKeywords}
+            title="Project Keywords"
+          />
         </Col>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectUsers} title="Project Users" />
+          <ProjectAdditionalInfo data={projectSkills} title="Project Skills" />
         </Col>
       </Row>
     </>

@@ -1,4 +1,4 @@
-import { CardBody, Card, CardHeader, Button } from "reactstrap";
+import { CardBody, Card, CardHeader, Button, CardFooter } from "reactstrap";
 
 import ProjectPreview from "../Preview/project-preview.jsx";
 import { useUserStore } from "../../stores/useUserStore.js";
@@ -13,14 +13,14 @@ function ProjectAdditionalInfo({ data, title }) {
         style={{ backgroundColor: "#dbe2ef", borderRadius: "10px" }}
         className="mt-2"
       >
-        <CardHeader>
-          <Button color="white" size="sm" className="button-style1">
-            Add
-          </Button>
-        </CardHeader>
         <CardBody>
           <ProjectPreview data={data} name={title} />
         </CardBody>
+        <CardFooter>
+          <Button color="white" size="sm" className="button-style1">
+            Add
+          </Button>
+        </CardFooter>
       </Card>
     </>
   );

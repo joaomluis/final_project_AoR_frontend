@@ -165,6 +165,12 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError),
 
+  getSkillsForProject: (token, projectId) =>
+    apiClient
+      .get(`/skills/${projectId}`, { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+
   //INTEREST endpoints
   addInterest: (token, data) =>
     apiClient
