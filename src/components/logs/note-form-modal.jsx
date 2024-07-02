@@ -38,7 +38,6 @@ function TaskFormModal({ id, addCreatedLog }) {
     try {
       const response = await Api.createNote(token, id, props);
       tsuccess(response.data);
-      console.log(response.data);
       addLog(response.data);
 
       handleClose();
@@ -70,7 +69,7 @@ function TaskFormModal({ id, addCreatedLog }) {
         <Row>
           <Col lg="10" md="8" sm="6"></Col>
           <Col lg="2" md="4" sm="6" style={{}}>
-            <Button className="mt-3 mb-0" onClick={handleShow} color="primary" style={{ width: "100%" }}>
+            <Button className="mt-3 mb-0" onClick={handleShow} variant="secondary" style={{ width: "100%" }}>
               {t("Add-note")}
             </Button>
           </Col>
@@ -94,12 +93,14 @@ function TaskFormModal({ id, addCreatedLog }) {
               disabled={false}
             />
             <FormInput label={t("note")} placeholder={t("")} type="textarea" required={false} value={note} setValue={setNote} />
-            <Button variant="secondary" onClick={handleClose}>
-              {t("close")}
-            </Button>
-            <Button variant="primary" type="submit">
-              {t("save")}
-            </Button>
+            <div style={{ textAlign: "right" }}>
+              <Button variant="primary" type="submit" style={{ marginRight: "10px" }}>
+                {t("save")}
+              </Button>
+              <Button variant="secondary" onClick={handleClose}>
+                {t("close")}
+              </Button>
+            </div>
           </Form>
         </Modal.Body>
       </Modal>

@@ -27,69 +27,69 @@ function formatText(text) {
     .join(" "); // Junta as partes com um espaço
 }
 
-function getLogTypeClass(logType) {
-  switch (logType) {
-    case LogType.USER_JOIN:
-      return "logTypeUserJoin";
-    case LogType.USER_LEAVE:
-      return "logTypeUserLeave";
-    case LogType.TASK_CREATE:
-      return "logTypeTaskCreate";
-    case LogType.PROJECT_CHANGE:
-      return "logTypeProjectChange";
-    case LogType.TASK_CHANGE:
-      return "logTypeTaskChange";
-    case LogType.TASK_DELETE:
-      return "logTypeTaskDelete";
-    case LogType.TASK_COMPLETE:
-      return "logTypeTaskComplete";
-    case LogType.TASK_STATE_CHANGE:
-      return "logTypeTaskStateChange";
-    case LogType.USER_CHANGE:
-      return "logTypeUserChange";
-    case LogType.USER_KICKED:
-      return "logTypeUserKicked";
-    case LogType.PROJECT_STATE_CHANGE:
-      return "logTypeProjectStateChange";
-    case LogType.NOTE:
-      return "logTypeNote";
-    case LogType.NOTE_TASK:
-      return "logTypeNoteTask";
+// function getLogTypeClass(logType) {
+//   switch (logType) {
+//     case LogType.USER_JOIN:
+//       return "logTypeUserJoin";
+//     case LogType.USER_LEAVE:
+//       return "logTypeUserLeave";
+//     case LogType.TASK_CREATE:
+//       return "logTypeTaskCreate";
+//     case LogType.PROJECT_CHANGE:
+//       return "logTypeProjectChange";
+//     case LogType.TASK_CHANGE:
+//       return "logTypeTaskChange";
+//     case LogType.TASK_DELETE:
+//       return "logTypeTaskDelete";
+//     case LogType.TASK_COMPLETE:
+//       return "logTypeTaskComplete";
+//     case LogType.TASK_STATE_CHANGE:
+//       return "logTypeTaskStateChange";
+//     case LogType.USER_CHANGE:
+//       return "logTypeUserChange";
+//     case LogType.USER_KICKED:
+//       return "logTypeUserKicked";
+//     case LogType.PROJECT_STATE_CHANGE:
+//       return "logTypeProjectStateChange";
+//     case LogType.NOTE:
+//       return "logTypeNote";
+//     case LogType.NOTE_TASK:
+//       return "logTypeNoteTask";
 
-    default:
-      return ""; // Retorna uma string vazia ou uma classe padrão se necessário
-  }
-}
+//     default:
+//       return ""; // Retorna uma string vazia ou uma classe padrão se necessário
+//   }
+// }
 function getLogTypeBorderColor(logType) {
   switch (logType) {
     case LogType.USER_JOIN:
-      return "var(--color-user-join)"; // Cor específica para USER_JOIN
+      return "var(--color-user-join)";
     case LogType.USER_LEAVE:
-      return "var(--color-user-leave)"; // Cor específica para USER_LEAVE
+      return "var(--color-user-leave)";
     case LogType.TASK_CREATE:
-      return "var(--color-task-create)"; // Cor específica para TASK_CREATE
+      return "var(--color-task-create)";
     case LogType.PROJECT_CHANGE:
-      return "var(--color-project-change)"; // Cor específica para PROJECT_CHANGE
+      return "var(--color-project-change)";
     case LogType.TASK_CHANGE:
-      return "var(--color-task-change)"; // Cor específica para TASK_CHANGE
+      return "var(--color-task-change)";
     case LogType.TASK_DELETE:
-      return "var(--color-task-delete)"; // Cor específica para TASK_DELETE
+      return "var(--color-task-delete)";
     case LogType.TASK_COMPLETE:
-      return "var(--color-task-complete)"; // Cor específica para TASK_COMPLETE
+      return "var(--color-task-complete)";
     case LogType.TASK_STATE_CHANGE:
-      return "var(--color-task-state-change)"; // Cor específica para TASK_STATE_CHANGE
+      return "var(--color-task-state-change)";
     case LogType.USER_CHANGE:
-      return "var(--color-user-change)"; // Cor específica para USER_CHANGE
+      return "var(--color-user-change)";
     case LogType.USER_KICKED:
-      return "var(--color-user-kicked)"; // Cor específica para USER_KICKED
+      return "var(--color-user-kicked)";
     case LogType.PROJECT_STATE_CHANGE:
-      return "var(--color-project-state-change)"; // Cor específica para PROJECT_STATE_CHANGE
+      return "var(--color-project-state-change)";
     case LogType.NOTE:
-      return "var(--color-note)"; // Cor específica para NOTE
+      return "var(--color-note)";
     case LogType.NOTE_TASK:
-      return "var(--color-note-task)"; // Cor específica para NOTE_TASK
+      return "var(--color-note-task)";
     default:
-      return "transparent"; // Transparente para casos não especificados
+      return "transparent";
   }
 }
 function LogsCard({ id }) {
@@ -259,7 +259,6 @@ function LogsCard({ id }) {
   };
 
   const NOTE = (log) => {
-    // Ensure log is defined and has a note property before accessing it
     const noteText = log && log.note ? log.note : "";
     const displayNote = noteText ? (isExpanded[log.id] ? noteText : `${noteText.substring(0, 10)}...`) : "";
 
@@ -267,7 +266,6 @@ function LogsCard({ id }) {
       <>
         {" "}
         {t("add-note")}
-        {/* Improved accessibility with a button */}
         <button
           className="italic"
           onClick={() => toggleExpansion(log.id)}
@@ -285,7 +283,6 @@ function LogsCard({ id }) {
   };
 
   const NOTE_TASK = (log) => {
-    // Ensure log is defined and has a note property before accessing it
     const noteText = log && log.note ? log.note : "";
     const displayNote = noteText ? (isExpanded[log.id] ? noteText : `${noteText.substring(0, 10)}...`) : "";
     return (
@@ -314,7 +311,6 @@ function LogsCard({ id }) {
       return <div>Log info is missing</div>;
     }
     const type = t(`${LogType.fromValue(log.type)}`);
-    // const type = formatText(LogType.fromValue(log.type));
     function renderLogDetail(log) {
       switch (log.type) {
         case LogType.TASK_CREATE:
@@ -362,11 +358,9 @@ function LogsCard({ id }) {
           return PROJECT_CHANGE_STATUS(log);
 
         case LogType.NOTE:
-          console.log(log.note);
           return NOTE(log);
 
         case LogType.NOTE_TASK:
-          console.log(log);
           return NOTE_TASK(log);
 
         default:
@@ -375,22 +369,41 @@ function LogsCard({ id }) {
     }
     return (
       <div
-        className={`logContainer `}
+        className="logContainer"
         style={{
           borderLeft: `1rem solid ${getLogTypeBorderColor(log.type)}`,
           borderRadius: "5px",
           boxShadow: "var(--box-shadow)",
+          display: "flex",
+          alignItems: "center",
+          padding: "10px",
         }}
       >
-        <p className="logTitle">{type}</p>
-        <p className="logDetail">
-          {t("user-log")}&nbsp;
-          {log?.type !== LogType.USER_LEAVE ? <span className="bold">{log.userFirstName}</span> : null}
-          {renderLogDetail(log)}
-          <div style={{ display: "flex", justifyContent: "right" }}>
-            {t("at")}&nbsp;<span className="italic">{formatNotificationTime(log.instant)}</span>{" "}
-          </div>
-        </p>
+        {log.userPicture && (
+          <img
+            src={log.userPicture}
+            alt={`${log.userFirstName}'s log`}
+            style={{
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              marginRight: "10px",
+              objectFit: "cover",
+            }}
+          />
+        )}
+        {/* Ajuste aqui: Adicionando flex-grow ao contêiner do texto */}
+        <div style={{ flexGrow: 1 }}>
+          <p className="logTitle">{type}</p>
+          <p className="logDetail">
+            {t("user-log")}&nbsp;
+            {log?.type !== LogType.USER_LEAVE ? <span className="bold">{log.userFirstName}</span> : null}
+            {renderLogDetail(log)}
+            <div style={{ display: "flex", justifyContent: "right" }}>
+              {t("at")}&nbsp;<span className="italic">{formatNotificationTime(log.instant)}</span>{" "}
+            </div>
+          </p>
+        </div>
       </div>
     );
   }
@@ -398,12 +411,11 @@ function LogsCard({ id }) {
   async function getLogs() {
     const props = {
       page_number: page,
-      page_size: 3,
+      page_size: 10,
     };
     try {
       const response = await Api.getProjectLogs(token, id, props);
       if (page === 1) {
-        console.log(response.data.results);
         setLogs(response.data.results);
       } else if (page > 1 && page <= totalPages) {
         console.log("page", page);
