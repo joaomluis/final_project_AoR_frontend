@@ -192,5 +192,11 @@
   "in-the-project": "in the project",
   "changed-project-state": "changed the project state",
   "log-to": "to",
-  "log-from": "from"
+  "log-from": "from",
+  "add-note": "add note",
+  "Add-note": "Add note",
+  "to-task": "associated with the task",
+  "NOTE": "Note",
+  "NOTE_TASK": "Log",
+  "no-task-selected": "No task selected"
 }

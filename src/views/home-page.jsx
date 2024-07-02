@@ -43,24 +43,22 @@ function HomePage() {
 
   return (
     <ListLayout title={t("my-projects")} loading={loading}>
-      <div>
-        <Row className="justify-content-center">
-          <Col xs="12" md="12" lg="12">
-            <Link to="/fica-lab/create-project">
-              <Button className=" mb-3 w-100" color="light">
-                <FaPlus /> {t("create-project")}
-              </Button>
-            </Link>
+      <Row className="justify-content-center">
+        <Col xs="12" md="12" lg="12">
+          <Link to="/fica-lab/create-project">
+            <Button className="mb-3 w-100" color="light">
+              <FaPlus /> {t("create-project")}
+            </Button>
+          </Link>
+        </Col>
+      </Row>
+      <Row>
+        {projects.map((project, index) => (
+          <Col sm="12" md="6" lg="4" className="mb-4" key={index}>
+            <ProjectCard Project={project} />
           </Col>
-        </Row>
-        <Row>
-          {projects.map((project, index) => (
-            <Col sm="12" md="6" lg="4" key={index}>
-              <ProjectCard Project={project} />
-            </Col>
-          ))}
-        </Row>
-      </div>
+        ))}
+      </Row>
     </ListLayout>
   );
 }

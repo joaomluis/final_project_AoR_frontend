@@ -13,6 +13,9 @@ const LogType = {
   PROJECT_CHANGE: 30, //change project details
   PROJECT_STATE_CHANGE: 31, //change project state from, to
 
+  NOTE: 40, //added note
+  NOTE_TASK: 41, //added note to task
+
   fromValue: function (value) {
     return Object.keys(this).find((key) => this[key] === value);
   },

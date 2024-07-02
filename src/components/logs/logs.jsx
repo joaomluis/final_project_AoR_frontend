@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, ListGroup, ListGroupItem } from "reactstrap";
+import { Card, Col, Row, CardHeader, CardBody, ListGroup, ListGroupItem } from "reactstrap";
 import { Button } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { format, formatDate } from "date-fns";
@@ -10,6 +10,9 @@ import TaskStatus from "../enums/TaskStatus";
 import LogType from "../enums/LogType";
 import UserType from "../enums/UserType";
 import ProjectStatus from "../enums/ProjectStatus";
+import TaskFormModal from "./note-form-modal";
+
+// import { NoteForm } from "./note-form";
 function formatNotificationTime(time) {
   return format(new Date(time), "d MMM yyyy, HH:mm");
 }
@@ -48,22 +51,66 @@ function getLogTypeClass(logType) {
       return "logTypeUserKicked";
     case LogType.PROJECT_STATE_CHANGE:
       return "logTypeProjectStateChange";
+    case LogType.NOTE:
+      return "logTypeNote";
+    case LogType.NOTE_TASK:
+      return "logTypeNoteTask";
 
     default:
       return ""; // Retorna uma string vazia ou uma classe padrão se necessário
   }
 }
-
+function getLogTypeBorderColor(logType) {
+  switch (logType) {
+    case LogType.USER_JOIN:
+      return "var(--color-user-join)"; // Cor específica para USER_JOIN
+    case LogType.USER_LEAVE:
+      return "var(--color-user-leave)"; // Cor específica para USER_LEAVE
+    case LogType.TASK_CREATE:
+      return "var(--color-task-create)"; // Cor específica para TASK_CREATE
+    case LogType.PROJECT_CHANGE:
+      return "var(--color-project-change)"; // Cor específica para PROJECT_CHANGE
+    case LogType.TASK_CHANGE:
+      return "var(--color-task-change)"; // Cor específica para TASK_CHANGE
+    case LogType.TASK_DELETE:
+      return "var(--color-task-delete)"; // Cor específica para TASK_DELETE
+    case LogType.TASK_COMPLETE:
+      return "var(--color-task-complete)"; // Cor específica para TASK_COMPLETE
+    case LogType.TASK_STATE_CHANGE:
+      return "var(--color-task-state-change)"; // Cor específica para TASK_STATE_CHANGE
+    case LogType.USER_CHANGE:
+      return "var(--color-user-change)"; // Cor específica para USER_CHANGE
+    case LogType.USER_KICKED:
+      return "var(--color-user-kicked)"; // Cor específica para USER_KICKED
+    case LogType.PROJECT_STATE_CHANGE:
+      return "var(--color-project-state-change)"; // Cor específica para PROJECT_STATE_CHANGE
+    case LogType.NOTE:
+      return "var(--color-note)"; // Cor específica para NOTE
+    case LogType.NOTE_TASK:
+      return "var(--color-note-task)"; // Cor específica para NOTE_TASK
+    default:
+      return "transparent"; // Transparente para casos não especificados
+  }
+}
 function LogsCard({ id }) {
+  console.log(id);
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
   const logs = useLogStore((state) => state.logs);
   const setLogs = useLogStore((state) => state.setLogs);
   const addLogPage = useLogStore((state) => state.addLogPage);
-  const today = formatNotificationDay(new Date());
-  const yesterday = formatNotificationDay(new Date(Date.now() - 86400000));
+  // const today = formatNotificationDay(new Date());
+  // const yesterday = formatNotificationDay(new Date(Date.now() - 86400000));
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isExpanded, setIsExpanded] = useState({});
+
+  const toggleExpansion = (logId) => {
+    setIsExpanded((prevState) => ({
+      ...prevState,
+      [logId]: !prevState[logId],
+    }));
+  };
 
   const loadMoreLogs = () => {
     if (page >= totalPages) return;
@@ -211,6 +258,56 @@ function LogsCard({ id }) {
     return <> {t("changed-project-details")}</>;
   };
 
+  const NOTE = (log) => {
+    // Ensure log is defined and has a note property before accessing it
+    const noteText = log && log.note ? log.note : "";
+    const displayNote = noteText ? (isExpanded[log.id] ? noteText : `${noteText.substring(0, 10)}...`) : "";
+
+    return (
+      <>
+        {" "}
+        {t("add-note")}
+        {/* Improved accessibility with a button */}
+        <button
+          className="italic"
+          onClick={() => toggleExpansion(log.id)}
+          style={{ cursor: "pointer", background: "none", border: "none", padding: "0", color: "inherit" }}
+        >
+          &nbsp;
+          {"'"}
+          {displayNote}
+          {"' "}
+          &nbsp;
+        </button>
+        {t("to-the-project")}
+      </>
+    );
+  };
+
+  const NOTE_TASK = (log) => {
+    // Ensure log is defined and has a note property before accessing it
+    const noteText = log && log.note ? log.note : "";
+    const displayNote = noteText ? (isExpanded[log.id] ? noteText : `${noteText.substring(0, 10)}...`) : "";
+    return (
+      <>
+        {" "}
+        {t("add-note")}
+        <button
+          className="italic"
+          onClick={() => toggleExpansion(log.id)}
+          style={{ cursor: "pointer", background: "none", border: "none", padding: "0", color: "inherit" }}
+        >
+          &nbsp;
+          {"'"}
+          {displayNote}
+          {"' "}
+          &nbsp;
+        </button>{" "}
+        {t("to-task")} <span className="bold">{log.taskName}</span>
+      </>
+    );
+  };
+
   function defaultLog({ log }) {
     if (!log) {
       console.log("log is null");
@@ -264,12 +361,27 @@ function LogsCard({ id }) {
           console.log(log);
           return PROJECT_CHANGE_STATUS(log);
 
+        case LogType.NOTE:
+          console.log(log.note);
+          return NOTE(log);
+
+        case LogType.NOTE_TASK:
+          console.log(log);
+          return NOTE_TASK(log);
+
         default:
           return DEF();
       }
     }
     return (
-      <div className={`logContainer ${getLogTypeClass(log.type)}`}>
+      <div
+        className={`logContainer `}
+        style={{
+          borderLeft: `1rem solid ${getLogTypeBorderColor(log.type)}`,
+          borderRadius: "5px",
+          boxShadow: "var(--box-shadow)",
+        }}
+      >
         <p className="logTitle">{type}</p>
         <p className="logDetail">
           {t("user-log")}&nbsp;
@@ -291,6 +403,7 @@ function LogsCard({ id }) {
     try {
       const response = await Api.getProjectLogs(token, id, props);
       if (page === 1) {
+        console.log(response.data.results);
         setLogs(response.data.results);
       } else if (page > 1 && page <= totalPages) {
         console.log("page", page);
@@ -307,17 +420,6 @@ function LogsCard({ id }) {
     getLogs();
   }, [page]);
 
-  const formatDateLabel = (date) => {
-    const logDate = new Date(date);
-    if (today(logDate)) {
-      return "Hoje";
-    } else if (yesterday(logDate)) {
-      return "Ontem";
-    } else {
-      // Formata a data para exibição se não for hoje nem ontem
-      return format(logDate, "dd/MM/yyyy");
-    }
-  };
   const logsByDate = logs?.reduce((acc, log) => {
     const date = formatNotificationDay(log.instant); // Converte a data para o formato YYYY-MM-DD
 
@@ -329,26 +431,29 @@ function LogsCard({ id }) {
   }, {});
 
   return (
-    <div>
-      <ListGroup style={{ margin: "" }}>
-        {Object.entries(logsByDate).map(([date, logsForDate]) => (
-          <div key={date}>
-            <h4>{date}</h4> {/* Exibe a data */}
-            {logsForDate.map((log, index) => (
-              <div key={index} style={{ margin: "10px" }}>
-                {defaultLog({ log: log })}
-              </div>
-            ))}
-          </div>
-        ))}
-      </ListGroup>
-      {/* Exibe o botão "Carregar Mais" apenas se houver mais páginas a serem carregadas */}
-      {page < totalPages ? (
-        <Button className="button-style1" onClick={loadMoreLogs} style={{ backgroundColor: "var(--greyish)", color: "var(--secondary-color)" }}>
-          {t("load-more")}
-        </Button>
-      ) : null}
-    </div>
+    <Row>
+      <Col md="12">
+        <div style={{ margin: "" }}>
+          {" "}
+          <TaskFormModal id={id} />
+          {Object.entries(logsByDate).map(([date, logsForDate]) => (
+            <div key={date}>
+              <h4>{date}</h4>
+              {logsForDate.map((log, index) => (
+                <div key={index} style={{ margin: "10px" }}>
+                  {defaultLog({ log: log })}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        {page < totalPages ? (
+          <Button color="secondary" onClick={loadMoreLogs} style={{ width: "100%" }}>
+            {t("load-more")}
+          </Button>
+        ) : null}
+      </Col>
+    </Row>
   );
 }
 export default LogsCard;

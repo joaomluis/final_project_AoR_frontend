@@ -1,7 +1,9 @@
 import React from "react";
 import { FormGroup, Input, Label } from "reactstrap";
-
-function FormInput({ label, placeholder, type, required, value, setValue, data, handleClick }) {
+import { useTranslation } from "react-i18next";
+function FormInput({ label, placeholder, type, required, value, setValue, data, handleClick, disabled }) {
+  const { t } = useTranslation();
+  disabled = disabled === undefined ? true : disabled;
   if (type === "select") {
     return (
       <FormGroup floating>
@@ -12,11 +14,12 @@ function FormInput({ label, placeholder, type, required, value, setValue, data, 
           onClick={handleClick}
           onChange={(e) => setValue(e.target.value)}
           value={value}
-          required={required}
+          required={disabled}
         >
-          <option value="" disabled>
+          <option value="" disabled={disabled}>
             {placeholder}
           </option>
+
           {data.map((option) => (
             <option key={option.id} value={option.id}>
               {option.location ? option.location : option.name}

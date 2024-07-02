@@ -17,6 +17,26 @@
   --admin: #e4cf4359;
   --admin-btn: rgba(152, 135, 27, 0.604);
 
+  --color-user-join: #1abc9c; /* Verde Água */
+  --color-user-leave: #e74c3c; /* Vermelho */
+  --color-user-change: #e67e22; /* Laranja */
+  --color-user-kicked: #d35400; /* Laranja Escuro */
+
+  /* Ações de Tarefa */
+  --color-task-create: #3498db; /* Azul */
+  --color-task-change: #34495e; /* Azul Marinho */
+  --color-task-delete: #c0392b; /* Vermelho Escuro */
+  --color-task-complete: #2ecc71; /* Verde */
+  --color-task-state-change: #f1c40f; /* Amarelo */
+
+  /* Ações de Projeto */
+  --color-project-change: #9b59b6; /* Roxo */
+  --color-project-state-change: #95a5a6; /* Cinza */
+
+  /* Cores Neutras e Notas */
+  --color-note: #7f8c8d; /* Cinza Escuro */
+  --color-note-task: #16a085; /* Verde Escuro */
+
   --box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -501,4 +521,52 @@ h4 {
 }
 .logTypeProjectStateChange {
   background-color: hsl(261, 45%, 95%);
+}
+
+.logTypeNote {
+  background-color: hsl(0, 0%, 100%);
+}
+
+.logTypeNoteTask {
+  background-color: hsl(132, 100%, 95%);
+}
+
+.btn-primary {
+  --bs-btn-color: var(--whitey); /* Cor do texto do botão, usando branco */
+  --bs-btn-bg: var(--secondary-color); /* Cor de fundo do botão, usando a cor primária */
+  --bs-btn-border-color: var(--secondary-color); /* Cor da borda do botão, mesma que a cor de fundo */
+
+  --bs-btn-hover-color: var(--primary-color); /* Cor do texto do botão no hover, mantendo branco */
+  --bs-btn-hover-bg: var(--greyish); /* Cor de fundo do botão no hover, usando a cor secundária */
+  --bs-btn-hover-border-color: var(--greyish); /* Cor da borda do botão no hover, mesma que a cor de fundo no hover */
+
+  --bs-btn-focus-shadow-rgb: 63, 114, 175; /* Sombra do botão no foco, usando valores RGB da cor secundária */
+
+  --bs-btn-active-color: var(--whitey); /* Cor do texto do botão ativo, mantendo branco */
+  --bs-btn-active-bg: var(--primary-color-darker); /* Cor de fundo do botão ativo, usando a cor primária mais escura */
+  --bs-btn-active-border-color: var(--primary-color-darker); /* Cor da borda do botão ativo, mesma que a cor de fundo ativo */
+
+  --bs-btn-disabled-color: var(--greyish); /* Cor do texto do botão desabilitado, usando cinza */
+  --bs-btn-disabled-bg: var(--primary-color); /* Cor de fundo do botão desabilitado, usando a cor primária */
+  --bs-btn-disabled-border-color: var(--primary-color); /* Cor da borda do botão desabilitado, mesma que a cor de fundo */
+}
+
+.btn-secondary {
+  --bs-btn-color: var(--whitey); /* Cor do texto do botão, usando branco */
+  --bs-btn-bg: var(--greyish); /* Cor de fundo do botão, usando cinza */
+  --bs-btn-border-color: var(--greyish); /* Cor da borda do botão, mesma que a cor de fundo */
+
+  --bs-btn-hover-color: var(--whitey); /* Cor do texto do botão no hover, mantendo branco */
+  --bs-btn-hover-bg: var(--primary-color-darker2); /* Cor de fundo do botão no hover, usando a cor primária mais escura */
+  --bs-btn-hover-border-color: var(--primary-color-darker); /* Cor da borda do botão no hover, usando a cor primária ainda mais escura */
+
+  --bs-btn-focus-shadow-rgb: 17, 46, 79; /* Sombra do botão no foco, usando valores RGB da cor primária */
+
+  --bs-btn-active-color: var(--whitey); /* Cor do texto do botão ativo, mantendo branco */
+  --bs-btn-active-bg: var(--primary-color-darker); /* Cor de fundo do botão ativo, usando a cor primária mais escura */
+  --bs-btn-active-border-color: var(--primary-color-darker); /* Cor da borda do botão ativo, mesma que a cor de fundo ativo */
+
+  --bs-btn-disabled-color: var(--whitey); /* Cor do texto do botão desabilitado, usando branco */
+  --bs-btn-disabled-bg: var(--greyish); /* Cor de fundo do botão desabilitado, usando cinza */
+  --bs-btn-disabled-border-color: var(--greyish); /* Cor da borda do botão desabilitado, mesma que a cor de fundo */
 }
