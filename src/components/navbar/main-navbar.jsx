@@ -95,8 +95,7 @@ function MainNavbar(args) {
   return (
     <>
       <Navbar {...args} expand="lg" color="dark" fixed="top" light dark>
-        <NavbarBrand tag={Link} to="/fica-lab/home">
-          {" "}
+        <NavbarBrand href="/fica-lab/home">
           <img alt="logo" src={logo} style={logoStyle} /> FicaLab
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />

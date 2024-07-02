@@ -27,3 +27,25 @@
   background-color: transparent;
   color: var(--secondary-color);
 }
+.confirm-modal-buttons {
+  display: flex;
+  justify-content: space-around; /* Centraliza os botões com espaço ao redor */
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+}
+
+.confirm-modal-buttons .confirm-button {
+  background-color: var(--secondary-color);
+  color: white; /* Texto branco */
+}
+
+.confirm-modal-buttons .cancel-button {
+  background-color: var(--cancelled);
+  color: white; /* Texto branco */
+}
+
+.confirm-modal-buttons .confirm-button:hover,
+.confirm-modal-buttons .cancel-button:hover {
+  opacity: 0.5;
+}
