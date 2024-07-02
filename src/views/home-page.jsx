@@ -5,6 +5,7 @@ import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx
 import { useUserStore } from "../stores/useUserStore.js";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import ListLayout from "../layout/list-layout/list.jsx";
 
 import { useTranslation } from "react-i18next";
 
@@ -16,6 +17,7 @@ function HomePage() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
   const email = useUserStore((state) => state.email);
+  const [loading, setLoading] = useState(true);
 
   const [projects, setProjects] = useState([]);
 
@@ -30,6 +32,7 @@ function HomePage() {
       try {
         const response = await Api.getProjects(token, props);
         setProjects(response.data.results); // Set the projects data
+        setLoading(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -39,33 +42,26 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="section4">
-      <Container>
-        <Card>
-          <CardBody>
-            <Row>
-              <Col className="mb-4" lg="9" md="8">
-                <CardTitle tag="h4">{t("recent-projects")}</CardTitle>
-              </Col>
-              <Col lg="3" md="4">
-                <Link to="/fica-lab/create-project">
-                  <Button color="light" className="button-style1">
-                    <FaPlus /> {t("create-project")}
-                  </Button>
-                </Link>
-              </Col>
-            </Row>
-            <Row>
-              {projects.map((project, index) => (
-                <Col sm="12" md="6" lg="4" key={index} className="mt-4">
-                  <ProjectCard Project={project} />
-                </Col>
-              ))}
-            </Row>
-          </CardBody>
-        </Card>
-      </Container>
-    </div>
+    <ListLayout title={t("my-projects")} loading={loading}>
+      <div>
+        <Row className="justify-content-center">
+          <Col xs="12" md="12" lg="12">
+            <Link to="/fica-lab/create-project">
+              <Button className=" mb-3 w-100" color="light">
+                <FaPlus /> {t("create-project")}
+              </Button>
+            </Link>
+          </Col>
+        </Row>
+        <Row>
+          {projects.map((project, index) => (
+            <Col sm="12" md="6" lg="4" key={index}>
+              <ProjectCard Project={project} />
+            </Col>
+          ))}
+        </Row>
+      </div>
+    </ListLayout>
   );
 }
 

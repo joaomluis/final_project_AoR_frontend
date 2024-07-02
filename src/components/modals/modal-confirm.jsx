@@ -7,12 +7,14 @@ const ConfirmModal = ({ isOpen, toggle, title, onConfirm }) => {
   const { t } = useTranslation();
   const footer = (
     <>
-      <Button color="primary" onClick={onConfirm}>
-        {t("yes")}
-      </Button>
-      <Button color="secondary" onClick={toggle}>
-        {t("no")}
-      </Button>
+      <div className="confirm-modal-buttons">
+        <Button className="confirm-button" onClick={onConfirm}>
+          {t("yes")}
+        </Button>
+        <Button className="cancel-button" onClick={toggle}>
+          {t("no")}
+        </Button>
+      </div>
     </>
   );
 
