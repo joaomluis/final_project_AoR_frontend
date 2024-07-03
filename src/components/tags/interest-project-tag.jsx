@@ -9,7 +9,6 @@ function UserInterests() {
   const token = useUserStore((state) => state.token);
 
   const projectKeywords = useCreateProjectStore((state) => state.projectKeywords);
-
   const addProjectKeyword = useCreateProjectStore((state) => state.addProjectKeyword);
   const removeProjectKeyword = useCreateProjectStore((state) => state.removeProjectKeyword);
 
@@ -40,7 +39,7 @@ function UserInterests() {
       const response = await Api.addInterest(token, interest);
       interest = response.data;
       addInterestToAll(interest);
-      addInterest(interest);
+      addProjectKeyword(interest);
       tsuccess("Interest " + interest.name + " created successfully!");
     } catch (error) {
       terror(error.message);

@@ -284,7 +284,7 @@ function LogsCard({ id }) {
 
   const NOTE_TASK = (log) => {
     const noteText = log && log.note ? log.note : "";
-    const displayNote = noteText ? (isExpanded[log.id] ? noteText : `${noteText.substring(0, 10)}...`) : "";
+    const displayNote = noteText ? (isExpanded[log.id] ? noteText : `${noteText.substring(0, 150)}...`) : "";
     return (
       <>
         {" "}

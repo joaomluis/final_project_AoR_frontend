@@ -28,9 +28,7 @@ function UserSkills() {
   };
 
   const removeSelectedSkill = (skill) => {
-    console.log(skill);
-
-    removeProjectSkill(skill.id);
+    removeProjectSkill(skill);
   };
 
   async function fetchSkillTypes() {
@@ -65,7 +63,7 @@ function UserSkills() {
       const response = await Api.addSkill(token, skill);
       skill = response.data;
       addSkillToAll(skill);
-      addSkill(skill);
+      addProjectSkill(skill);
       tsuccess("Skill " + skill.name + " created successfully!");
     } catch (error) {
       terror(error.message);
@@ -95,7 +93,7 @@ function UserSkills() {
   return (
     <ItemDropdown
       fetchTypes={fetchSkillTypes}
-      fetchItems={projectSkills}
+      fetchItems={fetchSkills}
       fetchAllItems={fetchAllSkills}
       createItem={createSkill}
       addItem={handleSelectedSkill}

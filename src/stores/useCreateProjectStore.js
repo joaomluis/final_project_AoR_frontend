@@ -14,25 +14,27 @@ const useCreateProjectStore = create((set) => ({
   projectUsers: [],
   setProjectUsers: (value) => set(() => ({ projectUsers: value })),
   projectResources: [],
-  setProjectResources: (value) => set(() => ({ projectResources: value })),
+  setProjectResources: (newResources) =>
+    set((state) => ({ projectResources: typeof newResources === "function" ? newResources(state.projectResources) : newResources })),
   projectKeywords: [],
   addProjectKeyword: (keyword) => set((state) => ({ projectKeywords: [...state.projectKeywords, keyword] })),
-  removeProjectKeyword: (keyword) => set((state) => ({ projectKeywords: state.projectKeywords.filter(k => k !== keyword) })),
+  removeProjectKeyword: (keyword) => set((state) => ({ projectKeywords: state.projectKeywords.filter((k) => k.id !== keyword.id) })),
   projectSkills: [],
   addProjectSkill: (skill) => set((state) => ({ projectSkills: [...state.projectSkills, skill] })),
-  removeProjectSkill: (skill) => set((state) => ({ projectSkills: state.projectSkills.filter(s => s !== skill) })),
+  removeProjectSkill: (skill) => set((state) => ({ projectSkills: state.projectSkills.filter((s) => s.id !== skill.id) })),
 
-  cleanStore: () => set(() => ({
-    projectName: '',
-    description: '',
-    lab: '',
-    startDate: '',
-    endDate: '',
-    projectUsers: [],
-    projectResources: [],
-    projectKeywords: [],
-    projectSkills: [],
-  })),
+  cleanStore: () =>
+    set(() => ({
+      projectName: "",
+      description: "",
+      lab: "",
+      startDate: "",
+      endDate: "",
+      projectUsers: [],
+      projectResources: [],
+      projectKeywords: [],
+      projectSkills: [],
+    })),
 }));
 
 export default useCreateProjectStore;
