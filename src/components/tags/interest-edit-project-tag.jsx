@@ -3,11 +3,22 @@ import ItemDropdown from "./item-drop-down";
 import { useUserStore } from "../../stores/useUserStore";
 import { Api } from "../../api";
 import { tsuccess, terror } from "../toasts/message-toasts";
+import useEditProjectStore from "../../stores/useEditProjectStore";
 
-function EditKeywordsInterests({projectKeywordsData}) {
+function EditKeywordsInterests() {
   const token = useUserStore((state) => state.token);
  
+  const projectKeywordsData = useEditProjectStore((state) => state.projectKeywords);
+  const addProjectKeyword = useEditProjectStore((state) => state.addProjectKeyword);
+  const removeProjectKeyword = useEditProjectStore((state) => state.removeProjectKeyword);
 
+  const addSelectedKeyword = (newKeyword) => {
+    addProjectKeyword(newKeyword);
+  };
+
+  const removeSelectedKeyword = (keyword) => {
+    removeProjectKeyword(keyword);
+  };
 
   const email = useUserStore((state) => state.email);
   
@@ -22,9 +33,9 @@ function EditKeywordsInterests({projectKeywordsData}) {
   async function fetchInterests() {
     try {
       const response = await Api.getUserInterests(token, email);
-      console.log(response.data);
+      
       updateInterests(response.data);
-      console.log(response.data);
+      
     } catch (error) {
       terror(error.message);
     }
@@ -76,8 +87,8 @@ function EditKeywordsInterests({projectKeywordsData}) {
       fetchItems={fetchInterests}
       fetchAllItems={fetchAllInterests}
       createItem={createInterest}
-      addItem={addUserInterest}
-      removeItem={removeUserInterest}
+      addItem={addSelectedKeyword}
+      removeItem={removeSelectedKeyword}
       items={projectKeywordsData}
       allItems={allInterests}
       hasTypes={false}

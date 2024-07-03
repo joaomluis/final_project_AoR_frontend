@@ -10,6 +10,8 @@ import { useUserStore } from "../../stores/useUserStore.js";
 import { Api } from "../../api.js";
 import { useParams } from "react-router-dom";
 
+import useEditProjectStore from "../../stores/useEditProjectStore.js";
+
 function ProjectSettings({ data }) {
   const token = useUserStore((state) => state.token);
   const { id } = useParams();
@@ -17,9 +19,12 @@ function ProjectSettings({ data }) {
   const [projectUsers, setProjectUsers] = useState([]);
   const [projectResources, setProjectResources] = useState([]);
   const [projectSkills, setProjectSkills] = useState([]);
-  const [projectKeywords, setProjectKeywords] = useState([]);
 
-  console.log("projectKeywords", projectKeywords);
+  
+  const projectKeywords = useEditProjectStore((state) => state.projectKeywords);
+  const setProjectKeywords = useEditProjectStore((state) => state.setProjectKeywords);
+
+  
 
   //GETTERS com a informação sobre o projeto aberto vão buscar a info através do id que está no url
   useEffect(() => {
@@ -57,7 +62,7 @@ function ProjectSettings({ data }) {
 
   return (
     <>
-    <EditKeywords ref={editKeywordsRef} projectKeywordsData={projectKeywords} />
+    <EditKeywords ref={editKeywordsRef}/>
     <EditSkills ref={editSkillsRef} />
       <Row>
         <Col md={12}>

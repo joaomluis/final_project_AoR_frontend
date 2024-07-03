@@ -12,11 +12,8 @@ import { tsuccess, terror } from "../toasts/message-toasts.jsx";
 import InterestTag from "../tags/interest-edit-project-tag.jsx";
 
 const EditKeywords = forwardRef((props, ref) => {
-    const { projectKeywordsData } = props;
   const token = useUserStore((state) => state.token);
   const [modal, setModal] = useState(false);
-
-  console.log("projectKeywordsDataMOdal", projectKeywordsData);
 
   const { t } = useTranslation();
   const toggle = () => setModal(!modal);
@@ -55,7 +52,7 @@ const EditKeywords = forwardRef((props, ref) => {
               {cardSkillInterest(
                 "Select Keywords",
                 "Add keywords that are relevant to your project. You can add and remove them as you wish.",
-                <InterestTag projectKeywordsData={projectKeywordsData} />
+                <InterestTag />
               )}
             </Col>
 

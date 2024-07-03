@@ -12,6 +12,7 @@ const useEditProjectStore = create((set) => ({
     set((state) => ({
       projectKeywords: state.projectKeywords.filter((k) => k !== keyword),
     })),
+  setProjectKeywords: (value) => set(() => ({ projectKeywords: value })),
   projectSkills: [],
   addProjectSkill: (skill) =>
     set((state) => ({ projectSkills: [...state.projectSkills, skill] })),
@@ -19,6 +20,7 @@ const useEditProjectStore = create((set) => ({
     set((state) => ({
       projectSkills: state.projectSkills.filter((s) => s !== skill),
     })),
+  setProjectSkills: (value) => set(() => ({ projectSkills: value })),
 
   cleanStore: () =>
     set(() => ({
