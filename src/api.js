@@ -203,6 +203,12 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError),
 
+      addInterestToProject: (token, projectId, interestId) =>
+        apiClient
+          .put(`/interests/${projectId}/${interestId}`, {}, {headers: {token}})
+          .then(handleResponse)
+          .catch(handleError),
+
   //IMAGE endpoints
   uploadImage: (token, file, filename) => {
     // Criar um Blob para enviar como binário

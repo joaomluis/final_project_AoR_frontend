@@ -1,18 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ItemDropdown from "./item-drop-down";
 import { useUserStore } from "../../stores/useUserStore";
 import { Api } from "../../api";
 import { tsuccess, terror } from "../toasts/message-toasts";
 import useEditProjectStore from "../../stores/useEditProjectStore";
+import {useParams} from "react-router-dom";
 
 function EditKeywordsInterests() {
   const token = useUserStore((state) => state.token);
+  const { id } = useParams();
  
   const projectKeywordsData = useEditProjectStore((state) => state.projectKeywords);
   const addProjectKeyword = useEditProjectStore((state) => state.addProjectKeyword);
   const removeProjectKeyword = useEditProjectStore((state) => state.removeProjectKeyword);
 
+  
+  async function addInterestToProject(token, projectId, interestId) {
+    try {
+      const response = await Api.addInterestToProject(token, projectId, interestId);
+      tsuccess(response);
+    } catch (error) {
+      
+      console.error('Error adding interest:', error);
+    }
+  }
+        
+
   const addSelectedKeyword = (newKeyword) => {
+    console.log(token);
+    addInterestToProject(token, id, newKeyword.id)
     addProjectKeyword(newKeyword);
   };
 
