@@ -17,6 +17,26 @@
   --admin: #e4cf4359;
   --admin-btn: rgba(152, 135, 27, 0.604);
 
+  --color-user-join: #1abc9c; /* Verde Água */
+  --color-user-leave: #e74c3c; /* Vermelho */
+  --color-user-change: #e67e22; /* Laranja */
+  --color-user-kicked: #d35400; /* Laranja Escuro */
+
+  /* Ações de Tarefa */
+  --color-task-create: #3498db; /* Azul */
+  --color-task-change: #34495e; /* Azul Marinho */
+  --color-task-delete: #c0392b; /* Vermelho Escuro */
+  --color-task-complete: #2ecc71; /* Verde */
+  --color-task-state-change: #f1c40f; /* Amarelo */
+
+  /* Ações de Projeto */
+  --color-project-change: #9b59b6; /* Roxo */
+  --color-project-state-change: #95a5a6; /* Cinza */
+
+  /* Cores Neutras e Notas */
+  --color-note: #7f8c8d; /* Cinza Escuro */
+  --color-note-task: #16a085; /* Verde Escuro */
+
   --box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -462,7 +482,8 @@ h4 {
 .has-new-items .new-items-dot {
   width: 10px;
   height: 10px;
-  background-color: red;
+  background-color: var(--cancelled);
+
   border-radius: 50%;
   position: absolute;
   margin-left: 5px;
@@ -500,4 +521,51 @@ h4 {
 }
 .logTypeProjectStateChange {
   background-color: hsl(261, 45%, 95%);
+}
+
+.logTypeNote {
+  background-color: hsl(0, 0%, 100%);
+}
+
+.logTypeNoteTask {
+  background-color: hsl(132, 100%, 95%);
+}
+.btn-primary {
+  --bs-btn-color: var(--whitey); /* Branco */
+  --bs-btn-bg: var(--primary-color); /* Cor primária */
+  --bs-btn-border-color: var(--primary-color); /* Cor primária */
+
+  --bs-btn-hover-color: var(--whitey); /* Branco */
+  --bs-btn-hover-bg: var(--primary-color-darker); /* Cor primária mais escura */
+  --bs-btn-hover-border-color: var(--primary-color-darker); /* Cor primária mais escura */
+
+  --bs-btn-focus-shadow-rgb: 63, 114, 175; /* Sombra do botão no foco, ajustada para combinar com a cor primária */
+
+  --bs-btn-active-color: var(--whitey); /* Branco */
+  --bs-btn-active-bg: var(--primary-color-darker2); /* Cor primária ainda mais escura */
+  --bs-btn-active-border-color: var(--primary-color-darker2); /* Cor primária ainda mais escura */
+
+  --bs-btn-disabled-color: var(--greyish); /* Cinza */
+  --bs-btn-disabled-bg: var(--primary-color-lighter); /* Cor primária mais clara */
+  --bs-btn-disabled-border-color: var(--primary-color-lighter); /* Cor primária mais clara */
+}
+
+.btn-secondary {
+  --bs-btn-color: var(--whitey); /* Branco */
+  --bs-btn-bg: var(--secondary-color); /* Cor secundária */
+  --bs-btn-border-color: var(--secondary-color); /* Cor secundária */
+
+  --bs-btn-hover-color: var(--secondary-color); /* Branco */
+  --bs-btn-hover-bg: var(--secondary-color-darker); /* Cor secundária mais escura */
+  --bs-btn-hover-border-color: var(--secondary-color-darker); /* Cor secundária mais escura */
+
+  --bs-btn-focus-shadow-rgb: 17, 46, 79; /* Sombra do botão no foco, ajustada para combinar com a cor secundária */
+
+  --bs-btn-active-color: var(--whitey); /* Branco */
+  --bs-btn-active-bg: var(--secondary-color-darker2); /* Cor secundária ainda mais escura */
+  --bs-btn-active-border-color: var(--secondary-color-darker2); /* Cor secundária ainda mais escura */
+
+  --bs-btn-disabled-color: var(--whitey); /* Branco */
+  --bs-btn-disabled-bg: var(--secondary-color-lighter); /* Cor secundária mais clara */
+  --bs-btn-disabled-border-color: var(--secondary-color-lighter); /* Cor secundária mais clara */
 }

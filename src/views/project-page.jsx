@@ -107,7 +107,7 @@ function ProjectPage() {
                     </Row>
                     <Row>
                       <Col md="12">
-                        <Nav tabs>
+                        <Nav tabs style={{ cursor: "pointer" }}>
                           {userType === UserType.NORMAL || userType === UserType.MANAGER ? (
                             <>
                               <NavItem>

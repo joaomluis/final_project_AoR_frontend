@@ -193,5 +193,10 @@
   "in-the-project": "no projeto",
   "changed-project-state": "alterou o estado do projeto",
   "log-to": "para",
-  "log-from": "de"
+  "log-from": "de",
+  "add-note": "adicionou uma nota",
+  "to-task": "à tarefa",
+  "NOTE": "Nota",
+  "NOTE_TASK": "Registo",
+  "no-task-selected": "Nenhuma tarefa selecionada"
 }
