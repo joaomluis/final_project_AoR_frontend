@@ -301,5 +301,24 @@ export const Api = {
       .catch(handleError);
   },
 
+  getTasks: (token, id, props) => {
+    const queryString = qs.stringify(props, { arrayFormat: "repeat" });
+
+    return apiClient
+      .get(`/tasks/${id}/?${queryString}`, {
+        headers: { token },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
+
+  createTask: (token, id, props) => apiClient.post(`/projects/${id}/tasks`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  updateTask: (token, id, props) => apiClient.put(`/tasks/${id}`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  updateTaskDate: (token, id, props) => apiClient.put(`/tasks/${id}/date`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  deleteTask: (token, id) => apiClient.delete(`/tasks/${id}`, { headers: { token } }).then(handleResponse).catch(handleError),
+
   createNote: (token, id, props) => apiClient.post(`/projects/${id}/notes`, props, { headers: { token } }).then(handleResponse).catch(handleError),
 };
