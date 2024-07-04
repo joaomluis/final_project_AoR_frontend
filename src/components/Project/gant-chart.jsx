@@ -34,7 +34,14 @@ const transformTasksData = (tasks) => {
         progress: task.status === "FINISHED" ? 100 : task.status === "IN_PROGRESS" ? 50 : 0,
         dependencies: task.dependentTasks ? task.dependentTasks.map((dep) => dep.systemTitle) : [],
         styles: {
-          backgroundColor: task.status === "FINISHED" ? "#8BC34A" : task.status === "IN_PROGRESS" ? "#FFEB3B" : "#F44336",
+          backgroundColor:
+            task.status === "FINISHED"
+              ? "var(--color-task-complete)"
+              : task.status === "IN_PROGRESS"
+              ? "var(--in-progress)"
+              : task.status === "PRESENTATION"
+              ? "#F44336"
+              : "#2196F3",
           progressColor: "#ffbb54",
           progressSelectedColor: "#ff9e0d",
         },
@@ -109,6 +116,7 @@ const GanttChart = ({ id }) => {
       const response = await Api.updateTaskDate(token, task.originalTask.id, props);
       // Opcional: Realizar uma nova busca ou atualização global dos dados
     } catch (error) {
+      console.error("Error updating task date:", error.message);
       terror(error.message);
     } finally {
       fetchData();
