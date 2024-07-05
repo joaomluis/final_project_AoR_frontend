@@ -9,29 +9,24 @@ import { useUserStore } from "../../stores/useUserStore";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
 import { terror } from "../toasts/message-toasts.jsx";
+import { ModalTask } from "../modals/modal-task.jsx";
 const transformTasksData = (tasks) => {
   console.log("Tasks:", tasks);
   return tasks
     .filter((task) => {
-      // Log das datas antes da conversão
-      console.log(`Initial Date: ${task.initialDate}, Final Date: ${task.finalDate}`);
       return task.initialDate && task.finalDate;
     })
     .map((task) => {
       // Conversão das datas
       const startDate = new Date(task.initialDate);
       const endDate = new Date(task.finalDate);
-
-      // Log das datas após a conversão
-      console.log(`Converted Start Date: ${startDate}, Converted End Date: ${endDate}`);
-
       return {
         id: task.systemTitle,
         name: task.title,
         type: "task",
         start: startDate,
         end: endDate,
-        progress: task.status === "FINISHED" ? 100 : task.status === "IN_PROGRESS" ? 50 : 0,
+        // progress: task.status === "FINISHED" ? 100 : task.status === "IN_PROGRESS" ? 50 : 0,
         dependencies: task.dependentTasks ? task.dependentTasks.map((dep) => dep.systemTitle) : [],
         styles: {
           backgroundColor:
@@ -46,6 +41,7 @@ const transformTasksData = (tasks) => {
           progressSelectedColor: "#ff9e0d",
         },
         originalTask: task,
+        isDisabled: task.status === "PRESENTATION", // Se for apresentação, desabilitar a edição
       };
     });
 };
@@ -72,8 +68,21 @@ const GanttChart = ({ id }) => {
   const token = useUserStore((state) => state.token);
   const [displayMode, setDisplayMode] = useState("gantt");
   const [columnWidth, setColumnWidth] = useState(200);
+  const [isChecked, setIsChecked] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const toggleModal = () => setIsTaskModalOpen(!isTaskModalOpen);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const toggleColumnWidth = () => {
     setColumnWidth(columnWidth === 200 ? 0 : 200);
+    setIsChecked(!isChecked);
   };
   const { t } = useTranslation();
   const fetchData = async () => {
@@ -84,7 +93,6 @@ const GanttChart = ({ id }) => {
     try {
       const response = await Api.getTasks(token, id, props);
       const data = response.data;
-      console.log("Data:", data);
       const transformedTasks = transformTasksData(data);
       setTasks(transformedTasks);
     } catch (error) {
@@ -116,7 +124,6 @@ const GanttChart = ({ id }) => {
       const response = await Api.updateTaskDate(token, task.originalTask.id, props);
       // Opcional: Realizar uma nova busca ou atualização global dos dados
     } catch (error) {
-      console.error("Error updating task date:", error.message);
       terror(error.message);
     } finally {
       fetchData();
@@ -176,53 +183,74 @@ const GanttChart = ({ id }) => {
     );
   };
 
+  function handleCreateTask() {
+    console.log("Create task");
+  }
+
   return (
     <>
-      <Container style={{ height: "91%" }}>
-        <Row>
-          <Col>
-            <Select
-              options={displayModeOptions}
-              defaultValue={displayModeOptions.find((option) => option.value === displayMode)}
-              onChange={(selectedOption) => setDisplayMode(selectedOption.value)}
-              styles={{ container: (provided) => ({ ...provided, display: "inline-block", width: 200, marginRight: 10 }) }}
-            />
-            {displayMode === "list" ? null : (
-              <>
-                <Select
-                  options={viewModeOptions}
-                  defaultValue={viewModeOptions.find((option) => option.value === viewMode)}
-                  onChange={(selectedOption) => setViewMode(selectedOption.value)}
-                  styles={{ container: (provided) => ({ ...provided, display: "inline-block", width: 200 }) }}
-                />
-                <label>
-                  <input type="checkbox" onChange={toggleColumnWidth} checked={columnWidth === 200} /> {t("set-tasks-visible")}
-                </label>
-              </>
-            )}
-            {displayMode === "list"
-              ? renderTaskList()
-              : tasks.length > 0 && (
-                  <Gantt
-                    tasks={tasks}
-                    viewMode={viewMode}
-                    onClick={handleTaskClick}
-                    onDateChange={handleDateChange}
-                    onProgressChange={""}
-                    onDoubleClick={""}
-                    onDelete={""}
-                    listCellWidth={columnWidth}
-                    barBackgroundColor=""
-                    rowHeight={30}
-                    headerHeight={30}
-                    barCornerRadius={5}
-                    // fontSize="1rem"
-                    ganttHeight={"60vh"}
+      {/* <Container style={{ height: "91%", position: "relative" }}> */}
+      <Row>
+        <Col lg="12">
+          <Row>
+            <Col lg="10" md="8" sm="6"></Col>
+            <Col lg="2" md="4" sm="6" style={{}}>
+              <Button className="mt-3 mb-0" onClick={toggleModal} variant="secondary" style={{ width: "100%" }}>
+                {t("Add-task")}
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg="4" md="4" sm="5" style={{ display: "flex", alignItems: "center" }}>
+              <Select
+                className="mt-2 mb-2 mr-2"
+                options={displayModeOptions}
+                defaultValue={displayModeOptions.find((option) => option.value === displayMode)}
+                onChange={(selectedOption) => setDisplayMode(selectedOption.value)}
+                styles={{ container: (provided) => ({ ...provided, display: "inline-block", width: "100%" }) }} // Ajusta marginRight para espaçamento
+              />
+            </Col>
+            <Col lg="4" md="4" sm="1" />
+            <Col lg="4" md="4" sm="6" style={{ display: "flex", alignItems: "center" }}>
+              {" "}
+              {displayMode === "list" ? null : (
+                <>
+                  <Select
+                    options={viewModeOptions}
+                    defaultValue={viewModeOptions.find((option) => option.value === viewMode)}
+                    onChange={(selectedOption) => setViewMode(selectedOption.value)}
+                    styles={{ container: (provided) => ({ ...provided, display: "inline-block", width: "100%" }) }} // Ajusta marginRight para espaçamento
                   />
-                )}
-          </Col>
-        </Row>
-      </Container>
+                </>
+              )}
+            </Col>
+          </Row>
+          <label style={{ marginRight: "1rem" }}>
+            <input type="checkbox" onChange={toggleColumnWidth} checked={columnWidth === 200} style={{ marginRight: "1rem" }} /> {t("view-tasks-list")}
+          </label>
+          {displayMode === "list"
+            ? renderTaskList()
+            : tasks.length > 0 && (
+                <Gantt
+                  tasks={tasks}
+                  viewMode={viewMode}
+                  onClick={handleTaskClick}
+                  onDateChange={handleDateChange}
+                  onProgressChange={""}
+                  onDoubleClick={""}
+                  onDelete={""}
+                  listCellWidth={windowWidth < 768 ? 0 : columnWidth}
+                  barBackgroundColor=""
+                  rowHeight={35}
+                  headerHeight={60}
+                  barCornerRadius={6}
+                  ganttHeight={""}
+                />
+              )}
+        </Col>
+      </Row>
+      {/* </Container> */}
+      <ModalTask isOpen={isTaskModalOpen} toggle={toggleModal} title={"create-task"} edit={""} />
     </>
   );
 };

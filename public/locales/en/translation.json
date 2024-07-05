@@ -198,5 +198,10 @@
   "to-task": "associated with the task",
   "NOTE": "Note",
   "NOTE_TASK": "Log",
-  "no-task-selected": "No task selected"
+  "no-task-selected": "No task selected",
+
+  "Add-task": "Add task",
+  "title": "Title",
+  "initial-date": "Initial date",
+  "final-date": "Final date"
 }

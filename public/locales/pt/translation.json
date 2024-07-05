@@ -198,5 +198,10 @@
   "to-task": "à tarefa",
   "NOTE": "Nota",
   "NOTE_TASK": "Registo",
-  "no-task-selected": "Nenhuma tarefa selecionada"
+  "no-task-selected": "Nenhuma tarefa selecionada",
+
+  "Add-task": "Adicionar tarefa",
+  "Title": "Título",
+  "initial-date": "Data inicial",
+  "final-date": "Data final"
 }
