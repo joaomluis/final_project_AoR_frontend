@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next";
 import { terror } from "../toasts/message-toasts.jsx";
 import { ModalTask } from "../modals/modal-task.jsx";
 const transformTasksData = (tasks) => {
-  console.log("Tasks:", tasks);
   return tasks
     .filter((task) => {
       return task.initialDate && task.finalDate;
@@ -71,6 +70,11 @@ const GanttChart = ({ id }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [updateTrigger, setUpdateTrigger] = useState(0);
+  const triggerUpdate = () => {
+    console.log("Triggering update...");
+    setUpdateTrigger((prev) => prev + 1); // Incrementa o contador para disparar a atualização
+  };
   const toggleModal = () => setIsTaskModalOpen(!isTaskModalOpen);
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -86,7 +90,6 @@ const GanttChart = ({ id }) => {
   };
   const { t } = useTranslation();
   const fetchData = async () => {
-    console.log("Fetching data...");
     const props = {
       dtoType: "TaskGanttDto",
     };
@@ -101,7 +104,7 @@ const GanttChart = ({ id }) => {
   };
   useEffect(() => {
     fetchData();
-  }, [id, token]);
+  }, [id, token, updateTrigger]);
 
   const handleTaskClick = (task) => {
     console.log("Task clicked:", task);
@@ -250,7 +253,7 @@ const GanttChart = ({ id }) => {
         </Col>
       </Row>
       {/* </Container> */}
-      <ModalTask isOpen={isTaskModalOpen} toggle={toggleModal} title={"create-task"} edit={""} />
+      <ModalTask isOpen={isTaskModalOpen} toggle={toggleModal} title={"create-task"} edit={""} id={id} token={token} trigger={() => triggerUpdate()} />
     </>
   );
 };
