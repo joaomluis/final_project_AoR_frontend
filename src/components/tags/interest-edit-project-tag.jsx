@@ -11,6 +11,7 @@ function EditKeywordsInterests() {
   const { id } = useParams();
  
   const projectKeywordsData = useEditProjectStore((state) => state.projectKeywords);
+  const setProjectKeywords = useEditProjectStore((state) => state.setProjectKeywords);
   const addProjectKeyword = useEditProjectStore((state) => state.addProjectKeyword);
   const removeProjectKeyword = useEditProjectStore((state) => state.removeProjectKeyword);
 
@@ -18,21 +19,32 @@ function EditKeywordsInterests() {
   async function addInterestToProject(token, projectId, interestId) {
     try {
       const response = await Api.addInterestToProject(token, projectId, interestId);
-      tsuccess(response);
+      console.log(response.data);
+      tsuccess(response.data);
     } catch (error) {
-      
+      terror(error.message);
       console.error('Error adding interest:', error);
+    }
+  }
+
+  async function removeInterestFromProject(token, projectId, interestId) {
+    try {
+      const response = await Api.removeInterestFromProject(token, projectId, interestId);
+      tsuccess(response.data);
+    } catch (error) {
+      terror(error.message);
+      console.error('Error removing interest:', error);
     }
   }
         
 
   const addSelectedKeyword = (newKeyword) => {
-    console.log(token);
     addInterestToProject(token, id, newKeyword.id)
     addProjectKeyword(newKeyword);
   };
 
   const removeSelectedKeyword = (keyword) => {
+    removeInterestFromProject(token, id, keyword.id)
     removeProjectKeyword(keyword);
   };
 
@@ -46,11 +58,11 @@ function EditKeywordsInterests() {
   const removeInterest = useUserStore((state) => state.removeInterest);
 
 
-  async function fetchInterests() {
+  async function fetchProjectInterests() {
     try {
-      const response = await Api.getUserInterests(token, email);
+      const response = await Api.getInterestsFromProject(token, id);
       
-      updateInterests(response.data);
+      setProjectKeywords(response.data);
       
     } catch (error) {
       terror(error.message);
@@ -78,29 +90,11 @@ function EditKeywordsInterests() {
     }
   }
 
-  async function addUserInterest(interest) {
-    try {
-      const response = await Api.addInterest(token, interest);
-      addInterest(response.data);
-    } catch (error) {
-      terror(error.message);
-    }
-  }
-
-  async function removeUserInterest(interest) {
-    try {
-      const response = await Api.removeInterest(token, interest);
-      removeInterest(interest);
-      tsuccess("Interest " + interest.name + " removed successfully!");
-    } catch (error) {
-      terror(error.message);
-    }
-  }
 
   return (
     <ItemDropdown
       // fetchTypes={fetchSkillTypes}
-      fetchItems={fetchInterests}
+      fetchItems={fetchProjectInterests}
       fetchAllItems={fetchAllInterests}
       createItem={createInterest}
       addItem={addSelectedKeyword}

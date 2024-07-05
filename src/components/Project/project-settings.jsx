@@ -31,13 +31,14 @@ function ProjectSettings({ data }) {
     async function fetchData() {
       try {
         const usersPromise = Api.getUsersForProject(token, id);
-        const keywordsPromise = Api.getInterestsForProject(token, id);
+        const keywordsPromise = Api.getInterestsFromProject(token, id);
         const resourcesPromise = Api.getProductsForProject(token, id);
         const skillsPromise = Api.getSkillsForProject(token, id);
   
         const [usersResponse, keywordsResponse, resourcesResponse, skillsResponse] = await Promise.all([usersPromise, keywordsPromise, resourcesPromise, skillsPromise]);
   
         setProjectUsers(usersResponse.data);
+        console.log("interest from project",keywordsResponse.data);
         setProjectKeywords(keywordsResponse.data);
         setProjectResources(resourcesResponse.data);
         setProjectSkills(skillsResponse.data);

@@ -197,17 +197,23 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError),
 
-  getInterestsForProject: (token, projectId) =>
+  getInterestsFromProject: (token, projectId) =>
     apiClient
       .get(`/interests/${projectId}`, { headers: { token } })
       .then(handleResponse)
       .catch(handleError),
 
-      addInterestToProject: (token, projectId, interestId) =>
-        apiClient
-          .put(`/interests/${projectId}/${interestId}`, {}, {headers: {token}})
-          .then(handleResponse)
-          .catch(handleError),
+  addInterestToProject: (token, projectId, interestId) =>
+    apiClient
+      .put(`/interests/${projectId}/${interestId}`, {}, {headers: {token}})
+      .then(handleResponse)
+      .catch(handleError),
+
+  removeInterestFromProject: (token, projectId, interestId) =>
+    apiClient
+      .put(`/interests/remove/${projectId}/${interestId}`, {}, {headers: {token}})
+      .then(handleResponse)
+      .catch(handleError),
 
   //IMAGE endpoints
   uploadImage: (token, file, filename) => {
