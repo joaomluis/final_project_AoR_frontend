@@ -128,6 +128,18 @@ export const Api = {
 
   getSkillsForProject: (token, projectId) => apiClient.get(`/skills/${projectId}`, { headers: { token } }).then(handleResponse).catch(handleError),
 
+  addSkillToProject: (token, projectId, skillId) =>
+    apiClient
+      .put(`/skills/${projectId}/${skillId}`, {}, {headers: {token}})
+      .then(handleResponse)
+      .catch(handleError),
+
+  removeSkillFromProject: (token, projectId, skillId) =>
+    apiClient
+      .put(`/skills/remove/${projectId}/${skillId}`, {}, {headers: {token}})
+      .then(handleResponse)
+      .catch(handleError),
+
   //INTEREST endpoints
   addInterest: (token, data) => apiClient.post("/interests", data, { headers: { token } }).then(handleResponse).catch(handleError),
   removeInterest: (token, data) => apiClient.put("/interests", data, { headers: { token } }).then(handleResponse).catch(handleError),
@@ -141,7 +153,23 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError),
 
-  getInterestsForProject: (token, projectId) => apiClient.get(`/interests/${projectId}`, { headers: { token } }).then(handleResponse).catch(handleError),
+  getInterestsFromProject: (token, projectId) =>
+    apiClient
+      .get(`/interests/${projectId}`, { headers: { token } })
+      .then(handleResponse)
+      .catch(handleError),
+
+  addInterestToProject: (token, projectId, interestId) =>
+    apiClient
+      .put(`/interests/${projectId}/${interestId}`, {}, {headers: {token}})
+      .then(handleResponse)
+      .catch(handleError),
+
+  removeInterestFromProject: (token, projectId, interestId) =>
+    apiClient
+      .put(`/interests/remove/${projectId}/${interestId}`, {}, {headers: {token}})
+      .then(handleResponse)
+      .catch(handleError),
 
   //IMAGE endpoints
   uploadImage: (token, file, filename) => {

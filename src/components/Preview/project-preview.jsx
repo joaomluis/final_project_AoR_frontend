@@ -22,6 +22,7 @@ const ProjectPreview = ({ data, name }) => {
           {name}
         </Label>
       </FormGroup>
+      {data && Array.isArray(data) && data.length > 0 && (
       <div
         style={{
           maxHeight: "175px",
@@ -33,6 +34,8 @@ const ProjectPreview = ({ data, name }) => {
           borderRadius: "5px",
         }}
       >
+      
+        
         {data.map((data) => (
           <div
             key={data.id}
@@ -82,6 +85,7 @@ const ProjectPreview = ({ data, name }) => {
           </div>
         ))}
       </div>
+      )}
     </>
   );
 };
