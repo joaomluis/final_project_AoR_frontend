@@ -6,7 +6,7 @@ import { tsuccess, terror } from "../toasts/message-toasts";
 import useEditProjectStore from "../../stores/useEditProjectStore";
 import {useParams} from "react-router-dom";
 
-function EditKeywordsInterests() {
+function EditProjectKeywords() {
   const token = useUserStore((state) => state.token);
   const { id } = useParams();
  
@@ -52,10 +52,8 @@ function EditKeywordsInterests() {
   
   const allInterests = useUserStore((state) => state.allInterests);
   const updateAllInterests = useUserStore((state) => state.updateAllInterests);
-  const updateInterests = useUserStore((state) => state.updateInterests);
   const addInterest = useUserStore((state) => state.addInterest);
   const addInterestToAll = useUserStore((state) => state.addInterestToAll);
-  const removeInterest = useUserStore((state) => state.removeInterest);
 
 
   async function fetchProjectInterests() {
@@ -106,4 +104,4 @@ function EditKeywordsInterests() {
   );
 }
 
-export default EditKeywordsInterests;
+export default EditProjectKeywords;

@@ -172,6 +172,18 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError),
 
+  addSkillToProject: (token, projectId, skillId) =>
+    apiClient
+      .put(`/skills/${projectId}/${skillId}`, {}, {headers: {token}})
+      .then(handleResponse)
+      .catch(handleError),
+
+  removeSkillFromProject: (token, projectId, skillId) =>
+    apiClient
+      .put(`/skills/remove/${projectId}/${skillId}`, {}, {headers: {token}})
+      .then(handleResponse)
+      .catch(handleError),
+
   //INTEREST endpoints
   addInterest: (token, data) =>
     apiClient

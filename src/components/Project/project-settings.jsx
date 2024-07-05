@@ -38,7 +38,6 @@ function ProjectSettings({ data }) {
         const [usersResponse, keywordsResponse, resourcesResponse, skillsResponse] = await Promise.all([usersPromise, keywordsPromise, resourcesPromise, skillsPromise]);
   
         setProjectUsers(usersResponse.data);
-        console.log("interest from project",keywordsResponse.data);
         setProjectKeywords(keywordsResponse.data);
         setProjectResources(resourcesResponse.data);
         setProjectSkills(skillsResponse.data);
