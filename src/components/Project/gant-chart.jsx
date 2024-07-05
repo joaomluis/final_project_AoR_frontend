@@ -71,11 +71,21 @@ const GanttChart = ({ id }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [updateTrigger, setUpdateTrigger] = useState(0);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [mode, setMode] = useState("create");
+
   const triggerUpdate = () => {
     console.log("Triggering update...");
     setUpdateTrigger((prev) => prev + 1); // Incrementa o contador para disparar a atualização
   };
-  const toggleModal = () => setIsTaskModalOpen(!isTaskModalOpen);
+  const toggleModal = () => {
+    setMode("create");
+    setIsTaskModalOpen(!isTaskModalOpen);
+  };
+  const toggleModalView = () => {
+    setMode("view");
+    setIsTaskModalOpen(!isTaskModalOpen);
+  };
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -107,7 +117,8 @@ const GanttChart = ({ id }) => {
   }, [id, token, updateTrigger]);
 
   const handleTaskClick = (task) => {
-    console.log("Task clicked:", task);
+    setSelectedTask(task.originalTask);
+    toggleModalView();
   };
 
   const handleDateChange = async (task) => {
@@ -186,9 +197,10 @@ const GanttChart = ({ id }) => {
     );
   };
 
-  function handleCreateTask() {
-    console.log("Create task");
-  }
+  const handleSetMode = (newMode) => {
+    console.log("Setting mode:", newMode);
+    setMode(newMode);
+  };
 
   return (
     <>
@@ -237,10 +249,10 @@ const GanttChart = ({ id }) => {
                 <Gantt
                   tasks={tasks}
                   viewMode={viewMode}
-                  onClick={handleTaskClick}
+                  onClick={""}
                   onDateChange={handleDateChange}
                   onProgressChange={""}
-                  onDoubleClick={""}
+                  onDoubleClick={handleTaskClick}
                   onDelete={""}
                   listCellWidth={windowWidth < 768 ? 0 : columnWidth}
                   barBackgroundColor=""
@@ -253,7 +265,18 @@ const GanttChart = ({ id }) => {
         </Col>
       </Row>
       {/* </Container> */}
-      <ModalTask isOpen={isTaskModalOpen} toggle={toggleModal} title={"create-task"} edit={""} id={id} token={token} trigger={() => triggerUpdate()} />
+      <ModalTask
+        mode={mode}
+        isOpen={isTaskModalOpen}
+        toggle={toggleModal}
+        title={mode === "create" ? "create-task" : mode === "edit" ? "edit-task" : "view-task"}
+        edit={""}
+        id={id}
+        token={token}
+        trigger={() => triggerUpdate()}
+        setMode={handleSetMode}
+        task={selectedTask}
+      />
     </>
   );
 };
