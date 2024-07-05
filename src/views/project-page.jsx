@@ -15,6 +15,8 @@ import UserType from "../components/enums/UserType.js";
 import useMessageStore from "../stores/useMessageStore.js";
 import { use } from "i18next";
 import LogsCard from "../components/logs/logs.jsx";
+import Gantt from "frappe-gantt";
+import GanttChart from "../components/Project/gant-chart.jsx";
 function ProjectPage() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
@@ -171,7 +173,7 @@ function ProjectPage() {
                                 <ProjectMainPage id={numericId} />
                               </TabPane>
                               <TabPane tabId="2">
-                                <p>Tab 2 content</p>
+                                <GanttChart id={numericId} />
                               </TabPane>
                               <TabPane tabId="3">
                                 <LogsCard id={numericId} />

@@ -109,6 +109,8 @@ export const Api = {
 
   getUsersForProject: (token, projectId) => apiClient.get(`/users/${projectId}`, { headers: { token } }).then(handleResponse).catch(handleError),
 
+  getUsersForTask: (token, projectId) => apiClient.get(`/users/task/${projectId}`, { headers: { token } }).then(handleResponse).catch(handleError),
+
   //LOCATION endpoints
   getAllLocations: (token) => apiClient.get("/labs", { headers: { token } }).then(handleResponse).catch(handleError),
 
@@ -328,6 +330,28 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
+
+  getTasks: (token, id, props) => {
+    const queryString = qs.stringify(props, { arrayFormat: "repeat" });
+
+    return apiClient
+      .get(`/tasks/${id}/?${queryString}`, {
+        headers: { token },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
+
+  getTasksForProject: (token, projectId) =>
+    apiClient.get(`/tasks/create-info/${projectId}`, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  createTask: (token, props) => apiClient.post(`/tasks/`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  updateTask: (token, id, props) => apiClient.put(`/tasks/${id}`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  updateTaskDate: (token, id, props) => apiClient.put(`/tasks/${id}/date`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  deleteTask: (token, id) => apiClient.delete(`/tasks/${id}`, { headers: { token } }).then(handleResponse).catch(handleError),
 
   createNote: (token, id, props) => apiClient.post(`/projects/${id}/notes`, props, { headers: { token } }).then(handleResponse).catch(handleError),
 };

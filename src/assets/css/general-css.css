@@ -26,7 +26,7 @@
   --color-task-create: #3498db; /* Azul */
   --color-task-change: #34495e; /* Azul Marinho */
   --color-task-delete: #c0392b; /* Vermelho Escuro */
-  --color-task-complete: #2ecc71; /* Verde */
+  --color-task-complete: var(--finished); /* Verde */
   --color-task-state-change: #f1c40f; /* Amarelo */
 
   /* Ações de Projeto */
