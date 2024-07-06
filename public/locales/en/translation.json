@@ -200,8 +200,20 @@
   "NOTE_TASK": "Log",
   "no-task-selected": "No task selected",
 
+  "edit-task": "Edit task",
+  "create-task": "Create task",
   "Add-task": "Add task",
   "title": "Title",
   "initial-date": "Initial date",
-  "final-date": "Final date"
+  "final-date": "Final date",
+  "view-task": "View task",
+  "responsible-user": "Responsible",
+  "member-user": "Auxiliary user(s)",
+  "external-executor": "External user(s)",
+  "dependency-task": "Dependency task(s)",
+  "settings": "Settings",
+  "project-info": "Project information",
+  "gantt": "Gantt Chart",
+  "logs": "Activity Logs",
+  "view-tasks-list": "View tasks list"
 }

@@ -117,6 +117,7 @@ const GanttChart = ({ id }) => {
   }, [id, token, updateTrigger]);
 
   const handleTaskClick = (task) => {
+    setMode("edit");
     setSelectedTask(task.originalTask);
     toggleModalView();
   };
@@ -240,9 +241,11 @@ const GanttChart = ({ id }) => {
               )}
             </Col>
           </Row>
-          <label style={{ marginRight: "1rem" }}>
-            <input type="checkbox" onChange={toggleColumnWidth} checked={columnWidth === 200} style={{ marginRight: "1rem" }} /> {t("view-tasks-list")}
-          </label>
+          {displayMode === "list" ? null : (
+            <label style={{ marginRight: "1rem" }}>
+              <input type="checkbox" onChange={toggleColumnWidth} checked={columnWidth === 200} style={{ marginRight: "1rem" }} /> {t("view-tasks-list")}
+            </label>
+          )}
           {displayMode === "list"
             ? renderTaskList()
             : tasks.length > 0 && (
@@ -269,7 +272,7 @@ const GanttChart = ({ id }) => {
         mode={mode}
         isOpen={isTaskModalOpen}
         toggle={toggleModal}
-        title={mode === "create" ? "create-task" : mode === "edit" ? "edit-task" : "view-task"}
+        title={mode === "create" ? t("create-task") : mode === "edit" ? t("edit-task") : t("view-task")}
         edit={""}
         id={id}
         token={token}
