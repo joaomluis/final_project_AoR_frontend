@@ -131,16 +131,10 @@ export const Api = {
   getSkillsForProject: (token, projectId) => apiClient.get(`/skills/${projectId}`, { headers: { token } }).then(handleResponse).catch(handleError),
 
   addSkillToProject: (token, projectId, skillId) =>
-    apiClient
-      .put(`/skills/${projectId}/${skillId}`, {}, {headers: {token}})
-      .then(handleResponse)
-      .catch(handleError),
+    apiClient.put(`/skills/${projectId}/${skillId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
   removeSkillFromProject: (token, projectId, skillId) =>
-    apiClient
-      .put(`/skills/remove/${projectId}/${skillId}`, {}, {headers: {token}})
-      .then(handleResponse)
-      .catch(handleError),
+    apiClient.put(`/skills/remove/${projectId}/${skillId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
   //INTEREST endpoints
   addInterest: (token, data) => apiClient.post("/interests", data, { headers: { token } }).then(handleResponse).catch(handleError),
@@ -155,23 +149,13 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError),
 
-  getInterestsFromProject: (token, projectId) =>
-    apiClient
-      .get(`/interests/${projectId}`, { headers: { token } })
-      .then(handleResponse)
-      .catch(handleError),
+  getInterestsFromProject: (token, projectId) => apiClient.get(`/interests/${projectId}`, { headers: { token } }).then(handleResponse).catch(handleError),
 
   addInterestToProject: (token, projectId, interestId) =>
-    apiClient
-      .put(`/interests/${projectId}/${interestId}`, {}, {headers: {token}})
-      .then(handleResponse)
-      .catch(handleError),
+    apiClient.put(`/interests/${projectId}/${interestId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
   removeInterestFromProject: (token, projectId, interestId) =>
-    apiClient
-      .put(`/interests/remove/${projectId}/${interestId}`, {}, {headers: {token}})
-      .then(handleResponse)
-      .catch(handleError),
+    apiClient.put(`/interests/remove/${projectId}/${interestId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
   //IMAGE endpoints
   uploadImage: (token, file, filename) => {
@@ -351,7 +335,7 @@ export const Api = {
 
   updateTaskDate: (token, id, props) => apiClient.put(`/tasks/${id}/date`, props, { headers: { token } }).then(handleResponse).catch(handleError),
 
-  deleteTask: (token, id) => apiClient.delete(`/tasks/${id}`, { headers: { token } }).then(handleResponse).catch(handleError),
+  deleteTask: (token, id) => apiClient.put(`/tasks/inactivate/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
   createNote: (token, id, props) => apiClient.post(`/projects/${id}/notes`, props, { headers: { token } }).then(handleResponse).catch(handleError),
 };

@@ -115,15 +115,13 @@ function ProjectPage() {
                               <NavItem>
                                 <NavLink
                                   className={classnames({
-                                    active: activeTab === "1",
-                                    "has-new-items": hasNewItems,
+                                    active: activeTab === "4",
                                   })}
                                   onClick={() => {
-                                    toggle("1");
+                                    toggle("4");
                                   }}
                                 >
-                                  Gantt Chart
-                                  {hasNewItems && <span className="new-items-dot"></span>} {/* Renderiza o ponto vermelho se houver novidades */}
+                                  {userType === UserType.MANAGER ? t("settings") : t("info")}
                                 </NavLink>
                               </NavItem>
                               <NavItem>
@@ -135,9 +133,24 @@ function ProjectPage() {
                                     toggle("2");
                                   }}
                                 >
-                                  Kanban
+                                  {t("gantt")}
                                 </NavLink>
                               </NavItem>
+                              <NavItem>
+                                <NavLink
+                                  className={classnames({
+                                    active: activeTab === "1",
+                                    "has-new-items": hasNewItems,
+                                  })}
+                                  onClick={() => {
+                                    toggle("1");
+                                  }}
+                                >
+                                  {t("chat")}
+                                  {hasNewItems && <span className="new-items-dot"></span>} {/* Renderiza o ponto vermelho se houver novidades */}
+                                </NavLink>
+                              </NavItem>
+
                               <NavItem>
                                 <NavLink
                                   className={classnames({
@@ -147,23 +160,11 @@ function ProjectPage() {
                                     toggle("3");
                                   }}
                                 >
-                                  Logs
+                                  {t("logs")}
                                 </NavLink>
                               </NavItem>
                             </>
                           ) : null}
-                          <NavItem>
-                            <NavLink
-                              className={classnames({
-                                active: activeTab === "4",
-                              })}
-                              onClick={() => {
-                                toggle("4");
-                              }}
-                            >
-                              Settings
-                            </NavLink>
-                          </NavItem>
                         </Nav>
 
                         <TabContent activeTab={activeTab}>

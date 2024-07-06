@@ -200,8 +200,18 @@
   "NOTE_TASK": "Registo",
   "no-task-selected": "Nenhuma tarefa selecionada",
 
+  "edit-task": "Editar tarefa",
+  "create-task": "Criar tarefa",
   "Add-task": "Adicionar tarefa",
   "Title": "Título",
   "initial-date": "Data inicial",
-  "final-date": "Data final"
+  "final-date": "Data final",
+  "view-task": "Ver tarefa",
+  "responsible-user": "Responsável",
+  "member-user": "Utilizador(es) auxiliar(es)",
+  "external-executor": "Utilizador(es) externo(s)",
+  "dependency-task": "Tarefa(s) de dependência",
+  "settings": "Configurações",
+  "project-info": "Informações do projeto",
+  "view-tasks-list": "Ver lista de tarefas"
 }
