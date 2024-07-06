@@ -234,6 +234,18 @@ export const Api = {
     return apiClient.get(`/projects/${id}/logs?${queryString}`, { headers: { token } }).then(handleResponse).catch(handleError);
   },
 
+  getProjectUsers: (token, id) => {
+    return apiClient.get(`/projects/${id}/users`, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
+  updateUserRole: (token, userId, dto) => {
+    return apiClient.put(`/projects/users/${userId}/role`, dto, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
+  kickUser: (token, userId, projectId) => {
+    return apiClient.put(`/projects/users/${userId}/${projectId}/kick`, {}, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
   //PRODUCTS endpoint
   getProducts: (token, props) => {
     const queryString = qs.stringify(props, { arrayFormat: "repeat" });

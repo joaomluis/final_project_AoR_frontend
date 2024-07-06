@@ -30,6 +30,7 @@
     "react-multiselect-dropdown-bootstrap": "^1.1.0",
     "react-password-strength-bar": "^0.4.1",
     "react-pro-sidebar": "^1.1.0",
+    "react-responsive": "^10.0.0",
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
     "react-select": "^5.8.0",

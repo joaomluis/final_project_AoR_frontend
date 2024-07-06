@@ -17,6 +17,9 @@ import { use } from "i18next";
 import LogsCard from "../components/logs/logs.jsx";
 import Gantt from "frappe-gantt";
 import GanttChart from "../components/Project/gant-chart.jsx";
+import UsersManagement from "../components/Project/project-users-management.jsx";
+import EditUsersPage from "../components/Project/lists/users-edit-page.jsx";
+import UserInvitationsPage from "../components/Project/lists/users-invitations-page.jsx";
 function ProjectPage() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
@@ -163,6 +166,30 @@ function ProjectPage() {
                                   {t("logs")}
                                 </NavLink>
                               </NavItem>
+                              <NavItem>
+                                <NavLink
+                                  className={classnames({
+                                    active: activeTab === "5",
+                                  })}
+                                  onClick={() => {
+                                    toggle("5");
+                                  }}
+                                >
+                                  {t("users")}
+                                </NavLink>
+                              </NavItem>
+                              <NavItem>
+                                <NavLink
+                                  className={classnames({
+                                    active: activeTab === "6",
+                                  })}
+                                  onClick={() => {
+                                    toggle("6");
+                                  }}
+                                >
+                                  {t("invites")}
+                                </NavLink>
+                              </NavItem>
                             </>
                           ) : null}
                         </Nav>
@@ -178,6 +205,16 @@ function ProjectPage() {
                               </TabPane>
                               <TabPane tabId="3">
                                 <LogsCard id={numericId} />
+                              </TabPane>
+                            </>
+                          ) : null}
+                          {userType === UserType.MANAGER ? (
+                            <>
+                              <TabPane tabId="5">
+                                <EditUsersPage id={numericId} edit={true} />
+                              </TabPane>
+                              <TabPane tabId="6">
+                                <UserInvitationsPage id={numericId} />
                               </TabPane>
                             </>
                           ) : null}
