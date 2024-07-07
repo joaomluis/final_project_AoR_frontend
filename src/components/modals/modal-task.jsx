@@ -239,7 +239,8 @@ export function ModalTask(props) {
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-6">
-          {renderSelect(t("Status"), statusOptions, selectedStatus, handleStatusChange)}
+          {props.mode === "create" ? null : renderSelect(t("Status"), statusOptions, selectedStatus, handleStatusChange)}
+
           {renderFormInput(t("Title"), taskData.title, "text", "title")}
           {renderFormInput(t("description"), taskData.description, "textarea", "description")}
           {renderFormInput(t("initial-date"), taskData.initialDate, "date", "initialDate")}

@@ -212,6 +212,13 @@
   "external-executor": "Utilizador(es) externo(s)",
   "dependency-task": "Tarefa(s) de dependência",
   "settings": "Configurações",
+  "gantt": "Gráfico de Gantt",
+  "logs": "Registos de atividade",
   "project-info": "Informações do projeto",
-  "view-tasks-list": "Ver lista de tarefas"
+  "view-tasks-list": "Ver lista de tarefas",
+  "invites": "Convites",
+  "delete-task": "Eliminar tarefa",
+  "actions": "Ações",
+  "avatar": "Avatar",
+  "no-data-available": "Sem dados disponíveis"
 }

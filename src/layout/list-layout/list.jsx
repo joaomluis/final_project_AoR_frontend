@@ -12,7 +12,7 @@ function ListLayout({ title, toggleOrder, toggleFilter, toggleCreate, children, 
       <Loading loading={loading} />
       <Container>
         {" "}
-        <Card>
+        <Card className="card-no-hover" style={{ backgroundColor: "transparent", border: "none" }}>
           <CardBody>
             <Row className="row-no-margin">
               {!toggleOrder && !toggleFilter && !toggleCreate ? (

@@ -9,7 +9,6 @@ export default function ProjectMainPage({ id }) {
     <div className="project-main-page">
       <Row>
         <Col>
-          <div>another cards</div>
           <ChatCard id={id} />
         </Col>
       </Row>

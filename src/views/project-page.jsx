@@ -20,6 +20,8 @@ import GanttChart from "../components/Project/gant-chart.jsx";
 import UsersManagement from "../components/Project/project-users-management.jsx";
 import EditUsersPage from "../components/Project/lists/users-edit-page.jsx";
 import UserInvitationsPage from "../components/Project/lists/users-invitations-page.jsx";
+import Loading from "../components/loading/loading-overlay.jsx";
+import { set } from "date-fns";
 function ProjectPage() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
@@ -30,11 +32,10 @@ function ProjectPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [userType, setUserType] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { id } = useParams();
-  console.log("id", id);
   const numericId = parseInt(id);
-  console.log("numericId", numericId);
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
@@ -56,6 +57,7 @@ function ProjectPage() {
         setProjectData(response.data.results[0]);
         setUserType(response.data.userType);
         console.log(response.data.userType);
+        setLoading(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -96,11 +98,12 @@ function ProjectPage() {
   }
 
   return (
-    <div className="section4">
+    <div className="section4" style={{ position: "relative" }}>
+      <Loading loading={loading} />
       <Container>
         <Row>
-          <Col md="12" className=" mt-5">
-            <Card>
+          <Col md="12" className=" mt-0">
+            <Card className="card-no-hover">
               <Row>
                 <Col xl="12" lg="12" md="12" sm="12">
                   <CardBody>

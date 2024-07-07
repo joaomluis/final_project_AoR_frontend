@@ -1,0 +1,111 @@
+/* UserList.css */
+
+/* Estilos para o UserList */
+.table th,
+.table td {
+  vertical-align: middle !important;
+  text-align: center;
+  border-color: #dee2e6 !important;
+}
+
+.profile-image {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--secondary-color);
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+}
+
+.card-title img {
+  margin-right: 10px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-link {
+  padding: 0;
+}
+
+.new-items-dot {
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  height: 8px;
+  margin-left: 5px;
+  width: 8px;
+}
+
+.card {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-body,
+.card-footer {
+  padding: 16px;
+}
+
+.card-header h4 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.card-subtitle {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-top: 0.5rem;
+}
+
+.table-responsive {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table th {
+  background-color: var(--secondary-color);
+  color: #fff;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.card-no-hover {
+  transition: none !important;
+  box-shadow: none !important;
+}
+
+.card-no-hover:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.no-data-message {
+  text-align: center;
+  color: #6c757d;
+  font-size: 1.25rem;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+}
