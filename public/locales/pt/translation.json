@@ -220,5 +220,10 @@
   "delete-task": "Eliminar tarefa",
   "actions": "Ações",
   "avatar": "Avatar",
-  "no-data-available": "Sem dados disponíveis"
+  "no-data-available": "Sem dados disponíveis",
+  "you-are-accepted-to-join-the-project": "Foste aceite para entrar no projeto",
+  "you-have-received-a-new-propose-to-join-the-project": "Recebeste uma nova proposta para entrar no projeto",
+  "you-have-been-kicked-from-the-project": "Foste expulso do projeto",
+  "your-role-has-been-changed": "O teu papel foi alterado",
+  "task-executor-changed": "Foste nomeado executor da tarefa"
 }

@@ -234,8 +234,8 @@ function LogsCard({ id }) {
       <>
         {" "}
         {t("changed-user")} <span className="bold">{log.affectedUserFirstName}</span> {t("in-the-project")} {t("from")}{" "}
-        <span className="bold">{statusTypeNew} </span>
-        {t("to")} <span className="bold">{statusTypeOld} </span>
+        <span className="bold">{statusTypeOld} </span>
+        {t("to")} <span className="bold">{statusTypeNew} </span>
       </>
     );
   };
