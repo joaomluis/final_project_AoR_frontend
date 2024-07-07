@@ -106,6 +106,9 @@ function ChatCard({ id }) {
         style={{
           backgroundColor: "var(--greyish)",
           padding: "10px",
+          display: "flex",
+          flexDirection: "column",
+          maxWidth: "100%",
         }}
       >
         <div
@@ -115,6 +118,8 @@ function ChatCard({ id }) {
             maxHeight: "20rem",
             minHeight: "20rem",
             borderRadius: "0.5rem",
+            flexGrow: 1,
+            overflowX: "hidden",
           }}
         >
           {page < totalPages ? (

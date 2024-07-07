@@ -215,5 +215,10 @@
   "project-info": "Project information",
   "gantt": "Gantt Chart",
   "logs": "Activity Logs",
-  "view-tasks-list": "View tasks list"
+  "view-tasks-list": "View tasks list",
+  "invites": "Invites",
+  "delete-task": "Delete task",
+  "actions": "Actions",
+  "avatar": "Avatar",
+  "no-data-available": "No data available"
 }

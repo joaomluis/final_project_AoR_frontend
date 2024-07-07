@@ -1,38 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserList from "./users-list-table-card";
+import { terror, tsuccess } from "../../toasts/message-toasts";
+import { Api } from "../../../api";
+import { useUserStore } from "../../../stores/useUserStore";
+import useMessageStore from "../../../stores/useMessageStore";
 
 const UserInvitationsPage = (props) => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      firstname: "João",
-      lastname: "Silva",
-      email: "joao.silva@example.com",
-      profile: "Desenvolvedor",
-      role: "user",
-      lablocation: "Lab A",
-      privateProfile: false,
-      username: "joaosilva",
-      imagePath: "https://play-lh.googleusercontent.com/LeX880ebGwSM8Ai_zukSE83vLsyUEUePcPVsMJr2p8H3TUYwNg-2J_dVMdaVhfv1cHg",
-    },
-    {
-      id: 2,
-      firstname: "Maria",
-      lastname: "Santos",
-      email: "maria.santos@example.com",
-      profile: "Designer",
-      role: "admin",
-      lablocation: "Lab B",
-      privateProfile: false,
-      username: "mariasantos",
-      imagePath: "https://play-lh.googleusercontent.com/LeX880ebGwSM8Ai_zukSE83vLsyUEUePcPVsMJr2p8H3TUYwNg-2J_dVMdaVhfv1cHg",
-    },
-    // Adicione mais exemplos conforme necessário
-  ]);
+  const token = useUserStore((state) => state.token);
+  const activeTab = useMessageStore((state) => state.activeTab);
+  const [users, setUsers] = useState([]);
 
-  const handleAcceptResume = (userId) => {
-    // Função para aceitar o currículo de um usuário
-    // Implemente a lógica para enviar a solicitação ao backend
+  async function fetchUsers() {
+    try {
+      const response = await Api.getInvites(token, props.id);
+      setUsers(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  useEffect(() => {
+    if (activeTab === "6") fetchUsers();
+  }, [activeTab]);
+
+  const handleAcceptResume = (userId, boolean) => {
+    const dto = {
+      accept: boolean,
+      userId: userId,
+    };
+    try {
+      const response = Api.acceptResume(token, props.id, dto);
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+      if (boolean) tsuccess("Invite accepted");
+      else tsuccess("Invite declined");
+    } catch (error) {
+      terror("fail");
+    }
   };
 
   const handleChangeRole = (userId, newRole) => {

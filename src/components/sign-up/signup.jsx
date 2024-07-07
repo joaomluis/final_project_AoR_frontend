@@ -41,8 +41,6 @@ function SignUp() {
         updateEmail(response.data.email);
         updateUnreadEmails(response.data.unreadEmails);
         updateUnreadNotifications(response.data.unreadNotifications);
-        console.log(response.data.email);
-        console.log(response.data.token);
         //TODO redirect to home page
         navigate("fica-lab/home");
       }

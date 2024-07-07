@@ -569,3 +569,15 @@ h4 {
   --bs-btn-disabled-bg: var(--secondary-color-lighter); /* Cor secundária mais clara */
   --bs-btn-disabled-border-color: var(--secondary-color-lighter); /* Cor secundária mais clara */
 }
+.nav-link {
+  color: var(--whitey);
+  background-color: var(--secondary-color);
+}
+.nav-link.active {
+  color: var(--whitey);
+  background-color: var(--primary-color);
+}
+.nav-link:hover {
+  color: var(--whitey);
+  background-color: var(--primary-color-darker);
+}

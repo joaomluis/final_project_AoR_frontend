@@ -10,6 +10,8 @@ import Select from "react-select";
 import { useTranslation } from "react-i18next";
 import { terror } from "../toasts/message-toasts.jsx";
 import { ModalTask } from "../modals/modal-task.jsx";
+import useMessageStore from "../../stores/useMessageStore";
+
 const transformTasksData = (tasks) => {
   return tasks
     .filter((task) => {
@@ -73,6 +75,7 @@ const GanttChart = ({ id }) => {
   const [updateTrigger, setUpdateTrigger] = useState(0);
   const [selectedTask, setSelectedTask] = useState(null);
   const [mode, setMode] = useState("create");
+  const activeTab = useMessageStore((state) => state.activeTab);
 
   const triggerUpdate = () => {
     console.log("Triggering update...");
@@ -113,8 +116,11 @@ const GanttChart = ({ id }) => {
     }
   };
   useEffect(() => {
-    fetchData();
-  }, [id, token, updateTrigger]);
+    if (activeTab === "2") {
+      fetchData();
+      console.log("Fetching tasks...");
+    }
+  }, [id, token, updateTrigger, activeTab]);
 
   const handleTaskClick = (task) => {
     setMode("edit");

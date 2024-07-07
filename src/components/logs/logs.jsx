@@ -11,6 +11,7 @@ import LogType from "../enums/LogType";
 import UserType from "../enums/UserType";
 import ProjectStatus from "../enums/ProjectStatus";
 import TaskFormModal from "./note-form-modal";
+import useMessageStore from "../../stores/useMessageStore";
 
 // import { NoteForm } from "./note-form";
 function formatNotificationTime(time) {
@@ -93,7 +94,7 @@ function getLogTypeBorderColor(logType) {
   }
 }
 function LogsCard({ id }) {
-  console.log(id);
+  const activeTab = useMessageStore((state) => state.activeTab);
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
   const logs = useLogStore((state) => state.logs);
@@ -115,7 +116,6 @@ function LogsCard({ id }) {
   const loadMoreLogs = () => {
     if (page >= totalPages) return;
     setPage((prevPage) => prevPage + 1);
-    console.log(page);
   };
 
   const DEF = () => {
@@ -123,7 +123,6 @@ function LogsCard({ id }) {
   };
 
   const TASK_CREATE = (log) => {
-    console.log(log.taskName);
     return (
       <>
         {" "}
@@ -220,7 +219,6 @@ function LogsCard({ id }) {
   };
 
   const USER_KICKED = (log) => {
-    console.log(log.id);
     return (
       <>
         {" "}
@@ -243,7 +241,6 @@ function LogsCard({ id }) {
   };
 
   const PROJECT_CHANGE_STATUS = (log) => {
-    console.log(log.id);
     const statusTypeNew = formatText(ProjectStatus.fromValue(log.newProjectStatus));
     const statusTypeOld = formatText(ProjectStatus.fromValue(log.oldProjectStatus));
     return (
@@ -314,47 +311,36 @@ function LogsCard({ id }) {
     function renderLogDetail(log) {
       switch (log.type) {
         case LogType.TASK_CREATE:
-          console.log(log);
           return TASK_CREATE(log);
 
         case LogType.TASK_CHANGE:
-          console.log(log);
           return TASK_CHANGE(log);
 
         case LogType.TASK_DELETE:
-          console.log(log);
           return TASK_DELETE(log);
 
         case LogType.TASK_COMPLETE:
-          console.log(log);
           return TASK_COMPLETE(log);
 
         case LogType.TASK_STATE_CHANGE:
-          console.log(log);
           return TASK_STATE_CHANGE(log);
 
         case LogType.USER_JOIN:
-          console.log(log);
           return USER_JOIN(log);
 
         case LogType.USER_LEAVE:
-          console.log(log);
           return USER_LEAVE(log);
 
         case LogType.USER_CHANGE:
-          console.log(log);
           return USER_CHANGE(log);
 
         case LogType.USER_KICKED:
-          console.log(log);
           return USER_KICKED(log);
 
         case LogType.PROJECT_CHANGE:
-          console.log(log);
           return PROJECT_CHANGE(log);
 
         case LogType.PROJECT_STATE_CHANGE:
-          console.log(log);
           return PROJECT_CHANGE_STATUS(log);
 
         case LogType.NOTE:
@@ -418,9 +404,7 @@ function LogsCard({ id }) {
       if (page === 1) {
         setLogs(response.data.results);
       } else if (page > 1 && page <= totalPages) {
-        console.log("page", page);
         addLogPage(response.data.results);
-        console.log("logs", logs);
       }
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -429,8 +413,11 @@ function LogsCard({ id }) {
   }
 
   useEffect(() => {
-    getLogs();
-  }, [page]);
+    if (activeTab === "3") {
+      getLogs();
+      console.log("Fetching logs...");
+    }
+  }, [page, activeTab]);
 
   const logsByDate = logs?.reduce((acc, log) => {
     const date = formatNotificationDay(log.instant); // Converte a data para o formato YYYY-MM-DD

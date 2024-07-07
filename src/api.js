@@ -246,6 +246,14 @@ export const Api = {
     return apiClient.put(`/projects/users/${userId}/${projectId}/kick`, {}, { headers: { token } }).then(handleResponse).catch(handleError);
   },
 
+  getInvites: (token, projectId) => {
+    return apiClient.get(`/projects/${projectId}/invites`, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
+  acceptResume: (token, projectId, props) => {
+    return apiClient.put(`/projects/${projectId}/invite-response/`, props, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
   //PRODUCTS endpoint
   getProducts: (token, props) => {
     const queryString = qs.stringify(props, { arrayFormat: "repeat" });

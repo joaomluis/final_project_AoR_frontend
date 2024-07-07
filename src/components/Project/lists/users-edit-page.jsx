@@ -3,11 +3,13 @@ import UserList from "./users-list-table-card";
 import { Api } from "../../../api.js";
 import { useUserStore } from "../../../stores/useUserStore.js";
 import { tsuccess, terror } from "../../toasts/message-toasts.jsx";
+import useMessageStore from "../../../stores/useMessageStore.js";
 
 const EditUsersPage = (props) => {
   const token = useUserStore((state) => state.token);
+  const activeTab = useMessageStore((state) => state.activeTab);
   const [users, setUsers] = useState([]);
-  const [changedUser, setChangedUser] = useState(null);
+
   async function fetchUsers() {
     try {
       const response = await Api.getProjectUsers(token, props.id);
@@ -17,8 +19,11 @@ const EditUsersPage = (props) => {
     }
   }
   useEffect(() => {
-    fetchUsers();
-  }, [props.id]);
+    if (activeTab === "5") {
+      fetchUsers();
+      console.log("fetching users");
+    }
+  }, [activeTab]);
 
   const handleChangeRole = (userId, newRole) => {
     console.log(userId, newRole);
