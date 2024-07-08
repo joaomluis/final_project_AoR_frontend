@@ -58,7 +58,7 @@ const AdminPage = () => {
     const page = parseInt(pageParam, 10) || 1;
     const props = {
       page_number: page,
-      page_size: 1,
+      page_size: 10,
     };
     try {
       const response = await Api.getReadyProject(token, props);
