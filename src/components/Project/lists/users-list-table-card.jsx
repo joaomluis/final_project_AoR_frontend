@@ -120,32 +120,28 @@ const UserList = ({ users, handleAcceptResume, handleChangeRole, handleKickUser,
                     className="mt-3"
                     defaultValue={{ value: user.role, label: getRoleLabel(user.role) }}
                   />
-                  <CardFooter>
-                    <div className="d-flex justify-content-around">
-                      <Link to={`/fica-lab/user/${user.id}`} className="btn btn-link p-0">
-                        <FaEye size={20} color="blue" />
-                      </Link>
-                      <Button color="link" onClick={() => handleKickUser(user.id)} className="p-0">
-                        <FaUserTimes size={20} color="red" />
-                      </Button>
-                    </div>
+                  <CardFooter style={{ display: "flex", justifyContent: "space-around" }}>
+                    <Link to={`/fica-lab/user/${user.id}`} className="btn btn-link p-0">
+                      <FaEye size={20} color="blue" />
+                    </Link>
+                    <Button color="link" onClick={() => handleKickUser(user.id)} className="p-0">
+                      <FaUserTimes size={20} color="red" />
+                    </Button>
                   </CardFooter>
                 </>
               )}
             </CardBody>
             {edit === true ? null : (
-              <CardFooter>
-                <div className="d-flex justify-content-around">
-                  <Link to={`/fica-lab/user/${user.id}`} className="btn btn-link p-0">
-                    <FaEye size={20} color="blue" />
-                  </Link>
-                  <Button color="link" onClick={() => handleAcceptResume(user.id, true)} className="p-0">
-                    <FaUserCheck size={20} color="green" />
-                  </Button>
-                  <Button color="link" onClick={() => handleAcceptResume(user.id)} className="p-0">
-                    <FaUserTimes size={20} color="red" />
-                  </Button>
-                </div>
+              <CardFooter style={{ display: "flex", justifyContent: "space-around" }}>
+                <Link to={`/fica-lab/user/${user.id}`} className="btn btn-link p-0">
+                  <FaEye size={20} color="blue" />
+                </Link>
+                <Button color="link" onClick={() => handleAcceptResume(user.id, true)} className="p-0">
+                  <FaUserCheck size={20} color="green" />
+                </Button>
+                <Button color="link" onClick={() => handleAcceptResume(user.id)} className="p-0">
+                  <FaUserTimes size={20} color="red" />
+                </Button>
               </CardFooter>
             )}
           </Card>

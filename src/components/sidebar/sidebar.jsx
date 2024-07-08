@@ -3,6 +3,8 @@ import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { FaHome, FaUsers, FaTools, FaClipboard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useUserStore } from "../../stores/useUserStore";
+import { MdAdminPanelSettings } from "react-icons/md";
+
 // import { useMailStore } from "../../stores/useMailStore";
 import "./sidebar.css";
 import { Api } from "../../api";
@@ -170,6 +172,14 @@ function SideNavbar() {
           <MenuItem icon={<IconWithBadge icon={<FaUsers style={collapsed ? collapsedStyle : ""} />} badgeCount={userCount} collapsed={collapsed} />}>
             {" "}
             {t("users")}
+          </MenuItem>
+        </div>
+        <div className="custom-link" onClick={() => navigate("/fica-lab/admin-page")}>
+          <MenuItem
+            icon={<IconWithBadge icon={<MdAdminPanelSettings style={collapsed ? collapsedStyle : ""} />} badgeCount={userCount} collapsed={collapsed} />}
+          >
+            {" "}
+            {t("admin")}
           </MenuItem>
         </div>
         {/* <SubMenu icon={<FaClipboard style={collapsed ? collapsedStyle : ""} />} label={t("my-projects")}>

@@ -13,6 +13,7 @@ import UserList from "./views/user-list.jsx";
 import ProductList from "./views/product-list.jsx";
 import EmailList from "./views/email-list.jsx";
 import User from "./views/user-page.jsx";
+import AdminPage from "./admin/admin-page.jsx";
 var routes = [
   {
     path: "/",
@@ -106,6 +107,13 @@ var routes = [
     path: "/email-list",
     name: "Email List",
     component: <EmailList />,
+    layout: "/main",
+    private: true,
+  },
+  {
+    path: "/admin-page",
+    name: "Admin Page",
+    component: <AdminPage />,
     layout: "/main",
     private: true,
   },
