@@ -77,7 +77,7 @@ function ProjectPage() {
     try {
       const response = await Api.sendProposed(token, numericId);
       console.log(response);
-      tsuccess("Invite sent!");
+      tsuccess(t("invite-sent"));
       toggleModalSendInvite();
     } catch (error) {
       terror(error);
@@ -88,7 +88,7 @@ function ProjectPage() {
     try {
       const response = await Api.leaveProject(token, numericId);
       console.log(response);
-      tsuccess("You left the project!");
+      tsuccess("you-left-project");
       navigate("/fica-lab/home");
       toggleModalLeaveProject();
     } catch (error) {

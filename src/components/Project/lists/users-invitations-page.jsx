@@ -24,18 +24,18 @@ const UserInvitationsPage = (props) => {
     if (activeTab === "6") fetchUsers();
   }, [activeTab]);
 
-  const handleAcceptResume = (userId, boolean) => {
+  const handleAcceptResume = async (userId, boolean) => {
     const dto = {
       accept: boolean,
       userId: userId,
     };
     try {
-      const response = Api.acceptResume(token, props.id, dto);
+      const response = await Api.acceptResume(token, props.id, dto);
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
       if (boolean) tsuccess("Invite accepted");
       else tsuccess("Invite declined");
     } catch (error) {
-      terror("fail");
+      terror(error.message);
     }
   };
 

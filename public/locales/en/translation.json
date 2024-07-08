@@ -225,5 +225,9 @@
   "you-have-received-a-new-propose-to-join-the-project": "You have received a new propose to join the project",
   "you-have-been-kicked-from-the-project": "You have been kicked from the project",
   "your-role-has-been-changed": "Your role has been changed",
-  "task-executor-changed": "You are added as executor of the task"
+  "task-executor-changed": "You are added as executor of the task",
+  "you-left-project": "You left the project",
+  "invite-sent": "Invite sent",
+  "send-inv": "Send invite",
+  "leave": "Leave project"
 }
