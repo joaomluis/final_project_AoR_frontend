@@ -570,8 +570,8 @@ h4 {
   --bs-btn-disabled-border-color: var(--secondary-color-lighter); /* Cor secundária mais clara */
 }
 .nav-link {
-  color: var(--whitey);
-  background-color: var(--secondary-color);
+  color: var(--secondary-color);
+  background-color: var(--greyish);
 }
 .nav-link.active {
   color: var(--whitey);
@@ -579,5 +579,5 @@ h4 {
 }
 .nav-link:hover {
   color: var(--whitey);
-  background-color: var(--primary-color-darker);
+  background-color: var(--primary-color);
 }

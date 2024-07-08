@@ -144,7 +144,6 @@ function ProjectList() {
       order_field: orderField, //TODO: criar um campo com nome de ordenação
       order_direction: orderDirection, //TODO: criar um campo para a direção da ordenação
     };
-    console.log(props);
 
     try {
       const response = await Api.getProjects(token, props);

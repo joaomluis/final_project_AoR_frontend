@@ -366,4 +366,21 @@ export const Api = {
   deleteTask: (token, id) => apiClient.put(`/tasks/inactivate/${id}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
   createNote: (token, id, props) => apiClient.post(`/projects/${id}/notes`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  //ADMIN endpoints
+
+  getReadyProjects: (token) => apiClient.get("/admin/projects", { headers: { token } }).then(handleResponse).catch(handleError),
+
+  acceptProject: (token, id, props) => apiClient.put(`/admin/projects/${id}/`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  getReadyProject: (token, props) => {
+    const queryString = qs.stringify(props, { arrayFormat: "repeat" });
+
+    return apiClient
+      .get(`/admin/projects/?${queryString}`, {
+        headers: { token },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
 };
