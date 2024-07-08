@@ -198,7 +198,9 @@ export function ModalTask(props) {
     <div className="mb-3">
       <Form.Label>{label}</Form.Label>
       {props.mode === "view" ? (
-        <div>{value}</div>
+        <div>
+          <strong>{value}</strong>
+        </div>
       ) : (
         <Form.Control
           type={type}
@@ -217,7 +219,9 @@ export function ModalTask(props) {
       <div className="mb-3">
         <Form.Label>{label}</Form.Label>
         {props.mode === "view" ? (
-          <div>{isMulti ? value.map((v) => v.label).join(", ") : value?.label}</div>
+          <div>
+            <strong>{isMulti ? value.map((v) => v.label).join(", ") : value?.label}</strong>
+          </div>
         ) : (
           <SelectComponent
             isMulti={isMulti}

@@ -14,6 +14,11 @@ const NotificationItem = ({ notification, onClick }) => {
   const isEmail = NotificationType.NEW_MAIL === notification.notificationType;
   const isInvite = NotificationType.INVITE === notification.notificationType;
   const isProjectMessage = NotificationType.PROJECT_MESSAGE === notification.notificationType;
+  const isInviteAccepted = NotificationType.INVITE_ACCEPTED === notification.notificationType;
+  const isInviteProposed = NotificationType.INVITE_PROPOSED === notification.notificationType;
+  const isUserKicked = NotificationType.PROJECT_KICKED === notification.notificationType;
+  const isRoleChanged = NotificationType.PROJECT_ROLE_CHANGED === notification.notificationType;
+  const isTaskExecutorChanged = NotificationType.TASK_EXECUTOR_CHANGED === notification.notificationType;
   const navigate = useNavigate();
   const notificationStyles = {
     email: {
@@ -31,6 +36,12 @@ const NotificationItem = ({ notification, onClick }) => {
     project_message: {
       backgroundColor: "var(--whitey)",
       borderLeft: "0.3rem solid var(--greyish)",
+      padding: "0.5rem",
+      fontSize: "1rem",
+    },
+    task: {
+      backgroundColor: "var(--whitey)",
+      borderLeft: "0.3rem solid var(--yellowy)",
       padding: "0.5rem",
       fontSize: "1rem",
     },
@@ -61,6 +72,16 @@ const NotificationItem = ({ notification, onClick }) => {
       ? `/fica-lab/project/${notification.projectId}`
       : isProjectMessage
       ? `/fica-lab/project/${notification.projectId}`
+      : isInviteAccepted
+      ? `/fica-lab/project/${notification.projectId}`
+      : isInviteProposed
+      ? `/fica-lab/project/${notification.projectId}`
+      : isUserKicked
+      ? `/fica-lab/project/${notification.projectId}`
+      : isRoleChanged
+      ? `/fica-lab/project/${notification.projectId}`
+      : isTaskExecutorChanged
+      ? `/fica-lab/project/${notification.projectId}`
       : `/fica-lab/email-list/?page=1`;
     navigate(path);
   };
@@ -75,6 +96,16 @@ const NotificationItem = ({ notification, onClick }) => {
           ? getNotificationStyle("invite", notification.read)
           : isProjectMessage
           ? getNotificationStyle("project_message", notification.read)
+          : isInviteAccepted
+          ? getNotificationStyle("invite", notification.read)
+          : isInviteProposed
+          ? getNotificationStyle("invite", notification.read)
+          : isUserKicked
+          ? getNotificationStyle("invite", notification.read)
+          : isRoleChanged
+          ? getNotificationStyle("invite", notification.read)
+          : isTaskExecutorChanged
+          ? getNotificationStyle("task", notification.read)
           : getNotificationStyle("message", notification.read)
       }
     >
@@ -100,6 +131,16 @@ const NotificationItem = ({ notification, onClick }) => {
                   ? t("you-have-received-an-invite")
                   : isProjectMessage
                   ? t("you-have-received-a-new-project-message")
+                  : isInviteAccepted
+                  ? t("you-are-accepted-to-join-the-project")
+                  : isInviteProposed
+                  ? t("you-have-received-a-new-propose-to-join-the-project")
+                  : isUserKicked
+                  ? t("you-have-been-kicked-from-the-project")
+                  : isRoleChanged
+                  ? t("your-role-has-been-changed")
+                  : isTaskExecutorChanged
+                  ? t("task-executor-changed")
                   : t("you-have-received-a-new-message")}
               </strong>
             </div>

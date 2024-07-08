@@ -40,7 +40,12 @@ function handleWebSocketJSON(json) {
         userStore.updateUnreadEmails(userStore.unreadEmails + 1);
         break;
 
+      case NotificationType.INVITE_ACCEPTED:
+      case NotificationType.INVITE_PROPOSED:
+      case NotificationType.PROJECT_KICKED:
+      case NotificationType.PROJECT_ROLE_CHANGED:
       case NotificationType.INVITE:
+      case NotificationType.TASK_EXECUTOR_CHANGED:
         userStore.addNotification(data);
         userStore.updateUnreadEmails(userStore.unreadEmails + 1);
         userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);

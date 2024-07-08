@@ -58,7 +58,7 @@ function EmailComponent({ mail, loading, children, back, deleteToggle }) {
     <div className="section4" style={{ position: "relative" }}>
       <Loading loading={loading} />
       <Container>
-        <Card>
+        <Card className="card-no-hover">
           <CardBody>
             <Row className="row-no-margin align-items-center" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <Col xs="2" sm="1" md="1" lg="1">

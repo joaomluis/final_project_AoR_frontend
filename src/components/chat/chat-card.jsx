@@ -35,9 +35,7 @@ function ChatCard({ id }) {
     };
     try {
       const response = await Api.getProjectMessages(token, id, props);
-      console.log("response", response);
       if (page === 1) {
-        console.log("page 1");
         setMessages(response.data.results);
       } else if (page > 1) {
         console.log(page);
@@ -71,11 +69,9 @@ function ChatCard({ id }) {
   };
 
   const handleInputSubmit = (e) => {
-    console.log("handleInputSubmit");
     e.preventDefault();
 
     if (socket && socket.readyState === WebSocket.OPEN) {
-      console.log("socket open");
       const newMessage = {
         message: messageInput,
         sendUser: email,

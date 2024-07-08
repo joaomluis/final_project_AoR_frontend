@@ -1,6 +1,8 @@
 .product-card {
   background-color: var(--withey-color);
   color: var(--primary-color);
+  display: flex;
+  justify-content: space-between;
 }
 
 .product-title {

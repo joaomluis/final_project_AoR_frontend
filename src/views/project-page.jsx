@@ -1,4 +1,5 @@
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
+import { Button } from "reactstrap";
 import classnames from "classnames";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,6 +23,9 @@ import EditUsersPage from "../components/Project/lists/users-edit-page.jsx";
 import UserInvitationsPage from "../components/Project/lists/users-invitations-page.jsx";
 import Loading from "../components/loading/loading-overlay.jsx";
 import { set } from "date-fns";
+import ConfirmModal from "../components/modals/modal-confirm.jsx";
+import { terror, tsuccess } from "../components/toasts/message-toasts.jsx";
+
 function ProjectPage() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
@@ -33,6 +37,10 @@ function ProjectPage() {
   const location = useLocation();
   const [userType, setUserType] = useState("");
   const [loading, setLoading] = useState(false);
+  const [modalSendInvite, setModalSendInvite] = useState(false);
+  const [modalLeaveProject, setModalLeaveProject] = useState(false);
+  const toggleModalSendInvite = () => setModalSendInvite(!modalSendInvite);
+  const toggleModalLeaveProject = () => setModalLeaveProject(!modalLeaveProject);
 
   const { id } = useParams();
   const numericId = parseInt(id);
@@ -53,10 +61,9 @@ function ProjectPage() {
       useMessageStore.getState().setHasNewItems(false);
       clearMessages(); // Limpa as mensagens ao carregar a página
       try {
-        const response = await Api.getProjectsByDto(token, props);
+        const response = await Api.getProjects(token, props);
         setProjectData(response.data.results[0]);
         setUserType(response.data.userType);
-        console.log(response.data.userType);
         setLoading(false);
       } catch (error) {
         console.log(error.message);
@@ -66,11 +73,34 @@ function ProjectPage() {
     fetchProject();
   }, [id]);
 
+  async function handleSendInvite() {
+    try {
+      const response = await Api.sendProposed(token, numericId);
+      console.log(response);
+      tsuccess(t("invite-sent"));
+      toggleModalSendInvite();
+    } catch (error) {
+      terror(error);
+    }
+  }
+
+  async function handleLeaveProject() {
+    try {
+      const response = await Api.leaveProject(token, numericId);
+      console.log(response);
+      tsuccess("you-left-project");
+      navigate("/fica-lab/home");
+      toggleModalLeaveProject();
+    } catch (error) {
+      terror(error.message);
+    }
+  }
+
   /**
-   * Envia uma mensagem ao backend informando que o usuário fechou a página ou está navegando para outra
+   * Envia uma mensagem ao backend informando que o user fechou a página ou está navegando para outra
    */
   useEffect(() => {
-    // Função que envia uma mensagem ao backend informando que o usuário fechou a página ou está navegando para outra
+    // Função que envia uma mensagem ao backend informando que o user fechou a página ou está navegando para outra
     const informBackendOnCloseOrNavigate = () => {
       if (socket && socket.readyState === WebSocket.OPEN) {
         const closeMessage = {
@@ -108,8 +138,21 @@ function ProjectPage() {
                 <Col xl="12" lg="12" md="12" sm="12">
                   <CardBody>
                     <Row>
-                      <Col className="mb-4" md="10">
-                        <CardTitle tag="h4">{projectData.name}</CardTitle>
+                      <Col className="mb-4" md="12">
+                        <div className="d-flex justify-content-between align-items-center">
+                          <CardTitle tag="h4" className="m-0">
+                            {projectData.name}
+                          </CardTitle>
+                          {userType === UserType.MANAGER || userType === UserType.NORMAL ? (
+                            <Button color="danger" className="" onClick={toggleModalLeaveProject}>
+                              {t("leave")}
+                            </Button>
+                          ) : (
+                            <Button className="" onClick={toggleModalSendInvite}>
+                              {t("send-inv")}
+                            </Button>
+                          )}
+                        </div>
                       </Col>
                       <Col md="2"></Col>
                     </Row>
@@ -169,30 +212,34 @@ function ProjectPage() {
                                   {t("logs")}
                                 </NavLink>
                               </NavItem>
-                              <NavItem>
-                                <NavLink
-                                  className={classnames({
-                                    active: activeTab === "5",
-                                  })}
-                                  onClick={() => {
-                                    toggle("5");
-                                  }}
-                                >
-                                  {t("users")}
-                                </NavLink>
-                              </NavItem>
-                              <NavItem>
-                                <NavLink
-                                  className={classnames({
-                                    active: activeTab === "6",
-                                  })}
-                                  onClick={() => {
-                                    toggle("6");
-                                  }}
-                                >
-                                  {t("invites")}
-                                </NavLink>
-                              </NavItem>
+                              {userType === UserType.MANAGER ? (
+                                <>
+                                  <NavItem>
+                                    <NavLink
+                                      className={classnames({
+                                        active: activeTab === "5",
+                                      })}
+                                      onClick={() => {
+                                        toggle("5");
+                                      }}
+                                    >
+                                      {t("users")}
+                                    </NavLink>
+                                  </NavItem>
+                                  <NavItem>
+                                    <NavLink
+                                      className={classnames({
+                                        active: activeTab === "6",
+                                      })}
+                                      onClick={() => {
+                                        toggle("6");
+                                      }}
+                                    >
+                                      {t("invites")}
+                                    </NavLink>
+                                  </NavItem>{" "}
+                                </>
+                              ) : null}
                             </>
                           ) : null}
                         </Nav>
@@ -234,6 +281,8 @@ function ProjectPage() {
           </Col>
         </Row>
       </Container>
+      <ConfirmModal isOpen={modalSendInvite} toggle={toggleModalSendInvite} title={t("send-inv")} onConfirm={handleSendInvite} />
+      <ConfirmModal isOpen={modalLeaveProject} toggle={toggleModalLeaveProject} title={t("leave")} onConfirm={handleLeaveProject} />
     </div>
   );
 }
