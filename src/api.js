@@ -262,6 +262,10 @@ export const Api = {
     return apiClient.put(`/projects/${projectId}/leave`, {}, { headers: { token } }).then(handleResponse).catch(handleError);
   },
 
+  cancelProject: (token, projectId) => {
+    return apiClient.put(`/projects/${projectId}/cancel`, {}, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
   //PRODUCTS endpoint
   getProducts: (token, props) => {
     const queryString = qs.stringify(props, { arrayFormat: "repeat" });

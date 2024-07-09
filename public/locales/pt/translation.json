@@ -249,5 +249,6 @@
   "avg-execution-time": "Tempo médio de execução",
   "project-status-distribution": "Distribuição de estado do projeto",
   "promove-user": "Promover utilizador a administrador de sistema",
-  "projects-by-status": "Projetos por estado"
+  "projects-by-status": "Projetos por estado",
+  "cancel-project": "Cancelar projeto"
 }

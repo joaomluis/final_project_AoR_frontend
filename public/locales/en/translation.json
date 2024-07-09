@@ -248,5 +248,6 @@
   "avg-execution-time": "Average execution time",
   "project-status-distribution": "Project status distribution",
   "promove-user": "Promove user to admin",
-  "projects-by-status": "Projects by status"
+  "projects-by-status": "Projects by status",
+  "cancel-project": "Cancel project"
 }

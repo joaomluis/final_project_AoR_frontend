@@ -25,6 +25,7 @@ import Loading from "../components/loading/loading-overlay.jsx";
 import { set } from "date-fns";
 import ConfirmModal from "../components/modals/modal-confirm.jsx";
 import { terror, tsuccess } from "../components/toasts/message-toasts.jsx";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 function ProjectPage() {
   const { t } = useTranslation();
@@ -39,8 +40,13 @@ function ProjectPage() {
   const [loading, setLoading] = useState(false);
   const [modalSendInvite, setModalSendInvite] = useState(false);
   const [modalLeaveProject, setModalLeaveProject] = useState(false);
+  const [modalCancelProject, setModalCancelProject] = useState(false);
   const toggleModalSendInvite = () => setModalSendInvite(!modalSendInvite);
   const toggleModalLeaveProject = () => setModalLeaveProject(!modalLeaveProject);
+  const toggleModalCancelProject = () => setModalCancelProject(!modalCancelProject);
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleInfoModal = () => setShowModal(!showModal);
 
   const { id } = useParams();
   const numericId = parseInt(id);
@@ -50,6 +56,7 @@ function ProjectPage() {
 
   const [projectData, setProjectData] = useState({});
   const clearMessages = useMessageStore((state) => state.clear); // Acessando a ação clear da store
+  const isProjectInactive = projectData.status === "CANCELLED" || projectData.status === "FINISHED";
 
   const props = {
     dtoType: "ProjectDto",
@@ -72,7 +79,6 @@ function ProjectPage() {
 
     fetchProject();
   }, [id]);
-
   async function handleSendInvite() {
     try {
       const response = await Api.sendProposed(token, numericId);
@@ -91,6 +97,18 @@ function ProjectPage() {
       tsuccess("you-left-project");
       navigate("/fica-lab/home");
       toggleModalLeaveProject();
+    } catch (error) {
+      terror(error.message);
+    }
+  }
+
+  async function handleCancelProject() {
+    try {
+      const response = await Api.cancelProject(token, numericId);
+      console.log(response);
+      tsuccess("project-cancelled");
+      navigate("/fica-lab/home");
+      toggleModalCancelProject();
     } catch (error) {
       terror(error.message);
     }
@@ -129,10 +147,39 @@ function ProjectPage() {
 
   return (
     <div className="section4" style={{ position: "relative" }}>
+      {isProjectInactive && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 1,
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            <h2 style={{ color: "var(--cancelled)", backgroundColor: "black", borderRadius: "10px", padding: "1rem" }}>{projectData.status}</h2>
+            <Button color="primary" onClick={toggleInfoModal}>
+              {t("more-info")}
+            </Button>
+          </div>
+        </div>
+      )}
       <Loading loading={loading} />
       <Container>
         <Row>
-          <Col md="12" className=" mt-0">
+          <Col md="12" className="mt-0">
             <Card className="card-no-hover">
               <Row>
                 <Col xl="12" lg="12" md="12" sm="12">
@@ -144,13 +191,18 @@ function ProjectPage() {
                             {projectData.name}
                           </CardTitle>
                           {userType === UserType.MANAGER || userType === UserType.NORMAL ? (
-                            <Button color="danger" className="" onClick={toggleModalLeaveProject}>
-                              {t("leave")}
-                            </Button>
+                            <div>
+                              <Button color="secondary" onClick={toggleModalLeaveProject}>
+                                {t("leave")}
+                              </Button>
+                              {userType === UserType.MANAGER && (
+                                <Button color="danger" onClick={toggleModalCancelProject}>
+                                  {t("cancel-project")}
+                                </Button>
+                              )}
+                            </div>
                           ) : (
-                            <Button className="" onClick={toggleModalSendInvite}>
-                              {t("send-inv")}
-                            </Button>
+                            <Button onClick={toggleModalSendInvite}>{t("send-inv")}</Button>
                           )}
                         </div>
                       </Col>
@@ -159,93 +211,49 @@ function ProjectPage() {
                     <Row>
                       <Col md="12">
                         <Nav tabs style={{ cursor: "pointer" }}>
-                          {userType === UserType.NORMAL || userType === UserType.MANAGER ? (
+                          {(userType === UserType.NORMAL || userType === UserType.MANAGER) && (
                             <>
                               <NavItem>
-                                <NavLink
-                                  className={classnames({
-                                    active: activeTab === "4",
-                                  })}
-                                  onClick={() => {
-                                    toggle("4");
-                                  }}
-                                >
+                                <NavLink className={classnames({ active: activeTab === "4" })} onClick={() => toggle("4")}>
                                   {userType === UserType.MANAGER ? t("settings") : t("info")}
                                 </NavLink>
                               </NavItem>
                               <NavItem>
-                                <NavLink
-                                  className={classnames({
-                                    active: activeTab === "2",
-                                  })}
-                                  onClick={() => {
-                                    toggle("2");
-                                  }}
-                                >
+                                <NavLink className={classnames({ active: activeTab === "2" })} onClick={() => toggle("2")}>
                                   {t("gantt")}
                                 </NavLink>
                               </NavItem>
                               <NavItem>
-                                <NavLink
-                                  className={classnames({
-                                    active: activeTab === "1",
-                                    "has-new-items": hasNewItems,
-                                  })}
-                                  onClick={() => {
-                                    toggle("1");
-                                  }}
-                                >
+                                <NavLink className={classnames({ active: activeTab === "1", "has-new-items": hasNewItems })} onClick={() => toggle("1")}>
                                   {t("chat")}
-                                  {hasNewItems && <span className="new-items-dot"></span>} {/* Renderiza o ponto vermelho se houver novidades */}
+                                  {hasNewItems && <span className="new-items-dot"></span>}
                                 </NavLink>
                               </NavItem>
-
                               <NavItem>
-                                <NavLink
-                                  className={classnames({
-                                    active: activeTab === "3",
-                                  })}
-                                  onClick={() => {
-                                    toggle("3");
-                                  }}
-                                >
+                                <NavLink className={classnames({ active: activeTab === "3" })} onClick={() => toggle("3")}>
                                   {t("logs")}
                                 </NavLink>
                               </NavItem>
-                              {userType === UserType.MANAGER ? (
+                              {userType === UserType.MANAGER && (
                                 <>
                                   <NavItem>
-                                    <NavLink
-                                      className={classnames({
-                                        active: activeTab === "5",
-                                      })}
-                                      onClick={() => {
-                                        toggle("5");
-                                      }}
-                                    >
+                                    <NavLink className={classnames({ active: activeTab === "5" })} onClick={() => toggle("5")}>
                                       {t("users")}
                                     </NavLink>
                                   </NavItem>
                                   <NavItem>
-                                    <NavLink
-                                      className={classnames({
-                                        active: activeTab === "6",
-                                      })}
-                                      onClick={() => {
-                                        toggle("6");
-                                      }}
-                                    >
+                                    <NavLink className={classnames({ active: activeTab === "6" })} onClick={() => toggle("6")}>
                                       {t("invites")}
                                     </NavLink>
-                                  </NavItem>{" "}
+                                  </NavItem>
                                 </>
-                              ) : null}
+                              )}
                             </>
-                          ) : null}
+                          )}
                         </Nav>
 
                         <TabContent activeTab={activeTab}>
-                          {userType === UserType.NORMAL || userType === UserType.MANAGER ? (
+                          {(userType === UserType.NORMAL || userType === UserType.MANAGER) && (
                             <>
                               <TabPane tabId="1">
                                 <ProjectMainPage id={numericId} />
@@ -257,8 +265,8 @@ function ProjectPage() {
                                 <LogsCard id={numericId} />
                               </TabPane>
                             </>
-                          ) : null}
-                          {userType === UserType.MANAGER ? (
+                          )}
+                          {userType === UserType.MANAGER && (
                             <>
                               <TabPane tabId="5">
                                 <EditUsersPage id={numericId} edit={true} />
@@ -267,7 +275,7 @@ function ProjectPage() {
                                 <UserInvitationsPage id={numericId} />
                               </TabPane>
                             </>
-                          ) : null}
+                          )}
                           <TabPane tabId="4">
                             <ProjectSettings data={projectData} />
                           </TabPane>
@@ -283,6 +291,18 @@ function ProjectPage() {
       </Container>
       <ConfirmModal isOpen={modalSendInvite} toggle={toggleModalSendInvite} title={t("send-inv")} onConfirm={handleSendInvite} />
       <ConfirmModal isOpen={modalLeaveProject} toggle={toggleModalLeaveProject} title={t("leave")} onConfirm={handleLeaveProject} />
+      <ConfirmModal isOpen={modalCancelProject} toggle={toggleModalCancelProject} title={t("cancel-project")} onConfirm={handleCancelProject} />
+      <Modal isOpen={showModal} toggle={toggleInfoModal}>
+        <ModalHeader toggle={toggleInfoModal}>
+          {t("status")} - {projectData.status}
+        </ModalHeader>
+        <ModalBody>{t("project-status-info", projectData.description)}</ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggleInfoModal}>
+            {t("close")}
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 }
