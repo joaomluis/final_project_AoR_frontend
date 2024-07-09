@@ -18,17 +18,15 @@ function ProjectSettings({ data }) {
   const { id } = useParams();
 
   const [projectUsers, setProjectUsers] = useState([]);
-  
-  const [projectSkills, setProjectSkills] = useState([]);
 
-  
+  // const [projectSkills, setProjectSkills] = useState([]);
+  const projectSkills = useEditProjectStore((state) => state.projectSkills);
+  const setProjectSkills = useEditProjectStore((state) => state.setProjectSkills);
   const projectKeywords = useEditProjectStore((state) => state.projectKeywords);
   const setProjectKeywords = useEditProjectStore((state) => state.setProjectKeywords);
 
   const projectResources = useEditProjectStore((state) => state.projectResources);
   const setProjectResources = useEditProjectStore((state) => state.setProjectResources);
-
-  
 
   //GETTERS com a informação sobre o projeto aberto vão buscar a info através do id que está no url
   useEffect(() => {
@@ -38,22 +36,28 @@ function ProjectSettings({ data }) {
         const keywordsPromise = Api.getInterestsFromProject(token, id);
         const resourcesPromise = Api.getProductsForProject(token, id);
         const skillsPromise = Api.getSkillsForProject(token, id);
-  
-        const [usersResponse, keywordsResponse, resourcesResponse, skillsResponse] = await Promise.all([usersPromise, keywordsPromise, resourcesPromise, skillsPromise]);
-  
+
+        const [usersResponse, keywordsResponse, resourcesResponse, skillsResponse] = await Promise.all([
+          usersPromise,
+          keywordsPromise,
+          resourcesPromise,
+          skillsPromise,
+        ]);
+
         setProjectUsers(usersResponse.data);
         setProjectKeywords(keywordsResponse.data);
         setProjectResources(resourcesResponse.data);
         setProjectSkills(skillsResponse.data);
+        console.log(skillsResponse.data);
       } catch (error) {
         console.log(error.message);
       }
     }
-  
+
     fetchData();
   }, []);
 
-  //Renderização dos modals para edição 
+  //Renderização dos modals para edição
   const editKeywordsRef = useRef();
   const openEditKeywordsModal = () => {
     editKeywordsRef.current.open();
@@ -69,12 +73,11 @@ function ProjectSettings({ data }) {
     editResourcesRef.current.open();
   };
 
-
   return (
     <>
-    <EditKeywords ref={editKeywordsRef}/>
-    <EditSkills ref={editSkillsRef} />
-    <EditResources ref={editResourcesRef} />
+      <EditKeywords ref={editKeywordsRef} />
+      <EditSkills ref={editSkillsRef} />
+      <EditResources ref={editResourcesRef} />
       <Row>
         <Col md={12}>
           <ProjectBasicInfo data={data} />
@@ -82,26 +85,18 @@ function ProjectSettings({ data }) {
       </Row>
       <Row>
         <Col md={6}>
-          <ProjectAdditionalInfo
-            data={projectResources}
-            title="Resources"
-            editButton={openEditResourcesModal}
-          />
+          <ProjectAdditionalInfo data={projectResources} title="Resources" editButton={openEditResourcesModal} />
         </Col>
         <Col md={6}>
-        <ProjectAdditionalInfo
-            data={projectKeywords}
-            title="Keywords"
-            editButton={openEditKeywordsModal}
-          />
+          <ProjectAdditionalInfo data={projectKeywords} title="Keywords" editButton={openEditKeywordsModal} />
         </Col>
       </Row>
       <Row>
         <Col md={6}>
-        <ProjectAdditionalInfo data={projectUsers} title="Users" />
+          <ProjectAdditionalInfo data={projectUsers} title="Users" />
         </Col>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectSkills} title="Skills" editButton={openEditSkillsModal}/>
+          <ProjectAdditionalInfo data={projectSkills} title="Skills" editButton={openEditSkillsModal} />
         </Col>
       </Row>
     </>

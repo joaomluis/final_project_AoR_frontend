@@ -133,6 +133,9 @@ export const Api = {
   addSkillToProject: (token, projectId, skillId) =>
     apiClient.put(`/skills/${projectId}/${skillId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
+  addSkillToProjectDto: (token, projectId, skillId) =>
+    apiClient.put(`/skills/create/${projectId}/`, skillId, { headers: { token } }).then(handleResponse).catch(handleError),
+
   removeSkillFromProject: (token, projectId, skillId) =>
     apiClient.put(`/skills/remove/${projectId}/${skillId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
