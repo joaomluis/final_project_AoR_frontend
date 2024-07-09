@@ -23,6 +23,7 @@ import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
 import { useTranslation } from "react-i18next";
 import { tsuccess, terror } from "../toasts/message-toasts.jsx";
+import useEditProjectStore from "../../stores/useEditProjectStore.js";
 
 const EditResources = forwardRef((props, ref) => {
   const token = useUserStore((state) => state.token);
@@ -31,10 +32,14 @@ const EditResources = forwardRef((props, ref) => {
   const [resources, setResources] = useState([]);
   const [newResources, setNewResources] = useState([]);
 
+  const projectResources = useEditProjectStore((state) => state.projectResources);
+  const setProjectResources = useEditProjectStore((state) => state.setProjectResources);
+
   const [searchTerm, setSearchTerm] = useState("");
   const filteredResources = resources.filter((resource) =>
     resource.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -61,7 +66,9 @@ const EditResources = forwardRef((props, ref) => {
 
     try {
       const response = await Api.editProjectProducts(token, projectId, productList);
-      tsuccess(response.data.message);
+      console.log(response);
+      tsuccess(response.data);
+      toggle();
     } catch (error) {
       terror(error.message);
     }
@@ -69,7 +76,12 @@ const EditResources = forwardRef((props, ref) => {
 
 
   const { t } = useTranslation();
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    setModal(!modal);
+    if (modal) { 
+      setNewResources([]); //reset aos valores de input dos produtos
+    }
+  };
 
   const handleShow = () => {
     setModal(true);
@@ -80,32 +92,36 @@ const EditResources = forwardRef((props, ref) => {
   }));
 
   const handleQuantityChange = (resourceId, newQuantity) => {
-    const resourceName =
-      resources.find((resource) => resource.id === resourceId)?.name ||
-      "Unknown";
-
+    const resourceName = resources.find((resource) => resource.id === resourceId)?.name || "Unknown";
     const parsedQuantity = parseInt(newQuantity, 10);
-
-    const existingResourceIndex = newResources.findIndex(
-      (resource) => resource.id === resourceId
-    );
-
-    if (existingResourceIndex !== -1) {
-      setNewResources(
-        newResources.map((resource, index) => {
-          if (index === existingResourceIndex) {
-            return { ...resource, quantity: parsedQuantity };
-          }
-          return resource;
-        })
-      );
+  
+    // Update newResources
+    const existingNewResourceIndex = newResources.findIndex((resource) => resource.id === resourceId);
+    if (existingNewResourceIndex !== -1) {
+      setNewResources(newResources.map((resource, index) => {
+        if (index === existingNewResourceIndex) {
+          return { ...resource, quantity: parsedQuantity };
+        }
+        return resource;
+      }));
     } else {
-      setNewResources([
-        ...newResources,
-        { id: resourceId, name: resourceName, quantity: parsedQuantity },
-      ]);
+      setNewResources([...newResources, { id: resourceId, name: resourceName, quantity: parsedQuantity }]);
     }
-};
+  
+    // Update projectResources
+    const existingProjectResourceIndex = projectResources.findIndex(resource => resource.id === resourceId);
+
+    if (existingProjectResourceIndex !== -1) {
+      const updatedResources = [...projectResources];
+      updatedResources[existingProjectResourceIndex] = {
+        ...updatedResources[existingProjectResourceIndex],
+        quantity: parsedQuantity,
+      };
+      setProjectResources(updatedResources);
+    } else {
+      setProjectResources([...projectResources, { id: resourceId, name: resourceName, quantity: parsedQuantity }]);
+    }
+  };
 
   return (
     <div>
@@ -115,7 +131,7 @@ const EditResources = forwardRef((props, ref) => {
           style={{ color: "var(--whitey)", fontWeight: "bold" }}
           className="modal-style"
         >
-          Edit project resources{" "}
+          Add more project resources{" "}
           <Input
             className="mt-2"
             type="text"
