@@ -22,16 +22,16 @@ import Select from "react-select";
 import { FaCheck, FaTimes, FaEye } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 import { useTranslation } from "react-i18next";
-import UserType from "../enums/UserType.js";
-import ProjectStatus from "../enums/ProjectStatus.js";
+import UserType from "../components/enums/UserType.js";
+import ProjectStatus from "../components/enums/ProjectStatus.js";
 
-import "../Project/lists/users-list-table-card.css";
-import ListLayout from "../../layout/list-layout/list.jsx";
-import { Api } from "../../api.js";
-import { useUserStore } from "../../stores/useUserStore.js";
+import "../components/Project/lists/users-list-table-card.css";
+import ListLayout from "../layout/list-layout/list.jsx";
+import { Api } from "../api.js";
+import { useUserStore } from "../stores/useUserStore.js";
 import { use } from "i18next";
-import { terror, tsuccess } from "../toasts/message-toasts.jsx";
-import PaginationComponent from "../pagination/pagination.jsx";
+import { terror, tsuccess } from "../components/toasts/message-toasts.jsx";
+import PaginationComponent from "../components/pagination/pagination.jsx";
 import SettingsPage from "./settings-page.jsx";
 
 const AdminPage = () => {

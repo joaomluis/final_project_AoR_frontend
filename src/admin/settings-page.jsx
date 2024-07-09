@@ -5,10 +5,10 @@ import { FaChartPie, FaChartBar, FaUsers, FaClock } from "react-icons/fa";
 
 import { Form, FormGroup, Label, Input, Button, Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell } from "recharts";
-import { Api } from "../../api.js";
-import { useUserStore } from "../../stores/useUserStore.js";
+import { Api } from "../api.js";
+import { useUserStore } from "../stores/useUserStore.js";
 import "./settings-page.css";
-import { terror, tsuccess } from "../toasts/message-toasts.jsx";
+import { terror, tsuccess } from "../components/toasts/message-toasts.jsx";
 import { use } from "i18next";
 import { parse } from "qs";
 const SettingsPage = () => {
@@ -30,6 +30,7 @@ const SettingsPage = () => {
   });
   const [labs, setLabs] = useState([]);
   const token = useUserStore((state) => state.token);
+
   const contentDocument = useRef();
 
   const handlePrint = useReactToPrint({

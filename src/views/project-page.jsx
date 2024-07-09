@@ -26,6 +26,7 @@ import { set } from "date-fns";
 import ConfirmModal from "../components/modals/modal-confirm.jsx";
 import { terror, tsuccess } from "../components/toasts/message-toasts.jsx";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import CancelProjectModal from "../components/modals/modal-project-cancelled.jsx";
 
 function ProjectPage() {
   const { t } = useTranslation();
@@ -102,9 +103,14 @@ function ProjectPage() {
     }
   }
 
-  async function handleCancelProject() {
+  async function handleCancelProject(justification) {
+    const props = {
+      id: numericId,
+      name: justification,
+    };
+    console.log(props);
     try {
-      const response = await Api.cancelProject(token, numericId);
+      const response = await Api.cancelProject(token, numericId, props);
       console.log(response);
       tsuccess("project-cancelled");
       navigate("/fica-lab/home");
@@ -291,7 +297,7 @@ function ProjectPage() {
       </Container>
       <ConfirmModal isOpen={modalSendInvite} toggle={toggleModalSendInvite} title={t("send-inv")} onConfirm={handleSendInvite} />
       <ConfirmModal isOpen={modalLeaveProject} toggle={toggleModalLeaveProject} title={t("leave")} onConfirm={handleLeaveProject} />
-      <ConfirmModal isOpen={modalCancelProject} toggle={toggleModalCancelProject} title={t("cancel-project")} onConfirm={handleCancelProject} />
+      <CancelProjectModal isOpen={modalCancelProject} toggle={toggleModalCancelProject} title={t("cancel-project")} onConfirm={handleCancelProject} />
       <Modal isOpen={showModal} toggle={toggleInfoModal}>
         <ModalHeader toggle={toggleInfoModal}>
           {t("status")} - {projectData.status}

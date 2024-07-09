@@ -10,7 +10,7 @@ import { Pagination } from "react-bootstrap";
 const PaginationComponent = ({ currentPage, totalPages, setCurrentPage }) => {
   const pageLimit = 3;
   const halfPageRange = Math.floor(pageLimit / 2);
-
+  const isMoreThanOnePage = totalPages > 1;
   /**
    * Method to handle the previous page button
    * It will decrement the current page if the current page is greater than 1
@@ -45,19 +45,21 @@ const PaginationComponent = ({ currentPage, totalPages, setCurrentPage }) => {
   }
 
   return (
-    <Pagination style={{ display: "flex", justifyContent: "center" }} className="mt-4">
-      <Pagination.Prev onClick={handlePreviousPage} disabled={currentPage === 1} />
+    isMoreThanOnePage && (
+      <Pagination style={{ display: "flex", justifyContent: "center" }} className="mt-4">
+        <Pagination.Prev onClick={handlePreviousPage} disabled={currentPage === 1} />
 
-      {startPage > 1 && <Pagination.Ellipsis />}
-      {[...Array(endPage + 1 - startPage).keys()].map((page) => (
-        <Pagination.Item key={startPage + page} active={startPage + page === currentPage} onClick={() => setCurrentPage(startPage + page)}>
-          {startPage + page}
-        </Pagination.Item>
-      ))}
-      {endPage < totalPages && <Pagination.Ellipsis />}
+        {startPage > 1 && <Pagination.Ellipsis />}
+        {[...Array(endPage + 1 - startPage).keys()].map((page) => (
+          <Pagination.Item key={startPage + page} active={startPage + page === currentPage} onClick={() => setCurrentPage(startPage + page)}>
+            {startPage + page}
+          </Pagination.Item>
+        ))}
+        {endPage < totalPages && <Pagination.Ellipsis />}
 
-      <Pagination.Next onClick={handleNextPage} disabled={currentPage === totalPages} />
-    </Pagination>
+        <Pagination.Next onClick={handleNextPage} disabled={currentPage === totalPages} />
+      </Pagination>
+    )
   );
 };
 
