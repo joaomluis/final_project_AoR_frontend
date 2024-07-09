@@ -9,7 +9,7 @@ const useEditProjectStore = create((set) => ({
   addProjectKeyword: (keyword) => set((state) => ({ projectKeywords: [...state.projectKeywords, keyword] })),
   removeProjectKeyword: (keyword) =>
     set((state) => ({
-      projectKeywords: state.projectKeywords.filter((k) => k !== keyword),
+      projectKeywords: state.projectKeywords.filter((k) => k.id !== keyword.id),
     })),
   setProjectKeywords: (value) => set(() => ({ projectKeywords: value })),
   projectSkills: [],
@@ -27,6 +27,17 @@ const useEditProjectStore = create((set) => ({
       projectKeywords: [],
       projectSkills: [],
     })),
+  allKeywords: [],
+  // updateSkills: (projectKeywords) => set({ projectKeywords }), //new action
+
+  setAllKeywords: (value) => set(() => ({ allKeywords: value })),
+  // addKeywords: (keyword) => set((state) => ({ projectKeywords: [...state.projectKeywords, keyword] })),
+  // removeKeywords: (keyword) =>
+  //   set((state) => ({
+  //     projectKeywords: state.allKeywords.filter((k) => k.id !== keyword.id),
+  //   })),
+  addKeywordToAll: (keyword) => set((state) => ({ allKeywords: [...state.allKeywords, keyword] })),
+  setAllSkills: (value) => set(() => ({ allSkills: value })),
 }));
 
 export default useEditProjectStore;

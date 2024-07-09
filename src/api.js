@@ -153,7 +153,8 @@ export const Api = {
 
   addInterestToProject: (token, projectId, interestId) =>
     apiClient.put(`/interests/${projectId}/${interestId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
-
+  createInterestToProject: (token, projectId, interest) =>
+    apiClient.post(`/interests/create/${projectId}`, interest, { headers: { token } }).then(handleResponse).catch(handleError),
   removeInterestFromProject: (token, projectId, interestId) =>
     apiClient.put(`/interests/remove/${projectId}/${interestId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
