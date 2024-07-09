@@ -9,19 +9,22 @@ import { Api } from "../api";
 import ModalInviteToProject from "../components/modals/modal-inv-project.jsx";
 import ModalMail from "../components/modals/modal-mail.jsx";
 import "../assets/css/general-css.css";
-
+import ConfirmModal from "../components/modals/modal-confirm.jsx";
+import UserType from "../components/enums/UserType.js";
 import { useUserStore } from "../stores/useUserStore.js";
 
 function MyProfile() {
   const { t } = useTranslation();
   const token = useUserStore((state) => state.token);
+
   const navigate = useNavigate();
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isOpenModalInvite, setIsOpenModalInvite] = useState(false);
   const myOwnProjects = useUserStore((state) => state.myOwnProjects);
-
+  const [userType, setUserType] = useState("");
+  const [profile, setProfile] = useState(30); // [user, projectsUser
   const [isOpenModalMail, setIsOpenModalMail] = useState(false);
   const toggleModalMail = () => setIsOpenModalMail(!isOpenModalMail);
   const [user, setUser] = useState({
@@ -39,6 +42,26 @@ function MyProfile() {
   });
 
   const [projectsUser, setProjectsUser] = useState([]);
+  const [isModalRoleChange, setIsModalRoleChange] = useState(false);
+  const toggleModalRoleChange = () => setIsModalRoleChange(!isModalRoleChange);
+
+  const isAdmin = userType === UserType.ADMIN;
+  const isDifferentProfile = UserType.fromName(profile) !== userType;
+  const showButton = isAdmin && isDifferentProfile;
+
+  async function handleRoleChange() {
+    const props = {
+      label: user.email,
+      value: 1,
+    };
+    try {
+      const response = await Api.changeRole(token, props);
+      setIsModalRoleChange(false);
+      tsuccess("role-changed");
+    } catch (error) {
+      terror(error.message);
+    }
+  }
 
   async function handleGetUser() {
     const props = {
@@ -47,9 +70,13 @@ function MyProfile() {
     try {
       const response = await Api.getUsers(token, props);
       setUser(response.data.results[0]);
+      setUserType(response.data.userType);
+      setProfile(response.data.results[0].role);
+      console.log(UserType.fromValue(response.data.userType));
+      console.log(response.data.results[0].role);
       setPage(1);
       setProjectsUser([]);
-      console.log(response.data);
+      console.log(response.data.results[0]);
     } catch (error) {
       console.log(error.message);
     }
@@ -231,6 +258,12 @@ function MyProfile() {
       <Container>
         <Row>
           <Col md="12" className=" mt-5">
+            {showButton ? (
+              <Button style={{ backgroundColor: "var(--admin)", color: "var(--secondary-color)" }} onClick={toggleModalRoleChange}>
+                {t("promove-user")}
+              </Button>
+            ) : null}
+
             <Card>
               <CardBody>
                 <Row className="mb-4">
@@ -239,6 +272,7 @@ function MyProfile() {
                       {user.firstname} {user.lastname}&nbsp;{user.username && `(${user.username})`}
                     </CardTitle>
                   </Col>
+
                   <Col
                     xl="4"
                     lg="6"
@@ -287,7 +321,9 @@ function MyProfile() {
         projects={projectsToInvite ? projectsToInvite.map((project) => project.name) : []}
         handleInviteUser={handleInviteUser}
       />
+
       <ModalMail isOpen={isOpenModalMail} onClose={toggleModalMail} user={user} />
+      <ConfirmModal title={"promove-user"} isOpen={isModalRoleChange} toggle={toggleModalRoleChange} onConfirm={handleRoleChange} />
     </div>
   );
 }

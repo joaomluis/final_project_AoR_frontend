@@ -383,4 +383,12 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
+  getStatisticsByLab: (token, lab) => {
+    const queryString = qs.stringify(lab, { arrayFormat: "repeat" });
+    return apiClient.get(`/admin/statistics?${queryString}`, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
+  updateTimeout: (token, props) => apiClient.put(`/admin/timeout`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  changeRole: (token, props) => apiClient.put(`/admin/role`, props, { headers: { token } }).then(handleResponse).catch(handleError),
 };

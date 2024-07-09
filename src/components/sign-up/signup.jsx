@@ -18,6 +18,7 @@ function SignUp() {
   const updateEmail = useUserStore((state) => state.updateEmail);
   const updateUnreadEmails = useUserStore((state) => state.updateUnreadEmails);
   const updateUnreadNotifications = useUserStore((state) => state.updateUnreadNotifications);
+  const updateUserType = useUserStore((state) => state.updateUserType);
   const navigate = useNavigate();
 
   const [isSignUp, setIsSignUp] = useState(false);
@@ -41,6 +42,7 @@ function SignUp() {
         updateEmail(response.data.email);
         updateUnreadEmails(response.data.unreadEmails);
         updateUnreadNotifications(response.data.unreadNotifications);
+        updateUserType(response.data.userType);
         //TODO redirect to home page
         navigate("fica-lab/home");
       }

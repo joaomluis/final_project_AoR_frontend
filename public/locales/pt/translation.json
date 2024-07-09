@@ -229,5 +229,25 @@
   "you-left-project": "Saiste do projeto",
   "invite-sent": "Convite enviado",
   "send-inv": "Enviar convite",
-  "leave": "Sair do projeto"
+  "leave": "Sair do projeto",
+
+  "timeout-updated-successfully": "Timeout atualizado com sucesso",
+  "timeout-updated-error": "Erro ao atualizar timeout",
+
+  "completed": "Concluído",
+  "approved": "Aprovado",
+  "ready": "Pronto",
+  "cancelled": "Cancelado",
+  "in-progress": "Em progresso",
+  "user-timeout-settings": "Configurações de timeout do utilizador",
+  "timeout-minutes": "Tempo de sessão (minutos)",
+  "update-timeout": "Atualizar timeout",
+  "select-Laboratory": "Selecionar Laboratório",
+  "laboratory": "Laboratório",
+  "select-a-lab": "Selecione um laboratório",
+  "avg-users-project": "Média de utilizadores por projeto",
+  "avg-execution-time": "Tempo médio de execução",
+  "project-status-distribution": "Distribuição de estado do projeto",
+  "promove-user": "Promover utilizador a administrador de sistema",
+  "projects-by-status": "Projetos por estado"
 }

@@ -229,5 +229,24 @@
   "you-left-project": "You left the project",
   "invite-sent": "Invite sent",
   "send-inv": "Send invite",
-  "leave": "Leave project"
+  "leave": "Leave project",
+
+  "timeout-updated-successfully": "Timeout updated successfully",
+  "timeout-updated-error": "Timeout updated error",
+  "completed": "Completed",
+  "approved": "Approved",
+  "ready": "Ready",
+  "cancelled": "Cancelled",
+  "in-progress": "In progress",
+  "user-timeout-settings": "User timeout settings",
+  "timeout-minutes": "Timeout (minutes)",
+  "update-timeout": "Update timeout",
+  "select-Laboratory": "Select Laboratory",
+  "laboratory": "Laboratory",
+  "select-a-lab": "Select a lab",
+  "avg-users-project": "Average users per project",
+  "avg-execution-time": "Average execution time",
+  "project-status-distribution": "Project status distribution",
+  "promove-user": "Promove user to admin",
+  "projects-by-status": "Projects by status"
 }
