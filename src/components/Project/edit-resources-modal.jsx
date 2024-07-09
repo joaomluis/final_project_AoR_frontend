@@ -17,15 +17,16 @@ import {
   FormGroup,
 } from "reactstrap";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useUserStore } from "../../stores/useUserStore.js";
 import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
 import { useTranslation } from "react-i18next";
 import { tsuccess, terror } from "../toasts/message-toasts.jsx";
-import useEditProjectStore from "../../stores/useEditProjectStore.js";
 
 const EditResources = forwardRef((props, ref) => {
   const token = useUserStore((state) => state.token);
+  const { id } = useParams();
   const [modal, setModal] = useState(false);
   const [resources, setResources] = useState([]);
   const [newResources, setNewResources] = useState([]);
@@ -52,6 +53,21 @@ const EditResources = forwardRef((props, ref) => {
     fetchResources();
   }, []);
 
+  async function editProjectProducts(token, projectId, data) {
+
+    let productList = {
+      products: data,
+    }
+
+    try {
+      const response = await Api.editProjectProducts(token, projectId, productList);
+      tsuccess(response.data.message);
+    } catch (error) {
+      terror(error.message);
+    }
+  }
+
+
   const { t } = useTranslation();
   const toggle = () => setModal(!modal);
 
@@ -68,6 +84,8 @@ const EditResources = forwardRef((props, ref) => {
       resources.find((resource) => resource.id === resourceId)?.name ||
       "Unknown";
 
+    const parsedQuantity = parseInt(newQuantity, 10);
+
     const existingResourceIndex = newResources.findIndex(
       (resource) => resource.id === resourceId
     );
@@ -76,7 +94,7 @@ const EditResources = forwardRef((props, ref) => {
       setNewResources(
         newResources.map((resource, index) => {
           if (index === existingResourceIndex) {
-            return { ...resource, quantity: newQuantity };
+            return { ...resource, quantity: parsedQuantity };
           }
           return resource;
         })
@@ -84,10 +102,10 @@ const EditResources = forwardRef((props, ref) => {
     } else {
       setNewResources([
         ...newResources,
-        { id: resourceId, name: resourceName, quantity: newQuantity },
+        { id: resourceId, name: resourceName, quantity: parsedQuantity },
       ]);
     }
-  };
+};
 
   return (
     <div>
@@ -148,7 +166,7 @@ const EditResources = forwardRef((props, ref) => {
           </div>
         </ModalBody>
         <ModalFooter className="modal-style">
-          <Button color="primary" onClick={toggle}>
+          <Button color="primary" onClick={() => editProjectProducts(token, id, newResources)}>
             Save
           </Button>{" "}
         </ModalFooter>

@@ -276,6 +276,9 @@ export const Api = {
 
   getProductsForProject: (token, projectId) => apiClient.get(`/products/${projectId}`, { headers: { token } }).then(handleResponse).catch(handleError),
 
+  editProjectProducts: (token, projectId, products) =>
+    apiClient.put(`/products/productEdition/${projectId}`, products, { headers: { token } }).then(handleResponse).catch(handleError),
+
   getFilterOptionsProducts: (token) => apiClient.get("/products/filter-options", { headers: { token } }).then(handleResponse).catch(handleError),
   getBrands: (token) => apiClient.get("/products/brands", { headers: { token } }).then(handleResponse).catch(handleError),
   createProduct: (token, data) => apiClient.post("/products", data, { headers: { token } }).then(handleResponse).catch(handleError),
