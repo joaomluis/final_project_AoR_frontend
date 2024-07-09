@@ -5,6 +5,7 @@ import ProjectBasicInfo from "./project-basic-info.jsx";
 import ProjectAdditionalInfo from "./project-additional-info.jsx";
 import EditKeywords from "./edit-keywords-modal.jsx";
 import EditSkills from "./edit-skills-modal.jsx";
+import EditResources from "./edit-resources-modal.jsx";
 
 import { useUserStore } from "../../stores/useUserStore.js";
 import { Api } from "../../api.js";
@@ -17,12 +18,15 @@ function ProjectSettings({ data }) {
   const { id } = useParams();
 
   const [projectUsers, setProjectUsers] = useState([]);
-  const [projectResources, setProjectResources] = useState([]);
+  
   const [projectSkills, setProjectSkills] = useState([]);
 
   
   const projectKeywords = useEditProjectStore((state) => state.projectKeywords);
   const setProjectKeywords = useEditProjectStore((state) => state.setProjectKeywords);
+
+  const projectResources = useEditProjectStore((state) => state.projectResources);
+  const setProjectResources = useEditProjectStore((state) => state.setProjectResources);
 
   
 
@@ -60,10 +64,17 @@ function ProjectSettings({ data }) {
     editSkillsRef.current.open();
   };
 
+  const editResourcesRef = useRef();
+  const openEditResourcesModal = () => {
+    editResourcesRef.current.open();
+  };
+
+
   return (
     <>
     <EditKeywords ref={editKeywordsRef}/>
     <EditSkills ref={editSkillsRef} />
+    <EditResources ref={editResourcesRef} />
       <Row>
         <Col md={12}>
           <ProjectBasicInfo data={data} />
@@ -74,19 +85,20 @@ function ProjectSettings({ data }) {
           <ProjectAdditionalInfo
             data={projectResources}
             title="Resources"
+            editButton={openEditResourcesModal}
           />
         </Col>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectUsers} title="Users" />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={6}>
-          <ProjectAdditionalInfo
+        <ProjectAdditionalInfo
             data={projectKeywords}
             title="Keywords"
             editButton={openEditKeywordsModal}
           />
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+        <ProjectAdditionalInfo data={projectUsers} title="Users" />
         </Col>
         <Col md={6}>
           <ProjectAdditionalInfo data={projectSkills} title="Skills" editButton={openEditSkillsModal}/>

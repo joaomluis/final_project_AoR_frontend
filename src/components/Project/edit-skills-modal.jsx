@@ -42,7 +42,7 @@ const EditSkills = forwardRef((props, ref) => {
     <div>
       <Modal isOpen={modal} toggle={toggle} centered={true} size="lg">
         <ModalHeader toggle={toggle} style={{ color: "var(--whitey)", fontWeight: "bold" }} className="modal-style">
-          Edit project keywords{" "}
+          Edit project skills{" "}
         </ModalHeader>
         <ModalBody className="modal-style">
           <Row>

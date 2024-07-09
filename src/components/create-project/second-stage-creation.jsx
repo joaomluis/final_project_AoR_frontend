@@ -112,7 +112,7 @@ function SecondStageCreation() {
                       <input
                         type="number"
                         min="0"
-                        value={quantityObj.quantity}
+                        value={resource.quantity}
                         onChange={(e) => handleQuantityChange(resource.id, e.target.value)}
                         style={{ width: "60px" }}
                       />

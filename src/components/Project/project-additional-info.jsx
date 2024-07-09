@@ -13,13 +13,15 @@ function ProjectAdditionalInfo({ data, title, editButton }) {
         style={{ backgroundColor: "#dbe2ef", borderRadius: "10px" }}
         className="mt-2"
       >
-        <CardBody>
+        <CardBody style={{ minHeight: "37vh" }}>
           <ProjectPreview data={data} name={title} />
         </CardBody>
-        <CardFooter>
+        <CardFooter style={{borderTop:'none'}}>
+          {editButton && (
           <Button color="white" size="sm" className="button-style1" onClick={editButton}>
             Edit
           </Button>
+          )}
         </CardFooter>
       </Card>
     </>
