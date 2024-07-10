@@ -269,7 +269,9 @@
 
   "add-more-resources": "Add more resources",
   "search-resources": "Search resources...",
-  "edit-project-skills": "Edit project skills"
+  "edit-project-skills": "Edit project skills",
+
+  "create-product": "Create product"
   
 
 }

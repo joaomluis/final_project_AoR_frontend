@@ -70,7 +70,6 @@ function FourthStageCreation() {
                   type="text"
                   name="projectName"
                   id="projectName"
-                  placeholder="Enter project name"
                   className="form-control-lg"
                   value={projectName}
                   readOnly

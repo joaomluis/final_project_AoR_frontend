@@ -58,7 +58,7 @@
   "no": "Não",
   "projects": "Projetos",
   "participants": "Participantes",
-  "see-project": "Ver projeto",
+  "see-project": "Ver Projeto",
   "filter": "Filtro",
   "status": "Estado",
   "order": "Ordenar",
@@ -84,18 +84,18 @@
   "home": "Início",
 
   "products": "Produtos",
-  "my-projects": "Meus projetos",
+  "my-projects": "Meus Projetos",
 
-  "view-skills": "Ver habilidades",
-  "view-interests": "Ver interesses",
-  "view-keywords": "Ver palavras-chave",
+  "view-skills": "Ver Habilidades",
+  "view-interests": "Ver Interesses",
+  "view-keywords": "Ver Palavras-chave",
 
   "labs": "Laboratórios",
   "brands": "Marcas",
   "types": "Tipos",
 
   "recent-projects": "Os teus projetos recentes",
-  "create-project": "Criar projeto",
+  "create-project": "Criar Projeto",
 
   "load-more": "Carregar mais",
   "user-interests": "Interesses do utilizador",
@@ -236,7 +236,7 @@
   "in-progress-phase": "Em progresso",
   "finished-phase": "Terminado",
   "cancelled-phase": "Cancelado",
-  "open-project": "Abrir projeto",
+  "open-project": "Abrir Projeto",
 
   "project-name": "Nome do projeto",
   "project-description": "Descrição do projeto",
@@ -269,6 +269,8 @@
 
     "add-more-resources": "Adicionar mais recursos",
   "search-resources": "Pesquisar recursos...",
-  "edit-project-skills": "Editar habilidades do projeto"
+  "edit-project-skills": "Editar habilidades do projeto",
+
+  "create-product": "Criar produto"
   
 }
