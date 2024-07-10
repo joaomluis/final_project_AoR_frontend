@@ -267,13 +267,11 @@
   "skills-preview": "Pré-visualização de habilidades",
   "resources-preview": "Pré-visualização de recursos",
 
-    "add-more-resources": "Adicionar mais recursos",
+  "add-more-resources": "Adicionar mais recursos",
   "search-resources": "Pesquisar recursos...",
   "edit-project-skills": "Editar habilidades do projeto",
 
-  "create-product": "Criar produto"
-  
-  "leave": "Sair do projeto",
+  "create-product": "Criar produto",
 
   "timeout-updated-successfully": "Timeout atualizado com sucesso",
   "timeout-updated-error": "Erro ao atualizar timeout",

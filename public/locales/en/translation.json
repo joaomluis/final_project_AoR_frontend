@@ -271,10 +271,7 @@
   "search-resources": "Search resources...",
   "edit-project-skills": "Edit project skills",
 
-  "create-product": "Create product"
-  
-
-  "leave": "Leave project",
+  "create-product": "Create product",
 
   "timeout-updated-successfully": "Timeout updated successfully",
   "timeout-updated-error": "Timeout updated error",
