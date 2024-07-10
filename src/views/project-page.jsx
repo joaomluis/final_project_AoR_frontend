@@ -39,12 +39,12 @@ function ProjectPage() {
   const location = useLocation();
   const [userType, setUserType] = useState("");
   const [loading, setLoading] = useState(false);
-  const [modalSendInvite, setModalSendInvite] = useState(false);
-  const [modalLeaveProject, setModalLeaveProject] = useState(false);
-  const [modalCancelProject, setModalCancelProject] = useState(false);
-  const toggleModalSendInvite = () => setModalSendInvite(!modalSendInvite);
-  const toggleModalLeaveProject = () => setModalLeaveProject(!modalLeaveProject);
-  const toggleModalCancelProject = () => setModalCancelProject(!modalCancelProject);
+  // const [modalSendInvite, setModalSendInvite] = useState(false);
+  // const [modalLeaveProject, setModalLeaveProject] = useState(false);
+  // const [modalCancelProject, setModalCancelProject] = useState(false);
+  // const toggleModalSendInvite = () => setModalSendInvite(!modalSendInvite);
+  // const toggleModalLeaveProject = () => setModalLeaveProject(!modalLeaveProject);
+  // const toggleModalCancelProject = () => setModalCancelProject(!modalCancelProject);
   const [showModal, setShowModal] = useState(false);
 
   const toggleInfoModal = () => setShowModal(!showModal);
@@ -57,7 +57,7 @@ function ProjectPage() {
 
   const [projectData, setProjectData] = useState({});
   const clearMessages = useMessageStore((state) => state.clear); // Acessando a ação clear da store
-  const isProjectInactive = projectData.status === "CANCELLED" || projectData.status === "FINISHED";
+  const isProjectInactive = projectData.status === "CANCELLED" || projectData.status === "FINISHED" || projectData.status === "READY";
 
   const props = {
     dtoType: "ProjectDto",
@@ -80,45 +80,7 @@ function ProjectPage() {
 
     fetchProject();
   }, [id]);
-  async function handleSendInvite() {
-    try {
-      const response = await Api.sendProposed(token, numericId);
-      console.log(response);
-      tsuccess(t("invite-sent"));
-      toggleModalSendInvite();
-    } catch (error) {
-      terror(error);
-    }
-  }
-
-  async function handleLeaveProject() {
-    try {
-      const response = await Api.leaveProject(token, numericId);
-      console.log(response);
-      tsuccess("you-left-project");
-      navigate("/fica-lab/home");
-      toggleModalLeaveProject();
-    } catch (error) {
-      terror(error.message);
-    }
-  }
-
-  async function handleCancelProject(justification) {
-    const props = {
-      id: numericId,
-      name: justification,
-    };
-    console.log(props);
-    try {
-      const response = await Api.cancelProject(token, numericId, props);
-      console.log(response);
-      tsuccess("project-cancelled");
-      navigate("/fica-lab/home");
-      toggleModalCancelProject();
-    } catch (error) {
-      terror(error.message);
-    }
-  }
+  // async function handleSendInvite() {
 
   /**
    * Envia uma mensagem ao backend informando que o user fechou a página ou está navegando para outra
@@ -150,6 +112,21 @@ function ProjectPage() {
   if (activeTab === "1") {
     useMessageStore.getState().setHasNewItems(false);
   }
+  function getColorByStatus(status) {
+    switch (status) {
+      case "CANCELLED":
+        return "var(--cancelled)";
+      case "READY":
+        return "var(--ready)";
+      case "FINISHED":
+        return "var(--finished)";
+      default:
+        return "var(--greyish)";
+    }
+  }
+
+  // Uso
+  const color = getColorByStatus(projectData.status);
 
   return (
     <div className="section4" style={{ position: "relative" }}>
@@ -175,7 +152,7 @@ function ProjectPage() {
               textAlign: "center",
             }}
           >
-            <h2 style={{ color: "var(--cancelled)", backgroundColor: "black", borderRadius: "10px", padding: "1rem" }}>{projectData.status}</h2>
+            <h2 style={{ color: color, backgroundColor: "black", borderRadius: "10px", padding: "1rem" }}>{projectData.status}</h2>
             <Button color="primary" onClick={toggleInfoModal}>
               {t("more-info")}
             </Button>
@@ -196,20 +173,6 @@ function ProjectPage() {
                           <CardTitle tag="h4" className="m-0">
                             {projectData.name}
                           </CardTitle>
-                          {userType === UserType.MANAGER || userType === UserType.NORMAL ? (
-                            <div>
-                              <Button color="secondary" onClick={toggleModalLeaveProject}>
-                                {t("leave")}
-                              </Button>
-                              {userType === UserType.MANAGER && (
-                                <Button color="danger" onClick={toggleModalCancelProject}>
-                                  {t("cancel-project")}
-                                </Button>
-                              )}
-                            </div>
-                          ) : (
-                            <Button onClick={toggleModalSendInvite}>{t("send-inv")}</Button>
-                          )}
                         </div>
                       </Col>
                       <Col md="2"></Col>
@@ -283,7 +246,7 @@ function ProjectPage() {
                             </>
                           )}
                           <TabPane tabId="4">
-                            <ProjectSettings data={projectData} />
+                            <ProjectSettings data={projectData} userType={userType} />
                           </TabPane>
                         </TabContent>
                       </Col>
@@ -295,9 +258,9 @@ function ProjectPage() {
           </Col>
         </Row>
       </Container>
-      <ConfirmModal isOpen={modalSendInvite} toggle={toggleModalSendInvite} title={t("send-inv")} onConfirm={handleSendInvite} />
+      {/* <ConfirmModal isOpen={modalSendInvite} toggle={toggleModalSendInvite} title={t("send-inv")} onConfirm={handleSendInvite} />
       <ConfirmModal isOpen={modalLeaveProject} toggle={toggleModalLeaveProject} title={t("leave")} onConfirm={handleLeaveProject} />
-      <CancelProjectModal isOpen={modalCancelProject} toggle={toggleModalCancelProject} title={t("cancel-project")} onConfirm={handleCancelProject} />
+      <CancelProjectModal isOpen={modalCancelProject} toggle={toggleModalCancelProject} title={t("cancel-project")} onConfirm={handleCancelProject} /> */}
       <Modal isOpen={showModal} toggle={toggleInfoModal}>
         <ModalHeader toggle={toggleInfoModal}>
           {t("status")} - {projectData.status}

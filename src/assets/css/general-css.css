@@ -601,3 +601,34 @@ h4 {
   background-color: #e9ecef; 
   box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
 }
+
+.ready-button {
+  background-color: var(--ready);
+  color: var(--whitey);
+  border: var(--ready);
+  white-space: nowrap;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.button-group .status-select {
+  margin-left: 10px;
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: var(--bs-modal-color);
+  pointer-events: auto;
+  background-color: var(--bs-modal-bg);
+  background-clip: padding-box;
+  border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
+  border-radius: var(--bs-modal-border-radius);
+  outline: 0;
+}

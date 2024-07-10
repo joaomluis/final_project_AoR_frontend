@@ -12,6 +12,9 @@ const NotificationType = {
   PROJECT_CLOSE: 311,
   PROJECT_KICKED: 312,
   PROJECT_ROLE_CHANGED: 313,
+
+  PROJECT_STATUS_CHANGED: 314,
+  PROJECT_CANCELLED: 315,
 };
 
 export default NotificationType;

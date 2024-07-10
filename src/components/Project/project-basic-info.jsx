@@ -1,9 +1,10 @@
 import { CardBody, Form, FormGroup, Input, Row, Col, Label } from "reactstrap";
 import { useTranslation } from "react-i18next";
+import useEditProjectStore from "../../stores/useEditProjectStore.js";
 
 function ProjectBasicInfo({ data }) {
   const { t } = useTranslation();
-
+  console.log(data.status);
   return (
     <>
       <CardBody style={{ backgroundColor: "#dbe2ef", borderRadius: "10px" }} className="mt-2">
@@ -50,7 +51,7 @@ function ProjectBasicInfo({ data }) {
             </Row>
             <FormGroup>
               <Label for="labLocation">{t("project-lab-location")}</Label>
-              <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={data.lab} readOnly />
+              <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={data.lab_location} readOnly />
             </FormGroup>
           </Col>
         </Row>

@@ -292,5 +292,13 @@
   "project-status-distribution": "Distribuição de estado do projeto",
   "promove-user": "Promover utilizador a administrador de sistema",
   "projects-by-status": "Projetos por estado",
-  "cancel-project": "Cancelar projeto"
+  "cancel-project": "Cancelar projeto",
+
+  "set-ready": "Marcar como pronto",
+  "submit-project": "Submeter projeto",
+  "in_progress": "Em Progresso",
+  "finished": "Terminado",
+  "project-status-changed": "Estado do projeto alterado",
+  "project-cancelled": "Projeto cancelado",
+  "project-approved": "Projeto aprovado"
 }
