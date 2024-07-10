@@ -1,7 +1,20 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Row, Col,
-    Card, CardHeader, CardText, CardBody, CardTitle, Label, FormGroup
- } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Row,
+  Col,
+  Card,
+  CardHeader,
+  CardText,
+  CardBody,
+  CardTitle,
+  Label,
+  FormGroup,
+} from "reactstrap";
 import { useEffect } from "react";
 import { useUserStore } from "../../stores/useUserStore.js";
 import { Api } from "../../api.js";
@@ -29,7 +42,6 @@ const EditSkills = forwardRef((props, ref) => {
   function cardSkillInterest(title, text, tag) {
     return (
       <Card>
-        
         <CardBody>
           <CardText>{text}</CardText>
           {tag}

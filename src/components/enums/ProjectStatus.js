@@ -8,6 +8,10 @@ const ProjectStatus = {
   fromValue: function (value) {
     return Object.keys(this).find((key) => this[key] === value);
   },
+
+  fromLabel: function (label) {
+    return this[label];
+  },
 };
 
 export default ProjectStatus;

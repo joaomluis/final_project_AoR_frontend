@@ -291,5 +291,13 @@
   "project-status-distribution": "Project status distribution",
   "promove-user": "Promove user to admin",
   "projects-by-status": "Projects by status",
-  "cancel-project": "Cancel project"
+  "cancel-project": "Cancel project",
+
+  "set-ready": "Set ready",
+  "submit-project": "Submit project to be approved",
+  "in_progress": "In Progress",
+  "finished": "Finished",
+  "project-status-changed": "Project status changed",
+  "project-cancelled": "Project cancelled",
+  "project-approved": "Project approved"
 }

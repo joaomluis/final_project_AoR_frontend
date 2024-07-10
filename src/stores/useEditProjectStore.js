@@ -39,6 +39,9 @@ const useEditProjectStore = create((set) => ({
   //   })),
   addKeywordToAll: (keyword) => set((state) => ({ allKeywords: [...state.allKeywords, keyword] })),
   setAllSkills: (value) => set(() => ({ allSkills: value })),
+
+  labs: [],
+  setLabs: (value) => set(() => ({ labs: value })),
 }));
 
 export default useEditProjectStore;

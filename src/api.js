@@ -270,6 +270,14 @@ export const Api = {
     return apiClient.put(`/projects/${projectId}/cancel`, justify, { headers: { token } }).then(handleResponse).catch(handleError);
   },
 
+  // submitProject: (token, projectId) => {
+  //   return apiClient.put(`/projects/${projectId}/submit`, {}, { headers: { token } }).then(handleResponse).catch(handleError);
+  // },
+
+  updateStatus: (token, projectId, status) => {
+    return apiClient.put(`/projects/${projectId}/status`, status, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
   //PRODUCTS endpoint
   getProducts: (token, props) => {
     const queryString = qs.stringify(props, { arrayFormat: "repeat" });
