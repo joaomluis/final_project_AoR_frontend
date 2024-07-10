@@ -42,7 +42,7 @@ const EditSkills = forwardRef((props, ref) => {
     <div>
       <Modal isOpen={modal} toggle={toggle} centered={true} size="lg">
         <ModalHeader toggle={toggle} style={{ color: "var(--whitey)", fontWeight: "bold" }} className="modal-style">
-          Edit project keywords{" "}
+        {t("edit-project-skills")}{" "}
         </ModalHeader>
         <ModalBody className="modal-style">
           <Row>
@@ -50,8 +50,8 @@ const EditSkills = forwardRef((props, ref) => {
             
 
               {cardSkillInterest(
-                "Select Keywords",
-                "Add keywords that are relevant to your project. You can add and remove them as you wish.",
+                t("keywords-preview"),
+                t("select-skills-subtext"),
                 <InterestTag />
               )}
             </Col>

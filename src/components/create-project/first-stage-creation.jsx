@@ -7,7 +7,11 @@ import { useUserStore } from "../../stores/useUserStore.js";
 
 import { Api } from "../../api";
 
+import { useTranslation } from "react-i18next";
+
 function FirstStageCreation() {
+  const { t } = useTranslation();
+
   const projectName = useCreateProjectStore((state) => state.projectName);
   const description = useCreateProjectStore((state) => state.description);
   const lab = useCreateProjectStore((state) => state.lab);
@@ -69,19 +73,19 @@ function FirstStageCreation() {
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="projectName">Project Name</Label>
+                <Label for="projectName">{t("project-name")}</Label>
                 <Input
                   type="text"
                   name="projectName"
                   id="projectName"
-                  placeholder="Enter project name"
+                  placeholder={t("enter-project-name")}
                   className="form-control-lg"
                   value={projectName}
                   onChange={handleProjectNameChange}
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="description">Project Description</Label>
+                <Label for="description">{t("project-description")}</Label>
                 <Input
                   type="textarea"
                   name="description"
@@ -94,7 +98,7 @@ function FirstStageCreation() {
               <FormGroup floating>
                 <Input bsSize="md" type="select" className="form-select-lg" value={lab.id || "default"} onChange={handleLabChange}>
                   <option disabled value="default">
-                    Select a Lab*
+                  {t("select-lab")}
                   </option>
                   {labs.map((lab) => (
                     <option key={lab.id} value={lab.id}>
@@ -106,11 +110,11 @@ function FirstStageCreation() {
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="startDate">Start Date</Label>
+                <Label for="startDate">{t("project-start-date")}</Label>
                 <Input type="date" name="startDate" id="startDate" className="form-control-lg" value={startDate} onChange={handleStartDateChange} />
               </FormGroup>
               <FormGroup>
-                <Label for="endDate">End Date</Label>
+                <Label for="endDate">{t("project-end-date")}</Label>
                 <Input type="date" name="endDate" id="endDate" className="form-control-lg" value={endDate} onChange={handleEndDateChange} />
               </FormGroup>
             </Col>

@@ -7,6 +7,8 @@ import "react-multi-carousel/lib/styles.css";
 import "../../assets/css/general-css.css";
 import img1 from "../../assets/img/project-img-placeholder.jpg";
 
+import { Api } from "../../api.js";
+
 const items = [
   {
     src: img1,

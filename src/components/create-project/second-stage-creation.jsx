@@ -3,8 +3,11 @@ import { Button, CardBody, Col, Form, Row } from "reactstrap";
 import useCreateProjectStore from "../../stores/useCreateProjectStore.js";
 import { useUserStore } from "../../stores/useUserStore.js";
 import { Api } from "../../api.js";
+import { useTranslation } from "react-i18next";
 
 function SecondStageCreation() {
+  const { t } = useTranslation();
+
   const token = useUserStore((state) => state.token);
   const setProjectResources = useCreateProjectStore((state) => state.setProjectResources);
   const projectResources = useCreateProjectStore((state) => state.projectResources);
@@ -12,16 +15,15 @@ function SecondStageCreation() {
   // const [resourceQuantities, setResourceQuantities] = useState(projectResources);
   const [filter, setFilter] = useState("All");
 
+  //useEffect que vai buscar os recursos disponíveis
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        console.log("Fetching resources...");
         const response = await Api.getProducts(token, {
           dtoType: "ProductDto",
           page_size: 200,
         });
         setResources(response.data.results);
-        console.log(response.data.results);
 
         const initialQuantities = response.data.results.map((resource) => ({
           id: resource.id,
@@ -45,6 +47,7 @@ function SecondStageCreation() {
   //   setProjectResources(resourceQuantities);
   // }, [resourceQuantities, setProjectResources]);
 
+  //função para atualizar a quantidade de um recurso
   const handleQuantityChange = (resourceId, value) => {
     console.log("handleQuantityChange", resourceId, value);
 
@@ -80,13 +83,13 @@ function SecondStageCreation() {
                 }}
               >
                 <Button className="button-style1" color="primary" size="sm" onClick={() => setFilter("All")} style={{ flex: 1, margin: "0.5rem" }}>
-                  All
+                {t("all")}
                 </Button>
                 <Button className="button-style1" color="primary" size="sm" onClick={() => setFilter("COMPONENT")} style={{ flex: 1, margin: "0.5rem" }}>
-                  Components
+                {t("components")}
                 </Button>
                 <Button className="button-style1" color="primary" size="sm" onClick={() => setFilter("RESOURCE")} style={{ flex: 1, margin: "0.5rem" }}>
-                  Resources
+                {t("resources")}
                 </Button>
               </div>
               <div style={{ maxHeight: "240px", overflowY: "auto" }}>

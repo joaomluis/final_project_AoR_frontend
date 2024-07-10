@@ -5,11 +5,15 @@ import { useEffect, useState } from "react";
 import useCreateProjectStore from "../../stores/useCreateProjectStore.js";
 import { useUserStore } from "../../stores/useUserStore.js";
 
-import { Api } from "../../api.js";
 
 import ProjectPreview from "../Preview/project-preview.jsx";
 
+import { useTranslation } from "react-i18next";
+
 function FourthStageCreation() {
+
+  const { t } = useTranslation();
+
   const projectName = useCreateProjectStore((state) => state.projectName);
   const description = useCreateProjectStore((state) => state.description);
   const lab = useCreateProjectStore((state) => state.lab);
@@ -64,45 +68,44 @@ function FourthStageCreation() {
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="projectName">Project Name</Label>
+                <Label for="projectName">{t("project-name")}</Label>
                 <Input
                   type="text"
                   name="projectName"
                   id="projectName"
-                  placeholder="Enter project name"
                   className="form-control-lg"
                   value={projectName}
                   readOnly
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="description">Project Description</Label>
+                <Label for="description">{t("project-description")}</Label>
                 <Input type="textarea" name="description" id="description" className="form-control-lg" value={description} readOnly />
               </FormGroup>
               <FormGroup>
-                <Label for="labLocation">Lab Location</Label>
+                <Label for="labLocation">{t("project-lab-location")}</Label>
                 <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={lab.location} readOnly />
               </FormGroup>
               <ProjectPreview
                 data={Object.entries(projectResources)
                   .filter(([key, value]) => value.quantity > 0)
                   .map(([key, value]) => value)}
-                name="Resources Preview"
+                name={t("resources-preview")}
               />{" "}
-              <ProjectPreview data={projectKeywords} name="Keywords Preview" />
+              <ProjectPreview data={projectKeywords} name={t("keywords-preview")} />
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="startDate">Start Date</Label>
+                <Label for="startDate">{t("project-start-date")}</Label>
                 <Input type="date" name="startDate" id="startDate" className="form-control-lg" value={startDate} readOnly />
               </FormGroup>
               <FormGroup>
-                <Label for="endDate">End Date</Label>
+                <Label for="endDate">{t("project-end-date")}</Label>
                 <Input type="date" name="endDate" id="endDate" className="form-control-lg" value={endDate} readOnly />
               </FormGroup>
 
-              <ProjectPreview data={projectUsers} name="Users Preview" />
-              <ProjectPreview data={projectSkills} name="Skills Preview" />
+              <ProjectPreview data={projectUsers} name={t("users-preview")} />
+              <ProjectPreview data={projectSkills} name={t("skills-preview")} />
             </Col>
           </Row>
         </Form>

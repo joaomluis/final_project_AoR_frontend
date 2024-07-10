@@ -133,6 +133,9 @@ export const Api = {
   addSkillToProject: (token, projectId, skillId) =>
     apiClient.put(`/skills/${projectId}/${skillId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
+  addSkillToProjectDto: (token, projectId, skillId) =>
+    apiClient.put(`/skills/create/${projectId}/`, skillId, { headers: { token } }).then(handleResponse).catch(handleError),
+
   removeSkillFromProject: (token, projectId, skillId) =>
     apiClient.put(`/skills/remove/${projectId}/${skillId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
@@ -153,7 +156,8 @@ export const Api = {
 
   addInterestToProject: (token, projectId, interestId) =>
     apiClient.put(`/interests/${projectId}/${interestId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
-
+  createInterestToProject: (token, projectId, interest) =>
+    apiClient.post(`/interests/create/${projectId}`, interest, { headers: { token } }).then(handleResponse).catch(handleError),
   removeInterestFromProject: (token, projectId, interestId) =>
     apiClient.put(`/interests/remove/${projectId}/${interestId}`, {}, { headers: { token } }).then(handleResponse).catch(handleError),
 
@@ -279,6 +283,9 @@ export const Api = {
   },
 
   getProductsForProject: (token, projectId) => apiClient.get(`/products/${projectId}`, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  editProjectProducts: (token, projectId, products) =>
+    apiClient.put(`/products/productEdition/${projectId}`, products, { headers: { token } }).then(handleResponse).catch(handleError),
 
   getFilterOptionsProducts: (token) => apiClient.get("/products/filter-options", { headers: { token } }).then(handleResponse).catch(handleError),
   getBrands: (token) => apiClient.get("/products/brands", { headers: { token } }).then(handleResponse).catch(handleError),

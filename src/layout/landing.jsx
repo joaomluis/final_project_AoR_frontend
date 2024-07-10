@@ -18,7 +18,7 @@ function Landing() {
   };
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" id="main-container">
       <MainNavBar />
       <div>
         <Routes>

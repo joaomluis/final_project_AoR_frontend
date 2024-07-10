@@ -12,54 +12,55 @@ function UserSkills() {
   const { id } = useParams();
 
   const projectSkillsData = useEditProjectStore((state) => state.projectSkills);
-
   const setProjectSkills = useEditProjectStore((state) => state.setProjectSkills);
   const addProjectSkill = useEditProjectStore((state) => state.addProjectSkill);
   const removeProjectSkill = useEditProjectStore((state) => state.removeProjectSkill);
 
+  const allSkills = useEditProjectStore((state) => state.allSkills);
+  const setAllSkills = useEditProjectStore((state) => state.setAllSkills);
+  const addSkillToAll = useEditProjectStore((state) => state.addSkillToAll);
 
-  async function addSkillToProject(token, projectId, skillId) {
-    try {
-      const response = await Api.addSkillToProject(token, projectId, skillId);
-      tsuccess(response.data);
-    } catch (error) {
-      terror(error.message);
-      console.error('Error adding interest:', error);
-    }
-  }
-
-  async function removeInterestFromProject(token, projectId, skillId) {
-    try {
-      const response = await Api.removeSkillFromProject(token, projectId, skillId);
-      tsuccess(response.data);
-    } catch (error) {
-      terror(error.message);
-      console.error('Error removing interest:', error);
-    }
-  }
-
-  const allSkills = useUserStore((state) => state.allSkills);
   const skillTypes = useUserStore((state) => state.skillTypes);
-  const updateAllSkills = useUserStore((state) => state.updateAllSkills);
-  const updateSkillTypes = useUserStore((state) => state.updateSkillTypes);
-  const addSkill = useUserStore((state) => state.addSkill);
-  const addSkillToAll = useUserStore((state) => state.addSkillToAll);
+  const setSkillTypes = useUserStore((state) => state.updateSkillTypes);
 
-  const addSelectedSkill = (newSkill) => {
-    addSkillToProject(token, id, newSkill.id);
-    addProjectSkill(newSkill);
-  };
+  async function addSkillToProject(skillId) {
+    try {
+      const response = await Api.addSkillToProject(token, id, skillId.id);
+      addProjectSkill(skillId);
+      tsuccess(response.data);
+    } catch (error) {
+      terror(error.message);
+      console.error("Error adding interest:", error);
+    }
+  }
 
-  const removeSelectedSkill = (skill) => { 
-    removeInterestFromProject(token, id, skill.id);
-    removeProjectSkill(skill.id);
-  };
+  async function removeSkillFromProject(skillId) {
+    console.log(skillId);
+    console.log(skillId.id);
+    try {
+      const response = await Api.removeSkillFromProject(token, id, skillId.id);
+      removeProjectSkill(skillId);
+      tsuccess(response.data);
+    } catch (error) {
+      terror(error.message);
+      console.error("Error removing interest:", error);
+    }
+  }
+
+  // const addSelectedSkill = (newSkill) => {
+  //   addSkillToProject(token, id, newSkill.id);
+  //   addProjectSkill(newSkill);
+  // };
+
+  // const removeSelectedSkill = (skill) => {
+  //   removeInterestFromProject(token, id, skill.id);
+  //   removeProjectSkill(skill.id);
+  // };
 
   async function fetchProjectSkills() {
     try {
-      const response = await Api.getSkillsForProject(token, id);    
+      const response = await Api.getSkillsForProject(token, id);
       setProjectSkills(response.data);
-      
     } catch (error) {
       terror(error.message);
     }
@@ -68,28 +69,29 @@ function UserSkills() {
   async function fetchSkillTypes() {
     try {
       const response = await Api.getSkillType(token);
-      updateSkillTypes(response.data);
+      setSkillTypes(response.data);
     } catch (error) {
       terror(error.message);
     }
   }
 
-
   async function fetchAllSkills() {
     try {
       const response = await Api.getAllSkills(token);
-      updateAllSkills(response.data);
+      setAllSkills(response.data);
     } catch (error) {
       terror(error.message);
     }
   }
 
   async function createSkill(skill) {
+    const prop = { id: 0, name: skill.name, type: skill.type };
+    console.log(prop);
     try {
-      const response = await Api.addSkill(token, skill);
-      skill = response.data;
-      addSkillToAll(skill);
-      addSkill(skill);
+      const response = await Api.addSkillToProjectDto(token, id, skill);
+      const newSkill = response.data;
+      addSkillToAll(newSkill);
+      addProjectSkill(newSkill);
       tsuccess("Skill " + skill.name + " created successfully!");
     } catch (error) {
       terror(error.message);
@@ -102,8 +104,8 @@ function UserSkills() {
       fetchItems={fetchProjectSkills}
       fetchAllItems={fetchAllSkills}
       createItem={createSkill}
-      addItem={addSelectedSkill}
-      removeItem={removeSelectedSkill}
+      addItem={addSkillToProject}
+      removeItem={removeSkillFromProject}
       items={projectSkillsData}
       allItems={allSkills}
       types={skillTypes}

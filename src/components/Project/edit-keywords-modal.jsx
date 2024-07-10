@@ -7,7 +7,6 @@ import { useUserStore } from "../../stores/useUserStore.js";
 import { Api } from "../../api.js";
 import "../../assets/css/general-css.css";
 import { useTranslation } from "react-i18next";
-import { tsuccess, terror } from "../toasts/message-toasts.jsx";
 
 import InterestTag from "../tags/interest-edit-project-tag.jsx";
 
@@ -42,7 +41,7 @@ const EditKeywords = forwardRef((props, ref) => {
     <div>
       <Modal isOpen={modal} toggle={toggle} centered={true} size="lg">
         <ModalHeader toggle={toggle} style={{ color: "var(--whitey)", fontWeight: "bold" }} className="modal-style">
-          Edit project keywords{" "}
+        {t("keywords-preview")}{" "}
         </ModalHeader>
         <ModalBody className="modal-style">
           <Row>
@@ -51,7 +50,7 @@ const EditKeywords = forwardRef((props, ref) => {
 
               {cardSkillInterest(
                 "Select Keywords",
-                "Add keywords that are relevant to your project. You can add and remove them as you wish.",
+                t("select-keywords-subtext"),
                 <InterestTag />
               )}
             </Col>

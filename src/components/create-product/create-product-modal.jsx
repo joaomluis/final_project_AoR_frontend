@@ -71,7 +71,7 @@ const CreateProductModal = ({ isOpen, toggle }) => {
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Create New Product</ModalHeader>
+      <ModalHeader toggle={toggle}>{t("create-product")}</ModalHeader>
       <form>
         <ModalBody>
           <FormInput

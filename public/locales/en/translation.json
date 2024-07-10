@@ -231,6 +231,51 @@
   "send-inv": "Send invite",
   "leave": "Leave project",
 
+  "planning-phase": "Planning",
+  "ready-phase": "Ready",
+  "in-progress-phase": "In progress",
+  "finished-phase": "Finished",
+  "cancelled-phase": "Cancelled",
+  "open-project": "Open project",
+
+  "project-name": "Project name",
+  "project-description": "Project description",
+  "project-start-date": "Project start date",
+  "project-end-date": "Project end date",
+  "project-lab-location": "Project lab location",
+  "edit-button": "Edit",
+  "enter-project-name": "Enter project name...",
+
+  "previous-button": "Previous",
+  "next-button": "Next",
+  "create-button": "Create",
+
+  "all": "All",
+  "components": "Components",
+  "resources": "Resources",
+
+  "project-skills": "Project skills",
+  "select-skills": "Select skills",
+  "select-skills-subtext": "Add skills that are relevant to your project. You can add and remove them as you wish.",
+  "project-keywords": "Project keywords",
+  "select-keywords": "Select keywords",
+  "select-keywords-subtext": "Add keywords that are relevant to your project. You can add and remove them as you wish.",
+
+  "add-new-members": "Add new members",
+  "users-preview": "Users preview",
+  "keywords-preview": "Keywords preview",
+  "skills-preview": "Skills preview",
+  "resources-preview": "Resources preview",
+
+  "add-more-resources": "Add more resources",
+  "search-resources": "Search resources...",
+  "edit-project-skills": "Edit project skills",
+
+  "create-product": "Create product"
+  
+
+  "leave": "Leave project",
+
   "timeout-updated-successfully": "Timeout updated successfully",
   "timeout-updated-error": "Timeout updated error",
   "completed": "Completed",

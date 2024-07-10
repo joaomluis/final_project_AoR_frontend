@@ -9,14 +9,14 @@ const useEditProjectStore = create((set) => ({
   addProjectKeyword: (keyword) => set((state) => ({ projectKeywords: [...state.projectKeywords, keyword] })),
   removeProjectKeyword: (keyword) =>
     set((state) => ({
-      projectKeywords: state.projectKeywords.filter((k) => k !== keyword),
+      projectKeywords: state.projectKeywords.filter((k) => k.id !== keyword.id),
     })),
   setProjectKeywords: (value) => set(() => ({ projectKeywords: value })),
   projectSkills: [],
   addProjectSkill: (skill) => set((state) => ({ projectSkills: [...state.projectSkills, skill] })),
   removeProjectSkill: (skill) =>
     set((state) => ({
-      projectSkills: state.projectSkills.filter((s) => s !== skill),
+      projectSkills: state.projectSkills.filter((s) => s.id !== skill.id),
     })),
   setProjectSkills: (value) => set(() => ({ projectSkills: value })),
 
@@ -27,6 +27,18 @@ const useEditProjectStore = create((set) => ({
       projectKeywords: [],
       projectSkills: [],
     })),
+  allKeywords: [],
+  // updateSkills: (projectKeywords) => set({ projectKeywords }), //new action
+  allSkills: [],
+  setAllKeywords: (value) => set(() => ({ allKeywords: value })),
+  addSkillToAll: (skill) => set((state) => ({ allSkills: [...state.allSkills, skill] })),
+  // addKeywords: (keyword) => set((state) => ({ projectKeywords: [...state.projectKeywords, keyword] })),
+  // removeKeywords: (keyword) =>
+  //   set((state) => ({
+  //     projectKeywords: state.allKeywords.filter((k) => k.id !== keyword.id),
+  //   })),
+  addKeywordToAll: (keyword) => set((state) => ({ allKeywords: [...state.allKeywords, keyword] })),
+  setAllSkills: (value) => set(() => ({ allSkills: value })),
 }));
 
 export default useEditProjectStore;
