@@ -4,9 +4,12 @@ import { useUserStore } from "../../stores/useUserStore";
 import { Api } from "../../api";
 import { tsuccess, terror } from "../toasts/message-toasts";
 import useEditProjectStore from "../../stores/useEditProjectStore";
+import {useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 function EditProjectKeywords() {
+  const { t } = useTranslation();
+
   const token = useUserStore((state) => state.token);
   const { id } = useParams();
 
@@ -57,7 +60,6 @@ function EditProjectKeywords() {
   //   removeInterestFromProject(token, id, keyword.id);
   // };
 
-  const email = useUserStore((state) => state.email);
 
   async function fetchProjectInterests() {
     try {

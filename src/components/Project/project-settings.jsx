@@ -13,7 +13,12 @@ import { useParams } from "react-router-dom";
 
 import useEditProjectStore from "../../stores/useEditProjectStore.js";
 
+import { useTranslation } from "react-i18next";
+
 function ProjectSettings({ data }) {
+
+  const { t } = useTranslation();
+
   const token = useUserStore((state) => state.token);
   const { id } = useParams();
 
@@ -85,18 +90,18 @@ function ProjectSettings({ data }) {
       </Row>
       <Row>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectResources} title="Resources" editButton={openEditResourcesModal} />
+          <ProjectAdditionalInfo data={projectResources} title={t("resources")} editButton={openEditResourcesModal} />
         </Col>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectKeywords} title="Keywords" editButton={openEditKeywordsModal} />
+          <ProjectAdditionalInfo data={projectKeywords} title={t("keywords")} editButton={openEditKeywordsModal} />
         </Col>
       </Row>
       <Row>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectUsers} title="Users" />
+          <ProjectAdditionalInfo data={projectUsers} title={t("users")} />
         </Col>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectSkills} title="Skills" editButton={openEditSkillsModal} />
+          <ProjectAdditionalInfo data={projectSkills} title={t("skills")} editButton={openEditSkillsModal} />
         </Col>
       </Row>
     </>

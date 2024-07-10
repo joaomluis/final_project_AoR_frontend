@@ -42,6 +42,7 @@ function CreateProject() {
 
   const [stage, setStage] = useState(1);
 
+  //função para criar um projeto
   async function createProject() {
     const props = {
       name: projectName,
@@ -75,7 +76,7 @@ function CreateProject() {
             <Card className="shadow-lg p-3 mb-5 bg-white rounded" style={{ minHeight: "500px" }}>
               <CardHeader className="bg-secondary-fl text-white">
                 <CardTitle tag="h3" className="text-center card-header-title">
-                  Create a new project
+                {t("create-project")}
                 </CardTitle>
               </CardHeader>
               {stage === 1 && <FirstStageCreation />}
@@ -86,18 +87,18 @@ function CreateProject() {
               <CardFooter className="d-flex justify-content-between">
                 {stage > 1 ? (
                   <Button onClick={() => setStage(stage - 1)}>
-                    <FaArrowLeft /> Previous
+                    <FaArrowLeft /> {t("previous-button")}
                   </Button>
                 ) : (
                   <div></div>
                 )}
                 {stage < 5 ? (
                   <Button onClick={() => stage < 5 && setStage(stage + 1)}>
-                    Next <FaArrowRight />
+                    {t("next-button")} <FaArrowRight />
                   </Button>
                 ) : (
                   <Button onClick={createProject}>
-                    Create <FaCheck />
+                    {t("create-button")} <FaCheck />
                   </Button>
                 )}
               </CardFooter>

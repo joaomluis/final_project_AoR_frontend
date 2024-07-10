@@ -229,5 +229,46 @@
   "you-left-project": "Saiste do projeto",
   "invite-sent": "Convite enviado",
   "send-inv": "Enviar convite",
-  "leave": "Sair do projeto"
+  "leave": "Sair do projeto",
+
+  "planning-phase": "Em planeamento",
+  "ready-phase": "Pronto",
+  "in-progress-phase": "Em progresso",
+  "finished-phase": "Terminado",
+  "cancelled-phase": "Cancelado",
+  "open-project": "Abrir projeto",
+
+  "project-name": "Nome do projeto",
+  "project-description": "Descrição do projeto",
+  "project-start-date": "Data de início",
+  "project-end-date": "Data de fim",
+  "project-lab-location": "Localização do laboratório",
+  "edit-button": "Editar",
+  "enter-project-name": "Insira o nome do projeto...",
+
+  "previous-button": "Anterior",
+  "next-button": "Próximo",
+  "create-button": "Criar",
+
+  "all": "Todos",
+  "components": "Componentes",
+  "resources": "Recursos",
+
+  "project-skills": "Habilidades do projeto",
+  "select-skills": "Selecionar habilidades",
+  "select-skills-subtext": "Adicione habilidades que são relevantes para o seu projeto. Pode adicionar e remover conforme desejar.",
+  "project-keywords": "Palavras-chave do projeto",
+  "select-keywords": "Selecionar palavras-chave",
+  "select-keywords-subtext": "Adicione palavras-chave que são relevantes para o seu projeto. Pode adicionar e remover conforme desejar.",
+
+  "add-new-members": "Adicionar novos membros",
+  "users-preview": "Pré-visualização de utilizadores",
+  "keywords-preview": "Pré-visualização de palavras-chave",
+  "skills-preview": "Pré-visualização de habilidades",
+  "resources-preview": "Pré-visualização de recursos",
+
+    "add-more-resources": "Adicionar mais recursos",
+  "search-resources": "Pesquisar recursos...",
+  "edit-project-skills": "Editar habilidades do projeto"
+  
 }

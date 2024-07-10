@@ -1,22 +1,16 @@
-import { Container, Col, Row, Card, CardHeader, CardText, CardBody, CardTitle, Input, CardImg, Label, Form, FormGroup, Button } from "reactstrap";
+import { Col, Row, Card, CardHeader, CardText, CardBody, CardTitle, Label, Form, FormGroup } from "reactstrap";
 
 import "../../assets/css/general-css.css";
 
 import { useTranslation } from "react-i18next";
 
-import { useState, useEffect } from "react";
-
-import useCreateProjectStore from "../../stores/useCreateProjectStore.js";
 
 import SkillTag from "../tags/skill-project-tag.jsx";
 import InterestTag from "../tags/interest-project-tag.jsx";
 
-import { Api } from "../../api.js";
-import { useUserStore } from "../../stores/useUserStore.js";
 
 function SecondStageCreation() {
   const { t } = useTranslation();
-  const token = useUserStore((state) => state.token);
 
   function cardSkillInterest(title, text, tag) {
     return (
@@ -54,11 +48,11 @@ function SecondStageCreation() {
                     color: "#333",
                   }}
                 >
-                  Project Skills
+                  {t("project-skills")}
                 </Label>
               </FormGroup>
 
-              {cardSkillInterest("Select Skills", "Add skills that are relevant to your project. You can add and remove them as you wish.", <SkillTag />)}
+              {cardSkillInterest(t("select-skills"), t("select-skills-subtext"), <SkillTag />)}
             </Col>
 
             <Col md="6" className="mt-3">
@@ -78,13 +72,13 @@ function SecondStageCreation() {
                     color: "#333",
                   }}
                 >
-                  Project Keywords
+                  {t("project-keywords")}
                 </Label>
               </FormGroup>
 
               {cardSkillInterest(
-                "Select Keywords",
-                "Add keywords that are relevant to your project. You can add and remove them as you wish.",
+                t("select-keywords"),
+                t("select-keywords-subtext"),
                 <InterestTag />
               )}
             </Col>

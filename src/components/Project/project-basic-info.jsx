@@ -1,6 +1,9 @@
-import { CardBody, Form, FormGroup, Input, Button, Row, Col, Label } from "reactstrap";
+import { CardBody, Form, FormGroup, Input, Row, Col, Label } from "reactstrap";
+import { useTranslation } from "react-i18next";
 
 function ProjectBasicInfo({ data }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <CardBody style={{ backgroundColor: "#dbe2ef", borderRadius: "10px" }} className="mt-2">
@@ -8,7 +11,7 @@ function ProjectBasicInfo({ data }) {
           <Col md={2}></Col>
           <Col md={8}>
             <FormGroup>
-              <Label for="projectName">Project Name</Label>
+              <Label for="projectName">{t("project-name")}</Label>
               <Input
                 type="text"
                 name="projectName"
@@ -20,7 +23,7 @@ function ProjectBasicInfo({ data }) {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="description">Project Description</Label>
+              <Label for="description">{t("project-description")}</Label>
               <Input
                 type="textarea"
                 name="description"
@@ -34,19 +37,19 @@ function ProjectBasicInfo({ data }) {
             <Row>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="startDate">Start Date</Label>
+                  <Label for="startDate">{t("project-start-date")}</Label>
                   <Input type="date" name="startDate" id="startDate" className="form-control-lg" value={data.startDate} readOnly />
                 </FormGroup>
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="endDate">End Date</Label>
+                  <Label for="endDate">{t("project-end-date")}</Label>
                   <Input type="date" name="endDate" id="endDate" className="form-control-lg" value={data.endDate} readOnly />
                 </FormGroup>
               </Col>
             </Row>
             <FormGroup>
-              <Label for="labLocation">Lab Location</Label>
+              <Label for="labLocation">{t("project-lab-location")}</Label>
               <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={data.lab} readOnly />
             </FormGroup>
           </Col>

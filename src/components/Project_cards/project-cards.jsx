@@ -12,31 +12,35 @@ import { MdDateRange } from "react-icons/md";
 
 import "../../assets/css/general-css.css";
 import PlusIcon from "../../assets/icons/plus-circle-icon.png";
+import { useTranslation } from "react-i18next";
 
 const ProjectCards = ({ Project }) => {
+
+  const { t } = useTranslation();
+
   const formatStatus = (status) => {
     let formattedStatus;
     let backgroundColor;
 
     switch (status) {
       case "PLANNING":
-        formattedStatus = "Planning";
+        formattedStatus = t("planning-phase");
         backgroundColor = "blue";
         break;
       case "READY":
-        formattedStatus = "Ready";
+        formattedStatus = t("ready-phase");
         backgroundColor = "green";
         break;
       case "IN_PROGRESS":
-        formattedStatus = "In Progress";
+        formattedStatus = t("inProgress-phase");
         backgroundColor = "yellow";
         break;
       case "FINISHED":
-        formattedStatus = "Finished";
+        formattedStatus = t("finished-phase");
         backgroundColor = "green";
         break;
       case "CANCELLED":
-        formattedStatus = "Cancelled";
+        formattedStatus = t("cancelled-phase");
         backgroundColor = "red";
         break;
       default:
@@ -83,7 +87,7 @@ const ProjectCards = ({ Project }) => {
           </CardSubtitle>
           <CardText>{truncateDescription(Project.description, 95)}</CardText>
           <div>
-            <MdDateRange /> Start date: {Project.startDate}
+            <MdDateRange /> {t("project-start-date")}: {Project.startDate}
           </div>
           <div>
             {Project.projectUsers.slice(0, 3).map((user, index) => (
@@ -120,7 +124,7 @@ const ProjectCards = ({ Project }) => {
             to={`/fica-lab/project/${Project.id}`}
             className="btn button-style1 w-100"
           >
-            Open Project
+            {t("open-project")}
           </Link>
         </CardFooter>
       </Card>

@@ -5,8 +5,11 @@ import useCreateProjectStore from "../../stores/useCreateProjectStore.js";
 
 import { Api } from "../../api.js";
 import { useUserStore } from "../../stores/useUserStore.js";
+import { useTranslation } from "react-i18next";
 
 function ThirdStageCreation() {
+  const { t } = useTranslation();
+
   const token = useUserStore((state) => state.token);
 
   const projectUsers = useCreateProjectStore((state) => state.projectUsers);
@@ -15,12 +18,14 @@ function ThirdStageCreation() {
   const [allMembers, setAllMembers] = useState([]);
   const [matchedMembers, setMatchedMembers] = useState([]);
 
+  // Função para lidar com a pesquisa de membros, filtra os membros pelo input da pesquisa
   const handleSearch = (event) => {
     event.preventDefault();
     const matched = allMembers?.filter((member) => member.firstName.toLowerCase().includes(searchTerm.toLowerCase()));
     setMatchedMembers(matched);
   };
 
+  // Função para lidar com a seleção de membros, adiciona ou remove membros da lista de membros do projeto
   const handleSelect = (userId) => {
     const newSelectedMembers = [...projectUsers];
     const memberObject = allMembers.find((member) => member.userId === userId);
@@ -63,13 +68,13 @@ function ThirdStageCreation() {
     <>
       <CardBody>
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <h3>Invite people to your project</h3>
+          <h3>{t("invite-to-project")}</h3>
         </div>
         <Form onSubmit={handleSearch}>
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Input type="text" placeholder="Add new members..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                <Input type="text" placeholder={t("add-new-members")} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
               </FormGroup>
 
               <div
@@ -133,7 +138,7 @@ function ThirdStageCreation() {
                     color: "#333",
                   }}
                 >
-                  Group Preview
+                  {t("users-preview")}
                 </Label>
               </FormGroup>
 

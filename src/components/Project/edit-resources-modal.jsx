@@ -8,13 +8,6 @@ import {
   Row,
   Col,
   Input,
-  Card,
-  CardHeader,
-  CardText,
-  CardBody,
-  CardTitle,
-  Label,
-  FormGroup,
 } from "reactstrap";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -26,6 +19,8 @@ import { tsuccess, terror } from "../toasts/message-toasts.jsx";
 import useEditProjectStore from "../../stores/useEditProjectStore.js";
 
 const EditResources = forwardRef((props, ref) => {
+  const { t } = useTranslation();
+
   const token = useUserStore((state) => state.token);
   const { id } = useParams();
   const [modal, setModal] = useState(false);
@@ -58,6 +53,7 @@ const EditResources = forwardRef((props, ref) => {
     fetchResources();
   }, []);
 
+  // Função para lidar a adição de produtos ao projeto, ou adição de quantidade de produtos ao projeto
   async function editProjectProducts(token, projectId, data) {
 
     let productList = {
@@ -75,7 +71,6 @@ const EditResources = forwardRef((props, ref) => {
   }
 
 
-  const { t } = useTranslation();
   const toggle = () => {
     setModal(!modal);
     if (modal) { 
@@ -91,6 +86,7 @@ const EditResources = forwardRef((props, ref) => {
     open: handleShow,
   }));
 
+  // Função para lidar com a mudança de quantidade de produtos no projeto
   const handleQuantityChange = (resourceId, newQuantity) => {
     const resourceName = resources.find((resource) => resource.id === resourceId)?.name || "Unknown";
     const parsedQuantity = parseInt(newQuantity, 10);
@@ -131,11 +127,11 @@ const EditResources = forwardRef((props, ref) => {
           style={{ color: "var(--whitey)", fontWeight: "bold" }}
           className="modal-style"
         >
-          Add more project resources{" "}
+          {t("add-more-resources")}{" "}
           <Input
             className="mt-2"
             type="text"
-            placeholder="Search products..."
+            placeholder={t("search-resources")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -183,7 +179,7 @@ const EditResources = forwardRef((props, ref) => {
         </ModalBody>
         <ModalFooter className="modal-style">
           <Button color="primary" onClick={() => editProjectProducts(token, id, newResources)}>
-            Save
+          {t("edit-button")}
           </Button>{" "}
         </ModalFooter>
       </Modal>

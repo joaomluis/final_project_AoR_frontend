@@ -1,10 +1,12 @@
 import { CardBody, Card, Button, CardFooter } from "reactstrap";
 
 import ProjectPreview from "../Preview/project-preview.jsx";
+import { useTranslation } from "react-i18next";
 
 
 function ProjectAdditionalInfo({ data, title, editButton }) {
 
+  const { t } = useTranslation();
 
   return (
     <>
@@ -19,7 +21,7 @@ function ProjectAdditionalInfo({ data, title, editButton }) {
         <CardFooter style={{borderTop:'none'}}>
           {editButton && (
           <Button color="white" size="sm" className="button-style1" onClick={editButton}>
-            Edit
+            {t("edit-button")}
           </Button>
           )}
         </CardFooter>

@@ -14,23 +14,23 @@ const ProjectCardsList = ({ Project }) => {
 
     switch (status) {
       case "PLANNING":
-        formattedStatus = "Planning";
+        formattedStatus = t("planning-phase");
         backgroundColor = "blue";
         break;
       case "READY":
-        formattedStatus = "Ready";
+        formattedStatus = t("ready-phase");
         backgroundColor = "green";
         break;
       case "IN_PROGRESS":
-        formattedStatus = "In Progress";
+        formattedStatus = t("inProgress-phase");
         backgroundColor = "yellow";
         break;
       case "FINISHED":
-        formattedStatus = "Finished";
+        formattedStatus = t("finished-phase");
         backgroundColor = "green";
         break;
       case "CANCELLED":
-        formattedStatus = "Cancelled";
+        formattedStatus = t("cancelled-phase");
         backgroundColor = "red";
         break;
       default:
@@ -79,7 +79,7 @@ const ProjectCardsList = ({ Project }) => {
           </CardSubtitle>
           <CardText>{truncateDescription(Project.description, 95)}</CardText>
           <div>
-            <MdDateRange /> Start date: {Project.startDate}
+            <MdDateRange /> {t("project-start-date")}: {Project.startDate}
           </div>
 
           <div style={{ display: "flex", justifyContent: "space-between" }}>
