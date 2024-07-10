@@ -17,6 +17,7 @@ export const useUserStore = create(
       token: "",
       email: "",
       privateProfile: "",
+      userType: 30,
       skills: [],
       allSkills: [],
       skillTypes: [],
@@ -79,6 +80,7 @@ export const useUserStore = create(
       logout() {
         set({ token: "" });
       },
+      updateUserType: (userType) => set({ userType }),
     }),
     {
       name: "userstore", //name of the storage

@@ -24,6 +24,7 @@ import { useMediaQuery } from "react-responsive";
 import { useTranslation } from "react-i18next";
 import UserType from "../components/enums/UserType.js";
 import ProjectStatus from "../components/enums/ProjectStatus.js";
+
 import "../components/Project/lists/users-list-table-card.css";
 import ListLayout from "../layout/list-layout/list.jsx";
 import { Api } from "../api.js";
@@ -31,6 +32,7 @@ import { useUserStore } from "../stores/useUserStore.js";
 import { use } from "i18next";
 import { terror, tsuccess } from "../components/toasts/message-toasts.jsx";
 import PaginationComponent from "../components/pagination/pagination.jsx";
+import SettingsPage from "./settings-page.jsx";
 
 const AdminPage = () => {
   const { t } = useTranslation();
@@ -42,6 +44,7 @@ const AdminPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams({ page: 1 });
   const pageParam = searchParams.get("page") || 1;
+  const [loading, setLoading] = useState(true);
 
   const toggle = (tab) => {
     if (activeTab !== tab) {
@@ -65,6 +68,7 @@ const AdminPage = () => {
       setTotalPages(response.data.totalPages);
       console.log(response.data.results);
       setProjects(response.data.results);
+      setLoading(false);
       if (pageParam === "1") removePageParam();
     } catch (error) {
       console.error(error);
@@ -188,45 +192,46 @@ const AdminPage = () => {
 
   return (
     <>
-      <ListLayout title={t("admin")} loading={false} toggleCreate={false} toggleOrder={false} toggleFilter={false}>
-        <Col md="12">
-          <Nav tabs style={{ cursor: "pointer" }}>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: activeTab === "1" })}
-                onClick={() => {
-                  toggle("1");
-                }}
-              >
-                {t("projects")}
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: activeTab === "2" })}
-                onClick={() => {
-                  toggle("2");
-                }}
-              >
-                {t("settings")}
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <TabContent activeTab={activeTab}>
-            <TabPane tabId="1">
-              <Row>
-                <Col sm="12">
-                  <div>{projects.length === 0 ? renderNoDataMessage() : isMobile ? renderCards() : renderTable()}</div>{" "}
-                </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId="2">
-              {/* Content for settings tab */}
-              <h4>{t("settings")}</h4>
-            </TabPane>
-          </TabContent>
-        </Col>
-        {activeTab !== "2" && <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />}
+      <ListLayout title={t("admin")} loading={loading}>
+        <Nav tabs style={{ cursor: "pointer" }}>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: activeTab === "1" })}
+              onClick={() => {
+                toggle("1");
+              }}
+            >
+              {t("projects")}
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: activeTab === "2" })}
+              onClick={() => {
+                toggle("2");
+              }}
+            >
+              {t("settings")}
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={activeTab}>
+          <TabPane tabId="1">
+            <Row>
+              <Col sm="12">
+                <div>{projects.length === 0 ? renderNoDataMessage() : isMobile ? renderCards() : renderTable()}</div>{" "}
+              </Col>
+            </Row>
+          </TabPane>
+          <TabPane tabId="2">
+            {/* Content for settings tab */}
+            <SettingsPage />
+          </TabPane>
+        </TabContent>
+
+        {activeTab !== "2" && totalPages !== 1 ? (
+          <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />
+        ) : null}
       </ListLayout>
     </>
   );

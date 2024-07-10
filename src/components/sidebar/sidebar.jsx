@@ -4,6 +4,7 @@ import { FaHome, FaUsers, FaTools, FaClipboard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useUserStore } from "../../stores/useUserStore";
 import { MdAdminPanelSettings } from "react-icons/md";
+import UserType from "../../components/enums/UserType";
 
 // import { useMailStore } from "../../stores/useMailStore";
 import "./sidebar.css";
@@ -16,7 +17,7 @@ function SideNavbar() {
   const [collapsed, setCollapsed] = useState(false);
   const token = useUserStore((state) => state.token);
   const email = useUserStore((state) => state.email);
-
+  const userType = useUserStore((state) => state.userType);
   const myOwnProjects = useUserStore((state) => state.myOwnProjects);
   const setMyOwnProjects = useUserStore((state) => state.updateMyOwnProjects);
   let statusClass = "";
@@ -174,14 +175,16 @@ function SideNavbar() {
             {t("users")}
           </MenuItem>
         </div>
-        <div className="custom-link" onClick={() => navigate("/fica-lab/admin-page")}>
-          <MenuItem
-            icon={<IconWithBadge icon={<MdAdminPanelSettings style={collapsed ? collapsedStyle : ""} />} badgeCount={userCount} collapsed={collapsed} />}
-          >
-            {" "}
-            {t("admin")}
-          </MenuItem>
-        </div>
+        {userType === UserType.ADMIN ? (
+          <div className="custom-link" onClick={() => navigate("/fica-lab/admin-page")}>
+            <MenuItem
+              icon={<IconWithBadge icon={<MdAdminPanelSettings style={collapsed ? collapsedStyle : ""} />} badgeCount={userCount} collapsed={collapsed} />}
+            >
+              {" "}
+              {t("admin")}
+            </MenuItem>
+          </div>
+        ) : null}
         {/* <SubMenu icon={<FaClipboard style={collapsed ? collapsedStyle : ""} />} label={t("my-projects")}>
           {myOwnProjects
             ? myOwnProjects.map((project, index) => {

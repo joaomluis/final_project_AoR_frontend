@@ -262,6 +262,10 @@ export const Api = {
     return apiClient.put(`/projects/${projectId}/leave`, {}, { headers: { token } }).then(handleResponse).catch(handleError);
   },
 
+  cancelProject: (token, projectId, justify) => {
+    return apiClient.put(`/projects/${projectId}/cancel`, justify, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
   //PRODUCTS endpoint
   getProducts: (token, props) => {
     const queryString = qs.stringify(props, { arrayFormat: "repeat" });
@@ -383,4 +387,12 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
+  getStatisticsByLab: (token, lab) => {
+    const queryString = qs.stringify(lab, { arrayFormat: "repeat" });
+    return apiClient.get(`/admin/statistics?${queryString}`, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
+  updateTimeout: (token, props) => apiClient.put(`/admin/timeout`, props, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  changeRole: (token, props) => apiClient.put(`/admin/role`, props, { headers: { token } }).then(handleResponse).catch(handleError),
 };

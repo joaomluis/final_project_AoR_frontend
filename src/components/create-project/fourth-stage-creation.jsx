@@ -26,6 +26,9 @@ function FourthStageCreation() {
   // const [labs, setLabs] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  console.log(projectResources);
+  const products = projectKeywords.filter((p) => p.quantity > 0);
+  console.log(products);
   // async function handleLoadLabLocations() {
   //   try {
   //     if (!isLoaded) {

@@ -9,6 +9,10 @@ const UserType = {
   fromValue: function (value) {
     return Object.keys(this).find((key) => this[key] === value);
   },
+
+  fromName: function (name) {
+    return this[name];
+  },
 };
 
 export default UserType;
