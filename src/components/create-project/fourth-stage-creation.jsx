@@ -22,9 +22,22 @@ function FourthStageCreation() {
   const projectUsers = useCreateProjectStore((state) => state.projectUsers);
 
   const projectResources = useCreateProjectStore((state) => state.projectResources);
+  const setProjectResources = useCreateProjectStore((state) => state.setProjectResources);
+
+  
 
   const projectKeywords = useCreateProjectStore((state) => state.projectKeywords);
   const projectSkills = useCreateProjectStore((state) => state.projectSkills);
+
+  useEffect(() => {
+    const filteredResources = projectResources.filter(resource => resource.quantity > 0);
+  
+    // Check if the filtered list is different from the current list
+    if (JSON.stringify(projectResources) !== JSON.stringify(filteredResources)) {
+      setProjectResources(filteredResources);
+    }
+  }, [projectResources, setProjectResources]);
+
 
   const token = useUserStore((state) => state.token);
   // const [labs, setLabs] = useState([]);
