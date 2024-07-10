@@ -1,6 +1,7 @@
 import React from "react";
 import { Badge, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import { useState } from "react";
+import "../../assets/css/general-css.css";
 
 const PopoverComponent = ({ data, title, id, idText }) => {
   const [popoverOpen, setPopoverOpen] = useState(false);

@@ -1,4 +1,14 @@
-import { Container, Col, Row, Card, CardFooter, Button, CardImg, CardBody, CardTitle } from "reactstrap";
+import {
+  Container,
+  Col,
+  Row,
+  Card,
+  CardFooter,
+  Button,
+  CardImg,
+  CardBody,
+  CardTitle,
+} from "reactstrap";
 import { useTranslation } from "react-i18next";
 
 import Carousel from "react-multi-carousel";
@@ -6,8 +16,12 @@ import "react-multi-carousel/lib/styles.css";
 
 import "../../assets/css/general-css.css";
 import img1 from "../../assets/img/project-img-placeholder.jpg";
+import img2 from "../../assets/img/project-img.jpg";
 
 import { Api } from "../../api.js";
+import { useEffect, useState } from "react";
+import { set } from "date-fns";
+import { Link } from "react-router-dom";
 
 const items = [
   {
@@ -53,6 +67,34 @@ const responsive = {
 
 function LandingPageContent() {
   const { t } = useTranslation();
+
+  const [projects, setProjects] = useState([]);
+
+  async function getAllProjects() {
+    try {
+      const response = await Api.getProjectsForLandingPage();
+      setProjects(response.data.results);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getAllProjects();
+  }, []);
+
+  // função para baralhar os objectos da array dos projectos
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; 
+    }
+    return array;
+  }
+
+  // Nova array com 5 projectos baralhados
+  const shuffledProjects = shuffleArray([...projects]).slice(0, 5);
+
   return (
     <Container>
       <div className="section3">
@@ -81,24 +123,31 @@ function LandingPageContent() {
           </Col>
         </Row>
         <Row style={{ marginTop: "20px" }}>
-          <Carousel responsive={responsive} infinite autoPlaySpeed={3000} centerMode={false}>
-            {items.map((item, index) => (
+          <Carousel
+            responsive={responsive}
+            infinite
+            autoPlaySpeed={3000}
+            centerMode={false}
+          >
+            {shuffledProjects.map((item, index) => (
               <div key={index} style={{ padding: "10px" }}>
                 <Card key={index}>
-                  <CardImg top width="100%" height={"200px"} src={item.src} alt={item.altText} />
+                  <CardImg
+                    top
+                    width="100%"
+                    height={"200px"}
+                    src={img2}
+                    alt={item.name}
+                  />
                   <CardBody>
-                    <CardTitle tag="h5">{item.caption}</CardTitle>
+                    <CardTitle tag="h5" className="mb-2">{item.name}</CardTitle>
+                    <p>
+                      {item.description.length > 50
+                        ? item.description.substring(0, 50) + "..."
+                        : item.description}
+                    </p>
                   </CardBody>
-                  <CardFooter style={{ backgroundColor: "inherit" }}>
-                    <Button
-                      style={{
-                        backgroundColor: "var(--secondary-color)",
-                        border: "none",
-                      }}
-                    >
-                      {t("view-project")}
-                    </Button>
-                  </CardFooter>
+                  
                 </Card>
               </div>
             ))}
@@ -106,14 +155,17 @@ function LandingPageContent() {
         </Row>
         <Row>
           <Col md="12" className="align-right mb-5 mt-3">
+          <Link to="/projects">
             <Button
               style={{
                 backgroundColor: "var(--secondary-color)",
                 border: "none",
               }}
+              size="sm"
             >
               {t("see-more-projects")}
             </Button>
+          </Link>
           </Col>
         </Row>
       </div>

@@ -1,13 +1,16 @@
 import { Card, CardBody, CardTitle, CardSubtitle, CardText, CardHeader, CardFooter, Badge } from "reactstrap";
 import { Link } from "react-router-dom";
 import { MdDateRange } from "react-icons/md";
+import { PiNotepad } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
 import "./project-cards-list.css";
 import "../../assets/css/general-css.css";
-import PlusIcon from "../../assets/icons/plus-circle-icon.png";
 import PopoverComponent from "../tags/tag-popover-component";
+import { useLocation } from "react-router-dom";
 const ProjectCardsList = ({ Project }) => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const loggedProjectPage = location.pathname.includes("project-list");
   const formatStatus = (status) => {
     let formattedStatus;
     let backgroundColor;
@@ -77,11 +80,12 @@ const ProjectCardsList = ({ Project }) => {
               {t("participants")} {projectUsers.length} / {maxParticipants}
             </div>
           </CardSubtitle>
-          <CardText>{truncateDescription(Project.description, 95)}</CardText>
+          <CardText><PiNotepad/> {truncateDescription(Project.description, 95)}</CardText>
+          {loggedProjectPage && (
           <div>
             <MdDateRange /> {t("project-start-date")}: {Project.startDate}
           </div>
-
+        )}
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div className="project-card-view">
               <PopoverComponent data={Project.keywords} title={t("view-keywords")} id={Project.id} idText="view-keywords" />
@@ -89,11 +93,13 @@ const ProjectCardsList = ({ Project }) => {
             </div>
           </div>
         </CardBody>
+        {loggedProjectPage && (
         <CardFooter>
           <Link color="light" to={`/fica-lab/project/${Project.id}`} className="btn button-style1 w-100">
             {t("see-project")}
           </Link>
         </CardFooter>
+      )}
       </Card>
     </>
   );
