@@ -299,5 +299,12 @@
   "finished": "Finished",
   "project-status-changed": "Project status changed",
   "project-cancelled": "Project cancelled",
-  "project-approved": "Project approved"
+  "project-approved": "Project approved",
+  "new-notification": "New notification",
+  "day": "Day",
+  "week": "Week",
+  "month": "Month",
+  "year": "Year",
+  "gantt-chart": "Gantt Chart",
+  "task-list": "Task list"
 }

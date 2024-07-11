@@ -18,23 +18,23 @@ const ProjectCardsList = ({ Project }) => {
     switch (status) {
       case "PLANNING":
         formattedStatus = t("planning-phase");
-        backgroundColor = "blue";
+        backgroundColor = "var(--planning)";
         break;
       case "READY":
         formattedStatus = t("ready-phase");
-        backgroundColor = "green";
+        backgroundColor = "var(--ready)";
         break;
       case "IN_PROGRESS":
-        formattedStatus = t("inProgress-phase");
-        backgroundColor = "yellow";
+        formattedStatus = t("in_progress");
+        backgroundColor = "var(--in-progress)";
         break;
       case "FINISHED":
         formattedStatus = t("finished-phase");
-        backgroundColor = "green";
+        backgroundColor = "var(--finished)";
         break;
       case "CANCELLED":
         formattedStatus = t("cancelled-phase");
-        backgroundColor = "red";
+        backgroundColor = "var(--cancelled)";
         break;
       default:
         formattedStatus = status;
@@ -80,12 +80,14 @@ const ProjectCardsList = ({ Project }) => {
               {t("participants")} {projectUsers.length} / {maxParticipants}
             </div>
           </CardSubtitle>
-          <CardText><PiNotepad/> {truncateDescription(Project.description, 95)}</CardText>
+          <CardText>
+            <PiNotepad /> {truncateDescription(Project.description, 95)}
+          </CardText>
           {loggedProjectPage && (
-          <div>
-            <MdDateRange /> {t("project-start-date")}: {Project.startDate}
-          </div>
-        )}
+            <div>
+              <MdDateRange /> {t("project-start-date")}: {Project.startDate}
+            </div>
+          )}
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div className="project-card-view">
               <PopoverComponent data={Project.keywords} title={t("view-keywords")} id={Project.id} idText="view-keywords" />
@@ -94,12 +96,12 @@ const ProjectCardsList = ({ Project }) => {
           </div>
         </CardBody>
         {loggedProjectPage && (
-        <CardFooter>
-          <Link color="light" to={`/fica-lab/project/${Project.id}`} className="btn button-style1 w-100">
-            {t("see-project")}
-          </Link>
-        </CardFooter>
-      )}
+          <CardFooter>
+            <Link color="light" to={`/fica-lab/project/${Project.id}`} className="btn button-style1 w-100">
+              {t("see-project")}
+            </Link>
+          </CardFooter>
+        )}
       </Card>
     </>
   );

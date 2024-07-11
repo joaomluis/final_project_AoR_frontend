@@ -300,5 +300,12 @@
   "finished": "Terminado",
   "project-status-changed": "Estado do projeto alterado",
   "project-cancelled": "Projeto cancelado",
-  "project-approved": "Projeto aprovado"
+  "project-approved": "Projeto aprovado",
+  "new-notification": "Nova notificação",
+  "day": "Dia",
+  "week": "Semana",
+  "month": "Mês",
+  "year": "Ano",
+  "gantt-chart": "Gráfico de Gantt",
+  "task-list": "Lista de tarefas"
 }

@@ -8,7 +8,7 @@ import "gantt-task-react/dist/index.css";
 import { useUserStore } from "../../stores/useUserStore";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
-import { terror } from "../toasts/message-toasts.jsx";
+import { terror, tsuccess } from "../toasts/message-toasts.jsx";
 import { ModalTask } from "../modals/modal-task.jsx";
 import useMessageStore from "../../stores/useMessageStore";
 
@@ -51,18 +51,6 @@ const formatToLocalDateTime = (date) => {
   return `${date}T00:00:00`;
 };
 
-const viewModeOptions = [
-  { value: ViewMode.Day, label: "Day" },
-  { value: ViewMode.Week, label: "Week" },
-  { value: ViewMode.Month, label: "Month" },
-  { value: ViewMode.Year, label: "Year" },
-];
-
-const displayModeOptions = [
-  { value: "gantt", label: "Gantt Chart" },
-  { value: "list", label: "Task List" },
-];
-
 const GanttChart = ({ id }) => {
   const [tasks, setTasks] = useState([]);
   const [viewMode, setViewMode] = useState(ViewMode.Month);
@@ -76,7 +64,19 @@ const GanttChart = ({ id }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [mode, setMode] = useState("create");
   const activeTab = useMessageStore((state) => state.activeTab);
+  const { t } = useTranslation();
 
+  const viewModeOptions = [
+    { value: ViewMode.Day, label: t("day") },
+    { value: ViewMode.Week, label: t("week") },
+    { value: ViewMode.Month, label: t("month") },
+    { value: ViewMode.Year, label: t("year") },
+  ];
+
+  const displayModeOptions = [
+    { value: "gantt", label: t("gantt-chart") },
+    { value: "list", label: t("task-list") },
+  ];
   const triggerUpdate = () => {
     console.log("Triggering update...");
     setUpdateTrigger((prev) => prev + 1); // Incrementa o contador para disparar a atualização
@@ -101,7 +101,6 @@ const GanttChart = ({ id }) => {
     setColumnWidth(columnWidth === 200 ? 0 : 200);
     setIsChecked(!isChecked);
   };
-  const { t } = useTranslation();
   const fetchData = async () => {
     const props = {
       dtoType: "TaskGanttDto",
@@ -123,6 +122,10 @@ const GanttChart = ({ id }) => {
   }, [id, token, updateTrigger, activeTab]);
 
   const handleTaskClick = (task) => {
+    if (task.originalTask.status === "PRESENTATION") {
+      terror("Task is a presentation, you cannot edit it");
+      return;
+    }
     setMode("edit");
     setSelectedTask(task.originalTask);
     toggleModalView();
@@ -140,9 +143,9 @@ const GanttChart = ({ id }) => {
         initialDate: task.start.toISOString().split("T")[0], // Formatar para ISO 8601 (sem tempo)
         finalDate: task.end.toISOString().split("T")[0], // Formatar para ISO 8601 (sem tempo)
       };
-      console.log("Props:", props);
       // Enviar solicitação para atualizar a data da tarefa no backend
       const response = await Api.updateTaskDate(token, task.originalTask.id, props);
+      tsuccess(response.data.message);
       // Opcional: Realizar uma nova busca ou atualização global dos dados
     } catch (error) {
       terror(error.message);
