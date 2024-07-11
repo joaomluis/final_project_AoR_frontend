@@ -292,5 +292,10 @@
   "project-status-distribution": "Distribuição de estado do projeto",
   "promove-user": "Promover utilizador a administrador de sistema",
   "projects-by-status": "Projetos por estado",
-  "cancel-project": "Cancelar projeto"
+  "cancel-project": "Cancelar projeto",
+
+  "project-group-size": "Tamanho do grupo de projeto",
+  "project-group-size-info": "Número de utilizadores por projeto autorizado é",
+  "project-group-size-selected": "Número de utilizadores selecionados:",
+  "of": "de"
 }

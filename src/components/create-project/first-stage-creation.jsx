@@ -1,6 +1,19 @@
-import { Col, Row, CardBody, Input, Label, Form, FormGroup } from "reactstrap";
+import {
+  Col,
+  Row,
+  CardBody,
+  Input,
+  Label,
+  Form,
+  FormGroup,
+  Popover,
+  PopoverHeader,
+  PopoverBody,
+} from "reactstrap";
 
 import { useEffect, useState } from "react";
+
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
 import useCreateProjectStore from "../../stores/useCreateProjectStore.js";
 import { useUserStore } from "../../stores/useUserStore.js";
@@ -17,8 +30,7 @@ function FirstStageCreation() {
   const lab = useCreateProjectStore((state) => state.lab);
   const startDate = useCreateProjectStore((state) => state.startDate);
   const endDate = useCreateProjectStore((state) => state.endDate);
-  const [minEndDate, setMinEndDate] = useState('');
-
+  const [minEndDate, setMinEndDate] = useState("");
 
   const token = useUserStore((state) => state.token);
   const [labs, setLabs] = useState([]);
@@ -37,13 +49,46 @@ function FirstStageCreation() {
     }
   }
 
+  //Codigo para lidar com definição de tamanho do grupo
+
+  const groupSize = useCreateProjectStore((state) => state.projectGroupSize);
+  const setGroupSize = useCreateProjectStore(
+    (state) => state.setProjectGroupSize
+  );
+  const minGroupSize = 4;
+
+  const [popoverOpen, setPopoverOpen] = useState(false);
+
+  const showPopover = () => setPopoverOpen(true);
+  const hidePopover = () => setPopoverOpen(false);
+
+  const [groupMaxSize, setGroupMaxSize] = useState(0);
+
+  async function getGroupMaxSizeAllowed() {
+    try {
+      const response = await Api.getGroupMaxSize(token);
+      setGroupMaxSize(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   useEffect(() => {
     handleLoadLabLocations();
+    getGroupMaxSizeAllowed();
   }, []);
-
 
   const handleProjectNameChange = (event) => {
     useCreateProjectStore.getState().setProjectName(event.target.value);
+  };
+
+  const handleGroupSizeChange = (event) => {
+    const newValue = event.target.value;
+    if (newValue <= groupMaxSize) {
+      setGroupSize(newValue);
+    } else {
+      setGroupSize(groupMaxSize);
+    }
   };
 
   const handleDescriptionChange = (event) => {
@@ -61,11 +106,10 @@ function FirstStageCreation() {
     const newStartDate = e.target.value;
     useCreateProjectStore.getState().setStartDate(newStartDate);
 
-    
     const dayAfterStartDate = new Date(newStartDate);
     dayAfterStartDate.setDate(dayAfterStartDate.getDate() + 1);
 
-    const formattedMinEndDate = dayAfterStartDate.toISOString().split('T')[0];
+    const formattedMinEndDate = dayAfterStartDate.toISOString().split("T")[0];
     setMinEndDate(formattedMinEndDate);
     useCreateProjectStore.getState().setEndDate(formattedMinEndDate);
   };
@@ -104,9 +148,15 @@ function FirstStageCreation() {
                 />
               </FormGroup>
               <FormGroup floating>
-                <Input bsSize="md" type="select" className="form-select-lg" value={lab.id || "default"} onChange={handleLabChange}>
+                <Input
+                  bsSize="md"
+                  type="select"
+                  className="form-select-lg"
+                  value={lab.id || "default"}
+                  onChange={handleLabChange}
+                >
                   <option disabled value="default">
-                  {t("select-lab")}
+                    {t("select-lab")}
                   </option>
                   {labs.map((lab) => (
                     <option key={lab.id} value={lab.id}>
@@ -119,11 +169,61 @@ function FirstStageCreation() {
             <Col md={6}>
               <FormGroup>
                 <Label for="startDate">{t("project-start-date")}</Label>
-                <Input type="date" name="startDate" id="startDate" className="form-control-lg" value={startDate} onChange={handleStartDateChange} />
+                <Input
+                  type="date"
+                  name="startDate"
+                  id="startDate"
+                  className="form-control-lg"
+                  value={startDate}
+                  onChange={handleStartDateChange}
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="endDate">{t("project-end-date")}</Label>
-                <Input type="date" name="endDate" id="endDate" className="form-control-lg" value={endDate} onChange={handleEndDateChange} min={minEndDate} />
+                <Input
+                  type="date"
+                  name="endDate"
+                  id="endDate"
+                  className="form-control-lg"
+                  value={endDate}
+                  onChange={handleEndDateChange}
+                  min={minEndDate}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="projectName">{t("project-group-size")}</Label>
+                {"  "}
+
+                <span
+                  id="Popover1"
+                  style={{ cursor: "pointer" }}
+                  onMouseEnter={showPopover}
+                  onMouseLeave={hidePopover}
+                >
+                  <IoIosInformationCircleOutline />
+                </span>
+                <Popover
+                  placement="right"
+                  isOpen={popoverOpen}
+                  target="Popover1"
+                >
+                  
+                  <PopoverBody>
+                  {t("project-group-size-info")} {groupMaxSize}
+                  </PopoverBody>
+                </Popover>
+
+                <Input
+                  type="number"
+                  name="projectGroupSize"
+                  id="projectGroupSize"
+                  className="form-control-lg"
+                  value={groupSize}
+                  min={minGroupSize}
+                  max={groupMaxSize}
+                  onChange={handleGroupSizeChange}
+                  required
+                />
               </FormGroup>
             </Col>
           </Row>

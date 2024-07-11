@@ -291,5 +291,10 @@
   "project-status-distribution": "Project status distribution",
   "promove-user": "Promove user to admin",
   "projects-by-status": "Projects by status",
-  "cancel-project": "Cancel project"
+  "cancel-project": "Cancel project",
+
+  "project-group-size": "Project group size",
+  "project-group-size-info": "The max number of users per project is",
+  "project-group-size-selected": "Number of users selected:",
+  "of": "of"
 }

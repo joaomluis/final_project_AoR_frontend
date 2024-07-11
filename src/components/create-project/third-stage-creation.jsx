@@ -7,6 +7,8 @@ import { Api } from "../../api.js";
 import { useUserStore } from "../../stores/useUserStore.js";
 import { useTranslation } from "react-i18next";
 
+import { terror } from "../toasts/message-toasts.jsx";
+
 function ThirdStageCreation() {
   const { t } = useTranslation();
 
@@ -14,6 +16,7 @@ function ThirdStageCreation() {
 
   const projectUsers = useCreateProjectStore((state) => state.projectUsers);
   const updateProjectMembers = useCreateProjectStore((state) => state.setProjectUsers);
+  const groupSize = useCreateProjectStore((state) => state.projectGroupSize);
   const [searchTerm, setSearchTerm] = useState("");
   const [allMembers, setAllMembers] = useState([]);
   const [matchedMembers, setMatchedMembers] = useState([]);
@@ -29,15 +32,19 @@ function ThirdStageCreation() {
   const handleSelect = (userId) => {
     const newSelectedMembers = [...projectUsers];
     const memberObject = allMembers.find((member) => member.userId === userId);
-
+  
     const index = newSelectedMembers.findIndex((member) => member.userId === userId);
-
+  
     if (index > -1) {
       newSelectedMembers.splice(index, 1);
-    } else {
+    } else if (newSelectedMembers.length < groupSize -1) {
+      
       newSelectedMembers.push(memberObject);
+    } else {
+      
+      terror("Group size limit has been reached.");
     }
-    console.log(newSelectedMembers);
+  ;
     updateProjectMembers(newSelectedMembers);
   };
 
@@ -64,12 +71,15 @@ function ThirdStageCreation() {
     fetchUsers();
   }, []);
 
+
   return (
     <>
       <CardBody>
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <h3>{t("invite-to-project")}</h3>
+          <h5>{t("project-group-size-selected")} {projectUsers.length +1 } {t("of")} {groupSize}</h5>
         </div>
+        
         <Form onSubmit={handleSearch}>
           <Row>
             <Col md={6}>
