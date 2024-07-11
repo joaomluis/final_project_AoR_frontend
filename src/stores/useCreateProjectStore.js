@@ -3,6 +3,8 @@ import { create } from "zustand";
 const useCreateProjectStore = create((set) => ({
   projectName: "",
   setProjectName: (value) => set(() => ({ projectName: value })),
+  projectGroupSize: 4,
+  setProjectGroupSize: (value) => set(() => ({ projectGroupSize: value })),
   description: "",
   setDescription: (value) => set(() => ({ description: value })),
   lab: "",

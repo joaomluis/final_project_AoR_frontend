@@ -75,7 +75,7 @@ function MyProfile() {
     try {
       const response = await Api.uploadImage(token, file, filename);
 
-      tsuccess(response.data);
+      tsuccess("Profile picture uploaded successfully!");
       const newImageUrl = response.data + "?timestamp=" + Date.now();
       handleInputChange(newImageUrl, "imagePath");
     } catch (error) {

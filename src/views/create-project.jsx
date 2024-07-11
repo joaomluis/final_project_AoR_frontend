@@ -11,8 +11,6 @@ import "../assets/css/general-css.css";
 //TODO correct the label
 
 import { useUserStore } from "../stores/useUserStore.js";
-import UserSettings from "../components/modals/user-settings.jsx";
-import FormInputLabel from "../components/input/forminputlabel.jsx";
 
 import { Api } from "../api";
 import { tsuccess, terror } from "../components/toasts/message-toasts.jsx";
@@ -29,6 +27,7 @@ function CreateProject() {
   const navigate = useNavigate();
   const token = useUserStore((state) => state.token);
   const projectName = useCreateProjectStore((state) => state.projectName);
+  const projectGroupSize = useCreateProjectStore((state) => state.projectGroupSize);
   const description = useCreateProjectStore((state) => state.description);
   const lab = useCreateProjectStore((state) => state.lab);
   const startDate = useCreateProjectStore((state) => state.startDate);
@@ -47,6 +46,7 @@ function CreateProject() {
     const props = {
       name: projectName,
       description: description,
+      groupSize: projectGroupSize,
       lab_id: lab.id,
       startDate: startDate,
       endDate: endDate,
