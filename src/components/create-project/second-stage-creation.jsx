@@ -74,7 +74,7 @@ function SecondStageCreation() {
       <CardBody>
         <Form>
           <Row>
-            <Col md={6} className="offset-md-3">
+            <Col md={12} className="">
               <div
                 style={{
                   display: "flex",
@@ -83,13 +83,13 @@ function SecondStageCreation() {
                 }}
               >
                 <Button className="button-style1" color="primary" size="sm" onClick={() => setFilter("All")} style={{ flex: 1, margin: "0.5rem" }}>
-                {t("all")}
+                  {t("all")}
                 </Button>
                 <Button className="button-style1" color="primary" size="sm" onClick={() => setFilter("COMPONENT")} style={{ flex: 1, margin: "0.5rem" }}>
-                {t("components")}
+                  {t("components")}
                 </Button>
                 <Button className="button-style1" color="primary" size="sm" onClick={() => setFilter("RESOURCE")} style={{ flex: 1, margin: "0.5rem" }}>
-                {t("resources")}
+                  {t("resources")}
                 </Button>
               </div>
               <div style={{ maxHeight: "240px", overflowY: "auto" }}>

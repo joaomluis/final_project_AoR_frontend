@@ -8,7 +8,7 @@ import "gantt-task-react/dist/index.css";
 import { useUserStore } from "../../stores/useUserStore";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
-import { terror } from "../toasts/message-toasts.jsx";
+import { terror, tsuccess } from "../toasts/message-toasts.jsx";
 import { ModalTask } from "../modals/modal-task.jsx";
 import useMessageStore from "../../stores/useMessageStore";
 
@@ -51,18 +51,6 @@ const formatToLocalDateTime = (date) => {
   return `${date}T00:00:00`;
 };
 
-const viewModeOptions = [
-  { value: ViewMode.Day, label: "Day" },
-  { value: ViewMode.Week, label: "Week" },
-  { value: ViewMode.Month, label: "Month" },
-  { value: ViewMode.Year, label: "Year" },
-];
-
-const displayModeOptions = [
-  { value: "gantt", label: "Gantt Chart" },
-  { value: "list", label: "Task List" },
-];
-
 const GanttChart = ({ id }) => {
   const [tasks, setTasks] = useState([]);
   const [viewMode, setViewMode] = useState(ViewMode.Month);
@@ -76,7 +64,19 @@ const GanttChart = ({ id }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [mode, setMode] = useState("create");
   const activeTab = useMessageStore((state) => state.activeTab);
+  const { t } = useTranslation();
 
+  const viewModeOptions = [
+    { value: ViewMode.Day, label: t("day") },
+    { value: ViewMode.Week, label: t("week") },
+    { value: ViewMode.Month, label: t("month") },
+    { value: ViewMode.Year, label: t("year") },
+  ];
+
+  const displayModeOptions = [
+    { value: "gantt", label: t("gantt-chart") },
+    { value: "list", label: t("task-list") },
+  ];
   const triggerUpdate = () => {
     console.log("Triggering update...");
     setUpdateTrigger((prev) => prev + 1); // Incrementa o contador para disparar a atualização
@@ -101,7 +101,6 @@ const GanttChart = ({ id }) => {
     setColumnWidth(columnWidth === 200 ? 0 : 200);
     setIsChecked(!isChecked);
   };
-  const { t } = useTranslation();
   const fetchData = async () => {
     const props = {
       dtoType: "TaskGanttDto",
@@ -123,6 +122,10 @@ const GanttChart = ({ id }) => {
   }, [id, token, updateTrigger, activeTab]);
 
   const handleTaskClick = (task) => {
+    if (task.originalTask.status === "PRESENTATION") {
+      terror("Task is a presentation, you cannot edit it");
+      return;
+    }
     setMode("edit");
     setSelectedTask(task.originalTask);
     toggleModalView();
@@ -140,9 +143,9 @@ const GanttChart = ({ id }) => {
         initialDate: task.start.toISOString().split("T")[0], // Formatar para ISO 8601 (sem tempo)
         finalDate: task.end.toISOString().split("T")[0], // Formatar para ISO 8601 (sem tempo)
       };
-      console.log("Props:", props);
       // Enviar solicitação para atualizar a data da tarefa no backend
       const response = await Api.updateTaskDate(token, task.originalTask.id, props);
+      tsuccess(response.data.message);
       // Opcional: Realizar uma nova busca ou atualização global dos dados
     } catch (error) {
       terror(error.message);
@@ -150,57 +153,47 @@ const GanttChart = ({ id }) => {
       fetchData();
     }
   };
+  const handleClickTaskMobile = (e) => {
+    console.log(e);
+    const task = tasks.find((task) => task.originalTask.id === e);
+    setMode("view");
+    setSelectedTask(task.originalTask);
+    toggleModalView();
+  };
 
   const renderTaskList = () => {
-    const taskMap = new Map();
-    const topLevelTasks = [];
-
-    tasks.forEach((task) => {
-      taskMap.set(task.id, { ...task, dependents: [] });
-      if (!task.dependencies.length) {
-        topLevelTasks.push(task);
-      }
-    });
-
-    tasks.forEach((task) => {
-      task.dependencies.forEach((depId) => {
-        if (taskMap.has(depId)) {
-          taskMap.get(depId).dependents.push(task);
-        }
-      });
-    });
-
-    const renderTask = (task) => (
-      <Card key={task.id}>
-        <Card.Body style={{ borderTop: "1rem solid var(--greyish)" }}>
-          <Card.Title>{task.name}</Card.Title>
-          <Card.Text>
-            <strong>Start:</strong> {task.start.toLocaleDateString()}
-            <br />
-            <strong>End:</strong> {task.end.toLocaleDateString()}
-          </Card.Text>
-        </Card.Body>
-        {task.dependents.length > 0 && (
-          <ListGroup className="list-group-flush">
-            {task.dependents.map((dependent) => (
-              <ListGroup.Item key={dependent.id}>
-                <strong>{dependent.name}</strong>: {dependent.start.toLocaleDateString()} - {dependent.end.toLocaleDateString()}
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        )}
-      </Card>
-    );
-
+    console.log(tasks);
+    const filtered = tasks.filter((task) => task.originalTask.status !== "PRESENTATION");
     return (
-      <div>
-        <h3>Task List</h3>
+      <Container>
+        <h3 className="mb-4">{t("Task-list")}</h3>
         <ListGroup>
-          {topLevelTasks.map((task) => (
-            <ListGroup.Item key={task.id}>{renderTask(taskMap.get(task.id))}</ListGroup.Item>
+          {filtered.map((task) => (
+            <ListGroup.Item key={task.originalTask.id} className="p-0 border-0" onClick={() => handleClickTaskMobile(task.originalTask.id)}>
+              <Card className="mb-3" style={{ borderTop: "0.25rem solid var(--greyish)" }}>
+                <Card.Body>
+                  <Card.Title style={{ fontSize: "1.25rem" }}>{task.originalTask.title}</Card.Title>
+                  <Card.Text style={{ fontSize: "0.9rem" }}>
+                    <strong>{t("Start")}</strong>: {new Date(task.originalTask.initialDate).toLocaleDateString()}
+                    <br />
+                    <strong>{t("End")}</strong>: {new Date(task.originalTask.finalDate).toLocaleDateString()}
+                  </Card.Text>
+                </Card.Body>
+                {task.originalTask.dependentTasks && task.originalTask.dependentTasks.length > 0 && (
+                  <ListGroup className="list-group-flush">
+                    {task.originalTask.dependentTasks.map((dependent) => (
+                      <ListGroup.Item key={dependent.id} style={{ fontSize: "0.85rem" }}>
+                        <strong>{dependent.title}</strong>: {new Date(dependent.initialDate).toLocaleDateString()} -{" "}
+                        {new Date(dependent.finalDate).toLocaleDateString()}
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                )}
+              </Card>
+            </ListGroup.Item>
           ))}
         </ListGroup>
-      </div>
+      </Container>
     );
   };
 

@@ -114,7 +114,7 @@ function MyProfile() {
 
   function cardSkillInterest(title, text, tag) {
     return (
-      <Card>
+      <Card className="card-no-hover">
         <CardHeader>
           <CardTitle tag="h4">{title}</CardTitle>
         </CardHeader>
@@ -231,7 +231,7 @@ function MyProfile() {
             {cardSkillInterest(t("my-skills"), t("there-you-can-add-and-remove-your-skills"), <SkillTag />)}
           </Col>
           <Col className="mt-5">
-            <Card>
+            <Card className="card-no-hover">
               <CardHeader>
                 <CardTitle tag="h4">{t("about")}</CardTitle>
               </CardHeader>

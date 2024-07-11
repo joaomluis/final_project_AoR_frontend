@@ -1,12 +1,4 @@
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  CardHeader,
-  CardFooter,
-} from "reactstrap";
+import { Card, CardBody, CardTitle, CardSubtitle, CardText, CardHeader, CardFooter } from "reactstrap";
 import { Link } from "react-router-dom";
 import { MdDateRange } from "react-icons/md";
 
@@ -15,7 +7,6 @@ import PlusIcon from "../../assets/icons/plus-circle-icon.png";
 import { useTranslation } from "react-i18next";
 
 const ProjectCards = ({ Project }) => {
-
   const { t } = useTranslation();
 
   const formatStatus = (status) => {
@@ -25,23 +16,23 @@ const ProjectCards = ({ Project }) => {
     switch (status) {
       case "PLANNING":
         formattedStatus = t("planning-phase");
-        backgroundColor = "blue";
+        backgroundColor = "var(--planning)";
         break;
       case "READY":
         formattedStatus = t("ready-phase");
-        backgroundColor = "green";
+        backgroundColor = "var(--ready)";
         break;
       case "IN_PROGRESS":
-        formattedStatus = t("inProgress-phase");
-        backgroundColor = "yellow";
+        formattedStatus = t("in_progress");
+        backgroundColor = "var(--in-progress)";
         break;
       case "FINISHED":
         formattedStatus = t("finished-phase");
-        backgroundColor = "green";
+        backgroundColor = "var(--finished)";
         break;
       case "CANCELLED":
         formattedStatus = t("cancelled-phase");
-        backgroundColor = "red";
+        backgroundColor = "var(--cancelled)";
         break;
       default:
         formattedStatus = status;
@@ -64,25 +55,14 @@ const ProjectCards = ({ Project }) => {
 
   return (
     <>
-      <Card
-        id={Project.id}
-        color="light"
-        style={{ boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)" }}
-      >
+      <Card id={Project.id} color="light" style={{ boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)" }}>
         <CardHeader style={{ backgroundColor: "var(--greyish)" }}>
-          <CardTitle
-            tag="h4"
-            style={{ fontWeight: "bold", textAlign: "center" }}
-          >
+          <CardTitle tag="h4" style={{ fontWeight: "bold", textAlign: "center" }}>
             {Project.title}
           </CardTitle>
         </CardHeader>
         <CardBody>
-          <CardSubtitle
-            className="mb-2"
-            tag="h6"
-            style={{ color: backgroundColor }}
-          >
+          <CardSubtitle className="mb-2" tag="h6" style={{ color: backgroundColor }}>
             {formattedStatus}
           </CardSubtitle>
           <CardText>{truncateDescription(Project.description, 95)}</CardText>
@@ -119,11 +99,7 @@ const ProjectCards = ({ Project }) => {
           </div>
         </CardBody>
         <CardFooter>
-          <Link
-            color="light"
-            to={`/fica-lab/project/${Project.id}`}
-            className="btn button-style1 w-100"
-          >
+          <Link color="light" to={`/fica-lab/project/${Project.id}`} className="btn button-style1 w-100">
             {t("open-project")}
           </Link>
         </CardFooter>

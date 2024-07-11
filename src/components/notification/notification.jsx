@@ -19,6 +19,9 @@ const NotificationItem = ({ notification, onClick }) => {
   const isUserKicked = NotificationType.PROJECT_KICKED === notification.notificationType;
   const isRoleChanged = NotificationType.PROJECT_ROLE_CHANGED === notification.notificationType;
   const isTaskExecutorChanged = NotificationType.TASK_EXECUTOR_CHANGED === notification.notificationType;
+  const isProjectStatusChanged = NotificationType.PROJECT_STATUS_CHANGED === notification.notificationType;
+  const isProjectCancelled = NotificationType.PROJECT_CANCELLED === notification.notificationType;
+  const isProjectApproved = NotificationType.PROJECT_APPROVED === notification.notificationType;
   const navigate = useNavigate();
   const notificationStyles = {
     email: {
@@ -82,6 +85,12 @@ const NotificationItem = ({ notification, onClick }) => {
       ? `/fica-lab/project/${notification.projectId}`
       : isTaskExecutorChanged
       ? `/fica-lab/project/${notification.projectId}`
+      : isProjectStatusChanged
+      ? `/fica-lab/project/${notification.projectId}`
+      : isProjectCancelled
+      ? `/fica-lab/project/${notification.projectId}`
+      : isProjectApproved
+      ? `/fica-lab/project/${notification.projectId}`
       : `/fica-lab/email-list/?page=1`;
     navigate(path);
   };
@@ -106,6 +115,12 @@ const NotificationItem = ({ notification, onClick }) => {
           ? getNotificationStyle("invite", notification.read)
           : isTaskExecutorChanged
           ? getNotificationStyle("task", notification.read)
+          : isProjectStatusChanged
+          ? getNotificationStyle("project_message", notification.read)
+          : isProjectCancelled
+          ? getNotificationStyle("project_message", notification.read)
+          : isProjectApproved
+          ? getNotificationStyle("project_message", notification.read)
           : getNotificationStyle("message", notification.read)
       }
     >
@@ -141,6 +156,12 @@ const NotificationItem = ({ notification, onClick }) => {
                   ? t("your-role-has-been-changed")
                   : isTaskExecutorChanged
                   ? t("task-executor-changed")
+                  : isProjectStatusChanged
+                  ? t("project-status-changed")
+                  : isProjectCancelled
+                  ? t("project-cancelled")
+                  : isProjectApproved
+                  ? t("project-approved")
                   : t("you-have-received-a-new-message")}
               </strong>
             </div>

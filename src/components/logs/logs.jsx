@@ -22,6 +22,7 @@ function formatNotificationDay(time) {
 }
 
 function formatText(text) {
+  if (!text) return "";
   return text
     .split("_") // Divide a string em partes, separadas por underscore
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Transforma a primeira letra em maiúscula e o restante em minúscula

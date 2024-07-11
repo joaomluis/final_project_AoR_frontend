@@ -1,15 +1,4 @@
-import {
-  Col,
-  Row,
-  CardBody,
-  Input,
-  Label,
-  Form,
-  FormGroup,
-  Popover,
-  PopoverHeader,
-  PopoverBody,
-} from "reactstrap";
+import { Col, Row, CardBody, Input, Label, Form, FormGroup, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 
 import { useEffect, useState } from "react";
 
@@ -52,9 +41,7 @@ function FirstStageCreation() {
   //Codigo para lidar com definição de tamanho do grupo
 
   const groupSize = useCreateProjectStore((state) => state.projectGroupSize);
-  const setGroupSize = useCreateProjectStore(
-    (state) => state.setProjectGroupSize
-  );
+  const setGroupSize = useCreateProjectStore((state) => state.setProjectGroupSize);
   const minGroupSize = 4;
 
   const [popoverOpen, setPopoverOpen] = useState(false);
@@ -131,7 +118,7 @@ function FirstStageCreation() {
                   name="projectName"
                   id="projectName"
                   placeholder={t("enter-project-name")}
-                  className="form-control-lg"
+                  className="form-control"
                   value={projectName}
                   onChange={handleProjectNameChange}
                 />
@@ -142,19 +129,13 @@ function FirstStageCreation() {
                   type="textarea"
                   name="description"
                   id="description"
-                  className="form-control-lg"
+                  className="form-control"
                   value={description}
                   onChange={handleDescriptionChange}
                 />
               </FormGroup>
               <FormGroup floating>
-                <Input
-                  bsSize="md"
-                  type="select"
-                  className="form-select-lg"
-                  value={lab.id || "default"}
-                  onChange={handleLabChange}
-                >
+                <Input bsSize="md" type="select" className="form-select" value={lab.id || "default"} onChange={handleLabChange}>
                   <option disabled value="default">
                     {t("select-lab")}
                   </option>
@@ -169,47 +150,22 @@ function FirstStageCreation() {
             <Col md={6}>
               <FormGroup>
                 <Label for="startDate">{t("project-start-date")}</Label>
-                <Input
-                  type="date"
-                  name="startDate"
-                  id="startDate"
-                  className="form-control-lg"
-                  value={startDate}
-                  onChange={handleStartDateChange}
-                />
+                <Input type="date" name="startDate" id="startDate" className="form-control" value={startDate} onChange={handleStartDateChange} />
               </FormGroup>
               <FormGroup>
                 <Label for="endDate">{t("project-end-date")}</Label>
-                <Input
-                  type="date"
-                  name="endDate"
-                  id="endDate"
-                  className="form-control-lg"
-                  value={endDate}
-                  onChange={handleEndDateChange}
-                  min={minEndDate}
-                />
+                <Input type="date" name="endDate" id="endDate" className="form-control" value={endDate} onChange={handleEndDateChange} min={minEndDate} />
               </FormGroup>
               <FormGroup>
                 <Label for="projectName">{t("project-group-size")}</Label>
                 {"  "}
 
-                <span
-                  id="Popover1"
-                  style={{ cursor: "pointer" }}
-                  onMouseEnter={showPopover}
-                  onMouseLeave={hidePopover}
-                >
+                <span id="Popover1" style={{ cursor: "pointer" }} onMouseEnter={showPopover} onMouseLeave={hidePopover}>
                   <IoIosInformationCircleOutline />
                 </span>
-                <Popover
-                  placement="right"
-                  isOpen={popoverOpen}
-                  target="Popover1"
-                >
-                  
+                <Popover placement="right" isOpen={popoverOpen} target="Popover1">
                   <PopoverBody>
-                  {t("project-group-size-info")} {groupMaxSize}
+                    {t("project-group-size-info")} {groupMaxSize}
                   </PopoverBody>
                 </Popover>
 
@@ -217,7 +173,7 @@ function FirstStageCreation() {
                   type="number"
                   name="projectGroupSize"
                   id="projectGroupSize"
-                  className="form-control-lg"
+                  className="form-control"
                   value={groupSize}
                   min={minGroupSize}
                   max={groupMaxSize}

@@ -16,7 +16,6 @@ function handleWebSocketJSON(json) {
 
   switch (data.type) {
     case NotificationType.NOTIFICATION:
-      tinfo("new notification!");
       handleNewNotification(data);
       console.log("data", data.notificationType);
       break;
@@ -40,12 +39,11 @@ function handleWebSocketJSON(json) {
         userStore.updateUnreadEmails(userStore.unreadEmails + 1);
         break;
 
-      case NotificationType.INVITE_ACCEPTED:
-      case NotificationType.INVITE_PROPOSED:
-      case NotificationType.PROJECT_KICKED:
-      case NotificationType.PROJECT_ROLE_CHANGED:
       case NotificationType.INVITE:
       case NotificationType.TASK_EXECUTOR_CHANGED:
+      case NotificationType.PROJECT_STATUS_CHANGED:
+      case NotificationType.PROJECT_CANCELLED:
+      case NotificationType.PROJECT_APPROVED:
         userStore.addNotification(data);
         userStore.updateUnreadEmails(userStore.unreadEmails + 1);
         userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);
@@ -56,8 +54,18 @@ function handleWebSocketJSON(json) {
         tsuccess("logout");
         break;
 
+      case NotificationType.PROJECT_KICKED:
+        userStore.updateUnreadEmails(userStore.unreadEmails + 1);
+        break;
+
+      case NotificationType.INVITE_ACCEPTED:
+      case NotificationType.INVITE_PROPOSED:
+      case NotificationType.PROJECT_STATUS_CHANGED:
+      case NotificationType.PROJECT_CANCELLED:
+      case NotificationType.PROJECT_APPROVED:
       case NotificationType.PROJECT_MESSAGE:
-        console.log("data", data);
+      case NotificationType.PROJECT_ROLE_CHANGED:
+        tinfo("new-notification");
         userStore.addNotification(data);
         userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);
         break;

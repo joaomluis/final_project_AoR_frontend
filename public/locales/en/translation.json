@@ -293,8 +293,31 @@
   "projects-by-status": "Projects by status",
   "cancel-project": "Cancel project",
 
+  "set-ready": "Set ready",
+  "submit-project": "Submit project to be approved",
+  "in_progress": "In Progress",
+  "finished": "Finished",
+  "project-status-changed": "Project status changed",
+  "project-cancelled": "Project cancelled",
+  "project-approved": "Project approved",
+  "new-notification": "New notification",
+  "day": "Day",
+  "week": "Week",
+  "month": "Month",
+  "year": "Year",
+  "gantt-chart": "Gantt Chart",
+  "task-list": "Task list",
+
   "project-group-size": "Project group size",
   "project-group-size-info": "The max number of users per project is",
   "project-group-size-selected": "Number of users selected:",
-  "of": "of"
+  "of": "of",
+  "no-data-chosen": "No data chosen",
+  "not-specified": "Not specify",
+  "fill-date-error": "Please fill the start and end date",
+  "start-date-error": "Start date must be before end date",
+  "fill-keywords-error": "Please fill the keywords",
+  "fill-all-error": "Please fill all the fields",
+  "You can't set the maximum number of participants to a value lower than the current number of participants.": "You can't set the maximum number of participants to a value lower than the current number of participants.",
+  "only-planning-projects-can-be-edited": "Only planning projects can be edited"
 }

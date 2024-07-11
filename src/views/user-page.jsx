@@ -1,4 +1,24 @@
-import { Container, Button, Col, Row, Card, CardHeader, CardText, CardBody, CardTitle, Input, CardImg, Label, Form, FormGroup } from "reactstrap";
+import {
+  Container,
+  Button,
+  Col,
+  Row,
+  Card,
+  CardHeader,
+  CardText,
+  CardBody,
+  CardTitle,
+  Input,
+  CardImg,
+  Label,
+  Form,
+  FormGroup,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  DropdownToggle,
+} from "reactstrap";
+import Select from "react-select";
 
 import { useParams, Link, useNavigate } from "react-router-dom";
 
@@ -48,6 +68,27 @@ function MyProfile() {
   const isAdmin = userType === UserType.ADMIN;
   const isDifferentProfile = UserType.fromName(profile) !== userType;
   const showButton = isAdmin && isDifferentProfile;
+  const displayModeOptions = [
+    { value: "createddate", label: t("date") },
+    { value: "status", label: t("status") },
+  ];
+
+  const [displayMode, setDisplayMode] = useState(displayModeOptions[0].value);
+  const [order, setOrder] = useState("asc");
+  const handleChange = (selectedOption) => {
+    setProjectsUser([]);
+    setPage(1);
+
+    setDisplayMode(selectedOption.value);
+    if (selectedOption.value === displayMode) {
+      setOrder(order === "asc" ? "desc" : "asc");
+    } else {
+      setOrder("asc");
+    }
+
+    console.log(selectedOption.value);
+    console.log(order);
+  };
 
   async function handleRoleChange() {
     const props = {
@@ -72,18 +113,15 @@ function MyProfile() {
       setUser(response.data.results[0]);
       setUserType(response.data.userType);
       setProfile(response.data.results[0].role);
-      console.log(UserType.fromValue(response.data.userType));
-      console.log(response.data.results[0].role);
       setPage(1);
       setProjectsUser([]);
-      console.log(response.data.results[0]);
     } catch (error) {
       console.log(error.message);
     }
   }
 
   const loadMore = () => {
-    if (page < totalPages) {
+    if (page <= totalPages) {
       setPage(page + 1);
     }
   };
@@ -93,14 +131,19 @@ function MyProfile() {
       dtoType: "ProjectSideBarDto",
       participant_email: user.email,
       page_number: page,
-      page_size: 3,
-      order_field: "createddate",
-      order_direction: "asc",
+      page_size: 4,
+
+      order_direction: order,
+      order_field: displayMode,
     };
+    console.log(props.order_direction);
+    console.log(props.order_field);
     try {
       const response = await Api.getProjects(token, props);
+
       setProjectsUser((prevProjects) => [...prevProjects, ...response.data.results]);
       setTotalPages(response.data.totalPages);
+      console.log(response.data.results);
     } catch (error) {
       console.log(error.message);
     }
@@ -156,39 +199,80 @@ function MyProfile() {
     setIsOpenModalInvite(!isOpenModalInvite);
   };
 
+  const customStyles = {
+    container: (provided) => ({
+      ...provided,
+      display: "flex",
+      justifyContent: "flex-end",
+      width: "100%",
+      marginRight: "10px", // Ajusta marginRight para espaçamento
+      fontSize: "1rem",
+    }),
+  };
+
+  const miniCard = (project) => {
+    console.log(project.status);
+    const getColor = (status) => {
+      switch (status) {
+        case "PLANNING":
+          return "var(--planning)";
+        case "READY":
+          return "var(--ready)";
+        case "IN_PROGRESS":
+          return "var(--in-progress)";
+        case "FINISHED":
+          return "var(--finished)";
+        default:
+          return "";
+      }
+    };
+    const borderColor = getColor(project.status);
+
+    return (
+      <Col md="6" lg="4" className="mb-4">
+        <Card className={`shadow-sm`} style={{ borderLeft: `2px solid ${borderColor}`, borderRight: `2px solid ${borderColor}` }}>
+          <CardHeader tag="h5" className="font-weight-bold" style={{ borderBottom: `1px solid ${borderColor}`, backgroundColor: "transparent" }}>
+            {project.name}
+          </CardHeader>
+          <CardBody>
+            <CardText className="text-muted">
+              {"status"}: <span className="text-capitalize">{project.status}</span>
+            </CardText>
+            <div className="d-flex">
+              {" "}
+              <Button size="sm" color="secondary" onClick={() => handleClickProject(project.id)}>
+                {t("view-project")}
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+      </Col>
+    );
+  };
+
   const projectsCard = (projects) => {
     if (!projectsUser) {
       return null; // ou algum tipo de indicador de carregamento
     }
+
     return (
       <Row>
         <Col md="12" className="mt-5">
-          <Card>
+          <Card className={"card-no-hover"}>
             <CardHeader>
-              <CardTitle tag="h4">{t("projects")}</CardTitle>
+              <CardTitle tag="h4">
+                {t("projects")}
+                <Select
+                  className="mt-2 mb-2 mr-2"
+                  options={displayModeOptions}
+                  value={displayModeOptions.find((option) => option.value === displayMode)}
+                  onChange={handleChange}
+                  styles={customStyles}
+                />
+              </CardTitle>
             </CardHeader>
             <CardBody>
-              {projectsUser.length === 0 ? (
-                <p>{t("no-projects")}</p>
-              ) : (
-                <Row>
-                  {projectsUser?.map((project, index) => (
-                    <Col md="6" lg="4" className="">
-                      <Card>
-                        <Button className={` project-card ${project.status}`} onClick={() => handleClickProject(project.id)}>
-                          <CardBody>
-                            <CardTitle>
-                              <strong>{project.name}</strong>
-                            </CardTitle>
-                            <CardText>{project.status}</CardText>
-                          </CardBody>
-                        </Button>
-                      </Card>
-                    </Col>
-                  ))}
-                </Row>
-              )}
-
+              {projectsUser.length === 0 ? <p>{t("no-projects")}</p> : <Row>{projectsUser?.map((project, index) => miniCard(project))}</Row>}
               <Row>
                 <Col>
                   {totalPages === page || projectsUser.length === 0 ? null : (
@@ -211,15 +295,16 @@ function MyProfile() {
   useEffect(() => {
     if (user.email) {
       handleGetUserProjects();
+      console.log("get user projects");
     }
-  }, [user.email, page]);
+  }, [user.email, page, displayMode, order]);
 
   function publicProfile() {
     return (
       <>
         <Row>
           <Col md="6" className="mt-5">
-            <Card>
+            <Card className={"card-no-hover"}>
               <CardHeader>
                 <CardTitle tag="h4">{t("user-interests")}</CardTitle>
               </CardHeader>
@@ -227,7 +312,7 @@ function MyProfile() {
             </Card>
           </Col>
           <Col md="6" className="mt-5">
-            <Card>
+            <Card className={"card-no-hover"}>
               <CardHeader>
                 <CardTitle tag="h4">{t("user-skills")}</CardTitle>
               </CardHeader>
@@ -236,7 +321,7 @@ function MyProfile() {
           </Col>
           {user.about ? (
             <Col className="mt-5">
-              <Card>
+              <Card className={"card-no-hover"}>
                 <CardHeader>
                   <CardTitle tag="h4">{t("about")}</CardTitle>
                 </CardHeader>

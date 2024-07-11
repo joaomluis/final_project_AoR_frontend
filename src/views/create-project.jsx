@@ -43,6 +43,24 @@ function CreateProject() {
 
   //função para criar um projeto
   async function createProject() {
+    if (projectName === "" || description === "" || lab === null) {
+      terror(t("fill-all-error"));
+      return;
+    }
+    if (startDate === "" || endDate === "" || startDate === null || endDate === null) {
+      terror(t("fill-date-error"));
+      return;
+    } else if (startDate > endDate) {
+      terror(t("start-date-error"));
+      return;
+    } else if (projectKeywords.length === 0) {
+      terror(t("fill-keywords-error"));
+      return;
+    } else if (projectName === "" || description === "" || lab === null) {
+      terror(t("fill-all-error"));
+      return;
+    }
+
     const props = {
       name: projectName,
       description: description,
@@ -73,10 +91,10 @@ function CreateProject() {
         <Row>
           <Col md="1"></Col>
           <Col md="10" className=" mt-5">
-            <Card className="shadow-lg p-3 mb-5 bg-white rounded" style={{ minHeight: "500px" }}>
+            <Card className="shadow-lg p-3 mb-5 bg-white rounded card-no-hover" style={{ minHeight: "40em" }}>
               <CardHeader className="bg-secondary-fl text-white">
-                <CardTitle tag="h3" className="text-center card-header-title">
-                {t("create-project")}
+                <CardTitle tag="h3" className="text-center card-header-title text-white">
+                  {t("create-project")}
                 </CardTitle>
               </CardHeader>
               {stage === 1 && <FirstStageCreation />}

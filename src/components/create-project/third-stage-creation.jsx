@@ -32,19 +32,16 @@ function ThirdStageCreation() {
   const handleSelect = (userId) => {
     const newSelectedMembers = [...projectUsers];
     const memberObject = allMembers.find((member) => member.userId === userId);
-  
+
     const index = newSelectedMembers.findIndex((member) => member.userId === userId);
-  
+
     if (index > -1) {
       newSelectedMembers.splice(index, 1);
-    } else if (newSelectedMembers.length < groupSize -1) {
-      
+    } else if (newSelectedMembers.length < groupSize - 1) {
       newSelectedMembers.push(memberObject);
     } else {
-      
       terror("Group size limit has been reached.");
     }
-  ;
     updateProjectMembers(newSelectedMembers);
   };
 
@@ -71,15 +68,16 @@ function ThirdStageCreation() {
     fetchUsers();
   }, []);
 
-
   return (
     <>
       <CardBody>
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <h3>{t("invite-to-project")}</h3>
-          <h5>{t("project-group-size-selected")} {projectUsers.length +1 } {t("of")} {groupSize}</h5>
+          <h5>
+            {t("project-group-size-selected")} {projectUsers.length + 1} {t("of")} {groupSize}
+          </h5>
         </div>
-        
+
         <Form onSubmit={handleSearch}>
           <Row>
             <Col md={6}>

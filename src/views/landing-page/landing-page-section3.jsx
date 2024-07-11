@@ -1,14 +1,4 @@
-import {
-  Container,
-  Col,
-  Row,
-  Card,
-  CardFooter,
-  Button,
-  CardImg,
-  CardBody,
-  CardTitle,
-} from "reactstrap";
+import { Container, Col, Row, Card, CardFooter, Button, CardImg, CardBody, CardTitle } from "reactstrap";
 import { useTranslation } from "react-i18next";
 
 import Carousel from "react-multi-carousel";
@@ -87,7 +77,7 @@ function LandingPageContent() {
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]]; 
+      [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
   }
@@ -123,31 +113,17 @@ function LandingPageContent() {
           </Col>
         </Row>
         <Row style={{ marginTop: "20px" }}>
-          <Carousel
-            responsive={responsive}
-            infinite
-            autoPlaySpeed={3000}
-            centerMode={false}
-          >
+          <Carousel responsive={responsive} infinite autoPlaySpeed={3000} centerMode={false}>
             {shuffledProjects.map((item, index) => (
               <div key={index} style={{ padding: "10px" }}>
                 <Card key={index}>
-                  <CardImg
-                    top
-                    width="100%"
-                    height={"200px"}
-                    src={img2}
-                    alt={item.name}
-                  />
+                  <CardImg top width="100%" height={"200px"} src={img2} alt={item.name} />
                   <CardBody>
-                    <CardTitle tag="h5" className="mb-2">{item.name}</CardTitle>
-                    <p>
-                      {item.description.length > 50
-                        ? item.description.substring(0, 50) + "..."
-                        : item.description}
-                    </p>
+                    <CardTitle tag="h5" className="mb-2">
+                      {item.name}
+                    </CardTitle>
+                    <p>{item.description.length > 50 ? item.description.substring(0, 50) + "..." : item.description}</p>
                   </CardBody>
-                  
                 </Card>
               </div>
             ))}
@@ -155,17 +131,17 @@ function LandingPageContent() {
         </Row>
         <Row>
           <Col md="12" className="align-right mb-5 mt-3">
-          <Link to="/projects">
-            <Button
-              style={{
-                backgroundColor: "var(--secondary-color)",
-                border: "none",
-              }}
-              size="sm"
-            >
-              {t("see-more-projects")}
-            </Button>
-          </Link>
+            <Link to="/projects">
+              <Button
+                style={{
+                  backgroundColor: "var(--secondary-color)",
+                  border: "none",
+                }}
+                size="sm"
+              >
+                {t("see-more-projects")}
+              </Button>
+            </Link>
           </Col>
         </Row>
       </div>

@@ -219,8 +219,7 @@ export const Api = {
       .catch(handleError);
   },
 
-  getProjectsForLandingPage: () => 
-    apiClient.get("/projects/landing-page").then(handleResponse).catch(handleError),
+  getProjectsForLandingPage: () => apiClient.get("/projects/landing-page").then(handleResponse).catch(handleError),
 
   getGroupMaxSize: (token) => apiClient.get("/projects/max-participants-allowed", { headers: { token } }).then(handleResponse).catch(handleError),
 
@@ -274,6 +273,14 @@ export const Api = {
 
   cancelProject: (token, projectId, justify) => {
     return apiClient.put(`/projects/${projectId}/cancel`, justify, { headers: { token } }).then(handleResponse).catch(handleError);
+  },
+
+  // submitProject: (token, projectId) => {
+  //   return apiClient.put(`/projects/${projectId}/submit`, {}, { headers: { token } }).then(handleResponse).catch(handleError);
+  // },
+
+  updateStatus: (token, projectId, status) => {
+    return apiClient.put(`/projects/${projectId}/status`, status, { headers: { token } }).then(handleResponse).catch(handleError);
   },
 
   //PRODUCTS endpoint
@@ -332,6 +339,9 @@ export const Api = {
   //extra project
 
   inviteUserToProject: (token, data) => apiClient.post("/projects/invite", data, { headers: { token } }).then(handleResponse).catch(handleError),
+
+  changeMaxParticipants: (token, data) =>
+    apiClient.put("/projects/max-participants", data, { headers: { token } }).then(handleResponse).catch(handleError),
 
   //NOTIFICATION endpoints
   getNotifications: (token, props) => {

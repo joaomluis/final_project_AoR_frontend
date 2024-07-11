@@ -81,7 +81,6 @@ export function ModalTask(props) {
         dependentTasksIds: task.dependentTasks ? task.dependentTasks.map((depTask) => depTask.id) : [],
         status: statusOptions.find((s) => s.label === task.status)?.value || null,
       });
-      console.log("Task Data:", taskData.status);
 
       setSelectedUsers(members.map((user) => ({ label: user.name, value: user.id })));
       setSelectedResponsible(responsible ? { label: responsible.name, value: responsible.id } : null);
@@ -95,11 +94,8 @@ export function ModalTask(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("Task Data:asdasdasdasd", taskData);
       if (props.mode === "edit") {
         await Api.updateTask(props.token, props.task.id, taskData);
-        console.log(taskData);
-
         tsuccess("Task updated successfully");
       } else {
         await Api.createTask(props.token, taskData);
@@ -262,16 +258,18 @@ export function ModalTask(props) {
 
   return (
     <ModalBase isOpen={props.isOpen} toggle={props.toggle} title={props.title} footer={props.footer}>
-      {props.add && <button onClick={() => props.toggle()}>Criar Tarefa</button>}
+      {props.add && <Button onClick={() => props.toggle()}>{t("create-t")}</Button>}
       <div>{geralForm}</div>
       {props.mode !== "view" ? (
         <>
           <Button className="mt-3 mb-0" onClick={handleSubmit} variant="secondary" style={{ width: "100%" }}>
             {props.mode === "edit" ? t("edit-task") : t("create-task")}
           </Button>
-          <Button className="mt-2 mb-0" onClick={handleDeleteTask} variant="danger" size="sm" style={{ width: "auto", float: "left" }}>
-            {t("delete-task")}
-          </Button>
+          {props.mode === "create" ? null : (
+            <Button className="mt-2 mb-0" onClick={handleDeleteTask} variant="danger" size="sm" style={{ width: "auto", float: "left" }}>
+              {t("delete-task")}
+            </Button>
+          )}
         </>
       ) : (
         <Button className="mt-3 mb-0" onClick={() => props.setMode("edit")} variant="secondary" style={{ width: "100%" }}>
