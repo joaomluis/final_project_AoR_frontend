@@ -50,7 +50,11 @@ function ProjectBasicInfo({ data }) {
             </Row>
             <FormGroup>
               <Label for="labLocation">{t("project-lab-location")}</Label>
-              <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={data.lab} readOnly />
+              <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={data.lab_id} readOnly />
+            </FormGroup>
+            <FormGroup>
+              <Label for="labLocation">{t("project-group-size")}</Label>
+              <Input type="text" name="labLocation" id="labLocation" className="form-control-lg" value={data.maxParticipants} readOnly />
             </FormGroup>
           </Col>
         </Row>

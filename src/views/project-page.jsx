@@ -70,6 +70,7 @@ function ProjectPage() {
       clearMessages(); // Limpa as mensagens ao carregar a página
       try {
         const response = await Api.getProjects(token, props);
+        console.log(response.data.results[0]);
         setProjectData(response.data.results[0]);
         setUserType(response.data.userType);
         setLoading(false);
