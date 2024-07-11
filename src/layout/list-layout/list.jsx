@@ -17,15 +17,15 @@ function ListLayout({ title, toggleOrder, toggleFilter, toggleCreate, children, 
             <Row className="row-no-margin">
               {!toggleOrder && !toggleFilter && !toggleCreate ? (
                 <Col className="mb-4" lg="12" md="12" sm="12">
-                  <CardTitle tag="h4">{title}</CardTitle>
+                  <CardTitle tag="h1" style={{fontWeight:'bold'}}>{title}</CardTitle>
                 </Col>
               ) : toggleCreate ? (
                 <Col className="mb-4" lg="6" md="12" sm="12">
-                  <CardTitle tag="h4">{title}</CardTitle>
+                  <CardTitle tag="h1" style={{fontWeight:'bold'}}>{title}</CardTitle>
                 </Col>
               ) : (
                 <Col className="mb-4" lg="8" md="12" sm="12" cs>
-                  <CardTitle tag="h4">{title}</CardTitle>
+                  <CardTitle tag="h1" style={{fontWeight:'bold'}}>{title}</CardTitle>
                 </Col>
               )}
 

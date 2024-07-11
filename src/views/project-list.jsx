@@ -1,6 +1,10 @@
-import { Container, Col, Row, Card, CardBody, CardTitle, Input, Label, Button } from "reactstrap";
+import { Col, Row } from "reactstrap";
 import { Api } from "../api";
-import { tsuccess, terror, twarn } from "../components/toasts/message-toasts.jsx";
+import {
+  tsuccess,
+  terror,
+  twarn,
+} from "../components/toasts/message-toasts.jsx";
 import { useUserStore } from "../stores/useUserStore.js";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -33,7 +37,13 @@ function ProjectList() {
   const [totalPages, setTotalPages] = useState(1);
   const location = useLocation();
 
-  const [searchParams, setSearchParams] = useSearchParams({ page: 1, status: [], keywords: [], skills: [], labs: [] });
+  const [searchParams, setSearchParams] = useSearchParams({
+    page: 1,
+    status: [],
+    keywords: [],
+    skills: [],
+    labs: [],
+  });
   const statusParam = searchParams.get("status") || [];
   const keywordParam = searchParams.get("keywords") || [];
   const skillParam = searchParams.get("skills") || [];
@@ -55,7 +65,9 @@ function ProjectList() {
       selected: selected.map(Number).includes(item.id),
     }));
     setItems(newItems);
-    const filteredItems = newItems.filter((item) => selected.map(Number).includes(item.id));
+    const filteredItems = newItems.filter((item) =>
+      selected.map(Number).includes(item.id)
+    );
 
     const selectedIds = filteredItems.map((item) => item.id);
     // Update the respective array in the ids object
@@ -77,20 +89,32 @@ function ProjectList() {
    * @param {*} selected
    * @returns
    */
-  const handleStatusChange = (selected) => handleSelectionChange(selected, status, setStatus, "status");
-  const handleKeywordsChange = (selected) => handleSelectionChange(selected, keywords, setKeywords, "keywords");
-  const handleSkillsChange = (selected) => handleSelectionChange(selected, skills, setSkills, "skills");
-  const handleLabsChange = (selected) => handleSelectionChange(selected, labs, setLabs, "labs");
+  const handleStatusChange = (selected) =>
+    handleSelectionChange(selected, status, setStatus, "status");
+  const handleKeywordsChange = (selected) =>
+    handleSelectionChange(selected, keywords, setKeywords, "keywords");
+  const handleSkillsChange = (selected) =>
+    handleSelectionChange(selected, skills, setSkills, "skills");
+  const handleLabsChange = (selected) =>
+    handleSelectionChange(selected, labs, setLabs, "labs");
   /**
    * Filters to be displayed in the modal filter
    */
   const filters = [
     { label: "status", options: status, handleOnChange: handleStatusChange },
-    { label: "keywords", options: keywords, handleOnChange: handleKeywordsChange },
+    {
+      label: "keywords",
+      options: keywords,
+      handleOnChange: handleKeywordsChange,
+    },
     { label: "skills", options: skills, handleOnChange: handleSkillsChange },
     { label: "labs", options: labs, handleOnChange: handleLabsChange },
   ];
-  const ofilters = [{ label: "createdDate" }, { label: "status" }, { label: "vacancies" }];
+  const ofilters = [
+    { label: "createdDate" },
+    { label: "status" },
+    { label: "vacancies" },
+  ];
 
   // useEffect(() => {
   //   if (order.filter && order.direction) {
@@ -204,8 +228,17 @@ function ProjectList() {
   //   }
   // }, [totalPages]);
 
+  // condição para ver se a pagina foi renderizada com o project-list para poder chamar os filtros
+  const loggedProjectPage = location.pathname.includes("project-list");
+
   return (
-    <ListLayout title={t("projects")} toggleOrder={toggleOrder} toggleFilter={toggleFilter} loading={loading}>
+    <ListLayout
+      title={t("projects")}
+      {...(loggedProjectPage
+        ? { toggleOrder: toggleOrder, toggleFilter: toggleFilter }
+        : {})}
+      loading={loading}
+    >
       <Row>
         {projects.map((project, index) => (
           <Col sm="12" md="6" lg="4" key={index} className="mt-4">
@@ -213,9 +246,30 @@ function ProjectList() {
           </Col>
         ))}
       </Row>
-      <PaginationComponent currentPage={currentPage} totalPages={totalPages} setCurrentPage={handlePageChange} />
-      <ModalFilter isOpen={ModalFilters} toggle={toggleFilter} title={t("filter")} filters={filters} onSubmit={applyFilters} selected={ids} />
-      <ModalOrder isOpen={ModalOrders} toggle={toggleOrder} title={t("order")} filters={ofilters} onSubmit={applyFilters} />
+      <PaginationComponent
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={handlePageChange}
+      />
+      {loggedProjectPage && (
+        <>
+          <ModalFilter
+            isOpen={ModalFilters}
+            toggle={toggleFilter}
+            title={t("filter")}
+            filters={filters}
+            onSubmit={applyFilters}
+            selected={ids}
+          />
+          <ModalOrder
+            isOpen={ModalOrders}
+            toggle={toggleOrder}
+            title={t("order")}
+            filters={ofilters}
+            onSubmit={applyFilters}
+          />
+        </>
+      )}
     </ListLayout>
   );
 }

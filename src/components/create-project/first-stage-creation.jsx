@@ -17,6 +17,8 @@ function FirstStageCreation() {
   const lab = useCreateProjectStore((state) => state.lab);
   const startDate = useCreateProjectStore((state) => state.startDate);
   const endDate = useCreateProjectStore((state) => state.endDate);
+  const [minEndDate, setMinEndDate] = useState('');
+
 
   const token = useUserStore((state) => state.token);
   const [labs, setLabs] = useState([]);
@@ -39,9 +41,6 @@ function FirstStageCreation() {
     handleLoadLabLocations();
   }, []);
 
-  const logCurrentState = () => {
-    console.log(useCreateProjectStore.getState());
-  };
 
   const handleProjectNameChange = (event) => {
     useCreateProjectStore.getState().setProjectName(event.target.value);
@@ -56,14 +55,23 @@ function FirstStageCreation() {
     const selectedLab = labs.find((lab) => lab.id.toString() === selectedLabId);
     useCreateProjectStore.getState().setLab(selectedLab);
   };
+  //A função handleStartDateChange é responsável por atualizar o estado startDate com o valor do input de data de início do projeto.
+  //Além disso, ela calcula a data mínima para o input de data de término do projeto, que é um dia após a data de início.
+  const handleStartDateChange = (e) => {
+    const newStartDate = e.target.value;
+    useCreateProjectStore.getState().setStartDate(newStartDate);
 
-  const handleStartDateChange = (event) => {
-    useCreateProjectStore.getState().setStartDate(event.target.value);
+    
+    const dayAfterStartDate = new Date(newStartDate);
+    dayAfterStartDate.setDate(dayAfterStartDate.getDate() + 1);
+
+    const formattedMinEndDate = dayAfterStartDate.toISOString().split('T')[0];
+    setMinEndDate(formattedMinEndDate);
+    useCreateProjectStore.getState().setEndDate(formattedMinEndDate);
   };
 
   const handleEndDateChange = (event) => {
     useCreateProjectStore.getState().setEndDate(event.target.value);
-    logCurrentState();
   };
 
   return (
@@ -115,7 +123,7 @@ function FirstStageCreation() {
               </FormGroup>
               <FormGroup>
                 <Label for="endDate">{t("project-end-date")}</Label>
-                <Input type="date" name="endDate" id="endDate" className="form-control-lg" value={endDate} onChange={handleEndDateChange} />
+                <Input type="date" name="endDate" id="endDate" className="form-control-lg" value={endDate} onChange={handleEndDateChange} min={minEndDate} />
               </FormGroup>
             </Col>
           </Row>

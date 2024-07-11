@@ -218,6 +218,10 @@ export const Api = {
       .then(handleResponse)
       .catch(handleError);
   },
+
+  getProjectsForLandingPage: () => 
+    apiClient.get("/projects/landing-page").then(handleResponse).catch(handleError),
+
   getFilterOptions: (token) => apiClient.get("/projects/filter-options", { headers: { token } }).then(handleResponse).catch(handleError),
 
   createProject: (token, data) => apiClient.post("/projects", data, { headers: { token } }).then(handleResponse).catch(handleError),

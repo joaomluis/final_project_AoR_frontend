@@ -34,6 +34,12 @@ var routes = [
     layout: "/landing",
   },
   {
+    path: "/projects",
+    name: "project-list",
+    component: <ProjectList />,
+    layout: "/landing",
+  },
+  {
     path: "/my-profile",
     name: "my-profile",
     component: <MyProfile />,

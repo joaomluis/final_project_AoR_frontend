@@ -14,7 +14,7 @@ const LandingLayout = lazy(() => import("./layout/landing"));
 const MainLayout = lazy(() => import("./layout/main"));
 
 const App = () => {
-  console.log("App");
+  //console.log("App");
   // Diretamente acessa o token do estado global
   const token = useUserStore((state) => state.token);
 
