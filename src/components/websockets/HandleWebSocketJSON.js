@@ -61,7 +61,6 @@ function handleWebSocketJSON(json) {
       case NotificationType.PROJECT_APPROVED:
       case NotificationType.PROJECT_MESSAGE:
       case NotificationType.PROJECT_ROLE_CHANGED:
-        tinfo("new-notification");
         userStore.addNotification(data);
         userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);
         break;

@@ -275,7 +275,7 @@ function ProjectSettings({ data, userType }) {
       }
     }
     // Check if the user is a guest and the project is not inactive
-    if (userType === UserType.GUEST && isProjectInactive) {
+    if (userType === UserType.GUEST && !isProjectInactive) {
       return <Button onClick={toggleModalSendInvite}>{t("send-inv")}</Button>;
     }
 

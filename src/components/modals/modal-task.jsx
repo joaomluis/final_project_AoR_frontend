@@ -100,6 +100,23 @@ export function ModalTask(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (taskData.initialDate > taskData.finalDate) {
+        terror(t("start-date-error"));
+        return;
+      }
+      if (taskData.title === "") {
+        terror(t("title-error"));
+        return;
+      }
+      if (taskData.description === "") {
+        terror(t("description-error"));
+        return;
+      }
+      if (taskData.responsibleId === "") {
+        terror(t("responsible-error"));
+        return;
+      }
+
       if (props.mode === "edit") {
         await Api.updateTask(props.token, props.task.id, taskData);
         tsuccess("Task updated successfully");
