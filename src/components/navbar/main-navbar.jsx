@@ -72,7 +72,6 @@ function MainNavbar(args) {
   async function handleSignOut() {
     try {
       const response = await Api.signout(token);
-      tsuccess(response.data);
       navigator("/landing");
       useUserStore.getState().logout();
     } catch (e) {

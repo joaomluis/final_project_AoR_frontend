@@ -309,7 +309,7 @@
   "year": "Ano",
   "gantt-chart": "Gráfico de Gantt",
   "task-list": "Lista de tarefas",
-
+  "please-provide-justification": "Por favor, forneça uma justificação",
   "project-group-size": "Tamanho do grupo de projeto",
   "project-group-size-info": "Número de utilizadores por projeto autorizado é",
   "project-group-size-selected": "Número de utilizadores selecionados:",
@@ -320,6 +320,9 @@
   "fill-name-error": "Por favor, preencha o nome do projeto",
   "fill-keywords-error": "Por favor, preencha no mínimo 1 palavras-chave para o projeto",
   "fill-all-error": "Por favor, preencha todos os campos obrigatórios",
+  "responsible-error": "Por favor, selecione um responsável",
+  "description-error": "Por favor, preencha a descrição",
+  "title-error": "Por favor, preencha o título",
   "You can't set the maximum number of participants to a value lower than the current number of participants.": "Não pode definir o número máximo de participantes para um valor inferior ao número atual de participantes.",
   "only-planning-projects-can-be-edited": "Apenas projetos em planeamento podem ser editados",
 

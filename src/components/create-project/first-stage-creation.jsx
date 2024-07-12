@@ -91,14 +91,22 @@ function FirstStageCreation() {
   //Além disso, ela calcula a data mínima para o input de data de término do projeto, que é um dia após a data de início.
   const handleStartDateChange = (e) => {
     const newStartDate = e.target.value;
-    useCreateProjectStore.getState().setStartDate(newStartDate);
+    if (!newStartDate) {
+      // Opção 1: Limpar as datas de início e término
+      useCreateProjectStore.getState().setStartDate("");
+      useCreateProjectStore.getState().setEndDate("");
+      setMinEndDate("");
+      // Opção 2: Definir um comportamento diferente, se necessário
+    } else {
+      useCreateProjectStore.getState().setStartDate(newStartDate);
 
-    const dayAfterStartDate = new Date(newStartDate);
-    dayAfterStartDate.setDate(dayAfterStartDate.getDate() + 1);
+      const dayAfterStartDate = new Date(newStartDate);
+      dayAfterStartDate.setDate(dayAfterStartDate.getDate() + 1);
 
-    const formattedMinEndDate = dayAfterStartDate.toISOString().split("T")[0];
-    setMinEndDate(formattedMinEndDate);
-    useCreateProjectStore.getState().setEndDate(formattedMinEndDate);
+      const formattedMinEndDate = dayAfterStartDate.toISOString().split("T")[0];
+      setMinEndDate(formattedMinEndDate);
+      useCreateProjectStore.getState().setEndDate(formattedMinEndDate);
+    }
   };
 
   const handleEndDateChange = (event) => {
