@@ -6,6 +6,8 @@ import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import { Api } from "../../api.js";
 import { terror, tsuccess } from "../toasts/message-toasts.jsx";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export function ModalTask(props) {
   const { t } = useTranslation();
@@ -41,6 +43,10 @@ export function ModalTask(props) {
     { label: "IN_PROGRESS", value: 30 },
     { label: "FINISHED", value: 50 },
   ];
+
+  const [taskDescription, setTaskDescription] = useState({
+    richTextField: "",
+  });
 
   async function fetchData() {
     try {
@@ -190,6 +196,25 @@ export function ModalTask(props) {
     }));
   };
 
+  // const handleTaskDescriptionChange = (content) => {
+  //   setTaskData({ description: content });
+  // };
+
+  const renderFormInputRichText = (label, value, name) => (
+    <div className="mb-3">
+      <Form.Label>{label}</Form.Label>
+
+      {props.mode === "view" ? (
+        <div>
+          <hr style={{ border: "0.5px solid #ddd" }} />
+          <div dangerouslySetInnerHTML={{ __html: value }} />
+        </div>
+      ) : (
+        <ReactQuill value={value} onChange={(content) => setTaskData({ ...taskData, [name]: content })} theme="snow" />
+      )}
+    </div>
+  );
+
   const renderFormInput = (label, value, type, name) => (
     <div className="mb-3">
       <Form.Label>{label}</Form.Label>
@@ -239,10 +264,10 @@ export function ModalTask(props) {
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-6">
-          {props.mode === "create" ? null : renderSelect(t("Status"), statusOptions, selectedStatus, handleStatusChange)}
+          {props.mode === "create" ? null : renderSelect(t("status"), statusOptions, selectedStatus, handleStatusChange)}
 
           {renderFormInput(t("Title"), taskData.title, "text", "title")}
-          {renderFormInput(t("description"), taskData.description, "textarea", "description")}
+          {/* {renderFormInput(t("description"), taskData.description, "textarea", "description")} */}
           {renderFormInput(t("initial-date"), taskData.initialDate, "date", "initialDate")}
           {renderFormInput(t("final-date"), taskData.finalDate, "date", "finalDate")}
         </div>
@@ -252,6 +277,7 @@ export function ModalTask(props) {
           {renderSelect(t("external-executor"), taskExternalUsers, selectedExternalUsers, handleExternalUsersChange, true, true, handleExternalUserCreate)}
           {renderSelect(t("dependency-task"), taskTasks, selectedTasks, handleTasksChange, true)}
         </div>
+        {renderFormInputRichText(t("description"), taskData.description, "description", props.mode)}{" "}
       </div>
     </div>
   );

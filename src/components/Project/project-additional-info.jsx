@@ -3,7 +3,7 @@ import { CardBody, Card, Button, CardFooter } from "reactstrap";
 import ProjectPreview from "../Preview/project-preview.jsx";
 import { useTranslation } from "react-i18next";
 import UserType from "../enums/UserType.js";
-function ProjectAdditionalInfo({ data, title, editButton, userType }) {
+function ProjectAdditionalInfo({ data, title, editButton, userType, status }) {
   const { t } = useTranslation();
 
   return (
@@ -12,7 +12,7 @@ function ProjectAdditionalInfo({ data, title, editButton, userType }) {
         <CardBody style={{ minHeight: "37vh" }}>
           <ProjectPreview data={data} name={title} />
         </CardBody>
-        {userType === UserType.MANAGER && (
+        {userType === UserType.MANAGER && !status && (
           <CardFooter style={{ borderTop: "none" }}>
             {editButton && (
               <Button color="white" size="sm" className="button-style1" onClick={editButton}>

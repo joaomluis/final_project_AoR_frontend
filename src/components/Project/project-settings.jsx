@@ -42,6 +42,10 @@ function ProjectSettings({ data, userType }) {
   const [modalCancelProject, setModalCancelProject] = useState(false);
   const [modalReady, setModalReady] = useState(false);
   const [modalFinished, setModalFinished] = useState(false);
+  const isProjectInactive = data.status === "CANCELLED" || data.status === "FINISHED" || data.status === "READY";
+  const isProjectCancelledOrFinished = data.status === "CANCELLED" || data.status === "FINISHED";
+  const userLogger = useUserStore((state) => state.userType);
+  const isAdmin = userLogger === UserType.ADMIN;
   const toggleModalSendInvite = () => setModalSendInvite(!modalSendInvite);
   const toggleModalFinished = () => setModalFinished(!modalFinished);
   const toggleModalLeaveProject = () => setModalLeaveProject(!modalLeaveProject);
@@ -81,6 +85,21 @@ function ProjectSettings({ data, userType }) {
 
     fetchData();
   }, []);
+
+  const handleAcceptResume = async (id, accept) => {
+    const props = {
+      userId: id,
+      accept: accept,
+    };
+    try {
+      const response = await Api.acceptProject(token, id, props);
+      if (accept) tsuccess(t("project-accepted"));
+      else tsuccess(t("project-rejected"));
+      navigate("/fica-lab/admin-page");
+    } catch (error) {
+      terror(error.message);
+    }
+  };
 
   //Renderização dos modals para edição
   const editKeywordsRef = useRef();
@@ -153,6 +172,7 @@ function ProjectSettings({ data, userType }) {
   };
 
   const handleChangeStatus = async (id, newStatus) => {
+    if (data.status === ProjectStatus.fromValue(newStatus)) return;
     const prop = {
       id: ids,
       value: newStatus,
@@ -198,6 +218,79 @@ function ProjectSettings({ data, userType }) {
     }
   };
 
+  const renderButtons = () => {
+    // Check if the project is inactive and the user is an admin
+    if (isProjectCancelledOrFinished && isAdmin) {
+      return <></>;
+    }
+    // Check if the project is inactive and the user is an admin
+    if (isProjectInactive && isAdmin) {
+      return (
+        <>
+          <Button color="primary" onClick={() => handleAcceptResume(ids, true)}>
+            {t("approve")}
+          </Button>
+          <Button color="danger" onClick={() => handleAcceptResume(ids, false)}>
+            {t("reject")}
+          </Button>
+        </>
+      );
+    }
+
+    // Check if the user is a manager or a normal user
+    if (userType === UserType.MANAGER || userType === UserType.NORMAL) {
+      console.log("entrou");
+      if (!isProjectInactive) {
+        console.log("entrou2");
+        return (
+          <div className="button-group mt-3">
+            <Button color="secondary" onClick={toggleModalLeaveProject}>
+              {t("leave")}
+            </Button>
+            {userType === UserType.MANAGER && (
+              <>
+                <Button color="danger" onClick={toggleModalCancelProject}>
+                  {t("cancel-project")}
+                </Button>
+                {ProjectStatus.fromLabel(data.status) === ProjectStatus.PLANNING && (
+                  <Button className="ready-button" onClick={toggleModalSetReady}>
+                    {t("set-ready")}
+                  </Button>
+                )}
+                {isSelectable && (
+                  <Select
+                    className="status-select d-flex"
+                    options={options}
+                    onChange={(e) => handleChange(ids, e.value)}
+                    defaultValue={{
+                      value: ProjectStatus.fromLabel(data.status),
+                      label: t(data.status.toLowerCase()),
+                    }}
+                  />
+                )}
+              </>
+            )}
+          </div>
+        );
+      }
+    }
+    // Check if the user is a guest and the project is not inactive
+    if (userType === UserType.GUEST && isProjectInactive) {
+      return <Button onClick={toggleModalSendInvite}>{t("send-inv")}</Button>;
+    }
+
+    // Default: show send-invite button for users who are not a manager or a normal user
+    return (
+      <>
+        {ProjectStatus.CANCELLED || ProjectStatus.FINISHED || ProjectStatus.READY ? (
+          <></>
+        ) : (
+          <Button onClick={toggleModalSendInvite}>{t("send-inv")}</Button>
+        )}
+      </>
+    );
+  };
+
   return (
     <>
       <EditKeywords ref={editKeywordsRef} />
@@ -205,55 +298,42 @@ function ProjectSettings({ data, userType }) {
       <EditResources ref={editResourcesRef} />
       <Row>
         <Col md={12}>
-          {userType === UserType.MANAGER || userType === UserType.NORMAL ? (
-            <div className="button-group mt-3">
-              <Button color="secondary" onClick={toggleModalLeaveProject}>
-                {t("leave")}
-              </Button>
-              {userType === UserType.MANAGER && (
-                <>
-                  <Button color="danger" onClick={toggleModalCancelProject}>
-                    {t("cancel-project")}
-                  </Button>
-                  {ProjectStatus.fromLabel(data.status) === ProjectStatus.PLANNING && (
-                    <Button className="ready-button" onClick={toggleModalSetReady}>
-                      {t("set-ready")}
-                    </Button>
-                  )}
-                  {isSelectable && (
-                    <Select
-                      className="status-select d-flex"
-                      options={options}
-                      onChange={(e) => handleChange(ids, e.value)}
-                      defaultValue={{
-                        value: ProjectStatus.fromLabel(data.status),
-                        label: t(data.status.toLowerCase()),
-                      }}
-                    />
-                  )}
-                </>
-              )}
-            </div>
-          ) : (
-            <Button onClick={toggleModalSendInvite}>{t("send-inv")}</Button>
-          )}
+          {renderButtons()}
           <ProjectBasicInfo data={data} />
         </Col>
       </Row>
       <Row>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectResources} title={t("resources")} editButton={openEditResourcesModal} userType={userType} />
+          <ProjectAdditionalInfo
+            data={projectResources}
+            title={t("resources")}
+            editButton={openEditResourcesModal}
+            userType={userType}
+            status={isProjectInactive}
+          />
         </Col>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectKeywords} title={t("keywords")} editButton={openEditKeywordsModal} userType={userType} />
+          <ProjectAdditionalInfo
+            data={projectKeywords}
+            title={t("keywords")}
+            editButton={openEditKeywordsModal}
+            userType={userType}
+            status={isProjectInactive}
+          />
         </Col>
       </Row>
       <Row>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectUsers} title={t("users")} userType={userType} />
+          <ProjectAdditionalInfo data={projectUsers} title={t("users")} userType={userType} status={isProjectInactive} />
         </Col>
         <Col md={6}>
-          <ProjectAdditionalInfo data={projectSkills} userType={userType} title={t("skills")} editButton={openEditSkillsModal} />
+          <ProjectAdditionalInfo
+            data={projectSkills}
+            userType={userType}
+            title={t("skills")}
+            editButton={openEditSkillsModal}
+            status={isProjectInactive}
+          />
         </Col>
       </Row>
       <ConfirmModal isOpen={modalSendInvite} toggle={toggleModalSendInvite} title={t("send-inv")} onConfirm={handleSendInvite} />

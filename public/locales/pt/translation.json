@@ -233,6 +233,7 @@
 
   "planning-phase": "Em planeamento",
   "ready-phase": "Pronto",
+  "approved-phase": "Aprovado",
   "in-progress-phase": "Em progresso",
   "finished-phase": "Terminado",
   "cancelled-phase": "Cancelado",
@@ -323,5 +324,9 @@
   "only-planning-projects-can-be-edited": "Apenas projetos em planeamento podem ser editados",
 
   "download-pdf": "Download PDF",
-  "statistics": "Estatísticas"
+  "statistics": "Estatísticas",
+
+  "see-you-soon": "Até breve!",
+  "save-product": "Guardar produto",
+  "info": "Informação"
 }

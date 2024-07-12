@@ -39,6 +39,7 @@ function ProjectPage() {
   const location = useLocation();
   const [userType, setUserType] = useState("");
   const [loading, setLoading] = useState(false);
+  const userLogged = useUserStore((state) => state.userType);
   // const [modalSendInvite, setModalSendInvite] = useState(false);
   // const [modalLeaveProject, setModalLeaveProject] = useState(false);
   // const [modalCancelProject, setModalCancelProject] = useState(false);
@@ -141,7 +142,7 @@ function ProjectPage() {
 
   return (
     <div className="section4" style={{ position: "relative" }}>
-      {isProjectInactive && (
+      {isProjectInactive && userLogged !== UserType.ADMIN && (
         <div
           style={{
             position: "absolute",
@@ -191,7 +192,7 @@ function ProjectPage() {
                     <Row>
                       <Col md="12">
                         <Nav tabs style={{ cursor: "pointer" }}>
-                          {(userType === UserType.NORMAL || userType === UserType.MANAGER) && (
+                          {(userType === UserType.NORMAL || userType === UserType.MANAGER) && !isProjectInactive && (
                             <>
                               <NavItem>
                                 <NavLink className={classnames({ active: activeTab === "4" })} onClick={() => toggle("4")}>
@@ -214,7 +215,7 @@ function ProjectPage() {
                                   {t("logs")}
                                 </NavLink>
                               </NavItem>
-                              {userType === UserType.MANAGER && (
+                              {userType === UserType.MANAGER && !isProjectInactive && (
                                 <>
                                   <NavItem>
                                     <NavLink className={classnames({ active: activeTab === "5" })} onClick={() => toggle("5")}>
@@ -233,7 +234,7 @@ function ProjectPage() {
                         </Nav>
 
                         <TabContent activeTab={activeTab}>
-                          {(userType === UserType.NORMAL || userType === UserType.MANAGER) && (
+                          {(userType === UserType.NORMAL || userType === UserType.MANAGER) && !isProjectInactive && (
                             <>
                               <TabPane tabId="1">
                                 <ProjectMainPage id={numericId} />

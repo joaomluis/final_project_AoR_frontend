@@ -5,7 +5,12 @@ import { CiFilter } from "react-icons/ci";
 import { RiAddFill } from "react-icons/ri";
 import { useTranslation } from "react-i18next";
 import Loading from "../../components/loading/loading-overlay";
+import { useUserStore } from "../../stores/useUserStore";
+import UserType from "../../components/enums/UserType";
 function ListLayout({ title, toggleOrder, toggleFilter, toggleCreate, children, loading }) {
+  const userLogged = useUserStore((state) => state.userType);
+  const isAdmin = userLogged?.role === UserType.fromValue(userLogged);
+
   const { t } = useTranslation();
   return (
     <div className="section4" style={{ position: "relative" }}>
@@ -35,13 +40,14 @@ function ListLayout({ title, toggleOrder, toggleFilter, toggleCreate, children, 
                 </Col>
               )}
 
-              {toggleCreate && (
+              {toggleCreate && userLogged === UserType.NORMAL && <Col lg="2" md="12" sm="12" xs="12"></Col>}
+              {toggleCreate && userLogged === UserType.ADMIN ? (
                 <Col lg="2" md="12" sm="12" xs="12">
                   <Button color="light" className="button-style1 mt-1" onClick={toggleCreate}>
                     <RiAddFill /> {t("create")}
                   </Button>
                 </Col>
-              )}
+              ) : null}
               {toggleOrder && (
                 <Col lg="2" md="6" sm="6" xs="6">
                   <Button color="light" className="button-style1 mt-1" onClick={toggleOrder}>

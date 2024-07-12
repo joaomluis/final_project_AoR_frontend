@@ -71,10 +71,10 @@ function ProductList() {
   const handleTypeChange = (selected) => handleSelectionChange(selected, types, setTypes, "types");
 
   const filters = [
-    { label: "brands", options: brands, handleOnChange: handleBrandChange },
-    { label: "types", options: types, handleOnChange: handleTypeChange },
+    { label: t("brands"), options: brands, handleOnChange: handleBrandChange },
+    { label: t("types"), options: types, handleOnChange: handleTypeChange },
   ];
-  const ofilters = [{ label: "identifier" }, { label: "type" }, { label: "brand" }, { label: "name" }, { label: "supplier" }];
+  const ofilters = [{ label: t("identifier") }, { label: t("type") }, { label: t("brand") }, { label: t("name") }, { label: t("supplier") }];
 
   /**
    * Get filter options
@@ -108,12 +108,10 @@ function ProductList() {
       order_direction: orderDirection,
     };
 
-    console.log(props);
     try {
       const response = await Api.getProducts(token, props);
       setProducts(response.data.results);
       setTotalPages(response.data.totalPages);
-      console.log(response.data);
       setLoading(false);
       setModalFilter(false);
       setModalOrder(false);

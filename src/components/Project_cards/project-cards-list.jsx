@@ -36,6 +36,10 @@ const ProjectCardsList = ({ Project }) => {
         formattedStatus = t("cancelled-phase");
         backgroundColor = "var(--cancelled)";
         break;
+      case "APPROVED":
+        formattedStatus = t("approved-phase");
+        backgroundColor = "var(--approved)";
+        break;
       default:
         formattedStatus = status;
         backgroundColor = "gray";
