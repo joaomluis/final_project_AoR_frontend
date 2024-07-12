@@ -3,7 +3,7 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import logo from "../../assets/img/logo_pl.jpg";
+import logo from "../../assets/img/logo1.png";
 
 function Example(args) {
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ function Example(args) {
               width: 40,
             }}
           />{" "}
-          FicaLab
+          InnovationLab
         </NavbarBrand>
         {/* <NavbarToggler onClick={toggle} /> */}
         {/* <Collapse isOpen={isOpen} navbar>

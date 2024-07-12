@@ -7,7 +7,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { Notification } from "../notification/notification";
 import Dropdown from "react-bootstrap/Dropdown";
 
-import logo from "../../assets/img/logo_pl.jpg";
+import logo from "../../assets/img/logo1.png";
 import { tsuccess, terror } from "../toasts/message-toasts";
 import { useUserStore } from "../../stores/useUserStore";
 import ConfirmModal from "../modals/modal-confirm";
@@ -97,7 +97,7 @@ function MainNavbar(args) {
     <>
       <Navbar {...args} expand="lg" color="dark" fixed="top" light dark>
         <NavbarBrand href="/fica-lab/home">
-          <img alt="logo" src={logo} style={logoStyle} /> FicaLab
+          <img alt="logo" src={logo} style={logoStyle} /> InnovationLab
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

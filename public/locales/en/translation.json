@@ -329,6 +329,10 @@
   "statistics": "Statistics",
 
   "created-date": "Creation date",
-  "vacancies": "Vacancies"
+  "vacancies": "Vacancies",
+
+  "login-success": "Login successful",
+  "passwords-dont-match": "Passwords don't match",
+  "account-created": "Account created successfully! Visit your email to confirm your account."
 
 }

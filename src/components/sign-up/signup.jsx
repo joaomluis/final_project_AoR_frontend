@@ -37,13 +37,12 @@ function SignUp() {
     try {
       const response = await Api.signin(email, password);
       if (response.data) {
-        tsuccess("Login successful!");
+        tsuccess(t("login-success"));
         updateToken(response.data.token);
         updateEmail(response.data.email);
         updateUnreadEmails(response.data.unreadEmails);
         updateUnreadNotifications(response.data.unreadNotifications);
         updateUserType(response.data.userType);
-        //TODO redirect to home page
         navigate("fica-lab/home");
       }
     } catch (error) {
@@ -54,12 +53,12 @@ function SignUp() {
   async function handleSignUp() {
     console.log(registerUser);
     if (password !== confirmPassword) {
-      terror("Passwords do not match");
+      terror(t("passwords-dont-match"));
       return;
     }
     try {
       const response = await Api.signup(registerUser);
-      tsuccess(response.data);
+      tsuccess(t("account-created"));
       setPassword("");
       setConfirmPassword("");
       setEmail("");

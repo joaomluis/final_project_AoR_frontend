@@ -331,5 +331,9 @@
   "info": "Informação",
 
   "created-date": "Data de criação",
-  "vacancies": "Vagas"
+  "vacancies": "Vagas", 
+
+  "login-success": "Login efetuado com sucesso",
+  "passwords-dont-match": "As senhas não coincidem",
+  "account-created": "Conta criada com sucesso! Verifique o seu email para ativar a sua conta."
 }
