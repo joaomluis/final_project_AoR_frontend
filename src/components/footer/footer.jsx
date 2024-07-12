@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import "../../assets/css/general-css.css";
 
-import logo from "../../assets/img/logo_pl.jpg";
+import logo from "../../assets/img/logo1.png";
 import ukFlag from "../../assets/img/united-kingdom.png";
 import ptFlag from "../../assets/img/portugal.png";
 
@@ -28,7 +28,7 @@ const Footer = () => {
               width: 80,
             }}
           />{" "}
-          <span style={{ fontSize: "2em", color: "white" }}> FicaLab</span>
+          <span style={{ fontSize: "2em", color: "white" }}> InnovationLab</span>
         </Col>
 
         <Col md="3" className="text-center mt-3"></Col>
@@ -68,7 +68,7 @@ const Footer = () => {
       <hr style={{ borderColor: "white" }} />
       <Row>
         <Col md="6" className="text-left mt-1">
-          <p style={{ color: "white" }}>&copy; {new Date().getFullYear()} FicaLab. All rights reserved.</p>
+          <p style={{ color: "white" }}>&copy; {new Date().getFullYear()} InnovationLab. All rights reserved.</p>
         </Col>
         <Col md="6" className="align-right mt-1">
           <p style={{ color: "white" }}>Developed by: Ricardo Carvalho and João Luís - AoR</p>

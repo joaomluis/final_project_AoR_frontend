@@ -13,7 +13,7 @@ function Main() {
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/main") {
-        console.log(prop.private);
+        //console.log(prop.private);
         if (prop.public) {
           return <Route path={prop.path} element={prop.component} key={key} exact />;
         } else {
@@ -29,7 +29,10 @@ function Main() {
       <div className="main-panel">
         <Sidebar />
         <div id="main-container" className="main-container">
-          <Routes>{getRoutes(routes)}</Routes>
+          <Routes>{getRoutes(routes)}
+          <Route path="*" element={<Navigate to="/fica-lab/home" replace />} />
+          </Routes>
+          
           <Footer />
         </div>
       </div>
