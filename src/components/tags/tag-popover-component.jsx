@@ -28,14 +28,14 @@ const PopoverComponent = ({ data, title, id, idText }) => {
         target={uniqueId}
         // toggle={togglePopover} // Permite fechar o popover ao clicar fora
       >
-        <PopoverHeader
+        {/* <PopoverHeader
           style={{
             backgroundColor: "var(--greyish)",
             color: "var(--primary-color-darker)",
           }}
         >
           {title}
-        </PopoverHeader>
+        </PopoverHeader> */}
         <PopoverBody>
           {data?.map((element, index) => (
             <Badge key={index} className="m-1 badge-style">

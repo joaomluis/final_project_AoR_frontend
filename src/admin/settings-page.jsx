@@ -150,9 +150,9 @@ const SettingsPage = () => {
           <Col lg="6">
             <Card className="mb-4">
               <CardBody>
-                <CardTitle tag="h5">{t("select-Laboratory")}</CardTitle>
+                <CardTitle tag="h5" className="mb-3">{t("select-Laboratory")}</CardTitle>
                 <FormGroup>
-                  <Label for="lab">{t("lab")}</Label>
+                  
                   <Input type="select" name="lab" id="lab" value={lab} onChange={handleLabChange}>
                     <option value="">{t("select-a-lab")}</option>
                     {labs.map((lab) => (

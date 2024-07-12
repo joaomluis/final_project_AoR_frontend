@@ -283,7 +283,7 @@
   "in-progress": "Em progresso",
   "user-timeout-settings": "Configurações de timeout do utilizador",
   "timeout-minutes": "Tempo de sessão (minutos)",
-  "update-timeout": "Atualizar timeout",
+  "update-timeout": "Atualizar Timeout",
   "select-Laboratory": "Selecionar Laboratório",
   "laboratory": "Laboratório",
   "select-a-lab": "Selecione um laboratório",
@@ -320,5 +320,8 @@
   "fill-keywords-error": "Por favor, preencha no mínimo 1 palavras-chave para o projeto",
   "fill-all-error": "Por favor, preencha todos os campos obrigatórios",
   "You can't set the maximum number of participants to a value lower than the current number of participants.": "Não pode definir o número máximo de participantes para um valor inferior ao número atual de participantes.",
-  "only-planning-projects-can-be-edited": "Apenas projetos em planeamento podem ser editados"
+  "only-planning-projects-can-be-edited": "Apenas projetos em planeamento podem ser editados",
+
+  "download-pdf": "Download PDF",
+  "statistics": "Estatísticas"
 }

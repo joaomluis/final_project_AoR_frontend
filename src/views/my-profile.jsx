@@ -233,12 +233,12 @@ function MyProfile() {
           <Col className="mt-5">
             <Card className="card-no-hover">
               <CardHeader>
-                <CardTitle tag="h4">{t("about")}</CardTitle>
+                <CardTitle tag="h4">{t("about-me")}</CardTitle>
               </CardHeader>
               <CardBody>
                 <FormInput
-                  label={t("about-me")}
-                  placeholder="About"
+                  
+                  
                   type="textarea"
                   style={{ resize: "none", height: "150px" }}
                   value={user.about}

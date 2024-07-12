@@ -85,7 +85,7 @@ function SignUp() {
         {isSignUp ? (
           <>
             <CardHeader className="text-center" style={{ color: "var(--whitey)" }}>
-              <h2>{t("sign-up")}</h2>
+              <h2 style={{ color: "var(--whitey)", fontWeight: 'bold' }}>{t("sign-up")}</h2>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
                 {t("sign-up-subtext")}
@@ -139,7 +139,7 @@ function SignUp() {
         ) : (
           <>
             <CardHeader className="text-center" style={{ color: "var(--whitey)" }}>
-              <h4>{t("sign-in")}</h4>
+              <h2 style={{ color: "var(--whitey)", fontWeight: 'bold' }}>{t("sign-in")}</h2>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
                 {t("sign-in-subtext")}
