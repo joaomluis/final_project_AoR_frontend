@@ -6,7 +6,7 @@
   --secondary-color: #3f72af;
   --greyish: #dbe2ef;
   --whitey: #f9f7f7;
-  --yellowy: #ffd700;
+  --yellowy: #ffd500;
 
   --planning: #ffc464;
   --in-progress: #78c9ff;
@@ -128,7 +128,7 @@ h4 {
 }
 
 .modal-style {
-  background-color: var(--primary-color-darker);
+  background-color: var(--whitey);
   border: none !important;
 }
 
@@ -188,7 +188,7 @@ h4 {
 }
 
 .label-color {
-  color: var(--whitey);
+  color: var(--primary-color-darker);
 }
 
 .custom-hr {

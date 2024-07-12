@@ -91,7 +91,7 @@ function CreateProject() {
         <Row>
           <Col md="1"></Col>
           <Col md="10" className=" mt-5">
-            <Card className="shadow-lg p-3 mb-5 bg-white rounded card-no-hover" style={{ minHeight: "40em" }}>
+            <Card className="shadow-lg p-3 mb-5 bg-white rounded card-no-hover" style={{ minHeight: "30em" }}>
               <CardHeader className="bg-secondary-fl text-white">
                 <CardTitle tag="h3" className="text-center card-header-title text-white">
                   {t("create-project")}

@@ -65,7 +65,7 @@ const UserSettings = forwardRef((props, ref) => {
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} centered={true} size="lg">
-        <ModalHeader toggle={toggle} style={{ color: "var(--whitey)", fontWeight: "bold" }} className="modal-style">
+        <ModalHeader toggle={toggle} style={{ fontWeight: "bold" }} className="modal-style">
           {t("user-settings")}{" "}
         </ModalHeader>
         <ModalBody className="modal-style">
