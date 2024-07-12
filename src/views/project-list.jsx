@@ -101,19 +101,19 @@ function ProjectList() {
    * Filters to be displayed in the modal filter
    */
   const filters = [
-    { label: "status", options: status, handleOnChange: handleStatusChange },
+    { label: t("status"), options: status, handleOnChange: handleStatusChange },
     {
-      label: "keywords",
+      label: t("keywords"),
       options: keywords,
       handleOnChange: handleKeywordsChange,
     },
-    { label: "skills", options: skills, handleOnChange: handleSkillsChange },
-    { label: "labs", options: labs, handleOnChange: handleLabsChange },
+    { label: t("skills"), options: skills, handleOnChange: handleSkillsChange },
+    { label: t("labs"), options: labs, handleOnChange: handleLabsChange },
   ];
   const ofilters = [
-    { label: "createdDate" },
-    { label: "status" },
-    { label: "vacancies" },
+    { label: t("created-date") },
+    { label: t("status") },
+    { label: t("vacancies") },
   ];
 
   // useEffect(() => {

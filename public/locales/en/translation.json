@@ -326,5 +326,9 @@
   "info": "Info",
 
   "download-pdf": "Download PDF",
-  "statistics": "Statistics"
+  "statistics": "Statistics",
+
+  "created-date": "Creation date",
+  "vacancies": "Vacancies"
+
 }

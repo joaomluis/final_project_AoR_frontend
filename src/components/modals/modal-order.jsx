@@ -45,7 +45,7 @@ function ModalFilter({ isOpen, toggle, title, filters, onSubmit }) {
 
   return (
     <ModalBase isOpen={isOpen} toggle={toggle} title={title} footer={footer}>
-      <Button color="" className="button-style1 btn-modal-filter" onClick={handleClear}>
+      <Button color="" className="button-style1 btn-modal-filter mb-2" onClick={handleClear}>
         {t("clear")}
       </Button>
       {filters?.map((filter, index) => (

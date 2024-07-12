@@ -13,10 +13,10 @@ import Select from "react-select";
 const DDMultiSelect = ({ label, options = [], handleOnChange }) => {
   const [searchParams] = useSearchParams();
   const labels = searchParams.getAll(label);
-  console.log(labels);
+  //console.log(labels);
   const labelNames = labels.flatMap((label) => label.toLowerCase().split(","));
   const labelIds = options.filter((option) => labelNames.includes(option.name.toLowerCase())).map((option) => option.id);
-  console.log(labelIds);
+  //console.log(labelIds);
 
   const handleChange = (selectedOptions) => {
     const newSelectedOptions = selectedOptions.map((option) => option.value);
@@ -25,7 +25,7 @@ const DDMultiSelect = ({ label, options = [], handleOnChange }) => {
 
   return (
     <div>
-      <label>{label}:</label>
+      <label style={{ fontWeight: 'bold' }}>{label}:</label>
       <Select
         isMulti
         name="colors"
