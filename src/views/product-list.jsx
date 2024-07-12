@@ -71,10 +71,10 @@ function ProductList() {
   const handleTypeChange = (selected) => handleSelectionChange(selected, types, setTypes, "types");
 
   const filters = [
-    { label: t("brands"), options: brands, handleOnChange: handleBrandChange },
-    { label: t("types"), options: types, handleOnChange: handleTypeChange },
+    { label: "brands", options: brands, handleOnChange: handleBrandChange },
+    { label: "types", options: types, handleOnChange: handleTypeChange },
   ];
-  const ofilters = [{ label: t("identifier") }, { label: t("type") }, { label: t("brand") }, { label: t("name") }, { label: t("supplier") }];
+  const ofilters = [{ label: "identifier" }, { label: "type" }, { label: "brand" }, { label: "name" }, { label: "supplier" }];
 
   /**
    * Get filter options

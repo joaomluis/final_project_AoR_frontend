@@ -79,9 +79,9 @@ function UserList() {
    * Filters to be displayed in the modal filter
    */
   const filters = [
-    { label: t("interests"), options: interests, handleOnChange: handleInterestsChange },
-    { label: t("skills"), options: skills, handleOnChange: handleSkillsChange },
-    { label: t("labs"), options: labs, handleOnChange: handleLabsChange },
+    { label: "interests", options: interests, handleOnChange: handleInterestsChange },
+    { label: "skills", options: skills, handleOnChange: handleSkillsChange },
+    { label: "labs", options: labs, handleOnChange: handleLabsChange },
   ];
   const ofilters = [{ label: "username" }, { label: "firstname" }, { label: "privateProfile" }];
 

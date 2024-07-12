@@ -75,7 +75,7 @@ function MyProfile() {
     try {
       const response = await Api.uploadImage(token, file, filename);
 
-      tsuccess("Profile picture uploaded successfully!");
+      tsuccess(t("profile-picture-uploaded"));
       const newImageUrl = response.data + "?timestamp=" + Date.now();
       handleInputChange(newImageUrl, "imagePath");
     } catch (error) {
@@ -237,8 +237,6 @@ function MyProfile() {
               </CardHeader>
               <CardBody>
                 <FormInput
-                  
-                  
                   type="textarea"
                   style={{ resize: "none", height: "150px" }}
                   value={user.about}

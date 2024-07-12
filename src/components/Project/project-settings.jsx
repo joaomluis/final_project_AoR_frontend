@@ -132,7 +132,7 @@ function ProjectSettings({ data, userType }) {
     try {
       const response = await Api.leaveProject(token, ids);
       console.log(response);
-      tsuccess("you-left-project");
+      tsuccess(t("you-left-project"));
       navigate("/fica-lab/home");
       toggleModalLeaveProject();
     } catch (error) {
@@ -151,7 +151,7 @@ function ProjectSettings({ data, userType }) {
 
     try {
       const response = await Api.cancelProject(token, ids, props);
-      tsuccess("project-cancelled");
+      tsuccess(t("project-cancelled"));
       navigate("/fica-lab/home");
       toggleModalCancelProject();
     } catch (error) {
@@ -180,7 +180,7 @@ function ProjectSettings({ data, userType }) {
     try {
       const response = await Api.updateStatus(token, ids, prop);
 
-      tsuccess("status-updated");
+      tsuccess(t("status-updated"));
     } catch (error) {
       terror(error.message);
     }
@@ -194,7 +194,7 @@ function ProjectSettings({ data, userType }) {
 
     try {
       const response = await Api.updateStatus(token, ids, prop);
-      tsuccess("project-ready");
+      tsuccess(t("project-ready"));
       toggleModalSetReady();
       navigate("/fica-lab/home");
     } catch (error) {
@@ -210,7 +210,7 @@ function ProjectSettings({ data, userType }) {
     console.log(prop);
     try {
       const response = await Api.updateStatus(token, ids, prop);
-      tsuccess("project-finished");
+      tsuccess(t("project-finished"));
       toggleModalFinished();
       navigate("/fica-lab/home");
     } catch (error) {

@@ -1,6 +1,7 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 import Select from "react-select";
+import { useTranslation } from "react-i18next";
 /**
  * Component to render a dropdown with multiple selection
  * @param {*} label
@@ -11,6 +12,7 @@ import Select from "react-select";
  */
 
 const DDMultiSelect = ({ label, options = [], handleOnChange }) => {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const labels = searchParams.getAll(label);
   //console.log(labels);
@@ -25,7 +27,7 @@ const DDMultiSelect = ({ label, options = [], handleOnChange }) => {
 
   return (
     <div>
-      <label style={{ fontWeight: 'bold' }}>{label}:</label>
+      <label style={{ fontWeight: "bold" }}>{t(label)}:</label>
       <Select
         isMulti
         name="colors"

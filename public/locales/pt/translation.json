@@ -332,11 +332,17 @@
   "see-you-soon": "Até breve!",
   "save-product": "Guardar produto",
   "info": "Informação",
-
+  "more-info": "Mais informação",
   "created-date": "Data de criação",
-  "vacancies": "Vagas", 
+  "vacancies": "Vagas",
 
   "login-success": "Login efetuado com sucesso",
   "passwords-dont-match": "As senhas não coincidem",
-  "account-created": "Conta criada com sucesso! Verifique o seu email para ativar a sua conta."
+  "account-created": "Conta criada com sucesso! Verifique o seu email para ativar a sua conta.",
+  "firstname": "Primeiro nome",
+  "privateProfile": "Perfil privado",
+  "approve": "Aprovar",
+  "reject": "Rejeitar",
+  "status-updated": "Estado atualizado",
+  "profile-picture-uploaded": "Foto de perfil carregada"
 }

@@ -328,7 +328,7 @@
   "see-you-soon": "See you soon!",
   "save-product": "Save product",
   "info": "Info",
-
+  "more-info": "More info",
   "download-pdf": "Download PDF",
   "statistics": "Statistics",
 
@@ -337,6 +337,11 @@
 
   "login-success": "Login successful",
   "passwords-dont-match": "Passwords don't match",
-  "account-created": "Account created successfully! Visit your email to confirm your account."
-
+  "account-created": "Account created successfully! Visit your email to confirm your account.",
+  "firstname": "First name",
+  "privateProfile": "Private profile",
+  "profile-picture-uploaded": "Profile picture uploaded",
+  "approve": "Approve",
+  "reject": "Reject",
+  "status-updated": "Status updated"
 }
