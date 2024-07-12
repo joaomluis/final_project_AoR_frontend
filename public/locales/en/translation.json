@@ -233,6 +233,7 @@
 
   "planning-phase": "Planning",
   "ready-phase": "Ready",
+  "approved-phase": "Approved",
   "in-progress-phase": "In progress",
   "finished-phase": "Finished",
   "cancelled-phase": "Cancelled",
@@ -319,5 +320,8 @@
   "fill-keywords-error": "Please fill the keywords",
   "fill-all-error": "Please fill all the fields",
   "You can't set the maximum number of participants to a value lower than the current number of participants.": "You can't set the maximum number of participants to a value lower than the current number of participants.",
-  "only-planning-projects-can-be-edited": "Only planning projects can be edited"
+  "only-planning-projects-can-be-edited": "Only planning projects can be edited",
+  "see-you-soon": "See you soon!",
+  "save-product": "Save product",
+  "info": "Info"
 }

@@ -67,7 +67,7 @@ const CreateProductModal = ({ isOpen, toggle }) => {
   useEffect(() => {
     getTypeOptions();
     getSupplierOptions();
-  }, [product]);
+  }, []);
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
@@ -142,10 +142,10 @@ const CreateProductModal = ({ isOpen, toggle }) => {
         </ModalBody>
         <ModalFooter>
           <Button color="light" className="button-style1 mt-1" onClick={handleCreateProduct}>
-            Save Product
+            {t("save-product")}
           </Button>{" "}
           <Button color="light" className="button-style1 mt-1" onClick={toggle}>
-            Cancel
+            {t("cancel")}
           </Button>
         </ModalFooter>
       </form>

@@ -40,10 +40,6 @@ function handleWebSocketJSON(json) {
         break;
 
       case NotificationType.INVITE:
-      case NotificationType.TASK_EXECUTOR_CHANGED:
-      case NotificationType.PROJECT_STATUS_CHANGED:
-      case NotificationType.PROJECT_CANCELLED:
-      case NotificationType.PROJECT_APPROVED:
         userStore.addNotification(data);
         userStore.updateUnreadEmails(userStore.unreadEmails + 1);
         userStore.updateUnreadNotifications(userStore.unreadNotifications + 1);

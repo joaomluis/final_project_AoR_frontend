@@ -85,7 +85,7 @@ function SignUp() {
         {isSignUp ? (
           <>
             <CardHeader className="text-center" style={{ color: "var(--whitey)" }}>
-              <h2>{t("sign-up")}</h2>
+              <h2 style={{ color: "white" }}>{t("sign-up")}</h2>
 
               <CardText className="text-center" style={{ marginTop: "20px" }}>
                 {t("sign-up-subtext")}

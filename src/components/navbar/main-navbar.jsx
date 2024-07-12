@@ -66,7 +66,6 @@ function MainNavbar(args) {
   }, []);
 
   function handleSignOutConfirm() {
-    console.log("signout");
     setIsConfirmModalOpen(true);
   }
 
@@ -77,7 +76,9 @@ function MainNavbar(args) {
       navigator("/landing");
       useUserStore.getState().logout();
     } catch (e) {
-      terror("ups");
+      useUserStore.getState().logout();
+    } finally {
+      tsuccess(t("see-you-soon"));
     }
   }
 

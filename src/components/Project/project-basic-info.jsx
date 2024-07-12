@@ -17,7 +17,7 @@ function ProjectBasicInfo({ data }) {
   const members = useEditProjectStore((state) => state.projectUsers);
   const [changes, setChanges] = useState(false);
   const projectId = parseInt(id, 10);
-  console.log(data.status);
+
   useEffect(() => {
     setMaxParticipants(data.maxParticipants);
   }, [data.maxParticipants]);
